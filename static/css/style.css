@@ -206,9 +206,12 @@ section h2 {
 /* Focus Areas */
 .focus-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     margin-top: 50px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .focus-item {
@@ -409,5 +412,6 @@ footer {
     
     .focus-list {
         grid-template-columns: 1fr;
+        max-width: 100%;
     }
 }

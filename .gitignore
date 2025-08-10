@@ -1,25 +1,30 @@
-# Virtual environment
-.venv/
-venv/
-env/
+# Environment variables
+.env
 
-# Python cache
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
 
-# Flask
-instance/
-.webassets-cache
+# Build directories
+build/
+dist/
+*.egg-info/
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Build directory (will be generated)
-build/

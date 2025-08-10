@@ -134,7 +134,7 @@ body {
     transform: rotate(45deg) translate(-5px, -6px);
 }
 
-/* Hero Section */
+/* Hero Section - Dark mode compatible */
 .hero {
     padding: 120px 0 80px;
     background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
@@ -143,6 +143,12 @@ body {
     display: flex;
     align-items: center;
     position: relative;
+    transition: background 0.3s ease;
+}
+
+/* Dark mode hero gradient */
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, #2d1b69 0%, #1a1033 100%);
 }
 
 .hero-grid {
@@ -181,19 +187,33 @@ body {
     opacity: 0.9;
 }
 
+/* CTA Button - Dark mode compatible */
 .cta-button {
     display: inline-block;
-    background: white;
-    color: #667eea;
+    background: var(--bg-primary);
+    color: var(--accent-primary);
     padding: 15px 30px;
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .cta-button:hover {
     transform: translateY(-2px);
+    background: var(--text-primary);
+    color: var(--bg-primary);
+}
+
+/* Dark mode CTA button */
+[data-theme="dark"] .cta-button {
+    background: #ffffff;
+    color: #2d1b69;
+}
+
+[data-theme="dark"] .cta-button:hover {
+    background: #f0f0f0;
+    color: #1a1033;
 }
 
 /* Logo Section */

@@ -28,6 +28,35 @@ body {
     align-items: center;
 }
 
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.hero-text {
+    flex: 1;
+    text-align: left;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-photo {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
 .hero h1 {
     font-size: 3.5rem;
     font-weight: 700;
@@ -173,8 +202,74 @@ footer {
     padding: 30px 0;
 }
 
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: 15px 0;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #667eea;
+}
+
+/* Adjust hero section for fixed navbar */
+.hero {
+    padding-top: 120px; /* Add extra padding to account for fixed navbar */
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+    }
+    
+    .hero-text {
+        text-align: center;
+    }
+    
+    .profile-photo {
+        width: 250px;
+        height: 250px;
+    }
+    
     .hero h1 {
         font-size: 2.5rem;
     }
@@ -193,5 +288,13 @@ footer {
     
     .areas-grid {
         grid-template-columns: 1fr;
+    }
+
+    .nav-links {
+        gap: 20px;
+    }
+    
+    .nav-brand {
+        font-size: 1.2rem;
     }
 }

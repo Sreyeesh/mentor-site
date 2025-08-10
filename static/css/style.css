@@ -9,10 +9,40 @@ html {
     scroll-behavior: smooth;
 }
 
+/* CSS Variables for theming */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --accent-primary: #667eea;
+    --accent-secondary: #764ba2;
+    --border-color: #e1e5e9;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --card-bg: #ffffff;
+    --nav-bg: rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --accent-primary: #8b9eff;
+    --accent-secondary: #a78bfa;
+    --border-color: #404040;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --card-bg: #2d2d2d;
+    --nav-bg: rgba(26, 26, 26, 0.95);
+}
+
+/* Base styles using CSS variables */
 body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .wrap {
@@ -27,11 +57,12 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--nav-bg);
     backdrop-filter: blur(10px);
     z-index: 1000;
     padding: 15px 0;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 20px var(--shadow-color);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav-content {
@@ -47,7 +78,7 @@ body {
 }
 
 .nav-name-link {
-    color: #667eea;
+    color: var(--accent-primary);
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: 700;
@@ -55,7 +86,7 @@ body {
 }
 
 .nav-name-link:hover {
-    color: #5a6fd8;
+    color: var(--accent-secondary);
 }
 
 .nav-links {
@@ -64,17 +95,17 @@ body {
 }
 
 .nav-links a {
-    color: #333;
+    color: var(--text-primary);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: #667eea;
+    color: var(--accent-primary);
 }
 
-/* Hamburger Menu */
+/* Hamburger Menu - Dark mode compatible */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -85,7 +116,7 @@ body {
 .hamburger span {
     width: 25px;
     height: 3px;
-    background: #333;
+    background: var(--text-primary);
     margin: 3px 0;
     transition: 0.3s;
     border-radius: 2px;
@@ -106,7 +137,7 @@ body {
 /* Hero Section */
 .hero {
     padding: 120px 0 80px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
     color: white;
     min-height: 100vh;
     display: flex;
@@ -187,12 +218,12 @@ section h2 {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 50px;
-    color: #333;
+    color: var(--text-primary);
 }
 
 /* About Section */
 .about {
-    background: #f8f9fa;
+    background: var(--bg-secondary);
 }
 
 .about-content {
@@ -215,12 +246,12 @@ section h2 {
 }
 
 .focus-item {
-    background: white;
+    background: var(--card-bg);
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px var(--shadow-color);
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .focus-item:hover {
@@ -228,13 +259,13 @@ section h2 {
 }
 
 .focus-item h3 {
-    color: #667eea;
+    color: var(--accent-primary);
     font-size: 1.3rem;
 }
 
 /* Booking Section */
 .booking {
-    background: #f8f9fa;
+    background: var(--bg-secondary);
 }
 
 .booking-text {
@@ -295,20 +326,22 @@ section h2 {
 .form-group textarea {
     width: 100%;
     padding: 12px;
-    border: 2px solid #e1e5e9;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     font-size: 16px;
-    transition: border-color 0.3s ease;
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--accent-primary);
 }
 
 .submit-button {
-    background: #667eea;
+    background: var(--accent-primary);
     color: white;
     padding: 15px 30px;
     border: none;
@@ -321,15 +354,16 @@ section h2 {
 }
 
 .submit-button:hover {
-    background: #5a6fd8;
+    background: var(--accent-secondary);
 }
 
 /* Footer */
 footer {
-    background: #333;
-    color: white;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     text-align: center;
     padding: 30px 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Responsive Design */
@@ -367,14 +401,15 @@ footer {
         left: -100%;
         width: 100%;
         height: calc(100vh - 70px);
-        background: rgba(255, 255, 255, 0.98);
+        background: var(--bg-primary);
         backdrop-filter: blur(10px);
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
         padding-top: 50px;
         gap: 30px;
-        transition: left 0.3s ease;
+        transition: left 0.3s ease, background-color 0.3s ease;
+        border-top: 1px solid var(--border-color);
     }
     
     .nav-links.active {
@@ -384,6 +419,14 @@ footer {
     .nav-links a {
         font-size: 1.2rem;
         padding: 15px 0;
+        color: var(--text-primary);
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+        color: var(--accent-primary);
     }
     
     .nav-brand {
@@ -414,4 +457,53 @@ footer {
         grid-template-columns: 1fr;
         max-width: 100%;
     }
+
+    /* Dark mode toggle adjustments */
+    .nav-controls {
+        order: -1;
+        margin-right: 15px;
+    }
+    
+    .nav-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+}
+
+/* Dark mode toggle styles */
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dark-mode-toggle:hover {
+    background-color: var(--shadow-color);
+}
+
+.dark-mode-toggle .moon-icon {
+    display: none;
+}
+
+[data-theme="dark"] .dark-mode-toggle .sun-icon {
+    display: none;
+}
+
+[data-theme="dark"] .dark-mode-toggle .moon-icon {
+    display: block;
 }

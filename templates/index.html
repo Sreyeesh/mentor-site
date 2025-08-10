@@ -3,21 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ config.meta_description }}">
-    <title>{{ config.name }} - {{ config.tagline }}</title>
+    <meta name="description" content="One-on-one mentoring and coaching in animation and game development — practical guidance for your projects and career.">
+    <title>Mentoring in Animation & Game Development — Sreyeesh Garimella</title>
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Mentoring in Animation & Game Development — Sreyeesh Garimella">
+    <meta property="og:description" content="One-on-one mentoring and coaching in animation and game development — practical guidance for your projects and career.">
+    <meta property="og:image" content="/static/images/SreyeeshProfilePic.jpg">
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container">
+        <div class="wrap">
             <div class="nav-content">
-                <div class="nav-brand">{{ config.name }}</div>
-                <div class="nav-links">
+                <div class="nav-brand">
+                    <a href="#top" class="nav-name-link">Sreyeesh Garimella</a>
+                </div>
+                <div class="nav-links" id="nav-links">
                     <a href="#about">About</a>
                     <a href="#focus">Focus Areas</a>
+                    <a href="#booking">Book</a>
                     <a href="#contact">Contact</a>
+                </div>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </div>
         </div>
@@ -25,15 +39,15 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>{{ config.name }}</h1>
-                    <p class="tagline">{{ config.tagline }}</p>
-                    <a href="#contact" class="cta-button">Book a Session</a>
-                </div>
+        <div class="wrap">
+            <div class="hero-grid">
                 <div class="hero-image">
-                    <img src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}" alt="{{ config.name }}" class="profile-photo">
+                    <img src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}" alt="Sreyeesh Garimella" class="profile-photo">
+                </div>
+                <div class="hero-content">
+                    <h1>Mentoring & Coaching in Animation and Video Game Development</h1>
+                    <p class="hero-subtitle">Helping you unlock your full potential through personalized guidance and industry expertise.</p>
+                    <a href="#booking" class="cta-button">Book Your Session</a>
                 </div>
             </div>
         </div>
@@ -41,63 +55,79 @@
 
     <!-- About Me Section -->
     <section class="about" id="about">
-        <div class="container">
+        <div class="wrap">
             <h2>About Me</h2>
             <div class="about-content">
-                <p>I'm dedicated to helping people unlock their full potential and grow both personally and professionally. Drawing on years of experience in mentoring and coaching, I offer tailored guidance to help you overcome challenges and achieve your ambitions. My expertise lies in mentoring and coaching within the fields of animation and video game development.</p>
+                <p>I'm dedicated to helping people unlock their full potential through tailored mentoring and coaching in animation and video game development.</p>
             </div>
         </div>
     </section>
 
     <!-- Focus Areas Section -->
     <section class="focus-areas" id="focus">
-        <div class="container">
+        <div class="wrap">
             <h2>Focus Areas</h2>
-            <div class="areas-grid">
-                {% for area in config.focus_areas %}
-                <div class="area-card">
-                    <h3>{{ area }}</h3>
+            <div class="focus-list">
+                <div class="focus-item">
+                    <h3>Animation workflow & storytelling</h3>
                 </div>
-                {% endfor %}
+                <div class="focus-item">
+                    <h3>Game design fundamentals</h3>
+                </div>
+                <div class="focus-item">
+                    <h3>Career guidance in creative industries</h3>
+                </div>
+                <div class="focus-item">
+                    <h3>Portfolio and project feedback</h3>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Calendly Section -->
-    <section class="booking" id="contact">
-        <div class="container">
-            <h2>Book a Session</h2>
-            <div class="calendly-inline-widget" data-url="{{ config.calendly_link }}" style="min-width:320px;height:700px;"></div>
+    <!-- Booking Section -->
+    <section class="booking" id="booking">
+        <div class="wrap">
+            <h2>Book Your Session</h2>
+            <p class="booking-text">Book a one-on-one mentoring session to get tailored guidance for your projects.</p>
+            <div class="calendly-inline-widget" data-url="https://calendly.com/toucan-sg/60min" style="min-width:320px;height:700px;"></div>
             <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
         </div>
     </section>
 
-    <!-- Contact Form Section -->
-    <section class="contact">
-        <div class="container">
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="wrap">
             <h2>Get in Touch</h2>
-            <form action="https://formspree.io/f/xvgqdwbv" method="POST" class="contact-form">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="submit-button">Send Message</button>
-            </form>
+            <p class="contact-text">I personally reply within 24 hours.</p>
+            <div class="contact-options">
+                <a href="mailto:toucan.sg@gmail.com" class="email-link">toucan.sg@gmail.com</a>
+                <form action="#" method="POST" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+            </div>
         </div>
     </section>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2024 {{ config.name }}. All rights reserved.</p>
+        <div class="wrap">
+            <div class="footer-content">
+                <p>&copy; 2024 Sreyeesh Garimella. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

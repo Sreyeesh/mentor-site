@@ -1,13 +1,6 @@
 import os
 import shutil
-from flask import Flask
-from flask_static_digest import FlaskStaticDigest
-
-# Import your app
 from app import app
-
-# Initialize static digest
-digest = FlaskStaticDigest(app)
 
 if __name__ == '__main__':
     # Create build directory
@@ -20,7 +13,7 @@ if __name__ == '__main__':
     if os.path.exists('static'):
         shutil.copytree('static', os.path.join(build_dir, 'static'))
     
-    # Generate HTML files
+    # Generate HTML files using Flask test client
     with app.test_client() as client:
         # Get the main page
         response = client.get('/')
@@ -30,3 +23,7 @@ if __name__ == '__main__':
             f.write(response.data.decode('utf-8'))
     
     print("Static site generated in 'build' directory!")
+    print("Files created:")
+    for root, dirs, files in os.walk(build_dir):
+        for file in files:
+            print(f"  {os.path.join(root, file)}")

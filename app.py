@@ -6,15 +6,15 @@ app = Flask(__name__)
 # Site settings - easy to update content
 SITE_CONFIG = {
     'name': 'Sreyeesh Garimella',
-    'tagline': 'Mentor & Coach',
-    'email': 'sgarime1@gmail.com',
-    'calendly_link': 'https://calendly.com/toucan-sg/60min',  # Your actual Calendly link
-    'meta_description': 'Personal mentoring and coaching with Sreyeesh Garimella. Transform your skills and achieve your goals.',
+    'tagline': 'Mentoring & Coaching in Animation and Video Game Development',
+    'email': 'toucan.sg@gmail.com',
+    'calendly_link': 'https://calendly.com/toucan-sg/60min',
+    'meta_description': 'One-on-one mentoring and coaching in animation and game development — practical guidance for your projects and career.',
     'focus_areas': [
-        'Career Development',
-        'Leadership Skills',
-        'Personal Growth',
-        'Technical Skills'
+        'Animation workflow & storytelling',
+        'Game design fundamentals',
+        'Career guidance in creative industries',
+        'Portfolio and project feedback'
     ]
 }
 

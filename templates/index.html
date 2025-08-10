@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ config.meta_description }}">
+    <title>{{ config.name }} - {{ config.tagline }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>{{ config.name }}</h1>
+            <p class="tagline">{{ config.tagline }}</p>
+            <a href="#contact" class="cta-button">Book a Session</a>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <p>I'm passionate about helping others grow and achieve their potential. With years of experience in mentoring and coaching, I provide personalized guidance to help you navigate challenges and reach your goals.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Focus Areas Section -->
+    <section class="focus-areas">
+        <div class="container">
+            <h2>Focus Areas</h2>
+            <div class="areas-grid">
+                {% for area in config.focus_areas %}
+                <div class="area-card">
+                    <h3>{{ area }}</h3>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendly Section -->
+    <section class="booking" id="contact">
+        <div class="container">
+            <h2>Book a Session</h2>
+            <div class="calendly-inline-widget" data-url="{{ config.calendly_link }}" style="min-width:320px;height:700px;"></div>
+            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="contact">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <form action="https://formspree.io/f/your-form-id" method="POST" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 {{ config.name }}. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

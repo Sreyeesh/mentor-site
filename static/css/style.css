@@ -328,53 +328,120 @@ section h2 {
     text-decoration: underline;
 }
 
-.contact-form {
-    margin-top: 30px;
+/* Contact Icons - Improved */
+.contact-icons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 50px 0;
+    flex-wrap: wrap;
 }
 
-.form-group {
-    margin-bottom: 25px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 16px;
-    background-color: var(--card-bg);
+.contact-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 32px 24px;
+    background: var(--card-bg);
     color: var(--text-primary);
-    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px var(--shadow-color);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    min-width: 140px;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
+.contact-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s;
+}
+
+.contact-icon:hover::before {
+    left: 100%;
+}
+
+.contact-icon:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 12px 32px var(--shadow-color);
     border-color: var(--accent-primary);
 }
 
-.submit-button {
-    background: var(--accent-primary);
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    width: 100%;
+.contact-icon svg {
+    width: 36px;
+    height: 36px;
+    transition: transform 0.3s ease;
 }
 
-.submit-button:hover {
-    background: var(--accent-secondary);
+.contact-icon:hover svg {
+    transform: scale(1.1);
+}
+
+.contact-icon span {
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Icon-specific colors and effects */
+.email-icon:hover {
+    color: #ea4335;
+    border-color: #ea4335;
+    box-shadow: 0 12px 32px rgba(234, 67, 53, 0.3);
+}
+
+.linkedin-icon:hover {
+    color: #0077b5;
+    border-color: #0077b5;
+    box-shadow: 0 12px 32px rgba(0, 119, 181, 0.3);
+}
+
+.whatsapp-icon:hover {
+    color: #25d366;
+    border-color: #25d366;
+    box-shadow: 0 12px 32px rgba(37, 211, 102, 0.3);
+}
+
+/* Responsive design for contact icons */
+@media (max-width: 768px) {
+    .contact-icons {
+        gap: 24px;
+        margin: 40px 0;
+    }
+    
+    .contact-icon {
+        padding: 24px 20px;
+        min-width: 120px;
+    }
+    
+    .contact-icon svg {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .contact-icon span {
+        font-size: 0.9rem;
+    }
+    
+    .contact-icon:hover {
+        transform: translateY(-4px) scale(1.02);
+    }
+}
+
+/* Remove old contact form styles */
+.contact-form,
+.form-group,
+.submit-button {
+    display: none;
 }
 
 /* Footer */

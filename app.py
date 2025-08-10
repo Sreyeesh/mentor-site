@@ -8,7 +8,7 @@ SITE_CONFIG = {
     'name': 'Sreyeesh Garimella',
     'tagline': 'Mentor & Coach',
     'email': 'sgarime1@gmail.com',
-    'calendly_link': 'https://calendly.com/your-link',  # Update this with your actual Calendly link
+    'calendly_link': 'https://calendly.com/toucan-sg/60min',  # Your actual Calendly link
     'meta_description': 'Personal mentoring and coaching with Sreyeesh Garimella. Transform your skills and achieve your goals.',
     'focus_areas': [
         'Career Development',

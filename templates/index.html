@@ -12,9 +12,16 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>{{ config.name }}</h1>
-            <p class="tagline">{{ config.tagline }}</p>
-            <a href="#contact" class="cta-button">Book a Session</a>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>{{ config.name }}</h1>
+                    <p class="tagline">{{ config.tagline }}</p>
+                    <a href="#contact" class="cta-button">Book a Session</a>
+                </div>
+                <div class="hero-image">
+                    <img src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}" alt="{{ config.name }}" class="profile-photo">
+                </div>
+            </div>
         </div>
     </section>
 

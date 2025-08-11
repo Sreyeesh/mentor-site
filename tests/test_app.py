@@ -30,3 +30,4 @@ def test_404_page(client):
     """Test that 404 pages are handled properly"""
     response = client.get('/nonexistent-page')
     assert response.status_code == 404
+# Test fix

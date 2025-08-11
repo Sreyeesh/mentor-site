@@ -17,7 +17,7 @@ def test_home_page(client):
 def test_home_page_content(client):
     """Test that the page contains expected content"""
     response = client.get('/')
-    assert b'Book Your Session' in response.data
+    assert b'Get in Touch' in response.data  # Changed from 'Book Your Session'
     assert b'Focus Areas' in response.data
     assert b'Contact' in response.data
 

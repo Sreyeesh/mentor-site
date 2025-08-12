@@ -5,7 +5,12 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-app = Flask(__name__)
+# Support optional base path for GitHub Pages (e.g., "/<repo-name>")
+BASE_PATH = os.getenv('BASE_PATH', '')
+if BASE_PATH and not BASE_PATH.startswith('/'):
+    BASE_PATH = '/' + BASE_PATH
+
+app = Flask(__name__, static_url_path=f"{BASE_PATH}/static")
 
 # Site settings from environment variables
 SITE_CONFIG = {

@@ -10,7 +10,11 @@ BASE_PATH = os.getenv('BASE_PATH', '')
 if BASE_PATH and not BASE_PATH.startswith('/'):
     BASE_PATH = '/' + BASE_PATH
 
-app = Flask(__name__, static_url_path=f"{BASE_PATH}/static")
+# Fix static file serving - only add BASE_PATH if it's not empty
+if BASE_PATH:
+    app = Flask(__name__, static_url_path=f"{BASE_PATH}/static")
+else:
+    app = Flask(__name__)
 
 # Site settings from environment variables
 SITE_CONFIG = {

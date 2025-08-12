@@ -1,41 +1,40 @@
 version: '3.8'
 
 services:
-  web:
+  mentor-site:
     build: .
+    container_name: mentor-site-prod
     ports:
-      - "${PORT:-5000}:5000"
-    environment:
-      - FLASK_ENV=${FLASK_ENV:-development}
-      - FLASK_APP=${FLASK_APP:-app.py}
-      - FLASK_DEBUG=${FLASK_DEBUG:-True}
-      - SITE_NAME=${SITE_NAME:-Sreyeesh Garimella}
-      - SITE_TAGLINE=${SITE_TAGLINE:-Mentoring & Coaching in Animation and Video Game Development}
-      - SITE_EMAIL=${SITE_EMAIL:-toucan.sg@gmail.com}
-      - SITE_CALENDLY_LINK=${SITE_CALENDLY_LINK:-https://calendly.com/toucan-sg/60min}
-      - SITE_META_DESCRIPTION=${SITE_META_DESCRIPTION:-One-on-one mentoring and coaching in animation and game development — practical guidance for your projects and career.}
-      - SITE_FOCUS_AREAS=${SITE_FOCUS_AREAS:-Animation workflow & storytelling,Game design fundamentals,Career guidance in creative industries,Portfolio and project feedback}
-    env_file:
-      - .env
+      # Map host port 5000 to container port 80 (nginx)
+      - "5000:80"
     volumes:
-      # Mount static files for development (optional)
-      - ./static:/app/static:ro
-      - ./templates:/app/templates:ro
+      # Mount build directory for inspection
+      - ./build:/app/build:ro
+    environment:
+      - NODE_ENV=production
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      test: ["CMD", "curl", "-f", "http://localhost/mentor-site/"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
 
-  # Optional: Add nginx for production (uncomment if needed)
-  # nginx:
-  #   image: nginx:alpine
-  #   ports:
-  #     - "80:80"
-  #   volumes:
-  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro
-  #   depends_on:
-  #     - web
-  #   restart: unless-stopped
+  # Alternative service for development
+  mentor-site-dev:
+    build: .
+    container_name: mentor-site-dev
+    ports:
+      - "5001:80"  # Different port for dev
+    volumes:
+      - ./:/app
+      - ./build:/app/build
+    environment:
+      - NODE_ENV=development
+    profiles:
+      - dev  # Only start with --profile dev
+    restart: "no"
+
+networks:
+  default:
+    name: mentor-site-network

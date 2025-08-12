@@ -21,6 +21,9 @@ if __name__ == '__main__':
         # Write to build directory
         with open(os.path.join(build_dir, 'index.html'), 'w', encoding='utf-8') as f:
             f.write(response.data.decode('utf-8'))
+
+    # Ensure GitHub Pages serves files as-is (no Jekyll processing)
+    open(os.path.join(build_dir, '.nojekyll'), 'w').close()
     
     print("Static site generated in 'build' directory!")
     print("Files created:")

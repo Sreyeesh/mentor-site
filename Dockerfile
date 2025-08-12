@@ -15,6 +15,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         gcc \
+        nginx \
+        curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
@@ -32,24 +34,11 @@ ENV BASE_PATH=/mentor-site
 # Generate static site for production
 RUN python freeze.py
 
-# Install nginx for serving static files
-RUN apt-get update && apt-get install -y nginx curl && rm -rf /var/lib/apt/lists/*
-
-# Create non-root user for security first
-RUN adduser --disabled-password --gecos '' appuser
-
-# Create directories and set permissions for nginx to run as non-root
-RUN mkdir -p /var/cache/nginx /var/log/nginx /var/lib/nginx /run/nginx \
-    && chown -R appuser:appuser /var/cache/nginx /var/log/nginx /var/lib/nginx /run/nginx /etc/nginx \
-    && chown -R appuser:appuser /app
+# Create directories for nginx (don't change ownership yet)
+RUN mkdir -p /var/cache/nginx /var/log/nginx /var/lib/nginx /run/nginx
 
 # Create nginx configuration for serving static files
-RUN echo 'user appuser; \
-worker_processes auto; \
-pid /run/nginx/nginx.pid; \
-error_log /var/log/nginx/error.log warn; \
-\
-events { \
+RUN echo 'events { \
     worker_connections 1024; \
 } \
 \
@@ -58,14 +47,20 @@ http { \
     default_type application/octet-stream; \
     \
     access_log /var/log/nginx/access.log; \
+    error_log /var/log/nginx/error.log warn; \
     \
     sendfile on; \
     tcp_nopush on; \
     tcp_nodelay on; \
     keepalive_timeout 65; \
     \
+    gzip on; \
+    gzip_vary on; \
+    gzip_min_length 10240; \
+    gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json; \
+    \
     server { \
-        listen 5000; \
+        listen 80; \
         server_name localhost; \
         root /app/build; \
         index index.html; \
@@ -75,10 +70,12 @@ http { \
             alias /app/build/static/; \
             expires 1y; \
             add_header Cache-Control "public, immutable"; \
+            add_header Access-Control-Allow-Origin "*"; \
         } \
         \
         # Serve main page \
         location /mentor-site/ { \
+            alias /app/build/; \
             try_files $uri $uri/ /index.html; \
         } \
         \
@@ -96,14 +93,12 @@ http { \
     } \
 }' > /etc/nginx/nginx.conf
 
-USER appuser
-
-# Expose port
-EXPOSE 5000
+# Expose port 80 (nginx listens on this port inside container)
+EXPOSE 80
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:5000/health || exit 1
+    CMD curl -f http://localhost/health || exit 1
 
-# Run nginx
+# Run nginx as root (simpler and more reliable)
 CMD ["nginx", "-g", "daemon off;"]

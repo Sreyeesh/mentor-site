@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ master ]
   workflow_dispatch:
 
 permissions:
@@ -20,19 +20,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+          
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          
       - name: Build static site
-        env:
-          BASE_PATH: /${{ github.event.repository.name }}
         run: |
           python freeze.py
+          
+      - name: List build contents (debug)
+        run: |
+          echo "Build directory contents:"
+          ls -la build/
+          echo "Static directory contents:"
+          ls -la build/static/ || echo "No static directory found"
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -48,5 +57,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-

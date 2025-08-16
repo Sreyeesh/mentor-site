@@ -1,5 +1,3 @@
-Read file: README.md
-Here's a proper README for your mentor site:
 
 ```markdown:README.md
 # Sreyeesh Garimella - Mentor Site
@@ -27,7 +25,7 @@ docker-compose down
 docker-compose up --build --force-recreate
 ```
 
-## ✨ Features
+##  Features
 
 ### Professional Showcase
 - **Interactive Timeline** - Detailed career progression with role descriptions and skills
@@ -98,14 +96,14 @@ BASE_PATH=/mentor-site
 FLASK_DEBUG=True
 ```
 
-## �� Live Sites
+##  Live Sites
 
 - **🌐 Production:** [https://toucan.ee](https://toucan.ee)
 - **🔧 Development:** [http://localhost:5000/mentor-site/](http://localhost:5000/mentor-site/) (when running locally)
 
-## �� Development Status
+## Development Status
 
-### ✅ Completed
+### Completed
 - Core site functionality and routing
 - Professional timeline with career progression
 - Contact integration (Email, LinkedIn, WhatsApp)
@@ -115,41 +113,21 @@ FLASK_DEBUG=True
 - Docker containerization
 - Basic test coverage
 
-### 🔄 In Progress
+### In Progress
 - Content updates and optimization
 - Performance improvements
 - SEO enhancements
 
-### 🚧 Planned
+###  Planned
 - Contact form with lead tracking
 - Analytics integration
 - Blog/portfolio section
 - Testimonial showcase
 
-## 📄 License
+##  License
 
 This project is private and proprietary. All rights reserved.
 
-## �� Contact
 
-- **Email:** toucan.sg@gmail.com
-- **LinkedIn:** [Sreyeesh Garimella](https://www.linkedin.com/in/sreyeeshgarimella)
-- **WhatsApp:** +372 5827 7155
 
----
 
-*Built with ❤️ for helping others succeed in animation and game development*
-```
-
-This README now includes:
-
-1. **Clear Docker commands** as requested
-2. **Professional structure** with proper sections
-3. **Comprehensive feature list** highlighting the site's capabilities
-4. **Development information** for contributors
-5. **Project structure** for easy navigation
-6. **Development status** showing progress
-7. **Contact information** for business inquiries
-8. **Clean formatting** with emojis and proper markdown
-
-The README properly represents your mentor site as a professional business tool while providing all the technical information needed for development and deployment.

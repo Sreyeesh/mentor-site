@@ -1,108 +1,71 @@
 # Mentor Site
 
-A Flask-based mentoring website for **Sreyeesh Garimella** offering animation and game development coaching. Converts to static files for GitHub Pages deployment.
+A modern, responsive mentoring website for **Sreyeesh Garimella** - an experienced animation and game development professional. The site showcases professional experience, mentoring services, and provides multiple contact options for potential mentees.
 
-## Tech Stack
+**Features:**
+- Professional timeline showcasing industry experience
+- Interactive dark/light mode
+- Responsive design for all devices
+- Contact integration (Email, LinkedIn, WhatsApp)
+- Static site generation for easy deployment
 
-- Flask 2.3.3 with Python 3.11
-- HTML5, CSS3, JavaScript
-- Docker with nginx
-- pytest for testing
-- GitHub Actions for CI/CD
 
-## Project Structure
-
-```
-mentor-site/
-├── app.py                    # Flask application
-├── freeze.py                 # Static site generator
-├── deploy.sh                 # Local Docker deployment script
-├── requirements.txt          # Python dependencies
-├── Dockerfile               # Container configuration
-├── docker-compose.yml       # Container orchestration
-├── templates/
-│   └── index.html           # Main template
-├── static/
-│   ├── css/                 # Stylesheets
-│   ├── js/                  # JavaScript files
-│   └── images/              # Assets and profile images
-├── tests/
-│   └── test_app.py          # Test suite
-└── .github/workflows/
-    └── deploy-pages.yml     # GitHub Actions CI/CD
-```
-
-## Setup
+## Quick Start
 
 ```bash
+# Clone and setup
 git clone <repository-url>
 cd mentor-site
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
 
-## Development
-
-```bash
+# Run locally
 python app.py
+# Visit: http://localhost:5000
+
+# Or with Docker
+docker-compose up --build
+# Visit: http://localhost:5000/mentor-site/
 ```
 
-Visit `http://localhost:5000`
-
-## Build Static Site
-
-```bash
-python freeze.py
-```
-
-Generated files will be in the `build/` directory.
-
-## Docker
-
-**Local testing:**
-```bash
-chmod +x deploy.sh
-./deploy.sh  # For local deployment and testing only
-```
-
-**Manual:**
-```bash
-docker build -t mentor-site .
-docker run -d --name mentor-site-prod -p 5000:80 mentor-site
-```
-
-**Docker Compose:**
-```bash
-docker-compose up -d                    # Production
-docker-compose --profile dev up -d      # Development
-```
-
-## Testing
-
-```bash
-pytest                                  # Run all tests
-pytest --cov=app --cov-report=html     # With coverage report
-```
-
-## Deployment
-
-Push to `master` branch - GitHub Actions automatically builds and deploys to GitHub Pages.
-
-**Manual deployment:**
-1. Generate static files: `python freeze.py`
-2. Copy `build/` contents to GitHub Pages repository
-
-## Configuration
-
-```bash
-SITE_NAME="Sreyeesh Garimella"
-SITE_TAGLINE="Mentoring & Coaching in Animation and Video Game Development"
-SITE_EMAIL="toucan.sg@gmail.com"
-SITE_CALENDLY_LINK="https://calendly.com/toucan-sg/60min"
-BASE_PATH="/mentor-site"  # For GitHub Pages subdirectory
-```
-
+### 3. **Update the Live Site Section**
+```markdown
 ## Live Site
 
-**[https://toucan.ee](https://toucan.ee)**
+**🌐 Production:** [https://toucan.ee](https://toucan.ee)  
+**🔧 Development:** [http://localhost:5000/mentor-site/](http://localhost:5000/mentor-site/) (when running locally)
+```
+
+### 4. **Add a Features Section**
+```markdown
+## Features
+
+- **Professional Timeline** - Interactive career progression display
+- **Responsive Design** - Optimized for desktop, tablet, and mobile
+- **Dark/Light Mode** - User preference toggle
+- **Contact Integration** - Direct links to email, LinkedIn, and WhatsApp
+- **Static Generation** - Fast loading with pre-built HTML/CSS
+- **Docker Support** - Easy deployment and testing
+- **SEO Optimized** - Open Graph tags and meta descriptions
+```
+
+### 5. **Add Development Status**
+```markdown
+## Development Status
+
+- ✅ Core site functionality
+- ✅ Professional timeline
+- ✅ Contact integration
+- ✅ Responsive design
+- ✅ Dark mode support
+- 🔄 Content updates
+- 🔄 Performance optimization
+```
+
+## My Recommendation
+
+**Keep your current README** - it's well-structured and comprehensive. Just add these small improvements:
+
+1. **Better intro description** (more engaging)
+2. **Quick start section** (easier for new users)
+3. **Features list** (highlights what makes it special)
+4. **Update live site section** (include local development URL)
+

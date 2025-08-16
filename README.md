@@ -1,71 +1,155 @@
-# Mentor Site
+Read file: README.md
+Here's a proper README for your mentor site:
 
-A modern, responsive mentoring website for **Sreyeesh Garimella** - an experienced animation and game development professional. The site showcases professional experience, mentoring services, and provides multiple contact options for potential mentees.
+```markdown:README.md
+# Sreyeesh Garimella - Mentor Site
 
-**Features:**
-- Professional timeline showcasing industry experience
-- Interactive dark/light mode
-- Responsive design for all devices
-- Contact integration (Email, LinkedIn, WhatsApp)
-- Static site generation for easy deployment
+A professional mentoring website showcasing **Sreyeesh Garimella**'s expertise in animation and game development. Built with Flask and modern web technologies, this site serves as a digital portfolio and lead generation platform for one-on-one mentoring services.
 
+## 🚀 Quick Start
 
-## Quick Start
+### Docker Build Commands
 
 ```bash
-# Clone and setup
-git clone <repository-url>
-cd mentor-site
-
-# Run locally
-python app.py
-# Visit: http://localhost:5000
-
-# Or with Docker
+# Build and run with Docker Compose
 docker-compose up --build
-# Visit: http://localhost:5000/mentor-site/
+
+# Build only (without running)
+docker-compose build
+
+# Run in detached mode
+docker-compose up -d
+
+# Stop containers
+docker-compose down
+
+# Rebuild and restart
+docker-compose up --build --force-recreate
 ```
 
-### 3. **Update the Live Site Section**
-```markdown
-## Live Site
+## ✨ Features
 
-**🌐 Production:** [https://toucan.ee](https://toucan.ee)  
-**🔧 Development:** [http://localhost:5000/mentor-site/](http://localhost:5000/mentor-site/) (when running locally)
+### Professional Showcase
+- **Interactive Timeline** - Detailed career progression with role descriptions and skills
+- **Portfolio Integration** - Showcase of work experience and achievements
+- **Focus Areas** - Clear specialization in animation workflow, game design, and career guidance
+
+### User Experience
+- **Responsive Design** - Optimized for desktop, tablet, and mobile devices
+- **Dark/Light Mode** - User preference toggle with persistent settings
+- **Smooth Navigation** - Intuitive scrolling and section transitions
+- **Accessibility** - ARIA labels and semantic HTML structure
+
+### Contact & Lead Generation
+- **Multiple Contact Options** - Email, LinkedIn, and WhatsApp integration
+- **Professional Presentation** - Clean, modern design that builds trust
+- **SEO Optimized** - Open Graph tags and meta descriptions for social sharing
+
+### Technical Excellence
+- **Static Site Generation** - Fast loading with pre-built HTML/CSS
+- **Docker Support** - Easy deployment and testing across environments
+- **Modern Stack** - Flask, Python 3.11, and contemporary web standards
+
+## 📁 Project Structure
+
+```
+mentor-site/
+├── app.py                 # Flask application entry point
+├── freeze.py             # Static site generator
+├── requirements.txt      # Python dependencies
+├── templates/
+│   └── index.html       # Main site template
+├── static/
+│   ├── css/
+│   │   └── style.css    # Main stylesheet
+│   ├── js/
+│   │   └── script.js    # JavaScript functionality
+│   └── images/          # Site images and assets
+├── tests/
+│   └── test_app.py      # Test suite
+├── build/               # Generated static site
+├── Dockerfile           # Docker configuration
+└── docker-compose.yml   # Docker Compose setup
 ```
 
-### 4. **Add a Features Section**
-```markdown
-## Features
+## 🛠️ Development
 
-- **Professional Timeline** - Interactive career progression display
-- **Responsive Design** - Optimized for desktop, tablet, and mobile
-- **Dark/Light Mode** - User preference toggle
-- **Contact Integration** - Direct links to email, LinkedIn, and WhatsApp
-- **Static Generation** - Fast loading with pre-built HTML/CSS
-- **Docker Support** - Easy deployment and testing
-- **SEO Optimized** - Open Graph tags and meta descriptions
+### Running Tests
+```bash
+pytest
 ```
 
-### 5. **Add Development Status**
-```markdown
-## Development Status
+### Code Quality
+```bash
+# Linting
+flake8 .
 
-- ✅ Core site functionality
-- ✅ Professional timeline
-- ✅ Contact integration
-- ✅ Responsive design
-- ✅ Dark mode support
-- 🔄 Content updates
-- 🔄 Performance optimization
+# Type checking (if using mypy)
+mypy .
 ```
 
-## My Recommendation
+### Environment Variables
+Create a `.env` file for local development:
+```env
+SITE_NAME=Sreyeesh Garimella
+SITE_EMAIL=toucan.sg@gmail.com
+SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/60min
+BASE_PATH=/mentor-site
+FLASK_DEBUG=True
+```
 
-**Keep your current README** - it's well-structured and comprehensive. Just add these small improvements:
+## �� Live Sites
 
-1. **Better intro description** (more engaging)
-2. **Quick start section** (easier for new users)
-3. **Features list** (highlights what makes it special)
-4. **Update live site section** (include local development URL)
+- **🌐 Production:** [https://toucan.ee](https://toucan.ee)
+- **🔧 Development:** [http://localhost:5000/mentor-site/](http://localhost:5000/mentor-site/) (when running locally)
 
+## �� Development Status
+
+### ✅ Completed
+- Core site functionality and routing
+- Professional timeline with career progression
+- Contact integration (Email, LinkedIn, WhatsApp)
+- Responsive design for all devices
+- Dark/light mode toggle
+- Static site generation
+- Docker containerization
+- Basic test coverage
+
+### 🔄 In Progress
+- Content updates and optimization
+- Performance improvements
+- SEO enhancements
+
+### 🚧 Planned
+- Contact form with lead tracking
+- Analytics integration
+- Blog/portfolio section
+- Testimonial showcase
+
+## 📄 License
+
+This project is private and proprietary. All rights reserved.
+
+## �� Contact
+
+- **Email:** toucan.sg@gmail.com
+- **LinkedIn:** [Sreyeesh Garimella](https://www.linkedin.com/in/sreyeeshgarimella)
+- **WhatsApp:** +372 5827 7155
+
+---
+
+*Built with ❤️ for helping others succeed in animation and game development*
+```
+
+This README now includes:
+
+1. **Clear Docker commands** as requested
+2. **Professional structure** with proper sections
+3. **Comprehensive feature list** highlighting the site's capabilities
+4. **Development information** for contributors
+5. **Project structure** for easy navigation
+6. **Development status** showing progress
+7. **Contact information** for business inquiries
+8. **Clean formatting** with emojis and proper markdown
+
+The README properly represents your mentor site as a professional business tool while providing all the technical information needed for development and deployment.

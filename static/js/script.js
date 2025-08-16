@@ -45,40 +45,44 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (targetElement) {
                 const navbarHeight = 100; // Height of fixed navbar
-                const targetPosition = targetElement.offsetTop - navbarHeight;
+                let targetPosition = targetElement.offsetTop - navbarHeight;
                 
-                // Smooth scroll with easing
-                smoothScrollTo(targetPosition, 800);
+                // Special handling for top of page
+                if (targetId === '#top') {
+                    targetPosition = 0;
+                }
+                
+                // Faster smooth scroll
+                smoothScrollTo(targetPosition, 400);
             }
         });
     });
     
-    // Enhanced smooth scroll function with easing
+    // Simplified and faster smooth scroll function
     function smoothScrollTo(targetPosition, duration) {
         const startPosition = window.pageYOffset;
         const distance = targetPosition - startPosition;
-        let startTime = null;
+        const startTime = performance.now();
         
         function animation(currentTime) {
-            if (startTime === null) startTime = currentTime;
-            const timeElapsed = currentTime - startTime;
-            const run = easeInOutCubic(timeElapsed, startPosition, distance, duration);
-            window.scrollTo(0, run);
-            if (timeElapsed < duration) requestAnimationFrame(animation);
-        }
-        
-        // Easing function for smooth animation
-        function easeInOutCubic(t, b, c, d) {
-            t /= d / 2;
-            if (t < 1) return c / 2 * t * t * t + b;
-            t -= 2;
-            return c / 2 * (t * t * t + 2) + b;
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Simple ease-out function for faster, more natural movement
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const currentPosition = startPosition + (distance * easeOut);
+            
+            window.scrollTo(0, currentPosition);
+            
+            if (progress < 1) {
+                requestAnimationFrame(animation);
+            }
         }
         
         requestAnimationFrame(animation);
     }
     
-    // Scroll animations for sections
+    // Simplified scroll animations for sections
     const sections = document.querySelectorAll('section');
     const observerOptions = {
         threshold: 0.1,
@@ -167,23 +171,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
-// Performance optimization: Debounced scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Apply debouncing to scroll events
-const debouncedScrollHandler = debounce(() => {
-    // Any additional scroll-based functionality can go here
-}, 16); // ~60fps
-
-window.addEventListener('scroll', debouncedScrollHandler);

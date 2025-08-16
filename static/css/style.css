@@ -16,14 +16,14 @@ html {
         scroll-behavior: smooth;
     }
     
-    /* Smooth transitions for all interactive elements */
-    a, button, .timeline-item, .focus-item, .work-item {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Faster transitions for interactive elements */
+    a, button, .timeline-item, .focus-item {
+        transition: all 0.2s ease;
     }
     
-    /* Smooth section transitions */
+    /* Faster section transitions */
     section {
-        transition: opacity 0.6s ease, transform 0.6s ease;
+        transition: opacity 0.3s ease, transform 0.3s ease;
     }
 }
 
@@ -75,12 +75,12 @@ body {
 section {
     opacity: 1;
     transform: translateY(0);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 section.fade-in {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
 }
 
 section.fade-in.visible {

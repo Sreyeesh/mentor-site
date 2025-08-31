@@ -29,8 +29,6 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Testing and coverage
-.coverage
-.coverage.*
-htmlcov/
-.pytest_cache/
+# Newsletter and lead data
+newsletter_subscriptions.json
+leads.json

@@ -31,10 +31,10 @@ COPY . .
 # Set BASE_PATH environment variable for subdirectory deployment
 ENV BASE_PATH=/mentor-site
 
-# Generate static site for production
-RUN python freeze.py
+# Generate static site for production and verify it worked
+RUN python freeze.py && ls -la build/
 
-# Create directories for nginx (don't change ownership yet)
+# Create directories for nginx
 RUN mkdir -p /var/cache/nginx /var/log/nginx /var/lib/nginx /run/nginx
 
 # Create nginx configuration for serving static files
@@ -73,10 +73,17 @@ http { \
             add_header Access-Control-Allow-Origin "*"; \
         } \
         \
-        # Serve main page \
+        # Serve mentor-site directory \
         location /mentor-site/ { \
             alias /app/build/; \
             try_files $uri $uri/ /index.html; \
+            autoindex off; \
+        } \
+        \
+        # Handle mentor-site root specifically \
+        location = /mentor-site/ { \
+            alias /app/build/; \
+            try_files /index.html =404; \
         } \
         \
         # Redirect root to mentor-site \

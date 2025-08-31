@@ -1,7 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 import os
 from dotenv import load_dotenv
 from datetime import datetime
+import json
 
 # Load environment variables
 load_dotenv()
@@ -30,6 +31,40 @@ SITE_CONFIG = {
 @app.route('/')
 def index():
     return render_template('index.html', config=SITE_CONFIG, current_year=datetime.now().year)
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        # Get form data
+        name = request.form.get('name')
+        email = request.form.get('email')
+        message = request.form.get('message')
+        focus_area = request.form.get('focus_area')
+        
+        # Create submission record
+        submission = {
+            'timestamp': datetime.now().isoformat(),
+            'name': name,
+            'email': email,
+            'message': message,
+            'focus_area': focus_area
+        }
+        
+        # Save to JSON file (simple storage)
+        try:
+            with open('leads.json', 'a') as f:
+                f.write(json.dumps(submission) + '\n')
+        except Exception as e:
+            print(f"Error saving lead: {e}")
+        
+        # Redirect to thank you page
+        return redirect(url_for('thank_you'))
+    
+    return render_template('contact.html', config=SITE_CONFIG, current_year=datetime.now().year)
+
+@app.route('/thank-you')
+def thank_you():
+    return render_template('thank_you.html', config=SITE_CONFIG, current_year=datetime.now().year)
 
 if __name__ == '__main__':
     host = os.getenv('HOST', '0.0.0.0')

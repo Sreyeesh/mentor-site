@@ -4,6 +4,10 @@ import re
 from app import app
 
 if __name__ == '__main__':
+    # For custom domains, we don't need a base path
+    # The site will be served from the root domain (toucan.ee)
+    BASE_PATH = os.getenv('GITHUB_PAGES_BASE_PATH', '')
+    
     # Create build directory
     build_dir = 'build'
     if os.path.exists(build_dir):
@@ -34,15 +38,8 @@ if __name__ == '__main__':
                 if route == '/contact' and 'contact-form-section' not in html_content:
                     print(f"❌ Warning: {route} doesn't contain contact form")
                 
-                # Fix static file paths for subdirectory deployment
-                # First, fix the static file paths
-                html_content = html_content.replace('="/static/', '="/mentor-site/static/')
-                html_content = html_content.replace("='/static/", "='/mentor-site/static/")
-                html_content = html_content.replace('content="/static/', 'content="/mentor-site/static/')
-                
-                # Fix any remaining absolute paths (but not static paths)
-                html_content = html_content.replace('href="/"', 'href="/mentor-site/"')
-                html_content = html_content.replace("href='/'", "href='/mentor-site/'")
+                # For custom domains, static files should be served from root paths
+                # No need to modify the static file paths - they should remain as /static/
                 
                 # Determine filename
                 if route == '/':
@@ -66,7 +63,7 @@ if __name__ == '__main__':
     with open(os.path.join(build_dir, '.nojekyll'), 'w') as f:
         f.write('')
     
-    print("\nStatic site generated in 'build' directory!")
+    print(f"\nStatic site generated in 'build' directory for custom domain: toucan.ee")
     print("Files created:")
     for root, dirs, files in os.walk(build_dir):
         for file in files:

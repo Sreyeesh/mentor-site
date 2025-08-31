@@ -28,8 +28,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
-# Set BASE_PATH environment variable for subdirectory deployment
-ENV BASE_PATH=/mentor-site
+# For custom domain, no base path needed
+ENV BASE_PATH=
 
 # Generate static site for production and verify it worked
 RUN python freeze.py && ls -la build/
@@ -66,29 +66,16 @@ http { \
         index index.html; \
         \
         # Serve static files directly \
-        location /mentor-site/static/ { \
-            alias /app/build/static/; \
+        location /static/ { \
             expires 1y; \
             add_header Cache-Control "public, immutable"; \
             add_header Access-Control-Allow-Origin "*"; \
         } \
         \
-        # Serve mentor-site directory \
-        location /mentor-site/ { \
-            alias /app/build/; \
+        # Serve all other files \
+        location / { \
             try_files $uri $uri/ /index.html; \
             autoindex off; \
-        } \
-        \
-        # Handle mentor-site root specifically \
-        location = /mentor-site/ { \
-            alias /app/build/; \
-            try_files /index.html =404; \
-        } \
-        \
-        # Redirect root to mentor-site \
-        location = / { \
-            return 301 /mentor-site/; \
         } \
         \
         # Health check endpoint \

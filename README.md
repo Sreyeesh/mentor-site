@@ -1,133 +1,171 @@
+I'll update the README to include the exact tree structure from your project. Here's the updated version:
 
 ```markdown:README.md
 # Sreyeesh Garimella - Mentor Site
 
-A professional mentoring website showcasing **Sreyeesh Garimella**'s expertise in animation and game development. Built with Flask and modern web technologies, this site serves as a digital portfolio and lead generation platform for one-on-one mentoring services.
+A professional mentoring website for **Sreyeesh Garimella**, offering personalized one-on-one guidance in animation and video game development. This platform serves as both a digital portfolio showcasing extensive industry experience and a lead generation system for high-quality mentoring services.
+
+## 🎯 About the Mentoring Service
+
+### What I Offer
+- **Personalized 1-on-1 Sessions**: Tailored guidance based on your specific goals and skill level
+- **Animation Workflow & Storytelling**: From concept to final render, covering the complete animation pipeline
+- **Game Design Fundamentals**: Core principles, mechanics, and player experience design
+- **Career Guidance**: Strategic advice for breaking into and advancing in creative industries
+- **Portfolio & Project Feedback**: Expert review and improvement suggestions for your work
+
+### My Background
+With over 15 years of experience in the animation and gaming industry, I've worked with:
+- **Walt Disney Animation Studios** - Assistant Technical Director
+- **Brown Bag Films** - Render Support for Ireland's first CG feature film
+- **Multiple AAA game studios** - Technical and creative roles
+- **Freelance animation projects** - Diverse portfolio of work
 
 ## 🚀 Quick Start
 
-### Docker Build Commands
+### Local Development
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd mentor-site
 
+# Install dependencies
+pip install -r requirements.txt
+
+# Run locally
+python app.py
+
+# Or use Docker
+./deploy.sh
+```
+
+### Docker Deployment
 ```bash
 # Build and run with Docker Compose
 docker-compose up --build
 
-# Build only (without running)
-docker-compose build
-
-# Run in detached mode
-docker-compose up -d
-
-# Stop containers
-docker-compose down
-
-# Rebuild and restart
-docker-compose up --build --force-recreate
+# Deploy locally with custom script
+./deploy.sh
 ```
-
-##  Features
-
-### Professional Showcase
-- **Interactive Timeline** - Detailed career progression with role descriptions and skills
-- **Portfolio Integration** - Showcase of work experience and achievements
-- **Focus Areas** - Clear specialization in animation workflow, game design, and career guidance
-
-### User Experience
-- **Responsive Design** - Optimized for desktop, tablet, and mobile devices
-- **Dark/Light Mode** - User preference toggle with persistent settings
-- **Smooth Navigation** - Intuitive scrolling and section transitions
-- **Accessibility** - ARIA labels and semantic HTML structure
-
-### Contact & Lead Generation
-- **Multiple Contact Options** - Email, LinkedIn, and WhatsApp integration
-- **Professional Presentation** - Clean, modern design that builds trust
-- **SEO Optimized** - Open Graph tags and meta descriptions for social sharing
-
-### Technical Excellence
-- **Static Site Generation** - Fast loading with pre-built HTML/CSS
-- **Docker Support** - Easy deployment and testing across environments
-- **Modern Stack** - Flask, Python 3.11, and contemporary web standards
 
 ## 📁 Project Structure
 
 ```
-mentor-site/
-├── app.py                 # Flask application entry point
-├── freeze.py             # Static site generator
-├── requirements.txt      # Python dependencies
-├── templates/
-│   └── index.html       # Main site template
-├── static/
-│   ├── css/
-│   │   └── style.css    # Main stylesheet
-│   ├── js/
-│   │   └── script.js    # JavaScript functionality
-│   └── images/          # Site images and assets
-├── tests/
-│   └── test_app.py      # Test suite
-├── build/               # Generated static site
-├── Dockerfile           # Docker configuration
-└── docker-compose.yml   # Docker Compose setup
+.
+├── app.py
+├── deploy.sh
+├── docker-compose.yml
+├── Dockerfile
+├── .env
+├── .env.example
+├── .flake8
+├── freeze.py
+├── .github
+│   └── workflows
+│       └── deploy-pages.yml
+├── .gitignore
+├── pytest.ini
+├── README.md
+├── requirements.txt
+├── static
+│   ├── css
+│   │   └── style.css
+│   ├── images
+│   │   ├── GameCity.png
+│   │   └── SreyeeshProfilePic.jpg
+│   └── js
+│       └── script.js
+├── templates
+│   └── index.html
+└── tests
+    └── test_app.py
+
+9 directories, 19 files
 ```
 
-## 🛠️ Development
+##️ Technical Stack
 
-### Running Tests
+- **Backend**: Flask (Python)
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Deployment**: Docker, GitHub Actions, GitHub Pages
+- **Static Generation**: Custom freeze.py script
+- **Testing**: pytest
+- **Code Quality**: flake8
+
+## 🎨 Features
+
+### For Mentees
+- **Professional Portfolio**: View my extensive experience and projects
+- **Clear Service Offerings**: Understand exactly what mentoring includes
+- **Easy Contact**: Multiple ways to get in touch (Email, LinkedIn, WhatsApp)
+- **Transparent Process**: Know what to expect from mentoring sessions
+
+### For the Platform
+- **Responsive Design**: Works perfectly on all devices
+- **Fast Loading**: Optimized static site generation
+- **SEO Optimized**: Built for discoverability
+- **Automated Updates**: Copyright and content management
+- **Professional Presentation**: Clean, modern design
+
+## 🚀 Deployment
+
+### Local Development
 ```bash
-pytest
+# Run with Flask development server
+python app.py
+
+# Or use Docker
+./deploy.sh
 ```
 
-### Code Quality
-```bash
-# Linting
-flake8 .
+### Production Deployment
+- **GitHub Actions**: Automatically deploys to GitHub Pages on push to `master`
+- **Docker**: Containerized deployment with Nginx
+- **Static Generation**: Uses `freeze.py` to generate static HTML
 
-# Type checking (if using mypy)
-mypy .
-```
+## 📞 Contact & Booking
 
-### Environment Variables
-Create a `.env` file for local development:
-```env
-SITE_NAME=Sreyeesh Garimella
-SITE_EMAIL=toucan.sg@gmail.com
-SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/60min
-BASE_PATH=/mentor-site
-FLASK_DEBUG=True
-```
+### Get Started
+- **Email**: toucan.sg@gmail.com
+- **LinkedIn**: [Sreyeesh Garimella](https://www.linkedin.com/in/sreyeeshgarimella)
+- **WhatsApp**: +372 5827 7155
+- **Booking**: [Schedule a Session](https://calendly.com/toucan-sg/60min)
 
-##  Live Sites
+### Response Time
+I personally reply within 24 hours to all inquiries.
+
+## Live Sites
 
 - **🌐 Production:** [https://toucan.ee](https://toucan.ee)
 - **🔧 Development:** [http://localhost:5000/mentor-site/](http://localhost:5000/mentor-site/) (when running locally)
 
 ## Development Status
 
-### Completed
-- Core site functionality and routing
-- Professional timeline with career progression
+### ✅ Completed
+- Professional portfolio and experience showcase
+- Mentoring service descriptions and offerings
 - Contact integration (Email, LinkedIn, WhatsApp)
 - Responsive design for all devices
-- Dark/light mode toggle
-- Static site generation
+- Static site generation and deployment
 - Docker containerization
-- Basic test coverage
+- Automated copyright year
+- GitHub Actions deployment pipeline
+- Environment variable configuration
 
-### In Progress
-- Content updates and optimization
+### 🔄 In Progress
+- Content optimization and updates
 - Performance improvements
 - SEO enhancements
 
-###  Planned
+### 📋 Planned
 - Contact form with lead tracking
 - Analytics integration
 - Blog/portfolio section
 - Testimonial showcase
+- Session booking integration
 
-##  License
+## 📄 License
 
 This project is private and proprietary. All rights reserved.
 
-
-
-
+---

@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import os
 from dotenv import load_dotenv
+from datetime import datetime
 
 # Load environment variables
 load_dotenv()
@@ -28,7 +29,7 @@ SITE_CONFIG = {
 
 @app.route('/')
 def index():
-    return render_template('index.html', config=SITE_CONFIG)
+    return render_template('index.html', config=SITE_CONFIG, current_year=datetime.now().year)
 
 if __name__ == '__main__':
     host = os.getenv('HOST', '0.0.0.0')

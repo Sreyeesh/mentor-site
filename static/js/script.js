@@ -176,3 +176,184 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Newsletter functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Newsletter form submission
+    const newsletterForm = document.getElementById('newsletter-form');
+    const popupNewsletterForm = document.getElementById('popup-newsletter-form');
+    
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', handleNewsletterSubmit);
+    }
+    
+    if (popupNewsletterForm) {
+        popupNewsletterForm.addEventListener('submit', handleNewsletterSubmit);
+    }
+    
+    // Exit intent popup
+    setupExitIntentPopup();
+});
+
+async function handleNewsletterSubmit(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const formData = new FormData(form);
+    const isPopup = form.id === 'popup-newsletter-form';
+    
+    const email = formData.get('email');
+    const gdprConsent = formData.get('gdpr_consent') === 'on';
+    
+    const messageElement = isPopup ? 
+        document.getElementById('popup-message') : 
+        document.getElementById('newsletter-message');
+    
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    
+    // Show loading state
+    submitButton.textContent = 'Subscribing...';
+    submitButton.disabled = true;
+    
+    try {
+        const response = await fetch('/api/newsletter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                gdpr_consent: gdprConsent
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showMessage(messageElement, result.message, 'success');
+            form.reset();
+            
+            // If popup, close it after success
+            if (isPopup) {
+                setTimeout(() => {
+                    closeExitIntentPopup();
+                }, 2000);
+            }
+            
+            // Track subscription event (for analytics)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'newsletter_signup', {
+                    'event_category': 'engagement',
+                    'event_label': isPopup ? 'exit_intent' : 'newsletter_section'
+                });
+            }
+        } else {
+            showMessage(messageElement, result.message, 'error');
+        }
+    } catch (error) {
+        showMessage(messageElement, 'An error occurred. Please try again.', 'error');
+    } finally {
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+    }
+}
+
+function showMessage(element, message, type) {
+    element.textContent = message;
+    element.className = `form-message ${type}`;
+    element.style.display = 'block';
+    
+    // Hide message after 5 seconds
+    setTimeout(() => {
+        element.style.display = 'none';
+    }, 5000);
+}
+
+function setupExitIntentPopup() {
+    const popup = document.getElementById('exit-intent-popup');
+    const closeButton = document.getElementById('popup-close');
+    let popupShown = false;
+    let mouseLeftWindow = false;
+    
+    // Check if user has already subscribed or dismissed popup
+    if (localStorage.getItem('newsletter_popup_dismissed') || 
+        localStorage.getItem('newsletter_subscribed')) {
+        return;
+    }
+    
+    // Show popup when mouse leaves window (exit intent)
+    document.addEventListener('mouseleave', function(e) {
+        if (e.clientY <= 0 && !popupShown && !mouseLeftWindow) {
+            showExitIntentPopup();
+            mouseLeftWindow = true;
+        }
+    });
+    
+    // Alternative trigger: after 30 seconds if user is still on page
+    setTimeout(() => {
+        if (!popupShown && isUserEngaged()) {
+            showExitIntentPopup();
+        }
+    }, 30000);
+    
+    // Close popup handlers
+    if (closeButton) {
+        closeButton.addEventListener('click', closeExitIntentPopup);
+    }
+    
+    // Close on overlay click
+    if (popup) {
+        popup.addEventListener('click', function(e) {
+            if (e.target === popup) {
+                closeExitIntentPopup();
+            }
+        });
+    }
+    
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && popupShown) {
+            closeExitIntentPopup();
+        }
+    });
+}
+
+function showExitIntentPopup() {
+    const popup = document.getElementById('exit-intent-popup');
+    if (popup && !localStorage.getItem('newsletter_popup_dismissed')) {
+        popup.style.display = 'flex';
+        popupShown = true;
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeExitIntentPopup() {
+    const popup = document.getElementById('exit-intent-popup');
+    if (popup) {
+        popup.style.display = 'none';
+        popupShown = false;
+        document.body.style.overflow = '';
+        localStorage.setItem('newsletter_popup_dismissed', 'true');
+    }
+}
+
+function isUserEngaged() {
+    // Check if user has scrolled or spent time on page
+    const scrolled = window.pageYOffset > 100;
+    const timeSpent = Date.now() - performance.timing.navigationStart > 15000;
+    return scrolled || timeSpent;
+}
+
+// Track successful newsletter subscription
+function trackNewsletterSignup(source) {
+    localStorage.setItem('newsletter_subscribed', 'true');
+    
+    // Google Analytics event
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'newsletter_signup', {
+            'event_category': 'conversion',
+            'event_label': source
+        });
+    }
+}

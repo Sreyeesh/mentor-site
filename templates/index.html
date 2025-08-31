@@ -265,22 +265,78 @@
             <h2>Get in Touch</h2>
             <p class="contact-text">I personally reply within 24 hours.</p>
             
-            <!-- Formspree Form -->
+            <!-- Enhanced Formspree Form -->
             <form action="https://formspree.io/f/xvgbrkpo" method="POST" class="contact-form">
-                <div class="form-group">
-                    <label for="email">Your email:</label>
-                    <input type="email" id="email" name="email" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Your name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Your email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="message">Your message:</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
+                    <label for="focus_area">Primary focus area</label>
+                    <select id="focus_area" name="focus_area">
+                        <option value="">Select an area...</option>
+                        <option value="Animation workflow & storytelling">Animation workflow & storytelling</option>
+                        <option value="Game design fundamentals">Game design fundamentals</option>
+                        <option value="Career guidance in creative industries">Career guidance in creative industries</option>
+                        <option value="Portfolio and project feedback">Portfolio and project feedback</option>
+                        <option value="Other">Other</option>
+                    </select>
                 </div>
                 
-                <button type="submit" class="submit-button">Send</button>
+                <div class="form-group">
+                    <label for="experience_level">Your experience level</label>
+                    <select id="experience_level" name="experience_level">
+                        <option value="">Select your level...</option>
+                        <option value="Beginner">Beginner (0-1 years)</option>
+                        <option value="Intermediate">Intermediate (1-3 years)</option>
+                        <option value="Advanced">Advanced (3+ years)</option>
+                        <option value="Professional">Professional</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Your message *</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Tell me about your goals, current challenges, or what you'd like to work on. If you prefer WhatsApp or video call, please include your phone number in your message." required></textarea>
+                    <small class="form-help">Include your phone number if you prefer WhatsApp or video call communication.</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="preferred_contact">How would you like me to respond? *</label>
+                    <select id="preferred_contact" name="preferred_contact" required>
+                        <option value="">Choose your preferred method...</option>
+                        <option value="Email">Email - I'll send you a detailed response</option>
+                        <option value="WhatsApp">WhatsApp - Quick chat or voice message (include phone number above)</option>
+                        <option value="Video call">Video call - Schedule a free consultation (I'll send you my Calendly link)</option>
+                    </select>
+                    <small class="form-help">I'll use this method to get back to you with personalized guidance.</small>
+                </div>
+                
+                <button type="submit" class="submit-button">Send Message</button>
             </form>
             
-            <div class="contact-options">
+            <!-- Quick Schedule Option -->
+            <div class="quick-schedule">
+                <p class="quick-schedule-text">Or schedule a consultation directly:</p>
+                <a href="https://calendly.com/toucan-sg/consulting-link" target="_blank" rel="noopener noreferrer" class="schedule-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Schedule a Consultation
+                </a>
+            </div>
+            
+            <!-- <div class="contact-options">
                 <div class="contact-icons">
                     <a href="mailto:toucan.sg@gmail.com" class="contact-icon email-icon" aria-label="Send email">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -303,22 +359,35 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                         </svg>
-                        <span>WhatsApp</span>
+                        <span>WhatsApp</span> -->
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-
-
     <footer>
         <div class="wrap">
             <div class="footer-content">
-                <div class="footer-links">
-                    <!-- LinkedIn button removed -->
-                </div>
                 <p>&copy; {{ current_year }} Sreyeesh Garimella. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="mailto:toucan.sg@gmail.com" class="footer-social-link" aria-label="Send email">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        Email
+                    </a>
+                    
+                    <a href="https://www.linkedin.com/in/sreyeeshgarimella" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Connect on LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                        LinkedIn
+                    </a>
+                </div>
             </div>
         </div>
     </footer>

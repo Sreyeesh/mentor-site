@@ -13,10 +13,7 @@ if BASE_PATH and not BASE_PATH.startswith('/'):
     BASE_PATH = '/' + BASE_PATH
 
 # Fix static file serving - ensure static files are always served from /static
-if BASE_PATH:
-    app = Flask(__name__, static_url_path=f"{BASE_PATH}/static")
-else:
-    app = Flask(__name__, static_url_path='/static')
+app = Flask(__name__)
 
 # Site settings from environment variables
 SITE_CONFIG = {

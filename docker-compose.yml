@@ -7,9 +7,6 @@ services:
     ports:
       # Map host port 5000 to container port 80 (nginx)
       - "5000:80"
-    volumes:
-      # Mount build directory for inspection
-      - ./build:/app/build:ro
     environment:
       - NODE_ENV=production
     restart: unless-stopped

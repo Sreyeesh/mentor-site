@@ -1004,3 +1004,114 @@ footer {
 .linkedin-link:hover {
     background: #005885;
 }
+
+/* Lead Capture Form Styles */
+
+.contact-form-section {
+    padding: 80px 0;
+    background: var(--bg-color);
+}
+
+.form-subtitle {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background: var(--bg-color);
+    color: var(--text-primary);
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.submit-button {
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background: var(--accent-hover);
+}
+
+.thank-you-section {
+    padding: 120px 0;
+    text-align: center;
+}
+
+.thank-you-content h1 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.thank-you-content p {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.thank-you-actions {
+    margin-top: 40px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.secondary-button {
+    padding: 12px 24px;
+    background: transparent;
+    color: var(--accent-color);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+    background: var(--accent-color);
+    color: white;
+}

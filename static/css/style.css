@@ -616,10 +616,16 @@ section h2 {
 }
 
 /* Contact Section */
+.contact {
+    padding: 80px 0;
+    background: var(--bg-primary);
+}
+
 .contact-text {
     text-align: center;
     font-size: 1.2rem;
     margin-bottom: 40px;
+    color: var(--text-secondary);
 }
 
 .contact-options {
@@ -750,12 +756,6 @@ section h2 {
     }
 }
 
-/* Remove old contact form styles */
-.contact-form,
-.form-group,
-.submit-button {
-    display: none;
-}
 
 /* Footer */
 footer {
@@ -929,7 +929,7 @@ footer {
     }
 }
 
-/* Dark mode toggle styles */
+/* Dark mode toggle styles - CLEANED UP */
 .nav-controls {
     display: flex;
     align-items: center;
@@ -947,22 +947,41 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 40px;
+    height: 40px;
+    position: relative;
 }
 
 .dark-mode-toggle:hover {
     background-color: var(--shadow-color);
 }
 
+.dark-mode-toggle .sun-icon,
 .dark-mode-toggle .moon-icon {
-    display: none;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
 }
 
+.dark-mode-toggle .sun-icon {
+    opacity: 1;
+}
+
+.dark-mode-toggle .moon-icon {
+    opacity: 0;
+}
+
+/* DARK MODE - SHOW MOON ONLY */
 [data-theme="dark"] .dark-mode-toggle .sun-icon {
-    display: none;
+    opacity: 0;
 }
 
 [data-theme="dark"] .dark-mode-toggle .moon-icon {
-    display: block;
+    opacity: 1;
 }
 
 /* Social Links */
@@ -1019,13 +1038,36 @@ footer {
     font-size: 1.1rem;
 }
 
+/* COMPLETE FIX FOR CONTACT FORM AND DARK MODE TOGGLE */
+
+/* Remove any conflicting display:none rules */
+.contact-form,
+.form-group,
+.submit-button {
+    display: block !important;
+}
+
+/* Enhanced Contact Form Styles - COMPLETE FIX */
 .contact-form {
     max-width: 600px;
-    margin: 0 auto;
-    background: var(--card-bg);
+    margin: 0 auto 40px auto;
+    background: var(--card-bg, #ffffff);
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px var(--shadow-color, rgba(0, 0, 0, 0.1));
+    border: 1px solid var(--border-color, #e1e5e9);
+    transition: all 0.3s ease;
+}
+
+.contact-form:hover {
+    box-shadow: 0 12px 48px var(--shadow-color, rgba(0, 0, 0, 0.15));
+    transform: translateY(-2px);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
 }
 
 .form-group {
@@ -1035,85 +1077,356 @@ footer {
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    font-weight: 500;
-    color: var(--text-primary);
+    font-weight: 600;
+    color: var(--text-primary, #333333);
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 12px 16px;
-    border: 2px solid var(--border-color);
+    padding: 14px 16px;
+    border: 2px solid var(--border-color, #e1e5e9);
     border-radius: 8px;
     font-size: 16px;
-    background: var(--bg-color);
-    color: var(--text-primary);
-    transition: border-color 0.3s ease;
+    background: var(--bg-primary, #ffffff);
+    color: var(--text-primary, #333333);
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--accent-color);
+    border-color: var(--accent-primary, #667eea);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-secondary, #666666);
+    opacity: 0.7;
+}
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
 }
 
 .submit-button {
     width: 100%;
     padding: 16px 24px;
-    background: var(--accent-color);
+    background: linear-gradient(135deg, var(--accent-primary, #667eea) 0%, var(--accent-secondary, #764ba2) 100%);
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.submit-button:hover::before {
+    left: 100%;
 }
 
 .submit-button:hover {
-    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
 }
 
-.thank-you-section {
-    padding: 120px 0;
+.submit-button:active {
+    transform: translateY(0);
+}
+
+/* Form help text styling */
+.form-help {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: var(--text-secondary, #666666);
+    font-style: italic;
+    line-height: 1.4;
+}
+
+/* Quick Schedule Section */
+.quick-schedule {
     text-align: center;
+    margin: 40px 0;
+    padding: 30px;
+    background: var(--bg-secondary, #f8f9fa);
+    border-radius: 12px;
+    border: 1px solid var(--border-color, #e1e5e9);
 }
 
-.thank-you-content h1 {
+.quick-schedule-text {
     margin-bottom: 20px;
+    color: var(--text-secondary, #666666);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.schedule-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.schedule-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    color: white;
+}
+
+.schedule-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* DARK MODE TOGGLE - COMPLETE FIX */
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    color: var(--text-primary, #333333);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    position: relative;
+}
+
+.dark-mode-toggle:hover {
+    background-color: var(--shadow-color, rgba(0, 0, 0, 0.1));
+}
+
+/* FIXED ICON POSITIONING */
+.dark-mode-toggle .sun-icon,
+.dark-mode-toggle .moon-icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+/* LIGHT MODE - SHOW SUN ONLY */
+.dark-mode-toggle .sun-icon {
+    opacity: 1;
+}
+
+.dark-mode-toggle .moon-icon {
+    opacity: 0;
+}
+
+/* DARK MODE - SHOW MOON ONLY */
+[data-theme="dark"] .dark-mode-toggle .sun-icon {
+    opacity: 0;
+}
+
+[data-theme="dark"] .dark-mode-toggle .moon-icon {
+    opacity: 1;
+}
+
+/* Additional dark mode styles */
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select,
+[data-theme="dark"] .form-group textarea {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
     color: var(--text-primary);
 }
 
-.thank-you-content p {
-    margin-bottom: 16px;
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group select:focus,
+[data-theme="dark"] .form-group textarea:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(139, 158, 255, 0.1);
+}
+
+[data-theme="dark"] .form-group input::placeholder,
+[data-theme="dark"] .form-group textarea::placeholder {
     color: var(--text-secondary);
-    font-size: 1.1rem;
 }
 
-.thank-you-actions {
-    margin-top: 40px;
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
+[data-theme="dark"] .quick-schedule {
+    background: var(--card-bg);
+    border-color: var(--border-color);
 }
 
-.secondary-button {
-    padding: 12px 24px;
-    background: transparent;
-    color: var(--accent-color);
-    border: 2px solid var(--accent-color);
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.secondary-button:hover {
-    background: var(--accent-color);
+[data-theme="dark"] .submit-button {
+    background: var(--accent-primary);
     color: white;
+}
+
+[data-theme="dark"] .submit-button:hover {
+    background: var(--accent-secondary);
+}
+
+[data-theme="dark"] .footer-social-link {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .footer-social-link:hover {
+    color: var(--accent-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact-form {
+        padding: 30px 20px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .quick-schedule {
+        padding: 20px;
+    }
+    
+    .nav-controls {
+        order: -1;
+        margin-right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-form {
+        padding: 25px 15px;
+    }
+    
+    .form-group label {
+        font-size: 0.9rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 12px;
+    }
+    
+    .dark-mode-toggle {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .dark-mode-toggle .sun-icon,
+    .dark-mode-toggle .moon-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Form validation styles */
+.form-group input:invalid,
+.form-group textarea:invalid {
+    border-color: #ef4444;
+}
+
+.form-group input:valid,
+.form-group textarea:valid {
+    border-color: #10b981;
+}
+
+/* Loading state for submit button */
+.submit-button.loading {
+    background: var(--text-secondary);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.submit-button.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Success message styles */
+.form-success {
+    background: #10b981;
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Error message styles */
+.form-error {
+    background: #ef4444;
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
 }
 
 

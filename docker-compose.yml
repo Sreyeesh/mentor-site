@@ -1,12 +1,10 @@
-version: '3.8'
-
 services:
   mentor-site:
     build: .
     container_name: mentor-site-prod
     ports:
-      # Map host port 5000 to container port 80 (nginx)
-      - "5000:80"
+      # Map host port 3000 to container port 80 (nginx)
+      - "3000:80"
     environment:
       - NODE_ENV=production
     restart: unless-stopped
@@ -22,7 +20,7 @@ services:
     build: .
     container_name: mentor-site-dev
     ports:
-      - "5001:80"  # Different port for dev
+      - "3001:80"  # Different port for dev
     volumes:
       - ./:/app
       - ./build:/app/build

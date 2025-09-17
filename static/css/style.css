@@ -194,10 +194,10 @@ section.fade-in.visible {
     transform: rotate(45deg) translate(-5px, -6px);
 }
 
-/* Hero Section - Dark mode compatible */
+/* Hero Section - Updated to match design */
 .hero {
     padding: 120px 0 80px;
-    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    background: #6A4C93; /* Solid purple background as shown in image */
     color: white;
     min-height: 100vh;
     display: flex;
@@ -206,9 +206,9 @@ section.fade-in.visible {
     transition: background 0.3s ease;
 }
 
-/* Dark mode hero gradient */
+/* Dark mode hero - keep purple for consistency */
 [data-theme="dark"] .hero {
-    background: linear-gradient(135deg, #2d1b69 0%, #1a1033 100%);
+    background: #6A4C93;
 }
 
 .hero-grid {
@@ -233,11 +233,13 @@ section.fade-in.visible {
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
+/* Enhanced Hero Section */
 .hero-content h1 {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 20px;
     line-height: 1.2;
+    color: white;
 }
 
 .hero-subtitle {
@@ -245,6 +247,43 @@ section.fade-in.visible {
     font-weight: 300;
     margin-bottom: 40px;
     opacity: 0.9;
+}
+
+.credits-highlight {
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.credits-highlight p {
+    margin: 0;
+    font-size: 1rem;
+    color: white;
+}
+
+/* Urgency Banner - Coral/Orange as shown in image */
+.urgency-text {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: #F46036; /* Coral/orange color from image */
+    color: white;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 0.9rem;
+    animation: pulse 2s infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
 }
 
 /* CTA Button - Dark mode compatible */
@@ -263,6 +302,66 @@ section.fade-in.visible {
     transform: translateY(-2px);
     background: var(--text-primary);
     color: var(--bg-primary);
+}
+
+/* Enhanced CTA Buttons - Professional Gradient Design */
+.primary-cta {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 20px 40px;
+    border: none;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.primary-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.primary-cta:hover::before {
+    left: 100%;
+}
+
+.primary-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+}
+
+/* Secondary CTA Button - Clean White Background */
+.cta-button.secondary {
+    background: white;
+    border: 2px solid #9B88C7;
+    color: #9B88C7;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 20px 40px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button.secondary:hover {
+    background: #f8f9fa;
+    border-color: #8B7CB8;
+    color: #8B7CB8;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(155, 136, 199, 0.3);
 }
 
 /* Dark mode CTA button */
@@ -312,6 +411,19 @@ section h2 {
     text-align: center;
     font-size: 1.2rem;
     line-height: 1.8;
+}
+
+.current-status {
+    margin-top: 20px;
+    padding: 15px;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    border-left: 4px solid #10b981;
+}
+
+.current-status p {
+    margin: 0;
+    font-weight: 500;
 }
 
 /* Companies Section - Timeline Style */
@@ -646,116 +758,6 @@ section h2 {
 .email-link:hover {
     text-decoration: underline;
 }
-
-/* Contact Icons - Improved */
-.contact-icons {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin: 50px 0;
-    flex-wrap: wrap;
-}
-
-.contact-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    padding: 32px 24px;
-    background: var(--card-bg);
-    color: var(--text-primary);
-    text-decoration: none;
-    border-radius: 16px;
-    box-shadow: 0 6px 20px var(--shadow-color);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    min-width: 140px;
-    border: 2px solid transparent;
-    position: relative;
-    overflow: hidden;
-}
-
-.contact-icon::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    transition: left 0.5s;
-}
-
-.contact-icon:hover::before {
-    left: 100%;
-}
-
-.contact-icon:hover {
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 12px 32px var(--shadow-color);
-    border-color: var(--accent-primary);
-}
-
-.contact-icon svg {
-    width: 36px;
-    height: 36px;
-    transition: transform 0.3s ease;
-}
-
-.contact-icon:hover svg {
-    transform: scale(1.1);
-}
-
-.contact-icon span {
-    font-weight: 600;
-    font-size: 1rem;
-    letter-spacing: 0.5px;
-}
-
-/* Icon-specific colors and effects */
-.email-icon:hover {
-    color: #ea4335;
-    border-color: #ea4335;
-    box-shadow: 0 12px 32px rgba(234, 67, 53, 0.3);
-}
-
-.linkedin-icon:hover {
-    color: #0077b5;
-    border-color: #0077b5;
-    box-shadow: 0 12px 32px rgba(0, 119, 181, 0.3);
-}
-
-.whatsapp-icon:hover {
-    color: #25d366;
-    border-color: #25d366;
-    box-shadow: 0 12px 32px rgba(37, 211, 102, 0.3);
-}
-
-/* Responsive design for contact icons */
-@media (max-width: 768px) {
-    .contact-icons {
-        gap: 24px;
-        margin: 40px 0;
-    }
-    
-    .contact-icon {
-        padding: 24px 20px;
-        min-width: 120px;
-    }
-    
-    .contact-icon svg {
-        width: 32px;
-        height: 32px;
-    }
-    
-    .contact-icon span {
-        font-size: 0.9rem;
-    }
-    
-    .contact-icon:hover {
-        transform: translateY(-4px) scale(1.02);
-    }
-}
-
 
 /* Footer */
 footer {
@@ -1196,30 +1198,48 @@ footer {
     font-weight: 500;
 }
 
+/* 3. Update Schedule Button - Muted Professional Green */
 .schedule-button {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     padding: 16px 24px;
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background: linear-gradient(135deg, #059669, #047857); /* More muted professional green */
     color: white;
     text-decoration: none;
     border-radius: 8px;
     font-weight: 600;
     font-size: 16px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
 }
 
 .schedule-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
     color: white;
 }
 
-.schedule-button svg {
-    width: 20px;
-    height: 20px;
+/* Guarantee Section */
+.guarantee {
+    text-align: center;
+    margin-top: 40px;
+    padding: 30px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 2px solid var(--accent-primary);
+}
+
+.guarantee h3 {
+    color: var(--accent-primary);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.guarantee p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin: 0;
 }
 
 /* DARK MODE TOGGLE - COMPLETE FIX */
@@ -1341,6 +1361,15 @@ footer {
         order: -1;
         margin-right: 15px;
     }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .urgency-text {
+        font-size: 0.8rem;
+        padding: 10px 15px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1367,6 +1396,18 @@ footer {
     .dark-mode-toggle .moon-icon {
         width: 18px;
         height: 18px;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .credits-highlight {
+        padding: 12px;
+    }
+    
+    .guarantee {
+        padding: 20px;
     }
 }
 
@@ -1429,8 +1470,6 @@ footer {
     font-weight: 500;
 }
 
-
-
 /* Hero Section Updates */
 .hero-actions {
     display: flex;
@@ -1438,16 +1477,7 @@ footer {
     margin-top: 1.5rem;
 }
 
-.cta-button.secondary {
-    background: transparent;
-    border: 2px solid var(--accent-primary);
-    color: var(--accent-primary);
-}
-
-.cta-button.secondary:hover {
-    background: var(--accent-primary);
-    color: white;
-}
+/* Removed duplicate CSS - using the main .cta-button.secondary rules above */
 
 /* Exit Intent Popup */
 .popup-overlay {
@@ -1569,4 +1599,130 @@ footer {
     }
 }
 
+/* Company Logos Section - Carousel */
+.company-logos {
+    background: var(--bg-primary);
+    padding: 60px 0;
+    border-top: 1px solid var(--border-color);
+    overflow: hidden;
+}
 
+.company-logos h3 {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 40px;
+    letter-spacing: 0.5px;
+}
+
+.logos-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    mask: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.logos-track {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    animation: scroll 30s linear infinite;
+    width: max-content;
+}
+
+.logos-track:hover {
+    animation-play-state: paused;
+}
+
+.company-logo {
+    height: 60px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(0.7);
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.company-logo:hover {
+    filter: grayscale(0%) opacity(1);
+    transform: scale(1.05);
+}
+
+/* Dark mode logo adjustments */
+[data-theme="dark"] .company-logo {
+    filter: grayscale(100%) opacity(0.6) brightness(1.2);
+}
+
+[data-theme="dark"] .company-logo:hover {
+    filter: grayscale(0%) opacity(1) brightness(1);
+}
+
+/* Carousel Animation */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Responsive design for carousel */
+@media (max-width: 768px) {
+    .logos-track {
+        gap: 40px;
+        animation-duration: 25s;
+    }
+    
+    .company-logo {
+        height: 50px;
+        max-width: 150px;
+    }
+    
+    .company-logos {
+        padding: 40px 0;
+    }
+    
+    .logos-carousel {
+        mask: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+        -webkit-mask: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    }
+}
+
+@media (max-width: 480px) {
+    .logos-track {
+        gap: 30px;
+        animation-duration: 20s;
+    }
+    
+    .company-logo {
+        height: 40px;
+        max-width: 120px;
+    }
+    
+    .logos-carousel {
+        mask: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+        -webkit-mask: linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+    }
+}
+
+/* Pause animation on reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .logos-track {
+        animation: none;
+    }
+    
+    .logos-carousel {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .logos-carousel::-webkit-scrollbar {
+        display: none;
+    }
+}

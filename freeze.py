@@ -1,6 +1,5 @@
 import os
 import shutil
-import re
 from app import app
 
 if __name__ == '__main__':
@@ -21,7 +20,7 @@ if __name__ == '__main__':
     # Generate HTML files using Flask test client
     with app.test_client() as client:
         # Routes to generate
-        routes = ['/', '/contact', '/thank-you']
+        routes = ['/']
         
         for route in routes:
             try:
@@ -33,10 +32,6 @@ if __name__ == '__main__':
                     continue
                 
                 html_content = response.data.decode('utf-8')
-                
-                # Debug: Check if we got the right content
-                if route == '/contact' and 'contact-form-section' not in html_content:
-                    print(f"❌ Warning: {route} doesn't contain contact form")
                 
                 # For custom domains, static files should be served from root paths
                 # No need to modify the static file paths - they should remain as /static/

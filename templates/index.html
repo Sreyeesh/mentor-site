@@ -195,7 +195,9 @@
             </p>
             
             <!-- Contact Form -->
-            <form class="contact-form" action="{{ url_for('contact') }}" method="POST">
+            <form class="contact-form" id="contact-form" action="https://formspree.io/f/xvgbrkpo" method="POST">
+                <input type="hidden" name="form-name" value="mentor-site-contact">
+                <input type="text" id="website" name="website" class="honeypot-input" tabindex="-1" autocomplete="off" aria-hidden="true">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name">Name *</label>
@@ -227,6 +229,14 @@
                 </div>
                 
                 <button type="submit" class="submit-button">Get My Free Strategy Call</button>
+                <p class="form-disclaimer">By submitting, you'll receive a reply within 24 hours with next steps.</p>
+
+                <div class="form-status form-status--success" id="contact-success" hidden>
+                    <strong>Thanks!</strong> Your message is on its way. Check your inbox for a confirmation shortly.
+                </div>
+                <div class="form-status form-status--error" id="contact-error" hidden>
+                    Something went wrong sending your message. Please try again or email <a href="mailto:toucan.sg@gmail.com">toucan.sg@gmail.com</a>.
+                </div>
             </form>
             
             <!-- Quick Schedule Option -->

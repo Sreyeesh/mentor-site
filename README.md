@@ -76,7 +76,7 @@ Create a `.env` file for local development:
 ```env
 SITE_NAME=Sreyeesh Garimella
 SITE_EMAIL=toucan.sg@gmail.com
-SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/60min
+SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link
 BASE_PATH=/mentor-site
 FLASK_DEBUG=True
 ```

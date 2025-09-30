@@ -92,5 +92,49 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // ===== CONTACT FORM HANDLER =====
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        const submitButton = contactForm.querySelector('.submit-button');
+        const successMessage = document.getElementById('contact-success');
+        const errorMessage = document.getElementById('contact-error');
+        const defaultButtonText = submitButton ? submitButton.textContent : '';
+
+        contactForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            if (successMessage) successMessage.hidden = true;
+            if (errorMessage) errorMessage.hidden = true;
+
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sending...';
+            }
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    contactForm.reset();
+                    if (successMessage) successMessage.hidden = false;
+                } else {
+                    throw new Error(`Form submission failed with status ${response.status}`);
+                }
+            } catch (error) {
+                console.error('❌ Contact form submission error:', error);
+                if (errorMessage) errorMessage.hidden = false;
+            } finally {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = defaultButtonText;
+                }
+            }
+        });
+    }
+
     console.log('🎉 All functionality initialized!');
 });

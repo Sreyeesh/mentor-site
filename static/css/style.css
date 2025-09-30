@@ -1060,6 +1060,7 @@ footer {
     box-shadow: 0 8px 32px var(--shadow-color, rgba(0, 0, 0, 0.1));
     border: 1px solid var(--border-color, #e1e5e9);
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .contact-form:hover {
@@ -1123,6 +1124,37 @@ footer {
     background-repeat: no-repeat;
     background-size: 16px;
     padding-right: 40px;
+}
+
+.honeypot-input {
+    display: none !important;
+}
+
+.form-disclaimer {
+    margin-top: 16px;
+    font-size: 0.9rem;
+    color: var(--text-secondary, #666666);
+    text-align: center;
+}
+
+.form-status {
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.form-status--success {
+    background: rgba(76, 175, 80, 0.12);
+    color: #245b2a;
+    border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.form-status--error {
+    background: rgba(244, 67, 54, 0.12);
+    color: #902621;
+    border: 1px solid rgba(244, 67, 54, 0.3);
 }
 
 .form-group textarea {

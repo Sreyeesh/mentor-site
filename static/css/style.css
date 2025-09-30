@@ -784,6 +784,7 @@ footer {
     padding: 8px 16px;
     border-radius: 6px;
     transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
 }
 
 .footer-social-link:hover {

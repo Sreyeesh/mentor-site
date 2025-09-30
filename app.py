@@ -22,7 +22,8 @@ SITE_CONFIG = {
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
     'calendly_link': os.getenv('SITE_CALENDLY_LINK', 'https://calendly.com/toucan-sg/60min'),
     'meta_description': os.getenv('SITE_META_DESCRIPTION', 'One-on-one mentoring and coaching in animation and game development — practical guidance for your projects and career.'),
-    'focus_areas': os.getenv('SITE_FOCUS_AREAS', 'Animation workflow & storytelling,Game design fundamentals,Career guidance in creative industries,Portfolio and project feedback').split(',')
+    'focus_areas': os.getenv('SITE_FOCUS_AREAS', 'Animation workflow & storytelling,Game design fundamentals,Career guidance in creative industries,Portfolio and project feedback').split(','),
+    'asset_version': os.getenv('ASSET_VERSION', '1')
 }
 
 @app.route('/')

@@ -232,7 +232,7 @@
             <!-- Quick Schedule Option -->
             <div class="quick-schedule">
                 <p class="quick-schedule-text">Prefer to schedule directly?</p>
-                <a href="https://calendly.com/toucan-sg/60min" class="schedule-button" target="_blank">
+                <a href="https://calendly.com/toucan-sg/consulting-link" class="schedule-button" target="_blank">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                         <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -253,27 +253,36 @@
 
     <!-- Footer -->
     <footer>
-        <div class="wrap">
-            <div class="footer-links">
-                <a href="mailto:toucan.sg@gmail.com" class="footer-social-link">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                    toucan.sg@gmail.com
-                </a>
-                <a href="www.linkedin.com/in/sreyeeshgarimella" class="footer-social-link" target="_blank">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                        <rect x="2" y="9" width="4" height="12"></rect>
-                        <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
-                    LinkedIn
-                </a>
-            </div>
-            <p>&copy; {{ current_year }} Sreyeesh Garimella. All rights reserved.</p>
+    <div class="wrap">
+        <div class="footer-links">
+            <a href="mailto:toucan.sg@gmail.com" class="footer-social-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 
+                             1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 
+                             2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                toucan.sg@gmail.com
+            </a>
+            <a href="https://www.linkedin.com/in/sreyeeshgarimella" 
+               class="footer-social-link" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 
+                             0 0 0-2-2 2 2 0 0 0-2 
+                             2v7h-4v-7a6 6 0 0 1 
+                             6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+                LinkedIn
+            </a>
         </div>
-    </footer>
+        <p>&copy; {{ current_year }} Sreyeesh Garimella. All rights reserved.</p>
+    </div>
+</footer>
+
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>

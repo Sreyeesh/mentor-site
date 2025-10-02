@@ -101,6 +101,12 @@ mypy .
 python freeze.py
 ```
 
+### Writing Blog Posts
+- Draft a new Markdown file in `content/posts/` with front matter (`title`, `slug`, `date`, optional `tags`).
+- Run `python freeze.py` to rebuild `build/blog/` pages.
+- Commit the Markdown and regenerated `build/` directory (or let your deployment pipeline run the freeze step).
+- Comments and likes are handled via Giscus—set the repository details in `templates/blog/detail.html` when you are ready.
+
 ## 🚀 Deployment
 
 ### Local Docker Deployment

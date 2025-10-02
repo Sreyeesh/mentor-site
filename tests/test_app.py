@@ -1,5 +1,6 @@
 import pytest
 from app import app
+from freeze import load_posts
 
 @pytest.fixture
 def client():
@@ -31,3 +32,11 @@ def test_404_page(client):
     response = client.get('/nonexistent-page')
     assert response.status_code == 404
 # Test fix
+
+
+def test_markdown_posts_available():
+    """Ensure at least one Markdown post is discoverable for the blog."""
+    posts = load_posts()
+    assert posts, "Expected at least one blog post in content/posts/"
+    slugs = {post['slug'] for post in posts}
+    assert 'welcome-to-the-mentor-blog' in slugs

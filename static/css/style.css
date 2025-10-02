@@ -2248,9 +2248,17 @@ footer {
 }
 
 .blog-share a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
     font-weight: 600;
     color: var(--accent-primary, #667eea);
     text-decoration: none;
+}
+
+.blog-share a svg {
+    width: 16px;
+    height: 16px;
 }
 
 .blog-share a:hover {

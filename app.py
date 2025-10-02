@@ -19,6 +19,7 @@ SITE_CONFIG = {
     'name': os.getenv('SITE_NAME', 'Sreyeesh Garimella'),
     'tagline': os.getenv('SITE_TAGLINE', 'Mentoring & Coaching in Animation and Video Game Development'),
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
+    'linkedin_url': os.getenv('SITE_LINKEDIN_URL', 'https://www.linkedin.com/in/sreyeeshgarimella'),
     'calendly_link': os.getenv('SITE_CALENDLY_LINK', 'https://calendly.com/toucan-sg/60min'),
     'meta_description': os.getenv('SITE_META_DESCRIPTION', 'One-on-one mentoring and coaching in animation and game development — practical guidance for your projects and career.'),
     'focus_areas': os.getenv('SITE_FOCUS_AREAS', 'Animation workflow & storytelling,Game design fundamentals,Career guidance in creative industries,Portfolio and project feedback').split(','),

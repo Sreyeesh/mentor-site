@@ -1,0 +1,97 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ post.title }} — {{ config.name }} Blog{% endblock %}
+{% block meta_description %}{{ post.description or post.excerpt }}{% endblock %}
+
+{% block head_extra %}
+    <link rel="canonical" href="{{ canonical_url }}">
+{% endblock %}
+
+{% block content %}
+<article class="blog-post">
+    <header class="blog-post-header">
+        <p class="blog-post-date">{{ post.date_display }} • {{ post.reading_time }} min read</p>
+        <h1>{{ post.title }}</h1>
+        {% if post.tags %}
+            <ul class="blog-post-tags">
+                {% for tag in post.tags %}
+                    <li>{{ tag }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </header>
+
+    {% if post.hero_image %}
+        <figure class="blog-post-hero">
+            <img src="{{ url_for('static', filename=post.hero_image) }}" alt="" loading="lazy">
+        </figure>
+    {% endif %}
+
+    <div class="blog-post-body">
+        {{ post.content | safe }}
+    </div>
+
+    <footer class="blog-post-footer">
+        <div class="blog-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text={{ post.title | urlencode }}&url={{ canonical_url | urlencode }}" target="_blank" rel="noreferrer noopener">X (Twitter)</a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ canonical_url | urlencode }}" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+        </div>
+        <a class="back-to-blog" href="{{ blog_index_href }}">← Back to all posts</a>
+    </footer>
+</article>
+
+<section class="blog-comments" aria-labelledby="comments-title">
+    <h2 id="comments-title">Join the discussion</h2>
+    <script src="https://giscus.app/client.js"
+            data-repo=""
+            data-repo-id=""
+            data-category=""
+            data-category-id=""
+            data-mapping="pathname"
+            data-strict="1"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="light"
+            data-lang="en"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <p class="giscus-placeholder">Configure Giscus repository details to enable comments.</p>
+</section>
+
+<aside class="blog-related">
+    <h2>More to explore</h2>
+    <ul>
+        {% set related = (posts | selectattr('slug', 'ne', post.slug) | list)[:3] %}
+        {% if related %}
+            {% for other in related %}
+                <li>
+                    <a href="{{ blog_index_href.replace('index.html', '') }}{{ other.slug }}/">
+                        <span class="related-title">{{ other.title }}</span>
+                        <span class="related-meta">{{ other.date_display }} • {{ other.reading_time }} min read</span>
+                    </a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No other posts yet.</li>
+        {% endif %}
+    </ul>
+</aside>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const storedTheme = localStorage.getItem('theme');
+            const giscus = document.querySelector('script[src*="giscus"]');
+            if (giscus && storedTheme === 'dark') {
+                giscus.setAttribute('data-theme', 'dark');
+            } else if (giscus && prefersDark && !storedTheme) {
+                giscus.setAttribute('data-theme', 'dark');
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ config.name }} Blog{% endblock %}
+
+{% block content %}
+{% set featured = posts[0] if posts else None %}
+{% set more_posts = posts[1:] if posts|length > 1 else [] %}
+
+<section class="blog-hero gradient">
+    <div class="blog-hero-copy">
+        <h1>Your creative career playbook</h1>
+        <p class="blog-subtitle">Field notes, frameworks, and real-world lessons from mentoring animators and game designers across the globe.</p>
+    </div>
+</section>
+
+{% if featured %}
+<section class="blog-featured">
+    <article class="blog-featured-card">
+        {% if featured.hero_image %}
+            <div class="blog-featured-media">
+                <img src="{{ url_for('static', filename=featured.hero_image) }}" alt="" loading="lazy">
+            </div>
+        {% endif %}
+        <div class="blog-featured-body">
+            <p class="blog-meta">{{ featured.date_display }} • {{ featured.reading_time }} min read</p>
+            <h2><a href="{{ blog_index_href.replace('index.html', '') }}{{ featured.slug }}/">{{ featured.title }}</a></h2>
+            <p class="blog-featured-excerpt">{{ featured.excerpt }}</p>
+            {% if featured.tags %}
+                <ul class="blog-tag-list">
+                    {% for tag in featured.tags %}
+                        <li>{{ tag }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <a class="blog-featured-link" href="{{ blog_index_href.replace('index.html', '') }}{{ featured.slug }}/">Read the full story</a>
+        </div>
+    </article>
+</section>
+{% endif %}
+
+{% if more_posts %}
+<section class="blog-post-list">
+    <header class="blog-section-heading">
+        <h2>Latest posts</h2>
+        <p>Grab a coffee and dig into the newest ideas.</p>
+    </header>
+    <ul class="blog-card-grid">
+        {% for post in more_posts %}
+            <li class="blog-card">
+                <article>
+                    {% if post.hero_image %}
+                        <div class="blog-card-image">
+                            <img src="{{ url_for('static', filename=post.hero_image) }}" alt="" loading="lazy">
+                        </div>
+                    {% endif %}
+                    <div class="blog-card-body">
+                        <p class="blog-card-date">{{ post.date_display }} • {{ post.reading_time }} min read</p>
+                        <h3><a href="{{ blog_index_href.replace('index.html', '') }}{{ post.slug }}/">{{ post.title }}</a></h3>
+                        <p class="blog-card-excerpt">{{ post.excerpt }}</p>
+                        <a class="blog-card-read-more" href="{{ blog_index_href.replace('index.html', '') }}{{ post.slug }}/">Read article →</a>
+                    </div>
+                </article>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% if not posts %}
+    <p class="blog-empty">No posts yet — check back soon!</p>
+{% endif %}
+{% endblock %}

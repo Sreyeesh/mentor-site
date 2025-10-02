@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ config.name }} Blog{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Insights from {{ config.name }} on animation, game development, and mentoring.{% endblock %}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="blog-layout">
+    <nav class="navbar blog-nav">
+        <div class="wrap">
+            <div class="nav-content">
+                <div class="nav-brand">
+                    <a href="{{ home_href }}" class="nav-name-link">{{ config.name }}</a>
+                </div>
+                <div class="nav-links" id="blog-nav-links">
+                    <a href="{{ blog_index_href }}">Blog Home</a>
+                    <a href="{{ home_href }}#focus">Services</a>
+                    <a href="{{ home_href }}#contact">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="blog-main" id="top">
+        <div class="wrap">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="blog-footer">
+        <div class="wrap">
+            <p>&copy; {{ current_year }} {{ config.name }}. All rights reserved.</p>
+            <p><a href="mailto:{{ config.email }}">{{ config.email }}</a></p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js', v=config.asset_version) }}" defer></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

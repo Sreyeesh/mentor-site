@@ -23,7 +23,22 @@ SITE_CONFIG = {
     'calendly_link': os.getenv('SITE_CALENDLY_LINK', 'https://calendly.com/toucan-sg/60min'),
     'meta_description': os.getenv('SITE_META_DESCRIPTION', 'One-on-one mentoring and coaching in animation and game development — practical guidance for your projects and career.'),
     'focus_areas': os.getenv('SITE_FOCUS_AREAS', 'Animation workflow & storytelling,Game design fundamentals,Career guidance in creative industries,Portfolio and project feedback').split(','),
-    'asset_version': os.getenv('ASSET_VERSION', '1')
+    'asset_version': os.getenv('ASSET_VERSION', '1'),
+    'giscus': {
+        'repo': os.getenv('GISCUS_REPO', ''),
+        'repo_id': os.getenv('GISCUS_REPO_ID', ''),
+        'category': os.getenv('GISCUS_CATEGORY', ''),
+        'category_id': os.getenv('GISCUS_CATEGORY_ID', ''),
+        'mapping': os.getenv('GISCUS_MAPPING', 'pathname'),
+        'strict': os.getenv('GISCUS_STRICT', '1'),
+        'reactions_enabled': os.getenv('GISCUS_REACTIONS_ENABLED', '1'),
+        'emit_metadata': os.getenv('GISCUS_EMIT_METADATA', '0'),
+        'input_position': os.getenv('GISCUS_INPUT_POSITION', 'bottom'),
+        'lang': os.getenv('GISCUS_LANG', 'en'),
+        'theme_light': os.getenv('GISCUS_THEME_LIGHT', 'light'),
+        'theme_dark': os.getenv('GISCUS_THEME_DARK', 'dark'),
+        'loading': os.getenv('GISCUS_LOADING', 'lazy'),
+    },
 }
 
 @app.route('/')

@@ -1,5 +1,7 @@
 {% extends 'blog/base.html' %}
 
+{% set giscus = config.giscus if config.giscus is defined else {} %}
+
 {% block title %}{{ post.title }} — {{ config.name }} Blog{% endblock %}
 {% block meta_description %}{{ post.description or post.excerpt }}{% endblock %}
 
@@ -50,22 +52,29 @@
 
 <section class="blog-comments" aria-labelledby="comments-title">
     <h2 id="comments-title">Join the discussion</h2>
-    <script src="https://giscus.app/client.js"
-            data-repo=""
-            data-repo-id=""
-            data-category=""
-            data-category-id=""
-            data-mapping="pathname"
-            data-strict="1"
-            data-reactions-enabled="1"
-            data-emit-metadata="0"
-            data-input-position="bottom"
-            data-theme="light"
-            data-lang="en"
-            crossorigin="anonymous"
-            async>
-    </script>
-    <p class="giscus-placeholder">Configure Giscus repository details to enable comments.</p>
+    {% if giscus.repo and giscus.repo_id and giscus.category and giscus.category_id %}
+        <div class="giscus"></div>
+        <script id="giscus-script"
+                src="https://giscus.app/client.js"
+                data-repo="{{ giscus.repo }}"
+                data-repo-id="{{ giscus.repo_id }}"
+                data-category="{{ giscus.category }}"
+                data-category-id="{{ giscus.category_id }}"
+                data-mapping="{{ giscus.mapping }}"
+                data-strict="{{ giscus.strict }}"
+                data-reactions-enabled="{{ giscus.reactions_enabled }}"
+                data-emit-metadata="{{ giscus.emit_metadata }}"
+                data-input-position="{{ giscus.input_position }}"
+                data-theme="{{ giscus.theme_light }}"
+                data-lang="{{ giscus.lang }}"
+                data-loading="{{ giscus.loading }}"
+                crossorigin="anonymous"
+                async>
+        </script>
+        <noscript class="giscus-noscript">Enable JavaScript to view comments powered by Giscus.</noscript>
+    {% else %}
+        <p class="giscus-placeholder">Comments are coming soon — check back shortly.</p>
+    {% endif %}
 </section>
 
 <aside class="blog-related">
@@ -89,16 +98,59 @@
 {% endblock %}
 
 {% block scripts %}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const storedTheme = localStorage.getItem('theme');
-            const giscus = document.querySelector('script[src*="giscus"]');
-            if (giscus && storedTheme === 'dark') {
-                giscus.setAttribute('data-theme', 'dark');
-            } else if (giscus && prefersDark && !storedTheme) {
-                giscus.setAttribute('data-theme', 'dark');
-            }
-        });
-    </script>
+    {% if giscus.repo and giscus.repo_id and giscus.category and giscus.category_id %}
+        <script>
+            (function () {
+                const DARK_THEME = '{{ giscus.theme_dark }}';
+                const LIGHT_THEME = '{{ giscus.theme_light }}';
+
+                function currentTheme() {
+                    const storedTheme = localStorage.getItem('theme');
+                    if (storedTheme) {
+                        return storedTheme;
+                    }
+                    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+
+                function resolveGiscusTheme(nextTheme) {
+                    return nextTheme === 'dark' ? DARK_THEME : LIGHT_THEME;
+                }
+
+                function updateGiscusTheme(nextTheme) {
+                    const iframe = document.querySelector('iframe.giscus-frame');
+                    if (!iframe) {
+                        return;
+                    }
+                    iframe.contentWindow.postMessage({
+                        giscus: {
+                            setConfig: {
+                                theme: resolveGiscusTheme(nextTheme)
+                            }
+                        }
+                    }, 'https://giscus.app');
+                }
+
+                document.addEventListener('themechange', function (event) {
+                    updateGiscusTheme(event.detail);
+                });
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    const initialTheme = currentTheme();
+                    const giscusScript = document.getElementById('giscus-script');
+                    if (giscusScript) {
+                        giscusScript.setAttribute('data-theme', resolveGiscusTheme(initialTheme));
+                    }
+
+                    const observer = new MutationObserver(function () {
+                        const iframe = document.querySelector('iframe.giscus-frame');
+                        if (iframe) {
+                            updateGiscusTheme(initialTheme);
+                            observer.disconnect();
+                        }
+                    });
+                    observer.observe(document.body, { childList: true, subtree: true });
+                });
+            })();
+        </script>
+    {% endif %}
 {% endblock %}

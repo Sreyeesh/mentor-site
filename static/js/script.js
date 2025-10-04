@@ -11,7 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
         console.log('🎨 Initial theme set to:', savedTheme);
-        
+
+        const emitThemeChange = (theme) => {
+            document.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
+        };
+
+        emitThemeChange(savedTheme);
+
         // Add click event
         darkModeToggle.addEventListener('click', function(e) {
             e.preventDefault();
@@ -19,16 +25,18 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
+
             console.log('🔄 Switching from', currentTheme, 'to', newTheme);
-            
+
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            
+
+            emitThemeChange(newTheme);
+
             // Force repaint
             document.body.offsetHeight;
         });
-        
+
         console.log('✅ Dark mode toggle event listener added');
     } else {
         console.error('❌ Dark mode toggle not found!');

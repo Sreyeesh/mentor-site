@@ -105,7 +105,14 @@ python freeze.py
 - Draft a new Markdown file in `content/posts/` with front matter (`title`, `slug`, `date`, optional `tags`).
 - Run `python freeze.py` to rebuild `build/blog/` pages.
 - Commit the Markdown and regenerated `build/` directory (or let your deployment pipeline run the freeze step).
-- Comments and likes are handled via Giscus—set the repository details in `templates/blog/detail.html` when you are ready.
+- Comments and reactions are powered by Giscus—configure the environment variables below so every post gets a discussion thread.
+
+### Enabling Comments (Giscus)
+1. Enable Discussions in your GitHub repository and create/pick a category for blog comments.
+2. Visit [giscus.app](https://giscus.app), select your repo and category, and copy the values for `data-repo`, `data-repo-id`, `data-category`, and `data-category-id` (plus any optional settings).
+3. Add those values to `.env` (see `.env.example` for all supported keys such as `GISCUS_THEME_LIGHT`/`GISCUS_THEME_DARK`).
+4. Restart Flask or rerun `python freeze.py` so the updated configuration propagates into generated pages.
+5. Deploy and open any blog post—new comments show up in GitHub Discussions under the category you set.
 
 ## 🚀 Deployment
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authoring Tool</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        body { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+        header { margin-bottom: 2rem; }
+        .flash { padding: 0.75rem 1rem; margin-bottom: 1rem; border-radius: 6px; }
+        .flash-success { background: #e6f4ea; color: #1f7a1f; }
+        .flash-error { background: #fde8e8; color: #b91c1c; }
+        textarea { min-height: 260px; }
+        .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .post-list table { width: 100%; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Blog Authoring Tool</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('authoring.dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('authoring.edit_post') }}">New Post</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

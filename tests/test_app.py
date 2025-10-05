@@ -22,8 +22,8 @@ def test_home_page(client):
 def test_home_page_content(client):
     """Test that the page contains expected content."""
     response = client.get('/')
-    assert b'Get in Touch' in response.data
-    assert b'Focus Areas' in response.data
+    assert b'Get Free 30-Min Strategy Call' in response.data
+    assert b'Services' in response.data
     assert b'Contact' in response.data
 
 

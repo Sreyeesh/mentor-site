@@ -43,7 +43,9 @@ def load_all_posts() -> List[Dict[str, object]]:
             else:
                 metadata['date'] = str(date_value)
             metadata['path'] = path
-            metadata['updated_at'] = datetime.fromtimestamp(path.stat().st_mtime)
+            metadata['updated_at'] = datetime.fromtimestamp(
+                path.stat().st_mtime
+            )
             posts.append(metadata)
         except Exception as exc:  # noqa: BLE001
             flash(f'Failed to read {path.name}: {exc}', 'error')

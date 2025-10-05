@@ -28,25 +28,31 @@ def parse_post(path: Path) -> Dict[str, Any]:
     slug = metadata.get('slug') or slug_from_filename(path)
     raw_date = metadata.get('date')
     try:
-        published_at = datetime.fromisoformat(str(raw_date)) if raw_date else None
+        published_at = (
+            datetime.fromisoformat(str(raw_date)) if raw_date else None
+        )
     except ValueError:
         published_at = None
 
     html = markdown.markdown(
         post_data.content,
-        extensions=['fenced_code', 'tables', 'sane_lists']
+        extensions=['fenced_code', 'tables', 'sane_lists'],
     )
 
     words = post_data.content.split()
     word_count = len(words)
     reading_time = max(1, round(word_count / 200))
-    excerpt = metadata.get('excerpt') or ' '.join(words[:50]) + ('…' if word_count > 50 else '')
+    excerpt = metadata.get('excerpt') or ' '.join(words[:50])
+    if metadata.get('excerpt') is None and word_count > 50:
+        excerpt += '…'
 
     return {
         'title': metadata.get('title', 'Untitled Post'),
         'slug': slug,
         'date': published_at,
-        'date_display': published_at.strftime('%B %d, %Y') if published_at else '',
+        'date_display': (
+            published_at.strftime('%B %d, %Y') if published_at else ''
+        ),
         'description': metadata.get('description', ''),
         'excerpt': excerpt,
         'hero_image': metadata.get('hero_image'),
@@ -68,10 +74,16 @@ def load_posts() -> List[Dict[str, Any]]:
     for path in sorted(CONTENT_DIR.glob('*.md')):
         try:
             posts.append(parse_post(path))
-        except Exception as exc:  # noqa: BLE001 - surface file-specific errors
+        except Exception as exc:  # noqa: BLE001 - surface file errors
             print(f"❌ Failed to parse {path}: {exc}")
 
-    posts.sort(key=lambda item: (item.get('featured', False), item.get('date') or datetime.min), reverse=True)
+    posts.sort(
+        key=lambda item: (
+            item.get('featured', False),
+            item.get('date') or datetime.min,
+        ),
+        reverse=True,
+    )
     return posts
 
 
@@ -81,24 +93,23 @@ def write_file(destination: Path, content: str) -> None:
 
 
 def build_static_site() -> None:
-    # For custom domains, we don't need a base path
-    BASE_PATH = os.getenv('GITHUB_PAGES_BASE_PATH', '')
+    base_path = os.getenv('GITHUB_PAGES_BASE_PATH', '')
 
     if BUILD_DIR.exists():
         shutil.rmtree(BUILD_DIR)
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Copy static files
     if Path('static').exists():
         shutil.copytree('static', BUILD_DIR / 'static')
 
     posts = load_posts()
 
-    home_href = f"{BASE_PATH}/" if BASE_PATH else '/'
-    blog_index_href = f"{BASE_PATH}/blog/index.html" if BASE_PATH else '/blog/index.html'
+    home_href = f"{base_path}/" if base_path else '/'
+    blog_index_href = (
+        f"{base_path}/blog/index.html" if base_path else '/blog/index.html'
+    )
 
     with app.app_context():
-        # Render homepage through Flask route for consistency
         with app.test_client() as client:
             response = client.get('/')
             if response.status_code != 200:
@@ -106,23 +117,25 @@ def build_static_site() -> None:
             write_file(BUILD_DIR / 'index.html', response.data.decode('utf-8'))
             print('✅ Generated index.html')
 
-        # Render blog list
         with app.test_request_context('/'):
             blog_index = render_template(
                 'blog/list.html',
                 posts=posts,
                 config=SITE_CONFIG,
                 current_year=datetime.now().year,
-                base_path=BASE_PATH,
+                base_path=base_path,
                 home_href=home_href,
                 blog_index_href=blog_index_href,
             )
         write_file(BUILD_DIR / 'blog/index.html', blog_index)
         print('✅ Generated blog/index.html')
 
-        # Render blog detail pages
         for post in posts:
-            detail_href = f"{BASE_PATH}/blog/{post['slug']}/" if BASE_PATH else f"/blog/{post['slug']}/"
+            if base_path:
+                detail_href = f"{base_path}/blog/{post['slug']}/"
+            else:
+                detail_href = f"/blog/{post['slug']}/"
+
             with app.test_request_context(f"/blog/{post['slug']}/"):
                 detail_html = render_template(
                     'blog/detail.html',
@@ -130,7 +143,7 @@ def build_static_site() -> None:
                     posts=posts,
                     config=SITE_CONFIG,
                     current_year=datetime.now().year,
-                    base_path=BASE_PATH,
+                    base_path=base_path,
                     home_href=home_href,
                     blog_index_href=blog_index_href,
                     canonical_url=detail_href,
@@ -139,7 +152,6 @@ def build_static_site() -> None:
             write_file(output_path, detail_html)
             print(f"✅ Generated blog/{post['slug']}/index.html")
 
-    # Ensure GitHub Pages serves files as-is (no Jekyll processing)
     write_file(BUILD_DIR / '.nojekyll', '')
 
     print("\nStatic site generated in 'build' directory.")

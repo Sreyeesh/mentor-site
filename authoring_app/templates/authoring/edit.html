@@ -1,0 +1,50 @@
+{% extends 'authoring/base.html' %}
+{% block content %}
+<section>
+    <header>
+        <h2>{{ 'Create Post' if is_new else 'Edit Post' }}</h2>
+    </header>
+
+    <form method="post">
+        <input type="hidden" name="original_slug" value="{{ post_data.original_slug }}">
+        <label>
+            Title
+            <input name="title" type="text" value="{{ post_data.title }}" required>
+        </label>
+        <label>
+            Slug
+            <input name="slug" type="text" value="{{ post_data.slug }}" placeholder="auto-from-title">
+        </label>
+        <label>
+            Date
+            <input name="date" type="date" value="{{ post_data.date }}">
+        </label>
+        <label>
+            Description
+            <textarea name="description" rows="2">{{ post_data.description }}</textarea>
+        </label>
+        <label>
+            Excerpt
+            <textarea name="excerpt" rows="3">{{ post_data.excerpt }}</textarea>
+        </label>
+        <label>
+            Hero image URL
+            <input name="hero_image" type="text" value="{{ post_data.hero_image }}" placeholder="/static/images/...">
+        </label>
+        <label>
+            <input name="featured" type="checkbox" {% if post_data.featured %}checked{% endif %}> Featured post
+        </label>
+        <label>
+            Content (Markdown)
+            <textarea name="content" required>{{ post_data.content }}</textarea>
+        </label>
+        <footer class="actions">
+            <button type="submit">Save post</button>
+            <a class="secondary" role="button" href="{{ url_for('authoring.dashboard') }}">Cancel</a>
+            {% if not is_new %}
+                <a class="secondary" role="button" href="{{ url_for('authoring.preview_post', slug=post_data.slug or post_data.original_slug) }}" target="_blank">Preview</a>
+            {% endif %}
+        </footer>
+    </form>
+</section>
+{% endblock %}

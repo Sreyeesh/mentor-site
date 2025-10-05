@@ -25,13 +25,6 @@
             <p class="blog-meta">{{ featured.date_display }} • {{ featured.reading_time }} min read</p>
             <h2><a href="{{ blog_index_href.replace('index.html', '') }}{{ featured.slug }}/">{{ featured.title }}</a></h2>
             <p class="blog-featured-excerpt">{{ featured.excerpt }}</p>
-            {% if featured.tags %}
-                <ul class="blog-tag-list">
-                    {% for tag in featured.tags %}
-                        <li>{{ tag }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
             <a class="blog-featured-link" href="{{ blog_index_href.replace('index.html', '') }}{{ featured.slug }}/">Read the full story</a>
         </div>
     </article>

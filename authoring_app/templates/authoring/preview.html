@@ -1,0 +1,14 @@
+{% extends 'authoring/base.html' %}
+{% block content %}
+<section>
+    <header>
+        <h2>{{ post.metadata.title }}</h2>
+        <p><strong>Slug:</strong> {{ post.metadata.slug }}</p>
+        <p><strong>Date:</strong> {{ post.metadata.date }}</p>
+        <p><strong>Description:</strong> {{ post.metadata.description }}</p>
+    </header>
+    <article>
+        <pre style="white-space: pre-wrap;">{{ post.content }}</pre>
+    </article>
+</section>
+{% endblock %}

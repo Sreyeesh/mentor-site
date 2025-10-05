@@ -1,0 +1,41 @@
+{% extends 'authoring/base.html' %}
+{% block content %}
+<section class="post-list">
+    <header class="actions">
+        <a role="button" class="contrast" href="{{ url_for('authoring.edit_post') }}">Create new post</a>
+    </header>
+
+    {% if posts %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Slug</th>
+                    <th>Date</th>
+                    <th>Updated</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.slug }}</td>
+                        <td>{{ post.date or '—' }}</td>
+                        <td>{{ post.updated_at.strftime('%Y-%m-%d %H:%M') if post.updated_at else '—' }}</td>
+                        <td class="actions">
+                            <a href="{{ url_for('authoring.edit_post', slug=post.slug) }}">Edit</a>
+                            <a href="{{ url_for('authoring.preview_post', slug=post.slug) }}">Preview</a>
+                            <form action="{{ url_for('authoring.delete_post', slug=post.slug) }}" method="post" style="display:inline;">
+                                <button type="submit" class="secondary" onclick="return confirm('Delete post {{ post.title }}?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No posts found yet. Create your first article.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -101,8 +101,38 @@ mypy .
 python freeze.py
 ```
 
+### Blog Authoring Tool
+
+Use the standalone Flask app to draft or edit Markdown posts without touching the
+main site runtime. You can launch it directly or alongside Docker tooling:
+
+```bash
+# Optional: export these if your content lives elsewhere
+export AUTHORING_CONTENT_DIR=content/posts
+export AUTHORING_SECRET_KEY=change-me
+
+python author_app.py
+
+# or via Docker Compose
+docker compose --profile authoring up authoring-tool
+
+# or when starting the local static site container
+./deploy.sh --with-authoring
+```
+
+The tool runs at <http://localhost:5000/authoring/> when launched directly.
+Docker-based flows expose it on <http://localhost:5001/authoring/> (override with
+`--authoring-port`). It lets you:
+
+- create posts with required front matter fields
+- preview Markdown content
+- edit or delete existing Markdown files in `content/posts`
+
+When a post is ready, commit the generated Markdown and rerun `python freeze.py`
+before pushing so GitHub Pages publishes the latest content.
+
 ### Writing Blog Posts
-- Draft a new Markdown file in `content/posts/` with front matter (`title`, `slug`, `date`, optional `tags`).
+- Draft a new Markdown file in `content/posts/` with front matter (`title`, `slug`, `date`).
 - Run `python freeze.py` to rebuild `build/blog/` pages.
 - Commit the Markdown and regenerated `build/` directory (or let your deployment pipeline run the freeze step).
 - Comments and reactions are powered by Giscus—configure the environment variables below so every post gets a discussion thread.

@@ -15,6 +15,23 @@ services:
       retries: 3
       start_period: 40s
 
+  authoring-tool:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: mentor-site-authoring
+    command: python author_app.py
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./content:/app/content
+    environment:
+      - AUTHORING_CONTENT_DIR=/app/content/posts
+      - AUTHORING_SECRET_KEY=authoring-dev-secret
+    restart: unless-stopped
+    profiles:
+      - authoring
+
   # Alternative service for development
   mentor-site-dev:
     build: .

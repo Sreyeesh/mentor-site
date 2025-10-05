@@ -1,6 +1,7 @@
 import os
 import shutil
 from datetime import datetime
+import re
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -20,6 +21,28 @@ def slug_from_filename(path: Path) -> str:
     return path.stem.lower().replace(' ', '-').replace('_', '-')
 
 
+METADATA_LINE_RE = re.compile(r'^[A-Za-z0-9_]+:\s*.+$')
+
+
+def strip_leading_metadata_lines(content: str) -> str:
+    """Remove accidental metadata-style lines from the top of the body."""
+    lines = content.splitlines()
+    cleaned: List[str] = []
+    skipping = True
+
+    for line in lines:
+        if skipping and not line.strip():
+            # keep skipping until we hit real content
+            continue
+        if skipping and METADATA_LINE_RE.match(line.strip()):
+            # ignore metadata-like lines at the start
+            continue
+        skipping = False
+        cleaned.append(line)
+
+    return '\n'.join(cleaned).lstrip()
+
+
 def parse_post(path: Path) -> Dict[str, Any]:
     """Parse a Markdown file with front matter into a dictionary."""
     post_data = frontmatter.load(path)
@@ -34,12 +57,14 @@ def parse_post(path: Path) -> Dict[str, Any]:
     except ValueError:
         published_at = None
 
+    body = strip_leading_metadata_lines(post_data.content)
+
     html = markdown.markdown(
-        post_data.content,
-        extensions=['fenced_code', 'tables', 'sane_lists'],
+        body,
+        extensions=['fenced_code', 'tables', 'sane_lists']
     )
 
-    words = post_data.content.split()
+    words = body.split()
     word_count = len(words)
     reading_time = max(1, round(word_count / 200))
     excerpt = metadata.get('excerpt') or ' '.join(words[:50])

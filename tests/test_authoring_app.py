@@ -30,7 +30,11 @@ def test_create_post_writes_markdown(authoring_client, tmp_path):
         'content': '# Heading',
         'featured': 'on',
     }
-    response = authoring_client.post('/authoring/posts/new', data=payload, follow_redirects=True)
+    response = authoring_client.post(
+        '/authoring/posts/new',
+        data=payload,
+        follow_redirects=True,
+    )
     assert response.status_code == 200
     saved_file = tmp_path / 'my-first-post.md'
     assert saved_file.exists()

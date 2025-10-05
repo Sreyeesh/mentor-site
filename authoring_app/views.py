@@ -15,7 +15,12 @@ from flask import (
     url_for,
 )
 
-bp = Blueprint('authoring', __name__, url_prefix='/authoring', template_folder='templates')
+bp = Blueprint(
+    'authoring',
+    __name__,
+    url_prefix='/authoring',
+    template_folder='templates',
+)
 
 
 def get_content_dir() -> Path:
@@ -51,7 +56,11 @@ def load_all_posts() -> List[Dict[str, object]]:
 
 def slugify(value: str) -> str:
     slug = value.strip().lower()
-    slug = ''.join(char if char.isalnum() or char in {'-', ' '} else ' ' for char in slug)
+    slug = ''.join(
+        char if char.isalnum() or char in {'-', ' '}
+        else ' '
+        for char in slug
+    )
     slug = '-'.join(filter(None, slug.split()))
     return slug
 
@@ -120,7 +129,10 @@ def edit_post(slug: Optional[str] = None) -> str:
         original_slug = form.get('original_slug') or slug
         content_dir = get_content_dir()
         target_path = content_dir / f'{slug_value}.md'
-        if (not post or (original_slug and slug_value != original_slug)) and target_path.exists():
+        if (
+            not post
+            or (original_slug and slug_value != original_slug)
+        ) and target_path.exists():
             errors.append(f'A post with slug "{slug_value}" already exists.')
 
         if errors:

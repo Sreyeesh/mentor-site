@@ -1,7 +1,9 @@
-from pathlib import Path
 import os
+from pathlib import Path
 
 from flask import Flask
+
+from blog.utils import get_content_dir
 
 from .views import bp as authoring_bp
 
@@ -11,8 +13,8 @@ def create_app() -> Flask:
     app = Flask(__name__, template_folder='templates')
     app.config.from_mapping(
         SECRET_KEY=os.getenv('AUTHORING_SECRET_KEY', 'dev-authoring-secret'),
-        CONTENT_DIR=Path(
-            os.getenv('AUTHORING_CONTENT_DIR', 'content/posts')
+        CONTENT_DIR=get_content_dir(
+            os.getenv('AUTHORING_CONTENT_DIR')
         ).resolve(),
     )
 

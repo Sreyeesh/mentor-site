@@ -1,5 +1,6 @@
 import pytest
 
+import app as app_module
 from app import app
 from blog import load_posts
 
@@ -55,3 +56,36 @@ def test_blog_detail(client):
     response = client.get('/blog/how-i-teach-game-development/')
     assert response.status_code == 200
     assert b'How I Teach Game Development' in response.data
+
+
+def test_blog_detail_comments_placeholder(client):
+    response = client.get('/blog/how-i-teach-game-development/')
+    assert b'Join the discussion' in response.data
+    assert b'giscus-placeholder' in response.data
+
+
+def test_blog_detail_giscus_embed(monkeypatch, client):
+    monkeypatch.setitem(
+        app_module.SITE_CONFIG,
+        'giscus',
+        {
+            'repo': 'octocat/example',
+            'repo_id': 'R_123',
+            'category': 'Announcements',
+            'category_id': 'DIC_456',
+            'mapping': 'pathname',
+            'strict': '1',
+            'reactions_enabled': '1',
+            'emit_metadata': '0',
+            'input_position': 'bottom',
+            'lang': 'en',
+            'theme_light': 'light',
+            'theme_dark': 'dark',
+            'loading': 'lazy',
+            'enabled': True,
+        },
+    )
+
+    response = client.get('/blog/how-i-teach-game-development/')
+    assert b'https://giscus.app/client.js' in response.data
+    assert b'const config =' in response.data

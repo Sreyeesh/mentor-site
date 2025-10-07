@@ -2289,6 +2289,26 @@ footer {
     margin-bottom: 1.5rem;
 }
 
+.blog-comments .giscus,
+.blog-comments .giscus-placeholder,
+.blog-comments .giscus-noscript {
+    border-radius: 18px;
+    padding: 1.25rem 1.5rem;
+    background: rgba(148, 163, 184, 0.08);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.blog-comments .giscus-placeholder,
+.blog-comments .giscus-noscript {
+    color: var(--text-secondary, rgba(15, 23, 42, 0.7));
+    font-size: 0.95rem;
+}
+
+.blog-comments .giscus-noscript {
+    display: inline-block;
+    margin-top: 1rem;
+}
+
 .blog-related {
     margin-top: 4rem;
     padding: clamp(1.8rem, 3vw, 2.5rem);

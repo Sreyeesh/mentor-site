@@ -45,24 +45,74 @@
 
 <section class="blog-comments" aria-labelledby="comments-title">
     <h2 id="comments-title">Join the discussion</h2>
-    {% if giscus.repo and giscus.repo_id and giscus.category and giscus.category_id %}
-        <div class="giscus"></div>
-        <script id="giscus-script"
-                src="https://giscus.app/client.js"
-                data-repo="{{ giscus.repo }}"
-                data-repo-id="{{ giscus.repo_id }}"
-                data-category="{{ giscus.category }}"
-                data-category-id="{{ giscus.category_id }}"
-                data-mapping="{{ giscus.mapping }}"
-                data-strict="{{ giscus.strict }}"
-                data-reactions-enabled="{{ giscus.reactions_enabled }}"
-                data-emit-metadata="{{ giscus.emit_metadata }}"
-                data-input-position="{{ giscus.input_position }}"
-                data-theme="{{ giscus.theme_light }}"
-                data-lang="{{ giscus.lang }}"
-                data-loading="{{ giscus.loading }}"
-                crossorigin="anonymous"
-                async>
+    {% if giscus.enabled %}
+        {% set giscus_payload = {
+            'repo': giscus.repo,
+            'repo_id': giscus.repo_id,
+            'category': giscus.category,
+            'category_id': giscus.category_id,
+            'mapping': giscus.mapping,
+            'strict': giscus.strict,
+            'reactions_enabled': giscus.reactions_enabled,
+            'emit_metadata': giscus.emit_metadata,
+            'input_position': giscus.input_position,
+            'lang': giscus.lang,
+            'theme_light': giscus.theme_light,
+            'theme_dark': giscus.theme_dark,
+            'loading': giscus.loading
+        } %}
+        <div class="giscus" data-enabled="true"></div>
+        <script>
+            (function () {
+                const config = {{ giscus_payload | tojson }};
+                const requiredKeys = ['repo', 'repo_id', 'category', 'category_id'];
+                if (!requiredKeys.every((key) => config[key])) {
+                    return;
+                }
+
+                function preferredTheme() {
+                    try {
+                        const storedTheme = localStorage.getItem('theme');
+                        if (storedTheme === 'dark' || storedTheme === 'light') {
+                            return storedTheme;
+                        }
+                        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            return 'dark';
+                        }
+                    } catch (error) {
+                        console.warn('Unable to determine preferred theme for Giscus:', error);
+                    }
+                    return 'light';
+                }
+
+                const script = document.createElement('script');
+                script.id = 'giscus-script';
+                script.src = 'https://giscus.app/client.js';
+                script.async = true;
+                script.setAttribute('data-repo', config.repo);
+                script.setAttribute('data-repo-id', config.repo_id);
+                script.setAttribute('data-category', config.category);
+                script.setAttribute('data-category-id', config.category_id);
+                script.setAttribute('data-mapping', config.mapping || 'pathname');
+                script.setAttribute('data-strict', config.strict || '1');
+                script.setAttribute('data-reactions-enabled', config.reactions_enabled || '1');
+                script.setAttribute('data-emit-metadata', config.emit_metadata || '0');
+                script.setAttribute('data-input-position', config.input_position || 'bottom');
+                script.setAttribute('data-lang', config.lang || 'en');
+                script.setAttribute('data-loading', config.loading || 'lazy');
+                script.setAttribute(
+                    'data-theme',
+                    preferredTheme() === 'dark' ? config.theme_dark : config.theme_light
+                );
+                script.setAttribute('crossorigin', 'anonymous');
+
+                const container = document.querySelector('.giscus');
+                if (!container) {
+                    return;
+                }
+                container.innerHTML = '';
+                container.appendChild(script);
+            })();
         </script>
         <noscript class="giscus-noscript">Enable JavaScript to view comments powered by Giscus.</noscript>
     {% else %}
@@ -91,7 +141,7 @@
 {% endblock %}
 
 {% block scripts %}
-    {% if giscus.repo and giscus.repo_id and giscus.category and giscus.category_id %}
+    {% if giscus.enabled %}
         <script>
             (function () {
                 const DARK_THEME = '{{ giscus.theme_dark }}';
@@ -129,10 +179,6 @@
 
                 document.addEventListener('DOMContentLoaded', function () {
                     const initialTheme = currentTheme();
-                    const giscusScript = document.getElementById('giscus-script');
-                    if (giscusScript) {
-                        giscusScript.setAttribute('data-theme', resolveGiscusTheme(initialTheme));
-                    }
 
                     const observer = new MutationObserver(function () {
                         const iframe = document.querySelector('iframe.giscus-frame');

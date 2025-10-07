@@ -6,7 +6,17 @@ from flask import Flask, abort, render_template
 
 load_dotenv()
 
-BASE_PATH = os.getenv('BASE_PATH', '')
+
+def _env(key: str, default: str = '') -> str:
+    """Return a stripped environment value with an optional default."""
+
+    value = os.getenv(key)
+    if value is None:
+        return default
+    return value.strip()
+
+
+BASE_PATH = _env('BASE_PATH')
 if BASE_PATH and not BASE_PATH.startswith('/'):
     BASE_PATH = f"/{BASE_PATH}"
 
@@ -14,6 +24,31 @@ app = Flask(__name__)
 
 
 from blog import find_post, load_posts  # noqa: E402
+
+
+_GISCUS_REQUIRED_KEYS = ('repo', 'repo_id', 'category', 'category_id')
+
+
+def _build_giscus_config() -> dict[str, str | bool]:
+    """Create a reusable configuration dictionary for the Giscus widget."""
+
+    config = {
+        'repo': _env('GISCUS_REPO'),
+        'repo_id': _env('GISCUS_REPO_ID'),
+        'category': _env('GISCUS_CATEGORY'),
+        'category_id': _env('GISCUS_CATEGORY_ID'),
+        'mapping': _env('GISCUS_MAPPING', 'pathname'),
+        'strict': _env('GISCUS_STRICT', '1'),
+        'reactions_enabled': _env('GISCUS_REACTIONS_ENABLED', '1'),
+        'emit_metadata': _env('GISCUS_EMIT_METADATA', '0'),
+        'input_position': _env('GISCUS_INPUT_POSITION', 'bottom'),
+        'lang': _env('GISCUS_LANG', 'en'),
+        'theme_light': _env('GISCUS_THEME_LIGHT', 'light'),
+        'theme_dark': _env('GISCUS_THEME_DARK', 'dark'),
+        'loading': _env('GISCUS_LOADING', 'lazy'),
+    }
+    config['enabled'] = all(config.get(key) for key in _GISCUS_REQUIRED_KEYS)
+    return config
 
 
 SITE_CONFIG = {
@@ -47,22 +82,8 @@ SITE_CONFIG = {
             'Portfolio and project feedback'
         ),
     ).split(','),
-    'asset_version': os.getenv('ASSET_VERSION', '1'),
-    'giscus': {
-        'repo': os.getenv('GISCUS_REPO', ''),
-        'repo_id': os.getenv('GISCUS_REPO_ID', ''),
-        'category': os.getenv('GISCUS_CATEGORY', ''),
-        'category_id': os.getenv('GISCUS_CATEGORY_ID', ''),
-        'mapping': os.getenv('GISCUS_MAPPING', 'pathname'),
-        'strict': os.getenv('GISCUS_STRICT', '1'),
-        'reactions_enabled': os.getenv('GISCUS_REACTIONS_ENABLED', '1'),
-        'emit_metadata': os.getenv('GISCUS_EMIT_METADATA', '0'),
-        'input_position': os.getenv('GISCUS_INPUT_POSITION', 'bottom'),
-        'lang': os.getenv('GISCUS_LANG', 'en'),
-        'theme_light': os.getenv('GISCUS_THEME_LIGHT', 'light'),
-        'theme_dark': os.getenv('GISCUS_THEME_DARK', 'dark'),
-        'loading': os.getenv('GISCUS_LOADING', 'lazy'),
-    },
+    'asset_version': _env('ASSET_VERSION', '1'),
+    'giscus': _build_giscus_config(),
 }
 
 

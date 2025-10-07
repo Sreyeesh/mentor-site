@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 
 from dotenv import load_dotenv
-from flask import Flask, render_template
+from flask import Flask, abort, render_template
 
 load_dotenv()
 
@@ -11,6 +11,9 @@ if BASE_PATH and not BASE_PATH.startswith('/'):
     BASE_PATH = f"/{BASE_PATH}"
 
 app = Flask(__name__)
+
+
+from blog import find_post, load_posts  # noqa: E402
 
 
 SITE_CONFIG = {
@@ -70,6 +73,50 @@ def index():
         config=SITE_CONFIG,
         base_path=BASE_PATH,
         current_year=datetime.now().year,
+    )
+
+
+def _home_href() -> str:
+    return f"{BASE_PATH}/" if BASE_PATH else '/'
+
+
+def _blog_index_href() -> str:
+    return f"{BASE_PATH}/blog/" if BASE_PATH else '/blog/'
+
+
+@app.route('/blog/')
+def blog_index():
+    posts = load_posts()
+    return render_template(
+        'blog/list.html',
+        posts=posts,
+        config=SITE_CONFIG,
+        base_path=BASE_PATH,
+        current_year=datetime.now().year,
+        home_href=_home_href(),
+        blog_index_href=_blog_index_href(),
+    )
+
+
+@app.route('/blog/<slug>/')
+def blog_detail(slug: str):
+    posts = load_posts()
+    post = find_post(slug, posts=posts)
+    if post is None:
+        abort(404)
+
+    blog_index_href = _blog_index_href()
+
+    return render_template(
+        'blog/detail.html',
+        post=post,
+        posts=posts,
+        config=SITE_CONFIG,
+        base_path=BASE_PATH,
+        current_year=datetime.now().year,
+        home_href=_home_href(),
+        blog_index_href=blog_index_href,
+        canonical_url=f"{blog_index_href}{post['slug']}/",
     )
 
 

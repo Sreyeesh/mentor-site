@@ -1,115 +1,15 @@
 import os
 import shutil
 from datetime import datetime
-import re
 from pathlib import Path
-from typing import Any, Dict, List
 
-import frontmatter
-import markdown
 from flask import render_template
 
 from app import SITE_CONFIG, app
+from blog import find_post, load_posts
 
 
 BUILD_DIR = Path('build')
-CONTENT_DIR = Path('content/posts')
-
-
-def slug_from_filename(path: Path) -> str:
-    """Fallback slug generator based on the filename."""
-    return path.stem.lower().replace(' ', '-').replace('_', '-')
-
-
-METADATA_LINE_RE = re.compile(r'^[A-Za-z0-9_]+:\s*.+$')
-
-
-def strip_leading_metadata_lines(content: str) -> str:
-    """Remove accidental metadata-style lines from the top of the body."""
-    lines = content.splitlines()
-    cleaned: List[str] = []
-    skipping = True
-
-    for line in lines:
-        if skipping and not line.strip():
-            # keep skipping until we hit real content
-            continue
-        if skipping and METADATA_LINE_RE.match(line.strip()):
-            # ignore metadata-like lines at the start
-            continue
-        skipping = False
-        cleaned.append(line)
-
-    return '\n'.join(cleaned).lstrip()
-
-
-def parse_post(path: Path) -> Dict[str, Any]:
-    """Parse a Markdown file with front matter into a dictionary."""
-    post_data = frontmatter.load(path)
-    metadata = post_data.metadata
-
-    slug = metadata.get('slug') or slug_from_filename(path)
-    raw_date = metadata.get('date')
-    try:
-        published_at = (
-            datetime.fromisoformat(str(raw_date)) if raw_date else None
-        )
-    except ValueError:
-        published_at = None
-
-    body = strip_leading_metadata_lines(post_data.content)
-
-    html = markdown.markdown(
-        body,
-        extensions=['fenced_code', 'tables', 'sane_lists']
-    )
-
-    words = body.split()
-    word_count = len(words)
-    reading_time = max(1, round(word_count / 200))
-    excerpt = metadata.get('excerpt') or ' '.join(words[:50])
-    if metadata.get('excerpt') is None and word_count > 50:
-        excerpt += '…'
-
-    return {
-        'title': metadata.get('title', 'Untitled Post'),
-        'slug': slug,
-        'date': published_at,
-        'date_display': (
-            published_at.strftime('%B %d, %Y') if published_at else ''
-        ),
-        'description': metadata.get('description', ''),
-        'excerpt': excerpt,
-        'hero_image': metadata.get('hero_image'),
-        'tags': metadata.get('tags', []),
-        'content': html,
-        'word_count': word_count,
-        'reading_time': reading_time,
-        'featured': metadata.get('featured', False),
-        'source_path': path,
-    }
-
-
-def load_posts() -> List[Dict[str, Any]]:
-    """Load and sort all markdown posts."""
-    posts: List[Dict[str, Any]] = []
-    if not CONTENT_DIR.exists():
-        return posts
-
-    for path in sorted(CONTENT_DIR.glob('*.md')):
-        try:
-            posts.append(parse_post(path))
-        except Exception as exc:  # noqa: BLE001 - surface file errors
-            print(f"❌ Failed to parse {path}: {exc}")
-
-    posts.sort(
-        key=lambda item: (
-            item.get('featured', False),
-            item.get('date') or datetime.min,
-        ),
-        reverse=True,
-    )
-    return posts
 
 
 def write_file(destination: Path, content: str) -> None:
@@ -130,9 +30,7 @@ def build_static_site() -> None:
     posts = load_posts()
 
     home_href = f"{base_path}/" if base_path else '/'
-    blog_index_href = (
-        f"{base_path}/blog/index.html" if base_path else '/blog/index.html'
-    )
+    blog_index_href = f"{base_path}/blog/" if base_path else '/blog/'
 
     with app.app_context():
         with app.test_client() as client:
@@ -156,15 +54,12 @@ def build_static_site() -> None:
         print('✅ Generated blog/index.html')
 
         for post in posts:
-            if base_path:
-                detail_href = f"{base_path}/blog/{post['slug']}/"
-            else:
-                detail_href = f"/blog/{post['slug']}/"
+            detail_href = f"{blog_index_href}{post['slug']}/"
 
             with app.test_request_context(f"/blog/{post['slug']}/"):
                 detail_html = render_template(
                     'blog/detail.html',
-                    post=post,
+                    post=find_post(post['slug'], posts=posts),
                     posts=posts,
                     config=SITE_CONFIG,
                     current_year=datetime.now().year,

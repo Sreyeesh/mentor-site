@@ -77,9 +77,15 @@ Create a `.env` file for local development:
 SITE_NAME=Sreyeesh Garimella
 SITE_EMAIL=toucan.sg@gmail.com
 SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link
+SITE_URL=https://your-domain.com
 BASE_PATH=/mentor-site
 FLASK_DEBUG=True
 ```
+
+`SITE_URL` should be the fully qualified domain for the deployed site (for example,
+`https://mentor.yourdomain.com`). It is used to build canonical URLs and social
+share links so networks like LinkedIn and X always receive a complete link to
+your posts.
 
 ### Running Tests
 ```bash

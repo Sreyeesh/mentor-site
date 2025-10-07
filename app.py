@@ -28,6 +28,7 @@ SITE_CONFIG = {
         'SITE_CALENDLY_LINK',
         'https://calendly.com/toucan-sg/60min',
     ),
+    'site_url': os.getenv('SITE_URL', '').rstrip('/'),
     'meta_description': os.getenv(
         'SITE_META_DESCRIPTION',
         (

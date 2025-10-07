@@ -119,6 +119,7 @@ def write_file(destination: Path, content: str) -> None:
 
 def build_static_site() -> None:
     base_path = os.getenv('GITHUB_PAGES_BASE_PATH', '')
+    site_url = SITE_CONFIG.get('site_url', '').rstrip('/')
 
     if BUILD_DIR.exists():
         shutil.rmtree(BUILD_DIR)
@@ -161,6 +162,11 @@ def build_static_site() -> None:
             else:
                 detail_href = f"/blog/{post['slug']}/"
 
+            if site_url:
+                canonical_url = f"{site_url}{detail_href}"
+            else:
+                canonical_url = detail_href
+
             with app.test_request_context(f"/blog/{post['slug']}/"):
                 detail_html = render_template(
                     'blog/detail.html',
@@ -171,7 +177,7 @@ def build_static_site() -> None:
                     base_path=base_path,
                     home_href=home_href,
                     blog_index_href=blog_index_href,
-                    canonical_url=detail_href,
+                    canonical_url=canonical_url,
                 )
             output_path = BUILD_DIR / 'blog' / post['slug'] / 'index.html'
             write_file(output_path, detail_html)

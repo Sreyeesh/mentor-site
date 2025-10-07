@@ -77,7 +77,7 @@
         {% if related %}
             {% for other in related %}
                 <li>
-                    <a href="{{ blog_index_href.replace('index.html', '') }}{{ other.slug }}/">
+                    <a href="{{ blog_index_href }}{{ other.slug }}/">
                         <span class="related-title">{{ other.title }}</span>
                         <span class="related-meta">{{ other.date_display }} • {{ other.reading_time }} min read</span>
                     </a>

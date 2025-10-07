@@ -23,9 +23,9 @@
         {% endif %}
         <div class="blog-featured-body">
             <p class="blog-meta">{{ featured.date_display }} • {{ featured.reading_time }} min read</p>
-            <h2><a href="{{ blog_index_href.replace('index.html', '') }}{{ featured.slug }}/">{{ featured.title }}</a></h2>
+            <h2><a href="{{ blog_index_href }}{{ featured.slug }}/">{{ featured.title }}</a></h2>
             <p class="blog-featured-excerpt">{{ featured.excerpt }}</p>
-            <a class="blog-featured-link" href="{{ blog_index_href.replace('index.html', '') }}{{ featured.slug }}/">Read the full story</a>
+            <a class="blog-featured-link" href="{{ blog_index_href }}{{ featured.slug }}/">Read the full story</a>
         </div>
     </article>
 </section>
@@ -48,9 +48,9 @@
                     {% endif %}
                     <div class="blog-card-body">
                         <p class="blog-card-date">{{ post.date_display }} • {{ post.reading_time }} min read</p>
-                        <h3><a href="{{ blog_index_href.replace('index.html', '') }}{{ post.slug }}/">{{ post.title }}</a></h3>
+                        <h3><a href="{{ blog_index_href }}{{ post.slug }}/">{{ post.title }}</a></h3>
                         <p class="blog-card-excerpt">{{ post.excerpt }}</p>
-                        <a class="blog-card-read-more" href="{{ blog_index_href.replace('index.html', '') }}{{ post.slug }}/">Read article →</a>
+                        <a class="blog-card-read-more" href="{{ blog_index_href }}{{ post.slug }}/">Read article →</a>
                     </div>
                 </article>
             </li>

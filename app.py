@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 
 from dotenv import load_dotenv
-from flask import Flask, abort, render_template
+from flask import Flask, abort, render_template, request, url_for
 
 load_dotenv()
 
@@ -127,6 +127,10 @@ def blog_detail(slug: str):
         abort(404)
 
     blog_index_href = _blog_index_href()
+    canonical_url = request.base_url
+    hero_image_url = None
+    if post.get('hero_image'):
+        hero_image_url = url_for('static', filename=post['hero_image'], _external=True)
 
     return render_template(
         'blog/detail.html',
@@ -137,7 +141,8 @@ def blog_detail(slug: str):
         current_year=datetime.now().year,
         home_href=_home_href(),
         blog_index_href=blog_index_href,
-        canonical_url=f"{blog_index_href}{post['slug']}/",
+        canonical_url=canonical_url,
+        hero_image_url=hero_image_url,
     )
 
 

@@ -78,6 +78,7 @@ SITE_NAME=Sreyeesh Garimella
 SITE_EMAIL=toucan.sg@gmail.com
 SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link
 BASE_PATH=/mentor-site
+SITE_URL=https://example.com
 FLASK_DEBUG=True
 ```
 
@@ -100,6 +101,9 @@ mypy .
 # Generate static files
 python freeze.py
 ```
+
+Set `SITE_URL` in your environment (see above) to ensure canonical links and social
+share previews use the correct domain when freezing pages.
 
 ### Blog Authoring Tool
 

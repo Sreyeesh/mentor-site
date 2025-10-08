@@ -7,6 +7,23 @@
 
 {% block head_extra %}
     <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:title" content="{{ post.title }}">
+    <meta property="og:description" content="{{ (post.description or post.excerpt) | striptags | trim }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="{{ config.name }}">
+    {% if hero_image_url %}
+        <meta property="og:image" content="{{ hero_image_url }}">
+    {% endif %}
+    <meta name="twitter:title" content="{{ post.title }}">
+    <meta name="twitter:description" content="{{ (post.description or post.excerpt) | striptags | trim }}">
+    <meta name="twitter:url" content="{{ canonical_url }}">
+    {% if hero_image_url %}
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="{{ hero_image_url }}">
+    {% else %}
+        <meta name="twitter:card" content="summary">
+    {% endif %}
 {% endblock %}
 
 {% block content %}

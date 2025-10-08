@@ -58,10 +58,6 @@ SITE_CONFIG = {
         'Mentoring & Coaching in Animation and Video Game Development',
     ),
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
-    'linkedin_url': os.getenv(
-        'SITE_LINKEDIN_URL',
-        'https://www.linkedin.com/in/sreyeeshgarimella',
-    ),
     'calendly_link': os.getenv(
         'SITE_CALENDLY_LINK',
         'https://calendly.com/toucan-sg/60min',

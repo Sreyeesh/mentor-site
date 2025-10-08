@@ -7,6 +7,42 @@
 
 {% block head_extra %}
     <link rel="canonical" href="{{ canonical_url }}">
+    {% set social_description = (post.description or post.excerpt) %}
+    {% set hero_path = post.hero_image and url_for('static', filename=post.hero_image) %}
+    {% if hero_path %}
+        {% if config.site_url %}
+            {% set social_image = config.site_url ~ hero_path %}
+        {% else %}
+            {% set social_image = hero_path %}
+        {% endif %}
+    {% else %}
+        {% set default_image_path = url_for('static', filename='images/SreyeeshProfilePic.jpg') %}
+        {% if config.site_url %}
+            {% set social_image = config.site_url ~ default_image_path %}
+        {% else %}
+            {% set social_image = default_image_path %}
+        {% endif %}
+    {% endif %}
+
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="{{ config.name }}">
+    <meta property="og:title" content="{{ post.title }}">
+    {% if social_description %}
+        <meta property="og:description" content="{{ social_description }}">
+    {% endif %}
+    <meta property="og:url" content="{{ canonical_url }}">
+    {% if social_image %}
+        <meta property="og:image" content="{{ social_image }}">
+    {% endif %}
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ post.title }}">
+    {% if social_description %}
+        <meta name="twitter:description" content="{{ social_description }}">
+    {% endif %}
+    {% if social_image %}
+        <meta name="twitter:image" content="{{ social_image }}">
+    {% endif %}
 {% endblock %}
 
 {% block content %}

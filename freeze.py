@@ -3,7 +3,7 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
-from flask import render_template
+from flask import render_template, request, url_for
 
 from app import SITE_CONFIG, app
 from blog import find_post, load_posts
@@ -19,6 +19,7 @@ def write_file(destination: Path, content: str) -> None:
 
 def build_static_site() -> None:
     base_path = os.getenv('GITHUB_PAGES_BASE_PATH', '')
+    site_url = os.getenv('SITE_URL', '').rstrip('/')
 
     if BUILD_DIR.exists():
         shutil.rmtree(BUILD_DIR)
@@ -54,9 +55,14 @@ def build_static_site() -> None:
         print('✅ Generated blog/index.html')
 
         for post in posts:
-            detail_href = f"{blog_index_href}{post['slug']}/"
+            detail_path = f"{base_path}/blog/{post['slug']}/" if base_path else f"/blog/{post['slug']}/"
+            base_url = site_url or 'http://localhost:5000'
 
-            with app.test_request_context(f"/blog/{post['slug']}/"):
+            with app.test_request_context(detail_path, base_url=base_url):
+                canonical_url = request.base_url
+                hero_image_url = None
+                if post.get('hero_image'):
+                    hero_image_url = url_for('static', filename=post['hero_image'], _external=True)
                 detail_html = render_template(
                     'blog/detail.html',
                     post=find_post(post['slug'], posts=posts),
@@ -66,7 +72,8 @@ def build_static_site() -> None:
                     base_path=base_path,
                     home_href=home_href,
                     blog_index_href=blog_index_href,
-                    canonical_url=detail_href,
+                    canonical_url=canonical_url,
+                    hero_image_url=hero_image_url,
                 )
             output_path = BUILD_DIR / 'blog' / post['slug'] / 'index.html'
             write_file(output_path, detail_html)

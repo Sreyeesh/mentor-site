@@ -101,7 +101,11 @@ def blog_detail(slug: str):
     canonical_url = request.base_url
     hero_image_url = None
     if post.get('hero_image'):
-        hero_image_url = url_for('static', filename=post['hero_image'], _external=True)
+        hero_image_url = url_for(
+            'static',
+            filename=post['hero_image'],
+            _external=True,
+        )
 
     return render_template(
         'blog/detail.html',

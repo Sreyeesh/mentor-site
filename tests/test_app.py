@@ -1,6 +1,5 @@
 import pytest
 
-import app as app_module
 from app import app
 from blog import load_posts
 

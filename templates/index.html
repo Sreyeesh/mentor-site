@@ -26,7 +26,7 @@
                     <a href="#about">About</a>
                     <a href="#credibility">Experience</a>
                     <a href="#focus">Services</a>
-                    <a href="{{ (base_path or '') }}/blog/index.html">Blog</a>
+                    <a href="{{ (base_path or '') }}/blog/">Blog</a>
                     <a href="#contact">Get Started</a>
                 </div>
                 <div class="nav-controls">
@@ -264,25 +264,10 @@
 
     <!-- Footer -->
     <footer>
-    <div class="wrap">
-        <div class="footer-links">
-            <a href="https://www.linkedin.com/in/sreyeeshgarimella" 
-               class="footer-social-link" target="_blank" rel="noopener noreferrer">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 
-                             0 0 0-2-2 2 2 0 0 0-2 
-                             2v7h-4v-7a6 6 0 0 1 
-                             6-6z"></path>
-                    <rect x="2" y="9" width="4" height="12"></rect>
-                    <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-                LinkedIn
-            </a>
+        <div class="wrap">
+            <p>&copy; {{ current_year }} Sreyeesh Garimella. All rights reserved.</p>
         </div>
-        <p>&copy; {{ current_year }} Sreyeesh Garimella. All rights reserved.</p>
-    </div>
-</footer>
+    </footer>
 
 
     <script src="{{ url_for('static', filename='js/script.js', v=config.asset_version) }}"></script>

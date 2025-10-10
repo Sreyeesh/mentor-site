@@ -1,7 +1,8 @@
 import pytest
 
+import app as app_module
 from app import app
-from freeze import load_posts
+from blog import load_posts
 
 
 @pytest.fixture
@@ -43,3 +44,15 @@ def test_markdown_posts_available():
     """Ensure the blog loader returns a list (even when no posts exist)."""
     posts = load_posts()
     assert isinstance(posts, list)
+
+
+def test_blog_index(client):
+    response = client.get('/blog/')
+    assert response.status_code == 200
+    assert b'Your creative career playbook' in response.data
+
+
+def test_blog_detail(client):
+    response = client.get('/blog/how-i-teach-game-development/')
+    assert response.status_code == 200
+    assert b'How I Teach Game Development' in response.data

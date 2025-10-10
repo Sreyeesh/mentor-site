@@ -1,4 +1,4 @@
-from freeze import strip_leading_metadata_lines
+from blog import strip_leading_metadata_lines
 
 
 def test_strip_leading_metadata_removes_metadata_block():

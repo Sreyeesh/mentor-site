@@ -47,6 +47,20 @@ services:
       - dev  # Only start with --profile dev
     restart: "no"
 
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: pytest
+    volumes:
+      - ./:/app
+    profiles:
+      - ci
+    working_dir: /app
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+    restart: "no"
+
 networks:
   default:
     name: mentor-site-network

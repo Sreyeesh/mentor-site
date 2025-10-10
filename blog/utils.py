@@ -16,7 +16,11 @@ _DEFAULT_CONTENT_DIR = Path('content/posts')
 
 def _env_content_dir() -> Optional[str]:
     """Return an environment-provided content directory if available."""
-    for env_var in ('BLOG_CONTENT_DIR', 'AUTHORING_CONTENT_DIR', 'CONTENT_DIR'):
+    for env_var in (
+        'BLOG_CONTENT_DIR',
+        'AUTHORING_CONTENT_DIR',
+        'CONTENT_DIR',
+    ):
         value = os.getenv(env_var)
         if value:
             return value
@@ -26,9 +30,9 @@ def _env_content_dir() -> Optional[str]:
 def get_content_dir(override: Optional[Path | str] = None) -> Path:
     """Resolve the content directory with optional overrides.
 
-    ``override`` takes priority, followed by environment variables that keep the
-    blog in sync with the authoring tool. The final fallback is the default
-    ``content/posts`` path that ships with the project.
+    ``override`` takes priority, followed by environment variables that keep
+    the blog in sync with the authoring tool. The final fallback is the
+    default ``content/posts`` path that ships with the project.
     """
 
     if override:

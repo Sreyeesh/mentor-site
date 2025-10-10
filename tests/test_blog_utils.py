@@ -9,9 +9,13 @@ from blog import get_content_dir, load_posts
 
 @pytest.fixture(autouse=True)
 def clear_content_env(monkeypatch):
-    """Ensure content directory environment variables don't leak between tests."""
+    """Clear content-dir environment variables so tests stay isolated."""
 
-    for key in ('BLOG_CONTENT_DIR', 'AUTHORING_CONTENT_DIR', 'CONTENT_DIR'):
+    for key in (
+        'BLOG_CONTENT_DIR',
+        'AUTHORING_CONTENT_DIR',
+        'CONTENT_DIR',
+    ):
         monkeypatch.delenv(key, raising=False)
 
 

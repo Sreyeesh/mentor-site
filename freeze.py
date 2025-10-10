@@ -60,7 +60,9 @@ def build_static_site() -> None:
                 if base_path
                 else f"/blog/{post['slug']}/"
             )
-            canonical_url = f"{site_url}{detail_href}" if site_url else detail_href
+            canonical_url = (
+                f"{site_url}{detail_href}" if site_url else detail_href
+            )
 
             hero_image_url = None
             if post.get('hero_image'):

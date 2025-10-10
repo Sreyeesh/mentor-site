@@ -182,6 +182,13 @@ docker compose --profile authoring up authoring-tool
 - The UI is available at `http://localhost:5001/authoring/`.
 - Content is stored in your local `content/` directory via a bind mount, so edits persist outside the container.
 
+### Run tests in Docker
+Execute the test suite in an isolated container:
+```
+docker compose run --rm tests
+```
+The command uses the same image as the development container, mounts your working copy, installs dependencies from the image layer, and runs `pytest`.
+
 ### Combined workflow script
 `deploy.sh` wraps these commands, handles port checks, and optionally starts the authoring tool:
 ```

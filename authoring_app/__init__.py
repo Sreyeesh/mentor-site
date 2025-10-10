@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from flask import Flask
+from flask import Flask, redirect, url_for
 
 from blog.utils import get_content_dir
 
@@ -23,5 +23,11 @@ def create_app() -> Flask:
     content_dir.mkdir(parents=True, exist_ok=True)
 
     app.register_blueprint(authoring_bp)
+
+    @app.route('/')
+    def root_redirect() -> str:
+        """Provide a friendly landing page for health checks."""
+
+        return redirect(url_for('authoring.dashboard'))
 
     return app

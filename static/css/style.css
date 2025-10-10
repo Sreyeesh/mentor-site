@@ -1788,17 +1788,33 @@ footer {
 
 .blog-featured {
     margin-bottom: 4rem;
+    display: flex;
+    justify-content: center;
 }
 
 .blog-featured-card {
+    position: relative;
+    width: min(100%, 620px);
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(2rem, 4vw, 3rem);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.92));
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.16), rgba(196, 181, 253, 0.24));
     border-radius: 24px;
-    padding: clamp(2rem, 4vw, 3.5rem);
-    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
-    border: 1px solid rgba(148, 163, 184, 0.18);
+    padding: clamp(1.75rem, 3.5vw, 3rem);
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.14);
+    border: 1px solid rgba(102, 126, 234, 0.22);
+    backdrop-filter: blur(8px);
+}
+
+.blog-featured-card--with-media {
+    width: min(100%, 960px);
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+}
+
+.blog-featured-card--simple {
+    display: inline-grid;
+    width: auto;
+    max-width: min(620px, 100%);
 }
 
 .blog-featured-media {

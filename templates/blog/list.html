@@ -15,7 +15,7 @@
 
 {% if featured %}
 <section class="blog-featured">
-    <article class="blog-featured-card">
+    <article class="blog-featured-card{% if featured.hero_image %} blog-featured-card--with-media{% else %} blog-featured-card--simple{% endif %}">
         {% if featured.hero_image %}
             <div class="blog-featured-media">
                 <img src="{{ url_for('static', filename=featured.hero_image) }}" alt="" loading="lazy">

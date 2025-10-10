@@ -768,35 +768,6 @@ footer {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Footer Social Links */
-.footer-links {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.footer-social-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-primary);
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    cursor: pointer;
-}
-
-.footer-social-link:hover {
-    background-color: var(--shadow-color);
-    color: var(--accent-primary);
-}
-
-.footer-social-link svg {
-    width: 18px;
-    height: 18px;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-grid {
@@ -1017,14 +988,6 @@ footer {
 .social-link svg {
     width: 20px;
     height: 20px;
-}
-
-.linkedin-link {
-    background: #0077b5;
-}
-
-.linkedin-link:hover {
-    background: #005885;
 }
 
 /* Lead Capture Form Styles */
@@ -1365,14 +1328,6 @@ footer {
 
 [data-theme="dark"] .submit-button:hover {
     background: var(--accent-secondary);
-}
-
-[data-theme="dark"] .footer-social-link {
-    color: var(--text-primary);
-}
-
-[data-theme="dark"] .footer-social-link:hover {
-    color: var(--accent-primary);
 }
 
 /* Responsive Design */
@@ -2239,32 +2194,6 @@ footer {
     padding-top: 1.5rem;
 }
 
-.blog-share {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-weight: 600;
-    color: rgba(15, 23, 42, 0.55);
-}
-
-.blog-share a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-weight: 600;
-    color: var(--accent-primary, #667eea);
-    text-decoration: none;
-}
-
-.blog-share a svg {
-    width: 16px;
-    height: 16px;
-}
-
-.blog-share a:hover {
-    color: var(--accent-secondary, #764ba2);
-}
-
 .back-to-blog {
     font-weight: 600;
     color: var(--accent-primary, #667eea);
@@ -2273,20 +2202,6 @@ footer {
 
 .back-to-blog:hover {
     color: var(--accent-secondary, #764ba2);
-}
-
-.blog-comments {
-    margin-top: 4rem;
-    padding-top: 3rem;
-    border-top: 1px solid rgba(148, 163, 184, 0.2);
-    max-width: 820px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.blog-comments h2 {
-    font-size: 1.6rem;
-    margin-bottom: 1.5rem;
 }
 
 .blog-related {
@@ -2441,20 +2356,7 @@ footer {
         gap: 0.75rem;
     }
 
-    .blog-share {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-        width: 100%;
-    }
-
-    .blog-share a {
-        width: 100%;
-        justify-content: flex-start;
-    }
-
-    .blog-related,
-    .blog-comments {
+    .blog-related {
         padding-left: 1.5rem;
         padding-right: 1.5rem;
         border-radius: 18px;
@@ -2528,7 +2430,6 @@ footer {
     border-bottom-color: rgba(59, 130, 246, 0.22);
 }
 
-[data-theme="dark"] .blog-share,
 [data-theme="dark"] .related-meta,
 [data-theme="dark"] .blog-card-date,
 [data-theme="dark"] .blog-meta {

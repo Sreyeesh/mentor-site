@@ -14,6 +14,8 @@ from flask import (
     request,
     url_for,
 )
+from urllib.parse import urljoin, urlparse
+from werkzeug.utils import secure_filename
 
 bp = Blueprint(
     'authoring',
@@ -25,6 +27,23 @@ bp = Blueprint(
 
 def get_content_dir() -> Path:
     return Path(current_app.config['CONTENT_DIR'])
+
+
+def get_media_dir() -> Path:
+    return Path(current_app.config['MEDIA_UPLOAD_DIR'])
+
+
+def allowed_media_extensions() -> set[str]:
+    return set(current_app.config['ALLOWED_MEDIA_EXTENSIONS'])
+
+
+def is_safe_url(target: str) -> bool:
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target))
+    return (
+        test_url.scheme in {'http', 'https'}
+        and ref_url.netloc == test_url.netloc
+    )
 
 
 def load_all_posts() -> List[Dict[str, object]]:
@@ -94,6 +113,11 @@ def save_post(
     return target_path.name
 
 
+def build_media_url(filename: str) -> str:
+    prefix = str(current_app.config['MEDIA_URL_PREFIX']).rstrip('/')
+    return f'{prefix}/{filename}'
+
+
 @bp.route('/')
 def dashboard() -> str:
     posts = load_all_posts()
@@ -145,6 +169,7 @@ def edit_post(slug: Optional[str] = None) -> str:
                 is_new=post is None,
                 post_data=form,
                 post=post,
+                media_url_prefix=current_app.config['MEDIA_URL_PREFIX'],
             )
 
         metadata = {
@@ -197,7 +222,57 @@ def edit_post(slug: Optional[str] = None) -> str:
         is_new=post is None,
         post=post,
         post_data=post_data,
+        media_url_prefix=current_app.config['MEDIA_URL_PREFIX'],
     )
+
+
+@bp.route('/uploads', methods=['POST'])
+def upload_media() -> str:
+    next_url = request.form.get('next') or url_for('authoring.dashboard')
+    if not is_safe_url(next_url):
+        next_url = url_for('authoring.dashboard')
+
+    upload = request.files.get('media_file')
+    if upload is None or not upload.filename:
+        flash('Please choose a file to upload.', 'error')
+        return redirect(next_url)
+
+    filename = secure_filename(upload.filename)
+    if not filename:
+        flash('The selected filename is not valid.', 'error')
+        return redirect(next_url)
+
+    extension = Path(filename).suffix.lower().lstrip('.')
+    if extension not in allowed_media_extensions():
+        allowed_list = ', '.join(sorted(allowed_media_extensions()))
+        flash(
+            f'Unsupported file type "{extension}". '
+            f'Allowed extensions: {allowed_list}.',
+            'error',
+        )
+        return redirect(next_url)
+
+    media_dir = get_media_dir()
+    media_dir.mkdir(parents=True, exist_ok=True)
+
+    stem = Path(filename).stem
+    suffix = Path(filename).suffix
+    candidate = filename
+    counter = 1
+    while (media_dir / candidate).exists():
+        candidate = f'{stem}-{counter}{suffix}'
+        counter += 1
+
+    target_path = media_dir / candidate
+    upload.save(target_path)
+
+    media_url = build_media_url(candidate)
+    flash(
+        f'Uploaded successfully! Use "{media_url}" in your post '
+        'for images, video, or audio embeds.',
+        'success',
+    )
+    return redirect(next_url)
 
 
 @bp.route('/posts/<slug>/preview')

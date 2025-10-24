@@ -5,6 +5,29 @@
         <h2>{{ 'Create Post' if is_new else 'Edit Post' }}</h2>
     </header>
 
+    <section class="media-upload">
+        <h3>Upload images, video, or audio</h3>
+        <p>
+            Use this uploader to add media files to
+            <code>{{ media_url_prefix }}</code>. After the upload completes, copy
+            the flashed URL into the Hero image field or embed it in your
+            Markdown using standard Markdown image syntax or an HTML
+            <code>&lt;video&gt;</code>/<code>&lt;audio&gt;</code> tag.
+        </p>
+        <form
+            method="post"
+            action="{{ url_for('authoring.upload_media') }}"
+            enctype="multipart/form-data"
+        >
+            <input type="hidden" name="next" value="{{ request.full_path }}">
+            <label>
+                Choose file
+                <input name="media_file" type="file" required>
+            </label>
+            <button type="submit">Upload media</button>
+        </form>
+    </section>
+
     <form method="post">
         <input type="hidden" name="original_slug" value="{{ post_data.original_slug }}">
         <label>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ config.name }} — Mentoring & Coaching{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{{ config.meta_description }}{% endblock %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="{{ body_class | default('') }}">
+    <nav class="navbar">
+        <div class="wrap">
+            <div class="nav-content">
+                <div class="nav-brand">
+                    <a href="{{ site_links.home }}" class="nav-name-link">{{ config.name }}</a>
+                    {% if config.tagline %}
+                        <span class="nav-tagline">{{ config.tagline }}</span>
+                    {% endif %}
+                </div>
+                <div class="nav-links" id="nav-links">
+                    {% for item in nav_links %}
+                        <a href="{{ item.href }}" class="{% if item.is_cta %}nav-link--cta{% endif %}">{{ item.label }}</a>
+                    {% endfor %}
+                </div>
+                <div class="nav-controls">
+                    <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="hamburger" id="hamburger" aria-label="Toggle navigation" role="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="{{ main_class | default('site-main') }}" id="top">
+        {% block main_inner %}
+        <div class="wrap">
+            {% block content %}{% endblock %}
+        </div>
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <div class="footer-content">
+                <p>&copy; {{ current_year }} {{ config.name }}. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="{{ site_links.about }}">About</a>
+                    <a href="{{ site_links.mentoring }}">Mentoring</a>
+                    <a href="{{ site_links.blog }}">Blog</a>
+                    <a href="{{ site_links.contact }}">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js', v=config.asset_version) }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

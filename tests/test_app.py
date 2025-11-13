@@ -15,16 +15,30 @@ def test_home_page(client):
     """Test that the home page loads successfully."""
     response = client.get('/')
     assert response.status_code == 200
-    assert b'Sreyeesh Garimella' in response.data
-    assert b'Mentoring' in response.data
+    assert b'break into game development' in response.data.lower()
+    assert b'Book a Free 30-Min Strategy Call' in response.data
 
 
 def test_home_page_content(client):
     """Test that the page contains expected content."""
     response = client.get('/')
-    assert b'Get Free 30-Min Strategy Call' in response.data
-    assert b'Services' in response.data
-    assert b'Contact' in response.data
+    assert b'Who This Is For' in response.data
+    assert b'Mentoring Tracks' in response.data
+    assert b'FAQ' in response.data
+
+
+def test_new_pages_load(client):
+    """Ensure the new top-level pages render."""
+    pages = [
+        ('/mentoring/', b'Toucan Creator Mentorship'),
+        ('/schools-and-programs/', b'For Schools & Programs'),
+        ('/about/', b'Teaching philosophy'),
+        ('/contact/', b'Book a free 30-minute strategy call.'),
+    ]
+    for path, marker in pages:
+        response = client.get(path)
+        assert response.status_code == 200
+        assert marker in response.data
 
 
 def test_static_files(client):

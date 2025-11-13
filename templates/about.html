@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}About {{ config.name }} | Mentor & Director{% endblock %}
+{% block meta_description %}Learn about {{ config.name }}’s background across Disney, Blizzard, DNEG, and GameCity Kajaani plus the teaching philosophy behind the Toucan mentorship.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <p class="section-eyebrow">About</p>
+    <h1>Hi, I’m {{ config.name }} — mentor, director, and relentless supporter of emerging creators.</h1>
+    <p class="lead">I’ve shipped projects at Disney, Blizzard Entertainment, DNEG, Boulder Media, and GameCity Kajaani, helping teams align story, tech, and craft.</p>
+</section>
+
+<section class="section bio-section">
+    <div class="bio-grid">
+        <div>
+            <h2>From AAA cinematics to indie mentorship.</h2>
+            <p>I’ve spent 10+ years building characters, cinematics, and interactive moments for global studios. My credits include Overwatch 2, My Little Pony: A New Generation, and Garfield.</p>
+            <p>Along the way I noticed that talented juniors rarely lack passion—they lack direct feedback, production context, and someone willing to review the messy middle. That’s why I built the Toucan mentoring practice.</p>
+        </div>
+        <div>
+            <h3>Teaching philosophy</h3>
+            <ul class="bio-list">
+                <li><strong>Structure over hype:</strong> Every session ends with measurable homework.</li>
+                <li><strong>Production realism:</strong> We mimic how studios brief, review, and ship work.</li>
+                <li><strong>Friendly accountability:</strong> You always know what “good” looks like before you start.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section final-cta">
+    <div class="final-cta-card">
+        <p class="section-eyebrow">Let’s work together</p>
+        <h2>Ready to bring studio-level rigor to your project or classroom?</h2>
+        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book a Call</a>
+    </div>
+</section>
+{% endblock %}

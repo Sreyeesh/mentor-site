@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}Toucan Creator Mentorship – 1:1 Coaching in Game Dev, Art & Unreal{% endblock %}
+{% block meta_description %}Four-week mentoring sprints with weekly calls, feedback, and production-tested roadmaps for game dev, animation, and technical artists.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <p class="section-eyebrow">Mentoring</p>
+    <h1>Toucan Creator Mentorship — high-touch coaching for game developers, animators, and technical artists.</h1>
+    <p class="lead">Every engagement is a four-week sprint with live sessions, async notes, and a documented roadmap so you always know what to ship next.</p>
+    <div class="hero-actions">
+        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Apply for Mentorship</a>
+        <a href="#pricing" class="cta-button secondary">View Pricing</a>
+    </div>
+</section>
+
+<section class="section mentoring-overview">
+    <div class="section-header">
+        <p class="section-eyebrow">What’s included</p>
+        <h2>Every mentoring sprint follows the same structured support.</h2>
+    </div>
+    <div class="feature-grid">
+        <article class="feature-card">
+            <h3>Weekly 60-min calls</h3>
+            <p>Deep dives on your current build or shot with live paint-over, debugging, or pair design.</p>
+        </article>
+        <article class="feature-card">
+            <h3>Customized assignments</h3>
+            <p>Briefs and references tailored to the role you want—cinematic animator, Unreal tech artist, or gameplay designer.</p>
+        </article>
+        <article class="feature-card">
+            <h3>Async reviews & DM support</h3>
+            <p>Get annotated notes within 24 hours via Notion + video walkthroughs, plus quick Slack/Discord check-ins.</p>
+        </article>
+        <article class="feature-card">
+            <h3>End-of-sprint review</h3>
+            <p>We wrap with a portfolio audit, hiring plan, and the next four-week roadmap if you continue.</p>
+        </article>
+    </div>
+</section>
+
+<section class="section pricing-section" id="pricing">
+    <div class="section-header">
+        <p class="section-eyebrow">Pricing</p>
+        <h2>Pick the level of intensity that matches your timeline.</h2>
+    </div>
+    <div class="pricing-grid">
+        <article class="pricing-card">
+            <p class="pricing-label">Core Sprint</p>
+            <h3>€690 / 4 weeks</h3>
+            <ul>
+                <li>4 × live sessions</li>
+                <li>Weekly assignment briefs</li>
+                <li>Async notes within 48 hours</li>
+                <li>Private Notion board + version control checklist</li>
+            </ul>
+            <a href="{{ site_links.contact }}" class="cta-button secondary full-width">Apply for Core</a>
+        </article>
+        <article class="pricing-card pricing-card--accent">
+            <p class="pricing-label">VIP Sprint</p>
+            <h3>€1,150 / 4 weeks</h3>
+            <ul>
+                <li>2 × sessions per week</li>
+                <li>Daily async check-ins</li>
+                <li>Production pipeline setup (Git, LFS, build automation)</li>
+                <li>Portfolio polish + recruiter-ready materials</li>
+            </ul>
+            <a href="{{ site_links.contact }}" class="cta-button primary-cta full-width">Apply for VIP</a>
+        </article>
+    </div>
+</section>
+
+<section class="section track-reminder">
+    <div class="section-header">
+        <p class="section-eyebrow">Tracks</p>
+        <h2>Specialized attention for the exact craft you’re sharpening.</h2>
+    </div>
+    <div class="tracks-grid">
+        <article class="track-card">
+            <h3>Game Development & Unreal</h3>
+            <p>Gameplay systems, cinematic design, performance profiling, and build pipelines designed for pitching or junior roles.</p>
+        </article>
+        <article class="track-card">
+            <h3>Character Design & Art</h3>
+            <p>From thumbnails to polished presentation, with emphasis on storytelling, iteration, and art direction feedback.</p>
+        </article>
+        <article class="track-card">
+            <h3>Technical Workflow & Pipelines</h3>
+            <p>Source control mastery, project architecture, automation, and documentation so teams can scale with confidence.</p>
+        </article>
+    </div>
+</section>
+
+<section class="section mentoring-faq">
+    <div class="section-header">
+        <p class="section-eyebrow">FAQ</p>
+        <h2>Still unsure? Here are quick answers.</h2>
+    </div>
+    <div class="faq-list">
+        <details>
+            <summary>How do we start?</summary>
+            <p>Book the free strategy call. If we’re a fit, you’ll receive a short application, contract, and invoice to lock in your sprint.</p>
+        </details>
+        <details>
+            <summary>Do you offer team mentoring?</summary>
+            <p>Yes, small indie teams can book a shared sprint. We tailor assignments and office hours to your production calendar.</p>
+        </details>
+        <details>
+            <summary>Can I continue after four weeks?</summary>
+            <p>Most mentees renew for another sprint or shift to a maintenance cadence (bi-weekly sessions).</p>
+        </details>
+        <details>
+            <summary>What if I need help between calls?</summary>
+            <p>Use the shared Notion board to drop videos or Git links at any time; you’ll receive annotated feedback within 24 hours (12 hours for VIP).</p>
+        </details>
+    </div>
+</section>
+
+<section class="section final-cta">
+    <div class="final-cta-card">
+        <p class="section-eyebrow">Mentoring</p>
+        <h2>Apply now to reserve your sprint.</h2>
+        <p>Availability is limited to five creators per month so each project receives actionable feedback.</p>
+        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Apply for Mentorship</a>
+    </div>
+</section>
+{% endblock %}

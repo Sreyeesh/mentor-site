@@ -11,8 +11,10 @@
     <meta property="og:description" content="Get 1-on-1 guidance from a Disney, Blizzard & DNEG veteran. Skip years of trial and error and land your dream job in animation or game development.">
     <meta property="og:image" content="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}">
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
@@ -27,7 +29,7 @@
                     <a href="#credibility">Experience</a>
                     <a href="#focus">Services</a>
                     <a href="{{ (base_path or '') }}/blog/">Blog</a>
-                    <a href="#contact">Get Started</a>
+                    <a href="#contact" class="nav-link--cta">Get Started</a>
                 </div>
                 <div class="nav-controls">
                     <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">

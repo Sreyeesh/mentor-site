@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block title %}Break Into Game Development & Animation | {{ config.name }}{% endblock %}
+{% block meta_description %}Personalized mentoring for game development, animation, art, and Unreal workflows. Work directly with a Disney, Blizzard & DNEG veteran to build a studio-ready portfolio.{% endblock %}
+
+{% block content %}
+<section class="hero hero--split" id="top">
+    <div class="hero-grid">
+        <div class="hero-content">
+            <p class="section-eyebrow">1:1 Mentoring Program</p>
+            <h1>Break into game development & animation with a personal mentor — not another self-paced course.</h1>
+            <p class="hero-subtitle">
+                Get structured coaching from {{ config.name }}, a Disney, Blizzard & DNEG veteran. We focus on
+                production-ready work, accountability, and clear next steps every week.
+            </p>
+            <ul class="hero-points">
+                <li>Weekly 1:1 sessions focused on your active project</li>
+                <li>Custom practice briefs, reviews, and hiring feedback</li>
+                <li>Support across Unreal, animation, art, and technical workflows</li>
+            </ul>
+            <div class="hero-actions">
+                <a href="#contact-cta" class="cta-button primary-cta">Book a Free 30-Min Strategy Call</a>
+                <a href="#mentoring-tracks" class="cta-button secondary">See Mentorship Options</a>
+            </div>
+        </div>
+        <div class="hero-panel">
+            <div class="hero-panel-card">
+                <p class="hero-panel-eyebrow">Mentoring Outcomes</p>
+                <ul>
+                    <li>Studio-ready Unreal demos & reels</li>
+                    <li>Critiques tied to real production workflows</li>
+                    <li>Accountability across four-week sprints</li>
+                    <li>Introductions to hiring managers & recruiters</li>
+                </ul>
+                <p class="hero-panel-note">Limited to 5 mentees per month.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section who-section" id="who">
+    <div class="section-header">
+        <p class="section-eyebrow">Who This Is For</p>
+        <h2>Mentoring tracks tailored for emerging and active creators.</h2>
+    </div>
+    <div class="audience-grid">
+        <article class="audience-card">
+            <h3>Students & recent grads</h3>
+            <p>Need clarity on reels, capstone scope, and what studios actually expect when hiring juniors.</p>
+        </article>
+        <article class="audience-card">
+            <h3>Self-taught artists</h3>
+            <p>Structure your learning path, get briefs that mimic studio deadlines, and stay accountable.</p>
+        </article>
+        <article class="audience-card">
+            <h3>Junior devs & artists</h3>
+            <p>Level up faster with targeted feedback, code/art reviews, and realistic sprint planning.</p>
+        </article>
+        <article class="audience-card">
+            <h3>Indie teams & solo devs</h3>
+            <p>Bring an external director to pressure-test your build, optimize pipelines, and prep for funding.</p>
+        </article>
+    </div>
+</section>
+
+<section class="section tracks-section" id="mentoring-tracks">
+    <div class="section-header">
+        <p class="section-eyebrow">Mentoring Tracks</p>
+        <h2>Choose the focus area that matches your immediate goals.</h2>
+    </div>
+    <div class="tracks-grid">
+        <article class="track-card">
+            <h3>Game Development & Unreal</h3>
+            <ul>
+                <li>Blueprint and gameplay systems reviews</li>
+                <li>Milestone planning for vertical slices</li>
+                <li>Lighting, cameras, and cinematic polish</li>
+                <li>Git + LFS workflow tuning</li>
+            </ul>
+        </article>
+        <article class="track-card">
+            <h3>Character Design & Art Direction</h3>
+            <ul>
+                <li>Stylized vs realistic pipeline coaching</li>
+                <li>Iterative sketch + paint-over feedback</li>
+                <li>Story-driven briefs to stretch range</li>
+                <li>Portfolio narrative & presentation</li>
+            </ul>
+        </article>
+        <article class="track-card">
+            <h3>Technical Workflow & Pipelines</h3>
+            <ul>
+                <li>Production-ready Unreal project setups</li>
+                <li>Source control, branching, and automation</li>
+                <li>Custom tool reviews + documentation</li>
+                <li>Studio onboarding simulations</li>
+            </ul>
+        </article>
+    </div>
+</section>
+
+<section class="section process-section" id="how">
+    <div class="section-header">
+        <p class="section-eyebrow">How Mentoring Works</p>
+        <h2>A four-step loop that keeps you shipping.</h2>
+    </div>
+    <ol class="process-steps">
+        <li>
+            <span>1</span>
+            <h3>Book a discovery call</h3>
+            <p>We unpack your current work, goals, and blockers to see if there’s a fit.</p>
+        </li>
+        <li>
+            <span>2</span>
+            <h3>Receive a 4-week roadmap</h3>
+            <p>A custom plan with briefs, milestones, and references tailored to your target studio role.</p>
+        </li>
+        <li>
+            <span>3</span>
+            <h3>Weekly sessions & reviews</h3>
+            <p>Live breakdowns, async notes, and direct edits to keep you shipping on schedule.</p>
+        </li>
+        <li>
+            <span>4</span>
+            <h3>Final review + next steps</h3>
+            <p>We assess progress, update your portfolio, and map the next sprint or hiring push.</p>
+        </li>
+    </ol>
+</section>
+
+<section class="section proof-section" id="proof">
+    <div class="section-header">
+        <p class="section-eyebrow">Trusted Experience</p>
+        <h2>Studios and schools that have relied on {{ config.name }} for production and mentoring.</h2>
+    </div>
+    <div class="logos-grid">
+        <img src="{{ url_for('static', filename='images/Walt_Disney_Animation_Studios_logo.svg.png') }}" alt="Disney Animation Studios logo">
+        <img src="{{ url_for('static', filename='images/Blizzard_Entertainment_Logo_2015.svg.png') }}" alt="Blizzard Entertainment logo">
+        <img src="{{ url_for('static', filename='images/DNEG_Animation_2025.svg.png') }}" alt="DNEG Animation logo">
+        <img src="{{ url_for('static', filename='images/GameCity.png') }}" alt="GameCity Kajaani logo">
+        <img src="{{ url_for('static', filename='images/Overwatch_2_logo.svg.png') }}" alt="Overwatch 2 logo">
+        <img src="{{ url_for('static', filename='images/Boulder_Media.png') }}" alt="Boulder Media logo">
+    </div>
+    <div class="testimonials-grid">
+        <article class="testimonial-card">
+            <p class="testimonial-quote">“Weekly critiques with Sreyeesh felt like having a supervising animator on my student film. I landed my first games job 6 weeks later.”</p>
+            <p class="testimonial-meta">— Maya K., Unreal Lighting Artist</p>
+        </article>
+        <article class="testimonial-card">
+            <p class="testimonial-quote">“He rebuilt our capstone workflow overnight. The team finally understood how to version control and hit deadlines.”</p>
+            <p class="testimonial-meta">— Henri P., GameCity Kajaani</p>
+        </article>
+        <article class="testimonial-card">
+            <p class="testimonial-quote">“Every session ends with specific, measurable assignments. It’s the accountability I never found in online courses.”</p>
+            <p class="testimonial-meta">— Lina S., Character Animator</p>
+        </article>
+    </div>
+</section>
+
+<section class="section faq-section" id="faq">
+    <div class="section-header">
+        <p class="section-eyebrow">FAQ</p>
+        <h2>Common questions before booking a call.</h2>
+    </div>
+    <div class="faq-list">
+        <details>
+            <summary>Is this beginner friendly?</summary>
+            <p>Yes. We tailor briefs to your baseline skill level and focus on fast iteration to build confidence.</p>
+        </details>
+        <details>
+            <summary>How much time do I need each week?</summary>
+            <p>Expect 5–8 hours outside of the weekly session for exercises, revisions, and feedback implementation.</p>
+        </details>
+        <details>
+            <summary>Which tools do you support?</summary>
+            <p>Unreal Engine, Maya, Blender, Substance, Figma, and Git/Git LFS. We also cover production tooling unique to your studio.</p>
+        </details>
+        <details>
+            <summary>Where do sessions happen?</summary>
+            <p>Live calls take place on Zoom or Google Meet. Async feedback and files are tracked inside Notion & Frame.io.</p>
+        </details>
+    </div>
+</section>
+
+<section class="section final-cta" id="contact-cta">
+    <div class="final-cta-card">
+        <p class="section-eyebrow">Ready to stop learning alone?</p>
+        <h2>Let’s build a studio-ready roadmap together.</h2>
+        <p>Book a free strategy call to audit your current portfolio, set realistic goals, and see if the mentorship is a match.</p>
+        <div class="hero-actions">
+            <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book the Free Call</a>
+            <a href="{{ site_links.mentoring }}" class="cta-button secondary">Review Mentoring Options</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,65 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ config.name }} Blog{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}Insights from {{ config.name }} on animation, game development, and mentoring.{% endblock %}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
-    {% block head_extra %}{% endblock %}
-</head>
-<body class="blog-layout">
-    <nav class="navbar blog-nav">
-        <div class="wrap">
-            <div class="nav-content">
-                <div class="nav-brand">
-                    <a href="{{ home_href }}" class="nav-name-link">{{ config.name }}</a>
-                </div>
-                <div class="nav-links" id="nav-links">
-                    <a href="{{ blog_index_href }}">Blog Home</a>
-                    <a href="{{ home_href }}#focus">Services</a>
-                    <a href="{{ home_href }}#contact">Get Started</a>
-                </div>
-                <div class="nav-controls">
-                    <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
-                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="hamburger" id="hamburger" aria-label="Toggle navigation" role="button">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-        </div>
-    </nav>
+{% extends 'base.html' %}
 
-    <main class="blog-main" id="top">
-        <div class="wrap">
-            {% block content %}{% endblock %}
-        </div>
-    </main>
+{% block title %}{{ config.name }} Blog{% endblock %}
+{% block meta_description %}Insights from {{ config.name }} on animation, game development, and mentoring.{% endblock %}
 
-    <footer class="blog-footer">
-        <div class="wrap">
-            <p>&copy; {{ current_year }} {{ config.name }}. All rights reserved.</p>
-        </div>
-    </footer>
+{% block body_class %}blog-layout{% endblock %}
+{% block main_class %}blog-main{% endblock %}
 
-    <script src="{{ url_for('static', filename='js/script.js', v=config.asset_version) }}" defer></script>
-    {% block scripts %}{% endblock %}
-</body>
-</html>
+{% block main_inner %}
+<div class="wrap">
+    {% block content %}{% endblock %}
+</div>
+{% endblock %}

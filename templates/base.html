@@ -63,9 +63,41 @@
 
     <footer>
         <div class="wrap">
-            <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-column footer-column--brand">
+                    <a href="{{ site_links.home }}" class="footer-logo">{{ config.name }}</a>
+                    {% if config.tagline %}
+                        <p class="footer-tagline">{{ config.tagline }}</p>
+                    {% endif %}
+                    <p class="footer-description">
+                        1:1 mentoring, pipeline reviews, and creative direction for studios, schools, and independent teams.
+                    </p>
+                    <div class="footer-contact">
+                        <a href="mailto:{{ config.email }}" class="footer-contact-link">{{ config.email }}</a>
+                        <a href="{{ site_links.contact }}" class="footer-contact-link">Book a Strategy Call</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <p class="footer-heading">Explore</p>
+                    <ul class="footer-list">
+                        {% for item in nav_links %}
+                            <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <p class="footer-heading">Mentoring</p>
+                    <ul class="footer-list">
+                        <li><a href="{{ site_links.mentoring }}">Programs & Pricing</a></li>
+                        <li><a href="{{ site_links.schools }}">For Schools & Programs</a></li>
+                        <li><a href="{{ site_links.blog }}">Insights & Blog</a></li>
+                        <li><a href="{{ site_links.contact }}">Contact & Booking</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
                 <p>&copy; {{ current_year }} {{ config.name }}. All rights reserved.</p>
-                <div class="footer-links">
+                <div class="footer-bottom-links">
                     <a href="{{ site_links.about }}">About</a>
                     <a href="{{ site_links.mentoring }}">Mentoring</a>
                     <a href="{{ site_links.blog }}">Blog</a>

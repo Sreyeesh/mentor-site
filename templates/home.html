@@ -1,22 +1,23 @@
 {% extends 'base.html' %}
 
-{% block title %}Break Into Game Development & Animation | {{ config.name }}{% endblock %}
-{% block meta_description %}Personalized mentoring for game development, animation, art, and Unreal workflows. Work directly with a Disney, Blizzard & DNEG veteran to build a studio-ready portfolio.{% endblock %}
+{% block title %}Technical Art, Game Development & DevOps Tutoring | {{ config.name }}{% endblock %}
+{% block meta_description %}Private tutoring for technical art, direction, video game development, and DevOps/programming. Build custom curricula with a veteran mentor who teaches both studios and individual students.{% endblock %}
 
 {% block content %}
 <section class="hero hero--split" id="top">
     <div class="hero-grid">
         <div class="hero-content">
             <p class="section-eyebrow">1:1 Mentoring Program</p>
-            <h1>Break into game development & animation with a personal mentor — not another self-paced course.</h1>
+            <h1>Private mentoring for technical art, art direction, programming, and DevOps.</h1>
             <p class="hero-subtitle">
-                Get structured coaching from {{ config.name }}, a Disney, Blizzard & DNEG veteran. We focus on
-                production-ready work, accountability, and clear next steps every week.
+                Get structured tutoring from {{ config.name }}, a veteran technical artist, director, render wrangler, and developer
+                who is hired by studios, schools, and private students exclusively to tutor. Every session blends hands-on demos,
+                production context, and creative polish so you keep shipping.
             </p>
             <ul class="hero-points">
-                <li>Weekly 1:1 sessions focused on your active project</li>
-                <li>Custom practice briefs, reviews, and hiring feedback</li>
-                <li>Support across Unreal, animation, art, and technical workflows</li>
+                <li>Weekly 1:1 sessions focused on active scenes, builds, and pipelines</li>
+                <li>Pair reviews on technical art workflows, Unreal builds, and DevOps automation</li>
+                <li>Tailored lesson plans spanning art direction, programming, and SRE tooling</li>
             </ul>
             <div class="hero-actions">
                 <a href="#contact-cta" class="cta-button primary-cta">Book a Free 30-Min Strategy Call</a>
@@ -27,10 +28,9 @@
             <div class="hero-panel-card">
                 <p class="hero-panel-eyebrow">Mentoring Outcomes</p>
                 <ul>
-                    <li>Studio-ready Unreal demos & reels</li>
-                    <li>Critiques tied to real production workflows</li>
-                    <li>Accountability across four-week sprints</li>
-                    <li>Introductions to hiring managers & recruiters</li>
+                    <li>Custom tutoring curriculum & practice briefs</li>
+                    <li>Annotated demos for tools, pipelines, and creative work</li>
+                    <li>Documented progress your studio or classroom can reference</li>
                 </ul>
                 <p class="hero-panel-note">Limited to 5 mentees per month.</p>
             </div>
@@ -41,24 +41,28 @@
 <section class="section who-section" id="who">
     <div class="section-header">
         <p class="section-eyebrow">Who This Is For</p>
-        <h2>Mentoring tracks tailored for emerging and active creators.</h2>
+        <h2>Mentoring tracks built for DevOps engineers, SREs, game devs, and art teams.</h2>
     </div>
     <div class="audience-grid">
         <article class="audience-card">
-            <h3>Students & recent grads</h3>
-            <p>Need clarity on reels, capstone scope, and what studios actually expect when hiring juniors.</p>
+            <h3>Technical artists & TDs</h3>
+            <p>Get help wrangling renders, optimizing rigs, and scripting tools with someone who has solved the exact production issues.</p>
         </article>
         <article class="audience-card">
-            <h3>Self-taught artists</h3>
-            <p>Structure your learning path, get briefs that mimic studio deadlines, and stay accountable.</p>
+            <h3>Art directors & cinematic leads</h3>
+            <p>Receive trusted paint-overs, storytelling guidance, and presentation reviews that keep teams aligned.</p>
         </article>
         <article class="audience-card">
-            <h3>Junior devs & artists</h3>
-            <p>Level up faster with targeted feedback, code/art reviews, and realistic sprint planning.</p>
+            <h3>Game devs & programmers</h3>
+            <p>Pair on gameplay systems, Unreal builds, code structure, and milestone planning without leaving your IDE.</p>
         </article>
         <article class="audience-card">
-            <h3>Indie teams & solo devs</h3>
-            <p>Bring an external director to pressure-test your build, optimize pipelines, and prep for funding.</p>
+            <h3>Platform & DevOps engineers</h3>
+            <p>Design CI/CD, infrastructure, and observability lessons that match your stack—GitHub Actions, Terraform, Kubernetes, and more.</p>
+        </article>
+        <article class="audience-card">
+            <h3>Students & private cohorts</h3>
+            <p>Book a tutor who writes custom curricula for capstones, portfolio polish, or studio onboarding.</p>
         </article>
     </div>
 </section>
@@ -70,30 +74,39 @@
     </div>
     <div class="tracks-grid">
         <article class="track-card">
+            <h3>Technical Art & Tools</h3>
+            <ul>
+                <li>Shader, rigging, and render wrangling breakdowns with live demos</li>
+                <li>Pipeline automation tutorials (Python, Unreal/Unity tooling)</li>
+                <li>Shot diagnostics, optimization passes, and review-ready renders</li>
+                <li>Documentation templates so teams retain the lessons</li>
+            </ul>
+        </article>
+        <article class="track-card">
+            <h3>Art Direction & Cinematics</h3>
+            <ul>
+                <li>Look development, storytelling, and presentation systems</li>
+                <li>Iterative briefs, paint-overs, and cinematic edits</li>
+                <li>Portfolio sequencing for studio-ready reels</li>
+                <li>Leadership coaching for directors and classroom leads</li>
+            </ul>
+        </article>
+        <article class="track-card">
             <h3>Game Development & Unreal</h3>
             <ul>
-                <li>Blueprint and gameplay systems reviews</li>
-                <li>Milestone planning for vertical slices</li>
-                <li>Lighting, cameras, and cinematic polish</li>
-                <li>Git + LFS workflow tuning</li>
+                <li>Gameplay code reviews, performance passes, and polish sprints</li>
+                <li>Vertical slice planning, milestone coaching, and funding prep</li>
+                <li>Unreal/Unity build pipelines with DevOps-friendly automation</li>
+                <li>Curriculum design for student teams shipping playable builds</li>
             </ul>
         </article>
         <article class="track-card">
-            <h3>Character Design & Art Direction</h3>
+            <h3>DevOps & Programming Systems</h3>
             <ul>
-                <li>Stylized vs realistic pipeline coaching</li>
-                <li>Iterative sketch + paint-over feedback</li>
-                <li>Story-driven briefs to stretch range</li>
-                <li>Portfolio narrative & presentation</li>
-            </ul>
-        </article>
-        <article class="track-card">
-            <h3>Technical Workflow & Pipelines</h3>
-            <ul>
-                <li>Production-ready Unreal project setups</li>
-                <li>Source control, branching, and automation</li>
-                <li>Custom tool reviews + documentation</li>
-                <li>Studio onboarding simulations</li>
+                <li>CI/CD architecture tutoring (GitHub Actions, GitLab, Jenkins, Buildkite)</li>
+                <li>Infrastructure-as-code, cloud, and observability lessons with code reviews</li>
+                <li>Python, Go, and TypeScript coaching tied to real automation work</li>
+                <li>Service reliability curriculum for small teams and solo devs</li>
             </ul>
         </article>
     </div>
@@ -113,7 +126,7 @@
         <li>
             <span>2</span>
             <h3>Receive a 4-week roadmap</h3>
-            <p>A custom plan with briefs, milestones, and references tailored to your target studio role.</p>
+            <p>A custom plan with briefs, milestones, and references tailored to the outcomes you need for your production or study plan.</p>
         </li>
         <li>
             <span>3</span>
@@ -123,7 +136,7 @@
         <li>
             <span>4</span>
             <h3>Final review + next steps</h3>
-            <p>We assess progress, update your portfolio, and map the next sprint or hiring push.</p>
+            <p>We assess progress, document the improvements, and map the next sprint or learning arc.</p>
         </li>
     </ol>
 </section>
@@ -131,29 +144,25 @@
 <section class="section proof-section" id="proof">
     <div class="section-header">
         <p class="section-eyebrow">Trusted Experience</p>
-        <h2>Studios and schools that have relied on {{ config.name }} for production and mentoring.</h2>
+        <h2>Studios and teams that have relied on {{ config.name }} for engineering leadership and creative mentoring.</h2>
     </div>
-    <div class="logos-grid">
-        <img src="{{ url_for('static', filename='images/Walt_Disney_Animation_Studios_logo.svg.png') }}" alt="Disney Animation Studios logo">
-        <img src="{{ url_for('static', filename='images/Blizzard_Entertainment_Logo_2015.svg.png') }}" alt="Blizzard Entertainment logo">
-        <img src="{{ url_for('static', filename='images/DNEG_Animation_2025.svg.png') }}" alt="DNEG Animation logo">
-        <img src="{{ url_for('static', filename='images/GameCity.png') }}" alt="GameCity Kajaani logo">
-        <img src="{{ url_for('static', filename='images/Overwatch_2_logo.svg.png') }}" alt="Overwatch 2 logo">
-        <img src="{{ url_for('static', filename='images/Boulder_Media.png') }}" alt="Boulder Media logo">
-    </div>
-    <div class="testimonials-grid">
-        <article class="testimonial-card">
-            <p class="testimonial-quote">“Weekly critiques with Sreyeesh felt like having a supervising animator on my student film. I landed my first games job 6 weeks later.”</p>
-            <p class="testimonial-meta">— Maya K., Unreal Lighting Artist</p>
-        </article>
-        <article class="testimonial-card">
-            <p class="testimonial-quote">“He rebuilt our capstone workflow overnight. The team finally understood how to version control and hit deadlines.”</p>
-            <p class="testimonial-meta">— Henri P., GameCity Kajaani</p>
-        </article>
-        <article class="testimonial-card">
-            <p class="testimonial-quote">“Every session ends with specific, measurable assignments. It’s the accountability I never found in online courses.”</p>
-            <p class="testimonial-meta">— Lina S., Character Animator</p>
-        </article>
+    <div class="company-logos" aria-label="Studios and partners I've collaborated with">
+        <div class="logos-carousel">
+            <div class="logos-track">
+                <img src="{{ url_for('static', filename='images/Walt_Disney_Animation_Studios_logo.svg.png') }}" alt="Disney Animation Studios" class="company-logo">
+                <img src="{{ url_for('static', filename='images/Blizzard_Entertainment_Logo_2015.svg.png') }}" alt="Blizzard Entertainment" class="company-logo">
+                <img src="{{ url_for('static', filename='images/DNEG_Animation_2025.svg.png') }}" alt="DNEG Animation" class="company-logo">
+                <img src="{{ url_for('static', filename='images/GameCity.png') }}" alt="GameCity Kajaani" class="company-logo">
+                <img src="{{ url_for('static', filename='images/Overwatch_2_logo.svg.png') }}" alt="Overwatch 2" class="company-logo">
+                <img src="{{ url_for('static', filename='images/Boulder_Media.png') }}" alt="Boulder Media" class="company-logo">
+                <img src="{{ url_for('static', filename='images/Walt_Disney_Animation_Studios_logo.svg.png') }}" alt="Disney Animation Studios" class="company-logo" aria-hidden="true">
+                <img src="{{ url_for('static', filename='images/Blizzard_Entertainment_Logo_2015.svg.png') }}" alt="Blizzard Entertainment" class="company-logo" aria-hidden="true">
+                <img src="{{ url_for('static', filename='images/DNEG_Animation_2025.svg.png') }}" alt="DNEG Animation" class="company-logo" aria-hidden="true">
+                <img src="{{ url_for('static', filename='images/GameCity.png') }}" alt="GameCity Kajaani" class="company-logo" aria-hidden="true">
+                <img src="{{ url_for('static', filename='images/Overwatch_2_logo.svg.png') }}" alt="Overwatch 2" class="company-logo" aria-hidden="true">
+                <img src="{{ url_for('static', filename='images/Boulder_Media.png') }}" alt="Boulder Media" class="company-logo" aria-hidden="true">
+            </div>
+        </div>
     </div>
 </section>
 
@@ -169,11 +178,11 @@
         </details>
         <details>
             <summary>How much time do I need each week?</summary>
-            <p>Expect 5–8 hours outside of the weekly session for exercises, revisions, and feedback implementation.</p>
+            <p>Expect 5–8 hours outside of the weekly session for pipeline work, automation experiments, asset iterations, or documentation updates.</p>
         </details>
         <details>
             <summary>Which tools do you support?</summary>
-            <p>Unreal Engine, Maya, Blender, Substance, Figma, and Git/Git LFS. We also cover production tooling unique to your studio.</p>
+            <p>Unreal Engine, Unity, Blender, Substance, Figma, GitHub Actions, GitLab CI, Jenkins, CircleCI, Kubernetes, Docker, Terraform, Pulumi, AWS, Azure, GCP, plus Python/Go/TypeScript tooling. If your stack isn’t listed, we’ll adapt.</p>
         </details>
         <details>
             <summary>Where do sessions happen?</summary>
@@ -185,8 +194,8 @@
 <section class="section final-cta" id="contact-cta">
     <div class="final-cta-card">
         <p class="section-eyebrow">Ready to stop learning alone?</p>
-        <h2>Let’s build a studio-ready roadmap together.</h2>
-        <p>Book a free strategy call to audit your current portfolio, set realistic goals, and see if the mentorship is a match.</p>
+        <h2>Let’s design a tutoring plan for your technical art, game, programming, or DevOps goals.</h2>
+        <p>Book a free strategy call to audit your scene, build, or pipeline and outline the private curriculum you need.</p>
         <div class="hero-actions">
             <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book the Free Call</a>
             <a href="{{ site_links.mentoring }}" class="cta-button secondary">Review Mentoring Options</a>

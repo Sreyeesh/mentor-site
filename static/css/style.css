@@ -7,7 +7,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 100px; /* Account for fixed navbar */
+    scroll-padding-top: var(--scroll-offset, 100px); /* Account for fixed navbar */
 }
 
 /* Enhanced smooth scrolling for better performance */
@@ -40,7 +40,7 @@ html {
     --card-bg: #ffffff;
     --nav-bg: rgba(255, 255, 255, 0.9);
     --hero-bg: linear-gradient(135deg, #eef2ff, #f8fbff);
-    --scroll-offset: 100px; /* For smooth scrolling offset */
+    --scroll-offset: clamp(90px, 12vh, 150px); /* For smooth scrolling offset and sticky nav spacing */
 }
 
 [data-theme="dark"] {
@@ -65,6 +65,7 @@ body {
     background-color: var(--bg-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
     overflow-x: hidden; /* Prevent horizontal scroll */
+    padding-top: var(--scroll-offset, 100px); /* Keep content clear of the fixed navbar */
 }
 
 ::selection {
@@ -792,11 +793,159 @@ section h2 {
 
 /* Footer */
 footer {
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    text-align: center;
-    padding: 30px 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background: linear-gradient(135deg, rgba(13, 27, 42, 0.96), rgba(29, 64, 94, 0.9));
+    color: #f7f9ff;
+    padding: 56px 0;
+    transition: background 0.3s ease;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(122, 165, 255, 0.35), transparent 55%);
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.footer-column--brand {
+    max-width: 320px;
+}
+
+.footer-logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #f7f9ff;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+}
+
+.footer-tagline {
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.7rem;
+    color: rgba(247, 249, 255, 0.6);
+}
+
+.footer-description {
+    margin: 0;
+    color: rgba(247, 249, 255, 0.75);
+    line-height: 1.6;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.footer-contact-link {
+    color: #9ec5ff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.footer-contact-link:hover {
+    color: #d3e4ff;
+}
+
+.footer-heading {
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.72rem;
+    color: rgba(247, 249, 255, 0.65);
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.footer-list a {
+    color: #f7f9ff;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color 0.2s ease;
+}
+
+.footer-list a:hover {
+    color: #9ec5ff;
+}
+
+.footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    position: relative;
+    z-index: 1;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: rgba(247, 249, 255, 0.7);
+}
+
+.footer-bottom-links {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.footer-bottom-links a {
+    color: #f7f9ff;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+}
+
+.footer-bottom-links a:hover {
+    color: #9ec5ff;
+}
+
+.footer-bottom-links a:focus-visible,
+.footer-list a:focus-visible,
+.footer-contact-link:focus-visible {
+    outline: 2px solid #9ec5ff;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+@media (max-width: 640px) {
+    .footer-bottom,
+    .footer-bottom-links {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-contact {
+        align-items: center;
+    }
 }
 
 /* Responsive Design */
@@ -2381,11 +2530,11 @@ footer {
 }
 
 .section-eyebrow {
-    letter-spacing: 0.3em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     font-size: 0.75rem;
     color: var(--text-secondary);
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
 }
 
 .hero-points {
@@ -2546,6 +2695,10 @@ footer {
     border-radius: 32px;
     padding: 3rem;
     box-shadow: 0 25px 80px rgba(15, 98, 254, 0.35);
+}
+
+.final-cta-card > .cta-button {
+    margin-top: 1.75rem;
 }
 
 .final-cta-card .cta-button.secondary {

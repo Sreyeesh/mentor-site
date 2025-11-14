@@ -34,18 +34,28 @@ services:
 
   # Alternative service for development
   mentor-site-dev:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     container_name: mentor-site-dev
     ports:
-      - "3001:80"  # Different port for dev
-    volumes:
-      - ./:/app
-      - ./build:/app/build
+      - "3001:5000"  # Map host 3001 to Flask dev server
+    command: python app.py
     environment:
-      - NODE_ENV=development
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
     profiles:
       - dev  # Only start with --profile dev
     restart: "no"
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - .git
+            - __pycache__
+            - node_modules
 
   tests:
     build:

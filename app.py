@@ -28,7 +28,7 @@ SITE_CONFIG = {
     'name': os.getenv('SITE_NAME', 'Sreyeesh Garimella'),
     'tagline': os.getenv(
         'SITE_TAGLINE',
-        'Mentoring & Coaching in Animation and Video Game Development',
+        'Technical Art, Direction, Game Dev & DevOps Tutoring',
     ),
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
     'calendly_link': os.getenv(
@@ -39,17 +39,16 @@ SITE_CONFIG = {
     'meta_description': os.getenv(
         'SITE_META_DESCRIPTION',
         (
-            'One-on-one mentoring and coaching in animation and game '
-            'development — practical guidance for your projects and '
-            'career.'
+            'Private tutoring for technical art, direction, game development, '
+            'and DevOps/programming — custom curriculum with a veteran mentor.'
         ),
     ),
     'focus_areas': os.getenv(
         'SITE_FOCUS_AREAS',
         (
-            'Animation workflow & storytelling,Game design '
-            'fundamentals,Career guidance in creative industries,'
-            'Portfolio and project feedback'
+            'Technical art & tools tutoring,Art direction & cinematic '
+            'feedback,Game development & Unreal mentoring,DevOps/'
+            'programming automation coaching'
         ),
     ).split(','),
     'asset_version': _env('ASSET_VERSION', '1'),

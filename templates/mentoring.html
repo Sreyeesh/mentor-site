@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Toucan Creator Mentorship – 1:1 Coaching in Game Dev, Art & Unreal{% endblock %}
-{% block meta_description %}Four-week mentoring sprints with weekly calls, feedback, and production-tested roadmaps for game dev, animation, and technical artists.{% endblock %}
+{% block title %}Technical Art, Game Dev & DevOps Tutoring – 1:1 Mentorship{% endblock %}
+{% block meta_description %}Four-week tutoring sprints with weekly calls, async reviews, and production-tested curriculum for technical artists, directors, game developers, and DevOps/programming teams.{% endblock %}
 
 {% block content %}
 <section class="page-hero">
     <p class="section-eyebrow">Mentoring</p>
-    <h1>Toucan Creator Mentorship — high-touch coaching for game developers, animators, and technical artists.</h1>
-    <p class="lead">Every engagement is a four-week sprint with live sessions, async notes, and a documented roadmap so you always know what to ship next.</p>
+    <h1>High-touch tutoring for technical art, art direction, programming, and DevOps.</h1>
+    <p class="lead">Each four-week sprint pairs weekly live sessions with async reviews, led by a tutor who has served as a technical artist, director, render wrangler, and developer. Tutoring is the entire practice—no recruiting, just tailored curriculum whether you need CI/CD automation, Unreal production, or cinematic art direction.</p>
     <div class="hero-actions">
         <a href="{{ site_links.contact }}" class="cta-button primary-cta">Apply for Mentorship</a>
         <a href="#pricing" class="cta-button secondary">View Pricing</a>
@@ -22,19 +22,19 @@
     <div class="feature-grid">
         <article class="feature-card">
             <h3>Weekly 60-min calls</h3>
-            <p>Deep dives on your current build or shot with live paint-over, debugging, or pair design.</p>
+            <p>Live tutoring over infrastructure, gameplay builds, or art reviews with screen-shared debugging, paint-overs, and syllabus checkpoints.</p>
         </article>
         <article class="feature-card">
             <h3>Customized assignments</h3>
-            <p>Briefs and references tailored to the role you want—cinematic animator, Unreal tech artist, or gameplay designer.</p>
+            <p>Briefs aligned to your goals—GitOps rollout, Terraform refactor, Unreal milestone, or portfolio upgrade.</p>
         </article>
         <article class="feature-card">
             <h3>Async reviews & DM support</h3>
-            <p>Get annotated notes within 24 hours via Notion + video walkthroughs, plus quick Slack/Discord check-ins.</p>
+            <p>Annotated Loom walkthroughs and Slack/Discord check-ins within 24 hours so blockers never stack up.</p>
         </article>
         <article class="feature-card">
             <h3>End-of-sprint review</h3>
-            <p>We wrap with a portfolio audit, hiring plan, and the next four-week roadmap if you continue.</p>
+            <p>Documented outcomes, teaching notes, and the next four-week curriculum so momentum continues after the sprint.</p>
         </article>
     </div>
 </section>
@@ -50,9 +50,9 @@
             <h3>€690 / 4 weeks</h3>
             <ul>
                 <li>4 × live sessions</li>
-                <li>Weekly assignment briefs</li>
+                <li>Weekly tutoring briefs</li>
                 <li>Async notes within 48 hours</li>
-                <li>Private Notion board + version control checklist</li>
+                <li>Private Notion board + lesson notes</li>
             </ul>
             <a href="{{ site_links.contact }}" class="cta-button secondary full-width">Apply for Core</a>
         </article>
@@ -62,10 +62,21 @@
             <ul>
                 <li>2 × sessions per week</li>
                 <li>Daily async check-ins</li>
-                <li>Production pipeline setup (Git, LFS, build automation)</li>
-                <li>Portfolio polish + recruiter-ready materials</li>
+                <li>Production pipeline setup (GitHub Actions, GitLab CI, Buildkite)</li>
+                <li>Leadership coaching + communication frameworks for tutoring stakeholders</li>
             </ul>
             <a href="{{ site_links.contact }}" class="cta-button primary-cta full-width">Apply for VIP</a>
+        </article>
+        <article class="pricing-card">
+            <p class="pricing-label">DevOps Accelerator</p>
+            <h3>€1,350 / 4 weeks</h3>
+            <ul>
+                <li>Audit + rebuild of CI/CD, build farms, and release scripts</li>
+                <li>Infrastructure-as-code reviews (Terraform, Ansible, Pulumi)</li>
+                <li>Observability setup: dashboards, alerts, on-call runbooks</li>
+                <li>Two paired-programming/tooling sessions each week</li>
+            </ul>
+            <a href="{{ site_links.contact }}" class="cta-button secondary full-width">Apply for DevOps</a>
         </article>
     </div>
 </section>
@@ -77,16 +88,20 @@
     </div>
     <div class="tracks-grid">
         <article class="track-card">
-            <h3>Game Development & Unreal</h3>
-            <p>Gameplay systems, cinematic design, performance profiling, and build pipelines designed for pitching or junior roles.</p>
+            <h3>Technical Art & Tools</h3>
+            <p>Shader authoring, render wrangling, rig optimization, and pipeline scripting with hands-on demos and annotated breakdowns.</p>
         </article>
         <article class="track-card">
-            <h3>Character Design & Art</h3>
-            <p>From thumbnails to polished presentation, with emphasis on storytelling, iteration, and art direction feedback.</p>
+            <h3>Art Direction & Cinematics</h3>
+            <p>Look development, cinematic feedback, presentation sequencing, and critiques that keep teams and classrooms aligned.</p>
         </article>
         <article class="track-card">
-            <h3>Technical Workflow & Pipelines</h3>
-            <p>Source control mastery, project architecture, automation, and documentation so teams can scale with confidence.</p>
+            <h3>Game Development & Programming</h3>
+            <p>Unreal/Unity production oversight, gameplay systems reviews, code architecture tutoring, and milestone planning.</p>
+        </article>
+        <article class="track-card">
+            <h3>DevOps & Platform Systems</h3>
+            <p>CI/CD design, infrastructure-as-code, observability coaching, and automation lessons tailored to your stack.</p>
         </article>
     </div>
 </section>
@@ -103,7 +118,7 @@
         </details>
         <details>
             <summary>Do you offer team mentoring?</summary>
-            <p>Yes, small indie teams can book a shared sprint. We tailor assignments and office hours to your production calendar.</p>
+            <p>Yes. Engineering orgs and creative teams can book shared sprints or office hours. We’ll align on objectives before kickoff so DevOps, gameplay, and art stakeholders see value.</p>
         </details>
         <details>
             <summary>Can I continue after four weeks?</summary>
@@ -120,7 +135,7 @@
     <div class="final-cta-card">
         <p class="section-eyebrow">Mentoring</p>
         <h2>Apply now to reserve your sprint.</h2>
-        <p>Availability is limited to five creators per month so each project receives actionable feedback.</p>
+        <p>Availability is limited to five engineers, teams, or creators per month so every tutoring plan stays high-touch.</p>
         <a href="{{ site_links.contact }}" class="cta-button primary-cta">Apply for Mentorship</a>
     </div>
 </section>

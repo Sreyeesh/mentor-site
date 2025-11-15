@@ -1,9 +1,8 @@
 import os
 import shutil
-from datetime import datetime
 from pathlib import Path
 
-from app import SITE_CONFIG, app
+from app import app
 from blog import load_posts
 
 

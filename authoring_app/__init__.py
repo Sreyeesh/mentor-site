@@ -25,7 +25,10 @@ def create_app() -> Flask:
         MEDIA_UPLOAD_DIR=Path(
             os.getenv('AUTHORING_MEDIA_DIR', default_media_dir)
         ).resolve(),
-        MEDIA_URL_PREFIX=os.getenv('AUTHORING_MEDIA_URL_PREFIX', '/static/uploads'),
+        MEDIA_URL_PREFIX=os.getenv(
+            'AUTHORING_MEDIA_URL_PREFIX',
+            '/static/uploads',
+        ),
         ALLOWED_MEDIA_EXTENSIONS={
             'png',
             'jpg',

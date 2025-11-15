@@ -15,8 +15,8 @@ def test_home_page(client):
     """Test that the home page loads successfully."""
     response = client.get('/')
     assert response.status_code == 200
-    assert b'break into game development' in response.data.lower()
-    assert b'Book a Free 30-Min Strategy Call' in response.data
+    assert b'production-ready mentoring' in response.data.lower()
+    assert b'Get Free 30-Min Strategy Call' in response.data
 
 
 def test_home_page_content(client):
@@ -30,9 +30,9 @@ def test_home_page_content(client):
 def test_new_pages_load(client):
     """Ensure the new top-level pages render."""
     pages = [
-        ('/mentoring/', b'Toucan Creator Mentorship'),
+        ('/mentoring/', b'Toucan Studios O\xc3\x9c mentoring'),
         ('/schools-and-programs/', b'For Schools & Programs'),
-        ('/about/', b'Teaching philosophy'),
+        ('/about/', b'Hands-on mentoring built for production reality.'),
         ('/contact/', b'Book a free 30-minute strategy call.'),
     ]
     for path, marker in pages:

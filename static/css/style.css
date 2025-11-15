@@ -2697,6 +2697,12 @@ footer::before {
     box-shadow: 0 25px 80px rgba(15, 98, 254, 0.35);
 }
 
+.final-cta-card h2,
+.final-cta-card .section-eyebrow,
+.final-cta-card p {
+    color: #fff;
+}
+
 .final-cta-card > .cta-button {
     margin-top: 1.75rem;
 }
@@ -2818,6 +2824,25 @@ footer::before {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     align-items: start;
+}
+
+.headshot-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    align-items: center;
+}
+
+.headshot-media {
+    width: min(360px, 90%);
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.headshot-media img {
+    width: 100%;
+    height: auto;
+    border-radius: 24px;
+    object-fit: cover;
+    box-shadow: 0 25px 60px rgba(13, 19, 42, 0.25);
 }
 
 .bio-list {

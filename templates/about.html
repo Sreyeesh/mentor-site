@@ -1,29 +1,89 @@
 {% extends 'base.html' %}
 
 {% block title %}About {{ config.name }} | Mentor & Director{% endblock %}
-{% block meta_description %}Learn about {{ config.name }}’s background across Disney, Blizzard, DNEG, and GameCity Kajaani plus the teaching philosophy behind the Toucan mentorship.{% endblock %}
+{% block meta_description %}Discover how {{ config.name }} mentors artists, developers, and studios with production-ready coaching informed by experience at Disney, Blizzard Entertainment, DNEG, and indie teams worldwide.{% endblock %}
 
 {% block content %}
 <section class="page-hero">
     <p class="section-eyebrow">About</p>
-    <h1>Hi, I’m {{ config.name }} — mentor, director, and relentless supporter of emerging creators.</h1>
-    <p class="lead">I’ve shipped projects at Disney, Blizzard Entertainment, DNEG, Boulder Media, and GameCity Kajaani, working as a technical artist, render wrangler, director, and tools developer to align story, tech, and craft.</p>
+    <h1>I help artists, developers, and studios work smarter, create faster, and deliver at industry standards.</h1>
+    <p class="lead">Disney, Blizzard Entertainment, DNEG, and indie teams around the globe have trusted me to bridge the gap between creative vision and technical execution because I’ve lived in both the animation/VFX pipeline and the engineering/DevOps space.</p>
 </section>
 
 <section class="section bio-section">
-    <div class="bio-grid">
-        <div>
-            <h2>From AAA cinematics to indie mentorship.</h2>
-            <p>I’ve spent 10+ years building characters, cinematics, pipelines, and automation for global studios. My credits include Overwatch 2, My Little Pony: A New Generation, and Garfield.</p>
-            <p>Along the way I noticed that talented juniors rarely lack passion—they lack direct feedback, production context, and someone willing to review the messy middle. That’s why I built the Toucan mentoring practice, writing curricula for studios, schools, and private students—and tutoring is all I do.</p>
+    <div class="bio-grid headshot-grid">
+        <div class="headshot-media">
+            <img src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}" alt="Portrait of {{ config.name }}" loading="lazy">
         </div>
         <div>
-            <h3>Teaching philosophy</h3>
+            <h2>Hands-on mentoring built for production reality.</h2>
+            <p>My mentoring and coaching practice is fully immersive and results-focused. Whether I’m guiding a junior artist through their first production-ready project, helping a developer adapt to a creative pipeline, or advising an indie team on how to take their idea from concept to delivery, I stay in the trenches with you until the work meets the bar.</p>
+            <p>Because I’ve been responsible for both the artistic craft and the technical infrastructure, I know how to translate between creative language and engineering constraints—so you can stay focused on making something incredible.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="bio-grid">
+        <div>
+            <p>I partner with individuals and studios that want feedback grounded in real-world production. Every engagement is tailored, but the throughline is the same: clear goals, transparent critiques, and actionable next steps that accelerate growth.</p>
+        </div>
+        <div>
+            <h3>People work with me because I bring:</h3>
             <ul class="bio-list">
-                <li><strong>Structure over hype:</strong> Every session ends with measurable homework.</li>
-                <li><strong>Production realism:</strong> We mimic how studios brief, review, and ship work.</li>
-                <li><strong>Friendly accountability:</strong> You always know what “good” looks like before you start.</li>
+                <li><strong>Industry experience:</strong> Credits from Disney, Blizzard, DNEG, and live productions worldwide.</li>
+                <li><strong>Cross-disciplinary insight:</strong> Creative and technical workflows connected end-to-end.</li>
+                <li><strong>Actionable feedback:</strong> Reviews that translate to immediate improvements on the next pass.</li>
             </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="bio-grid">
+        <div>
+            <h2>Toucan Studios OÜ</h2>
+            <p>I run Toucan Studios OÜ where I mentor artists, developers, and game teams to deliver production-ready projects. Together with Game City Kajaani I provide mentorship, technical guidance, and creative direction that prepares emerging talent for the realities of the games industry.</p>
+            <ul class="bio-list">
+                <li>🎮 Mentor Unreal Engine developers from first prototype through release.</li>
+                <li>🎨 Guide animation students through industry workflows and portfolio preparation.</li>
+                <li>⚙️ Deliver training on asset pipelines, project organization, and collaborative production.</li>
+                <li>🤝 Help indie teams align gameplay, art, and technical systems seamlessly.</li>
+                <li>🎤 Host workshops, talks, and one-on-one coaching for creative professionals.</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Mission</h3>
+            <p>I’m here to bridge the gap between creative vision and technical execution. Every coaching engagement pushes projects from concept to completion with workflows that match industry-ready practices.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="bio-grid">
+        <div>
+            <h2>SG Production OÜ — Owner &amp; Technical Director</h2>
+            <p>Since July 2022 I’ve led SG Production OÜ remotely from Valgjärve, Estonia, delivering full-stack web development and creative pipeline automation for animation, VFX, and game studios. My role is part engineering lead, part technical director, and part mentor for teams that want dependable production infrastructure.</p>
+            <p>Key contributions include:</p>
+            <ul class="bio-list">
+                <li>Building custom backends and web applications tailored to studio needs.</li>
+                <li>Developing frontend dashboards for producers, artists, and clients.</li>
+                <li>Automating asset management and creative workflows across animation, VFX, and games.</li>
+                <li>Designing production management tools that support distributed teams.</li>
+                <li>Mentoring cross-functional teams in software best practices and workflow optimization.</li>
+            </ul>
+        </div>
+        <div>
+            <p>At SG Production my mission is to transform creative pipelines into scalable, reliable, and artist-friendly systems so studios can keep their focus on telling stories and building worlds.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="bio-grid">
+        <div>
+            <h3>Open for mentorship, coaching, and consulting</h3>
+            <p>I collaborate with individuals, teams, and studios who want to level up their skills, workflows, and results. If you need someone who speaks both artistry and infrastructure—and can guide you through the realities of production—I’d love to connect.</p>
         </div>
     </div>
 </section>

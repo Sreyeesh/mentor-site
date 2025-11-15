@@ -144,5 +144,102 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // ===== CALENDLY BADGE & TRIGGERS =====
+    const calendlyLink = document.body && document.body.dataset
+        ? document.body.dataset.calendlyLink
+        : null;
+    const contactLinkHref = document.body && document.body.dataset
+        ? document.body.dataset.contactLink
+        : null;
+    if (calendlyLink) {
+        const ensureCalendlyScript = () => new Promise((resolve, reject) => {
+            const existingScript = document.querySelector('script[data-calendly-widget]');
+            if (existingScript) {
+                if (window.Calendly) {
+                    resolve();
+                    return;
+                }
+                existingScript.addEventListener('load', resolve, { once: true });
+                existingScript.addEventListener('error', reject, { once: true });
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = 'https://assets.calendly.com/assets/external/widget.js';
+            script.async = true;
+            script.dataset.calendlyWidget = 'true';
+            script.addEventListener('load', resolve, { once: true });
+            script.addEventListener('error', reject, { once: true });
+            document.head.appendChild(script);
+        });
+
+        const initBadgeWidget = () => {
+            if (window.__calendlyBadgeInitialized) {
+                return;
+            }
+            if (window.Calendly && typeof window.Calendly.initBadgeWidget === 'function') {
+                window.Calendly.initBadgeWidget({
+                    url: calendlyLink,
+                    text: 'Schedule time with me',
+                    color: '#0069ff',
+                    textColor: '#ffffff',
+                    branding: true
+                });
+                window.__calendlyBadgeInitialized = true;
+            }
+        };
+
+        const markContactLinks = () => {
+            if (!contactLinkHref) {
+                return;
+            }
+            const contactAnchors = document.querySelectorAll(`a[href="${contactLinkHref}"]`);
+            contactAnchors.forEach(anchor => {
+                anchor.classList.add('js-calendly-trigger');
+                if (!anchor.dataset.calendlyUrl) {
+                    anchor.dataset.calendlyUrl = calendlyLink;
+                }
+            });
+        };
+
+        const attachCalendlyTriggers = () => {
+            const triggers = document.querySelectorAll('.js-calendly-trigger');
+            triggers.forEach(trigger => {
+                if (trigger.dataset.calendlyBound === 'true') {
+                    return;
+                }
+
+                trigger.addEventListener('click', (event) => {
+                    const targetUrl = trigger.dataset.calendlyUrl || calendlyLink;
+                    const canOpenPopup = window.Calendly && typeof window.Calendly.initPopupWidget === 'function';
+
+                    if (canOpenPopup) {
+                        event.preventDefault();
+                        window.Calendly.initPopupWidget({ url: targetUrl });
+                    } else if (trigger.tagName === 'A') {
+                        trigger.setAttribute('target', '_blank');
+                        trigger.href = targetUrl;
+                    } else {
+                        window.open(targetUrl, '_blank');
+                    }
+                });
+
+                trigger.dataset.calendlyBound = 'true';
+            });
+        };
+
+        markContactLinks();
+        attachCalendlyTriggers();
+        ensureCalendlyScript()
+            .then(() => {
+                initBadgeWidget();
+                attachCalendlyTriggers();
+                console.log('✅ Calendly badge initialized');
+            })
+            .catch((error) => {
+                console.error('❌ Calendly widget failed to load', error);
+            });
+    }
+
     console.log('🎉 All functionality initialized!');
 });

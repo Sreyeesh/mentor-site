@@ -15,8 +15,8 @@ def test_home_page(client):
     """Test that the home page loads successfully."""
     response = client.get('/')
     assert response.status_code == 200
-    assert b'production-ready mentoring' in response.data.lower()
-    assert b'Get Free 30-Min Strategy Call' in response.data
+    assert b'private mentoring for technical art' in response.data.lower()
+    assert b'book a free 30-min strategy call' in response.data.lower()
 
 
 def test_home_page_content(client):

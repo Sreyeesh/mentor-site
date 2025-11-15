@@ -31,16 +31,8 @@
         <div class="contact-card">
             <h2>Booking widget</h2>
             <div class="booking-placeholder">
-                <!-- Calendly inline widget begin -->
-                <div id="calendly-inline-widget" class="calendly-inline-widget" aria-live="polite" aria-busy="true"
-                    style="min-width:320px;height:700px;">
-                    <p class="calendly-loading">Loading available sessions…</p>
-                </div>
-                <noscript class="calendly-noscript">
-                    Calendly requires JavaScript to display the booking form. You can still <a href="{{ config.calendly_link }}"
-                        target="_blank" rel="noopener">book a slot directly on Calendly</a>.
-                </noscript>
-                <!-- Calendly inline widget end -->
+                <p>Use the floating Calendly badge in the corner to pick a time, or <a href="{{ config.calendly_link }}"
+                        target="_blank" rel="noopener">open the booking page in a new tab</a>.</p>
             </div>
         </div>
     </div>
@@ -57,51 +49,34 @@
 
 {% block scripts %}
     {{ super() }}
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const container = document.getElementById('calendly-inline-widget');
-            if (!container) {
-                return;
-            }
-
+        (function () {
             const calendlyUrl = {{ config.calendly_link | tojson }};
-            const scriptSelector = 'script[data-calendly-widget]';
 
-            const initializeWidget = () => {
-                if (!window.Calendly || typeof window.Calendly.initInlineWidget !== 'function') {
+            const initBadge = () => {
+                if (!window.Calendly || typeof window.Calendly.initBadgeWidget !== 'function') {
                     return;
                 }
 
-                window.Calendly.initInlineWidget({
+                window.Calendly.initBadgeWidget({
                     url: calendlyUrl,
-                    parentElement: container,
+                    text: 'Schedule time with me',
+                    color: '#0069ff',
+                    textColor: '#ffffff',
+                    branding: true,
                 });
-                container.removeAttribute('aria-busy');
             };
 
-            const existingScript = document.querySelector(scriptSelector);
-            if (existingScript) {
-                if (existingScript.dataset.loaded === 'true') {
-                    initializeWidget();
-                } else {
-                    existingScript.addEventListener('load', initializeWidget, { once: true });
+            window.addEventListener('load', function onLoad() {
+                initBadge();
+                if (!window.Calendly || typeof window.Calendly.initBadgeWidget !== 'function') {
+                    const script = document.querySelector('script[src*=\"calendly.com/assets/external/widget.js\"]');
+                    if (script) {
+                        script.addEventListener('load', initBadge, { once: true });
+                    }
                 }
-                return;
-            }
-
-            const calendlyScript = document.createElement('script');
-            calendlyScript.src = 'https://assets.calendly.com/assets/external/widget.js';
-            calendlyScript.async = true;
-            calendlyScript.dataset.calendlyWidget = 'true';
-            calendlyScript.addEventListener('load', () => {
-                calendlyScript.dataset.loaded = 'true';
-                initializeWidget();
             }, { once: true });
-            calendlyScript.addEventListener('error', () => {
-                container.setAttribute('data-calendly-error', 'load_failed');
-            });
-
-            document.head.appendChild(calendlyScript);
-        });
+        }());
     </script>
 {% endblock %}

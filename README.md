@@ -231,7 +231,7 @@ The `.env.example` file documents every supported key. Common ones are listed be
 | --- | --- | --- |
 | `SITE_NAME` | Display name used across templates | `Sreyeesh Garimella` |
 | `SITE_EMAIL` | Contact email surfaced on the site | `toucan.sg@gmail.com` |
-| `SITE_CALENDLY_LINK` | Calendly CTA URL | `https://calendly.com/toucan-sg/60min` |
+| `SITE_CALENDLY_LINK` | Calendly CTA URL | `https://calendly.com/toucan-sg/consulting-link` |
 | `SITE_META_DESCRIPTION` | SEO description injected into templates | preset marketing copy |
 | `SITE_FOCUS_AREAS` | Comma-separated list rendered as focus areas | preset sample values |
 | `BASE_PATH` | Optional URL prefix when hosting under a subdirectory | empty |

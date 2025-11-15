@@ -2819,6 +2819,17 @@ footer::before {
     margin-top: 1rem;
 }
 
+.calendly-loading {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.calendly-noscript {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
 .bio-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

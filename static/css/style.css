@@ -2819,6 +2819,33 @@ footer::before {
     margin-top: 1rem;
 }
 
+.calendly-badge-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem auto;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    border: none;
+    background: #0069ff;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(0, 105, 255, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.calendly-badge-button:hover,
+.calendly-badge-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 36px rgba(0, 105, 255, 0.4);
+}
+
+.calendly-fallback {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
 .bio-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

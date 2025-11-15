@@ -33,7 +33,7 @@ SITE_CONFIG = {
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
     'calendly_link': os.getenv(
         'SITE_CALENDLY_LINK',
-        'https://calendly.com/toucan-sg/60min',
+        'https://calendly.com/toucan-sg/consulting-link',
     ),
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),
     'meta_description': os.getenv(

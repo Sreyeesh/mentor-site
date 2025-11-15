@@ -1,12 +1,5 @@
 {% extends 'base.html' %}
 
-{% block head_extra %}
-    {{ super() }}
-    <link rel="preconnect" href="https://assets.calendly.com" crossorigin>
-    <link rel="dns-prefetch" href="https://assets.calendly.com">
-    <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
-{% endblock %}
-
 {% block title %}Book a Call | {{ config.name }}{% endblock %}
 {% block meta_description %}Get in touch to book a 30-minute strategy call or request workshops for your school or studio.{% endblock %}
 
@@ -31,8 +24,14 @@
         <div class="contact-card">
             <h2>Booking widget</h2>
             <div class="booking-placeholder">
-                <p>Use the floating Calendly badge in the corner to pick a time, or <a href="{{ config.calendly_link }}"
-                        target="_blank" rel="noopener">open the booking page in a new tab</a>.</p>
+                <p>Tap the badge to open Calendly and lock a slot instantly.</p>
+                <button class="calendly-badge-button js-calendly-trigger" type="button"
+                    data-calendly-url="{{ config.calendly_link }}">
+                    Schedule time with me
+                </button>
+                <p class="calendly-fallback">
+                    Prefer a new tab? <a href="{{ config.calendly_link }}" target="_blank" rel="noopener">Open Calendly directly</a>.
+                </p>
             </div>
         </div>
     </div>
@@ -45,38 +44,4 @@
         <a href="{{ site_links.schools }}" class="cta-button secondary">See Workshops</a>
     </div>
 </section>
-{% endblock %}
-
-{% block scripts %}
-    {{ super() }}
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    <script>
-        (function () {
-            const calendlyUrl = {{ config.calendly_link | tojson }};
-
-            const initBadge = () => {
-                if (!window.Calendly || typeof window.Calendly.initBadgeWidget !== 'function') {
-                    return;
-                }
-
-                window.Calendly.initBadgeWidget({
-                    url: calendlyUrl,
-                    text: 'Schedule time with me',
-                    color: '#0069ff',
-                    textColor: '#ffffff',
-                    branding: true,
-                });
-            };
-
-            window.addEventListener('load', function onLoad() {
-                initBadge();
-                if (!window.Calendly || typeof window.Calendly.initBadgeWidget !== 'function') {
-                    const script = document.querySelector('script[src*=\"calendly.com/assets/external/widget.js\"]');
-                    if (script) {
-                        script.addEventListener('load', initBadge, { once: true });
-                    }
-                }
-            }, { once: true });
-        }());
-    </script>
 {% endblock %}

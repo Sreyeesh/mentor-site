@@ -7,11 +7,14 @@
     <meta name="description" content="{% block meta_description %}{{ config.meta_description }}{% endblock %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://assets.calendly.com" crossorigin>
+    <link rel="dns-prefetch" href="https://assets.calendly.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
+    <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
     {% block head_extra %}{% endblock %}
 </head>
-<body class="{{ body_class | default('') }}">
+<body class="{{ body_class | default('') }}" data-calendly-link="{{ config.calendly_link }}" data-contact-link="{{ site_links.contact }}">
     <nav class="navbar">
         <div class="wrap">
             <div class="nav-content">
@@ -23,7 +26,12 @@
                 </div>
                 <div class="nav-links" id="nav-links">
                     {% for item in nav_links %}
-                        <a href="{{ item.href }}" class="{% if item.is_cta %}nav-link--cta{% endif %}">{{ item.label }}</a>
+                        {% set is_contact_link = item.href == site_links.contact %}
+                        <a href="{{ item.href }}"
+                            class="{% if item.is_cta %}nav-link--cta{% endif %}{% if is_contact_link %} js-calendly-trigger{% endif %}"
+                            {% if is_contact_link %}data-calendly-url="{{ config.calendly_link }}"{% endif %}>
+                            {{ item.label }}
+                        </a>
                     {% endfor %}
                 </div>
                 <div class="nav-controls">

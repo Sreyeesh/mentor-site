@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% block head_extra %}
+    {{ super() }}
+    <link rel="preconnect" href="https://assets.calendly.com" crossorigin>
+    <link rel="dns-prefetch" href="https://assets.calendly.com">
+    <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
+{% endblock %}
+
 {% block title %}Book a Call | {{ config.name }}{% endblock %}
 {% block meta_description %}Get in touch to book a 30-minute strategy call or request workshops for your school or studio.{% endblock %}
 
@@ -25,8 +32,14 @@
             <h2>Booking widget</h2>
             <div class="booking-placeholder">
                 <!-- Calendly inline widget begin -->
-                <div class="calendly-inline-widget" data-url="{{ config.calendly_link }}" style="min-width:320px;height:700px;"></div>
-                <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+                <div id="calendly-inline-widget" class="calendly-inline-widget" aria-live="polite" aria-busy="true"
+                    style="min-width:320px;height:700px;">
+                    <p class="calendly-loading">Loading available sessions…</p>
+                </div>
+                <noscript class="calendly-noscript">
+                    Calendly requires JavaScript to display the booking form. You can still <a href="{{ config.calendly_link }}"
+                        target="_blank" rel="noopener">book a slot directly on Calendly</a>.
+                </noscript>
                 <!-- Calendly inline widget end -->
             </div>
         </div>
@@ -40,4 +53,55 @@
         <a href="{{ site_links.schools }}" class="cta-button secondary">See Workshops</a>
     </div>
 </section>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const container = document.getElementById('calendly-inline-widget');
+            if (!container) {
+                return;
+            }
+
+            const calendlyUrl = {{ config.calendly_link | tojson }};
+            const scriptSelector = 'script[data-calendly-widget]';
+
+            const initializeWidget = () => {
+                if (!window.Calendly || typeof window.Calendly.initInlineWidget !== 'function') {
+                    return;
+                }
+
+                window.Calendly.initInlineWidget({
+                    url: calendlyUrl,
+                    parentElement: container,
+                });
+                container.removeAttribute('aria-busy');
+            };
+
+            const existingScript = document.querySelector(scriptSelector);
+            if (existingScript) {
+                if (existingScript.dataset.loaded === 'true') {
+                    initializeWidget();
+                } else {
+                    existingScript.addEventListener('load', initializeWidget, { once: true });
+                }
+                return;
+            }
+
+            const calendlyScript = document.createElement('script');
+            calendlyScript.src = 'https://assets.calendly.com/assets/external/widget.js';
+            calendlyScript.async = true;
+            calendlyScript.dataset.calendlyWidget = 'true';
+            calendlyScript.addEventListener('load', () => {
+                calendlyScript.dataset.loaded = 'true';
+                initializeWidget();
+            }, { once: true });
+            calendlyScript.addEventListener('error', () => {
+                container.setAttribute('data-calendly-error', 'load_failed');
+            });
+
+            document.head.appendChild(calendlyScript);
+        });
+    </script>
 {% endblock %}

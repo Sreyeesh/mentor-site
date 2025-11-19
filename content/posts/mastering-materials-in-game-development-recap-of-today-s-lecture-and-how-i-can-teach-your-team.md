@@ -181,12 +181,6 @@ If you’d like to:
 - adapt it to focus on a specific engine (e.g. Unreal-only), or  
 - build a small training program for your students or team,
 
-you can reach me here:
-
-- **Contact:** `[[add your email or contact form link here]]`  
-- **Subject line suggestion:** *“Materials Lecture / Training Inquiry”*  
-- Or connect via: `[[LinkedIn / Discord / other channel you prefer]]`
-
 Tell me a bit about:
 - who your audience is (students, studio team, community)  
 - their level (beginner / intermediate / mixed)  

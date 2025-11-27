@@ -1,8 +1,8 @@
 ---
 date: '2025-11-25'
-description: "Pipeline Tools Weekly 0.1.7: a lightweight production
-  pipeline CLI for solo creators and small studios to organize shows, assets, shots,
-  tasks, and versions locally."
+description: 'Pipeline Tools Weekly 0.1.7: a lightweight production pipeline CLI for
+  solo creators and small studios to organize shows, assets, shots, tasks, and versions
+  locally.'
 excerpt: Pipeline Tools Weekly 0.1.7 introduces a lightweight production pipeline
   CLI for solo creators and small studios, standardizing project folders and tracking
   shows, assets, shots, tasks, and versions in a local SQLite database. Keep your

@@ -72,36 +72,30 @@ python app.py
 ## 📁 Project Structure
 
 ```
-.
-├── app.py                     # Flask application entry point
-├── deploy.sh                  # Local deployment script
-├── docker-compose.yml         # Docker Compose setup
-├── Dockerfile                 # Docker configuration
-├── .env                       # Environment variables (local)
-├── .env.example              # Environment variables template
-├── .flake8                    # Flake8 configuration
+mentor-site/
+├── app.py                      # Main Flask app (development)
+├── author_app.py              # Authoring tool entry point
 ├── freeze.py                  # Static site generator
-├── .github/
-│   └── workflows/
-│       └── deploy-pages.yml   # GitHub Actions deployment
-├── .gitignore                 # Git ignore rules
-├── pytest.ini                # Pytest configuration
-├── README.md                  # Project documentation
 ├── requirements.txt           # Python dependencies
-├── static/
-│   ├── css/
-│   │   └── style.css         # Main stylesheet
-│   ├── images/
-│   │   ├── GameCity.png      # Game development image
-│   │   └── SreyeeshProfilePic.jpg  # Profile image
-│   └── js/
-│       └── script.js         # JavaScript functionality
-├── templates/
-│   └── index.html            # Main site template
-└── tests/
-    └── test_app.py           # Test suite
-
-9 directories, 19 files
+├── docker-compose.yml         # Docker services
+├── Dockerfile                 # Production container
+├── Dockerfile.dev             # Development container
+│
+├── authoring_app/             # Blog CMS
+│   ├── views.py              # CRUD routes
+│   └── templates/authoring/  # CMS UI
+│
+├── blog/                      # Blog utilities
+│   └── utils.py              # Post parsing & rendering
+│
+├── content/posts/             # Markdown blog posts
+├── static/                    # CSS, JS, images, uploads
+├── templates/                 # Jinja2 templates
+├── build/                     # Generated static site
+├── tests/                     # Pytest test suite
+│
+└── .github/workflows/
+    └── deploy-pages.yml       # CI/CD pipeline
 ```
 
 ## 🛠️ Development
@@ -235,44 +229,34 @@ The `.env.example` file documents every supported key. Common ones are listed be
 
 Set environment variables in `.env` for direct Flask runs or export them before launching Docker containers as needed.
 
-## Repository structure
-```
-.
-├── app.py
-├── author_app.py
-├── authoring_app/
-│   ├── __init__.py
-│   ├── templates/
-│   └── views.py
-├── blog/
-│   ├── __init__.py
-│   └── utils.py
-├── content/
-│   └── posts/
-├── docker-compose.yml
-├── deploy.sh
-├── freeze.py
-├── quick-rebuild.sh
-├── requirements.txt
-├── static/
-│   ├── css/
-│   ├── images/
-│   └── js/
-├── templates/
-│   ├── blog/
-│   └── index.html
-└── tests/
-    ├── conftest.py
-    ├── test_app.py
-    ├── test_authoring_app.py
-    ├── test_blog_utils.py
-    └── test_freeze_utils.py
-```
+## 🚀 Deployment
 
-## Deployment
-- `deploy.sh` builds and runs the static site locally using Docker (and can include the authoring tool).
-- `.github/workflows/deploy-pages.yml` publishes the static `build/` directory to GitHub Pages when `master` is updated.
-- You can host the `build/` directory on any static file host (S3, Netlify, GitHub Pages, etc.).
+This site is deployed to **GitHub Pages** using an automated CI/CD pipeline.
+
+### How it works
+
+1. **Local development**: Make changes using the authoring tool or by editing files directly
+2. **Generate static site**: Run `python freeze.py` to build the `build/` directory
+3. **Commit changes**: Commit both your source changes and the updated `build/` directory
+4. **Push to master**: `git push origin master`
+5. **Automatic deployment**: GitHub Actions automatically deploys the `build/` directory to GitHub Pages
+
+### GitHub Actions workflow
+
+The `.github/workflows/deploy-pages.yml` pipeline:
+- Runs linting with flake8
+- Runs the test suite with pytest
+- Generates the static site with `freeze.py`
+- Deploys the `build/` directory to GitHub Pages
+
+### Local testing with deploy.sh
+
+Test the production static site locally before deploying:
+
+```bash
+./deploy.sh                    # Static site only on http://localhost:5000/
+./deploy.sh --with-authoring   # Includes authoring tool
+```
 
 ## License
 This project is private and proprietary. All rights reserved.

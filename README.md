@@ -1,78 +1,73 @@
 # Mentor Site
 
-Mentor Site is a Flask-based mentoring website that can run dynamically for local development and freeze into a static site for deployment. The repository also bundles a Markdown authoring tool so you can draft and manage blog posts without hand-editing files.
+A professional Flask-based mentoring website with hybrid architecture: dynamic development mode for live editing and static site generation for fast, secure production hosting. Includes a built-in content management system (CMS) for creating and managing blog posts without manual file editing.
+
+## 🌟 Features
+
+- **Hybrid Architecture**: Dynamic Flask app for development, frozen static HTML for production
+- **Built-in CMS**: Web-based authoring tool for blog post management
+- **Markdown Content**: Write in Markdown with YAML front matter
+- **Media Management**: Upload and manage images, videos, and audio files
+- **Static Site Generation**: One-command freeze to production-ready HTML
+- **Docker Support**: Complete containerized workflows for development and deployment
+- **CI/CD Ready**: GitHub Actions pipeline for automated deployment
+- **SEO Optimized**: Meta descriptions, canonical URLs, and social sharing support
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Python 3.11+
-- Docker (optional)
+- Docker and Docker Compose (optional, for containerized workflows)
 - Git
 
-### Local Development
+### Fastest Start (Docker)
 
 ```bash
 # Clone the repository
 git clone <your-repo-url>
 cd mentor-site
 
+# Copy environment template
+cp .env.example .env
+
+# Start the authoring tool
+docker-compose --profile authoring up authoring-tool
+# Open http://localhost:5001/authoring/ to create content
+
+# Build and view static site
+docker-compose up --build mentor-site
+# Open http://localhost:3000/
+```
+
+### Local Python Development
+
+```bash
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
 # Install dependencies
 pip install -r requirements.txt
 
-# Run locally
+# Copy environment template
+cp .env.example .env
+
+# Run development server
 python app.py
+# Open http://localhost:5000/
 ```
 
-### Docker Development
+## 📋 Table of Contents
 
-```bash
-# Build and run with Docker Compose
-docker-compose up --build
-
-# Or use custom deployment script
-./deploy.sh
-```
-
-## What's inside
-- `app.py` – Flask entry point used during interactive development.
-- `freeze.py` – Static site generator that exports `build/` with production-ready HTML.
-- `author_app.py` & `authoring_app/` – Flask blueprint and views for the authoring tool.
-- `blog/` – Helpers for loading Markdown content and rendering blog posts.
-- `content/` – Source Markdown posts; what the authoring tool reads and writes.
-- `deploy.sh`, `docker-compose.yml`, `Dockerfile*` – Container workflows for the static site and authoring tool.
-- `tests/` – Pytest suite covering the site, blog utilities, and authoring flows.
-
-## Prerequisites
-- Python 3.11
-- pip (ships with Python)
-- Docker and Docker Compose v2 (optional, required for container workflows)
-- Git
-
-## Local development (Python)
-1. Clone the repository and create a virtual environment:
-   ```bash
-   git clone <your-repo-url>
-   cd mentor-site
-   python -m venv .venv
-   source .venv/bin/activate
-   ```
-2. Install dependencies and create a working `.env`:
-   ```bash
-   pip install -r requirements.txt
-   cp .env.example .env
-   ```
-   Update `.env` with site content (name, email, Calendly link, etc.). Leave `BASE_PATH` empty for local development so the app serves from the root (`/`).
-3. Run the Flask app:
-   ```bash
-   python app.py
-   ```
-   The site is available at `http://localhost:5000/`. If you set `BASE_PATH`, the app will serve from that prefix instead (for example `/mentor-site`).
-
-### Generate the static site
-Run the freezer to build production output:
-```bash
-python freeze.py
-```
+- [Project Structure](#-project-structure)
+- [Development Workflows](#-development-workflows)
+- [Authoring Tool Guide](#-authoring-tool-guide)
+- [Static Site Generation](#-static-site-generation)
+- [Docker Workflows](#-docker-workflows)
+- [Testing](#-testing)
+- [Environment Configuration](#-environment-configuration)
+- [Deployment](#-deployment)
+- [Content Management](#-content-management)
 
 ## 📁 Project Structure
 

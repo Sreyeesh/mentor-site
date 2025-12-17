@@ -110,6 +110,7 @@ SITE_URL=https://your-domain.com
 BASE_PATH=/mentor-site
 FLASK_DEBUG=True
 PLAUSIBLE_SCRIPT_URL=https://plausible.io/js/your-site.js
+PLAUSIBLE_DOMAIN=mentor.your-domain.com
 ```
 
 `SITE_URL` should be the fully qualified domain for the deployed site (for example,
@@ -119,7 +120,26 @@ your posts.
 
 `PLAUSIBLE_SCRIPT_URL` is optional. When it is set, the base template injects the
 Plausible analytics loader plus the initialization snippet so you can enable
-privacy-friendly tracking without editing templates.
+privacy-friendly tracking without editing templates. Set `PLAUSIBLE_DOMAIN` to
+the exact domain you registered with Plausible so the script includes the
+required `data-domain` attribute for automatic detection.
+
+If you prefer to drop in the Plausible snippet manually, add this block inside
+`<head>` of `templates/base.html`:
+
+```html
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-Koa-AcVzVzVMrXEYD5VkD.js"></script>
+<script>
+  window.plausible = window.plausible || function () {
+    (plausible.q = plausible.q || []).push(arguments);
+  };
+  plausible.init = plausible.init || function (options) {
+    plausible.o = options || {};
+  };
+  plausible.init();
+</script>
+```
 
 ### Running Tests
 ```bash

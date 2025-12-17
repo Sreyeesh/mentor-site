@@ -109,12 +109,17 @@ SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link
 SITE_URL=https://your-domain.com
 BASE_PATH=/mentor-site
 FLASK_DEBUG=True
+PLAUSIBLE_SCRIPT_URL=https://plausible.io/js/your-site.js
 ```
 
 `SITE_URL` should be the fully qualified domain for the deployed site (for example,
 `https://mentor.yourdomain.com`). It is used to build canonical URLs and social
 share links so networks like LinkedIn and X always receive a complete link to
 your posts.
+
+`PLAUSIBLE_SCRIPT_URL` is optional. When it is set, the base template injects the
+Plausible analytics loader plus the initialization snippet so you can enable
+privacy-friendly tracking without editing templates.
 
 ### Running Tests
 ```bash

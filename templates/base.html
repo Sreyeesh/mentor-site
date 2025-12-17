@@ -12,6 +12,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
     <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
+    {% if config.plausible_script_url %}
+        <script async src="{{ config.plausible_script_url }}"></script>
+        <script>
+            window.plausible = window.plausible || function () { (plausible.q = plausible.q || []).push(arguments) };
+            plausible.init = plausible.init || function (options) { plausible.o = options || {} };
+            plausible.init();
+        </script>
+    {% endif %}
     {% block head_extra %}{% endblock %}
 </head>
 <body class="{{ body_class | default('') }}" data-calendly-link="{{ config.calendly_link }}" data-contact-link="{{ site_links.contact }}">

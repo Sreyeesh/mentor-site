@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 
 from dotenv import load_dotenv
-from flask import Flask, abort, render_template, request, url_for
+from flask import Flask, abort, make_response, render_template, request, url_for
 
 load_dotenv()
 
@@ -130,6 +130,17 @@ def build_page_context(
     return context
 
 
+def build_absolute_url(path: str) -> str:
+    """Return a fully qualified URL for sitemap/robots usage."""
+
+    site_url = SITE_CONFIG.get('site_url', '').rstrip('/')
+    normalized_path = path if path.startswith('/') else f"/{path}"
+    if site_url:
+        return f"{site_url}{normalized_path}"
+    base = request.url_root.rstrip('/')
+    return f"{base}{normalized_path}"
+
+
 @app.route('/')
 def home():
     return render_template('home.html', **build_page_context(page_slug='home'))
@@ -225,6 +236,60 @@ def blog_detail(slug: str):
             hero_image_url=hero_image_url,
         ),
     )
+
+
+@app.route('/sitemap.xml')
+def sitemap():
+    posts = load_posts()
+    links = build_site_links()
+    urls = []
+
+    static_pages = [
+        links['home'],
+        links['mentoring'],
+        links['schools'],
+        links['about'],
+        links['blog'],
+        links['contact'],
+    ]
+
+    for page in static_pages:
+        urls.append(
+            {
+                'loc': build_absolute_url(page),
+                'lastmod': datetime.utcnow().date().isoformat(),
+                'changefreq': 'weekly',
+            }
+        )
+
+    for post in posts:
+        post_path = f"{links['blog']}{post['slug']}/"
+        last_modified = post.get('updated_at') or post.get('date')
+        urls.append(
+            {
+                'loc': build_absolute_url(post_path),
+                'lastmod': last_modified,
+                'changefreq': 'monthly',
+            }
+        )
+
+    response = make_response(
+        render_template('sitemap.xml', urls=urls),
+    )
+    response.headers['Content-Type'] = 'application/xml'
+    return response
+
+
+@app.route('/robots.txt')
+def robots_txt():
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        f"Sitemap: {build_absolute_url('/sitemap.xml')}",
+    ]
+    response = make_response("\n".join(lines) + "\n")
+    response.headers['Content-Type'] = 'text/plain'
+    return response
 
 
 if __name__ == '__main__':

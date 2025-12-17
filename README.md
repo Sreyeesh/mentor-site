@@ -141,6 +141,21 @@ If you prefer to drop in the Plausible snippet manually, add this block inside
 </script>
 ```
 
+### SEO Essentials
+
+- `sitemap.xml` is generated dynamically from every static page and published blog
+  post. Visit `http://localhost:5000/sitemap.xml` (or your deployed URL) to
+  confirm the XML output before submitting it to search engines.
+- `robots.txt` is also served automatically at `/robots.txt` with a pointer to
+  the sitemap. Run `curl http://localhost:5000/robots.txt` to double-check the
+  contents in development.
+- To connect Google Search Console: add your verified domain (recommended),
+  upload the provided DNS TXT record at your registrar, then submit the sitemap
+  URL (`https://your-domain.com/sitemap.xml`) once verification succeeds.
+- The frontend uses a responsive layout with lightweight CSS/JS; keep static
+  assets optimized (images in `static/`) to maintain fast load times on mobile
+  devices.
+
 ### Running Tests
 ```bash
 pytest

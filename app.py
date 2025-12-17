@@ -2,7 +2,14 @@ import os
 from datetime import datetime
 
 from dotenv import load_dotenv
-from flask import Flask, abort, make_response, render_template, request, url_for
+from flask import (
+    Flask,
+    abort,
+    make_response,
+    render_template,
+    request,
+    url_for,
+)
 
 load_dotenv()
 
@@ -39,8 +46,9 @@ SITE_CONFIG = {
     'meta_description': os.getenv(
         'SITE_META_DESCRIPTION',
         (
-            'Private tutoring for technical art, direction, game development, '
-            'and DevOps/programming — custom curriculum with a veteran mentor.'
+            'Mentorship for technical artists, developers, and studios — tutoring '
+            'in Unreal Engine workflows, DevOps automation, and creative pipelines '
+            'that ship products faster.'
         ),
     ),
     'focus_areas': os.getenv(

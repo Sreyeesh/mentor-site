@@ -13,7 +13,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
     <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
     {% if config.plausible_script_url %}
-        <script async src="{{ config.plausible_script_url }}"></script>
+        <script
+            defer
+            src="{{ config.plausible_script_url }}"
+            {% if config.plausible_domain %}data-domain="{{ config.plausible_domain }}"{% endif %}
+        ></script>
         <script>
             window.plausible = window.plausible || function () { (plausible.q = plausible.q || []).push(arguments) };
             plausible.init = plausible.init || function (options) { plausible.o = options || {} };

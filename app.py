@@ -109,15 +109,9 @@ def build_primary_nav(base_path_override: str | None = None) -> list:
     links = build_site_links(base_path_override)
     return [
         {'label': 'Home', 'href': links['home']},
-        {'label': 'Mentoring', 'href': links['mentoring']},
-        {'label': 'For Schools & Programs', 'href': links['schools']},
+        {'label': 'Tutoring', 'href': links['mentoring']},
         {'label': 'About', 'href': links['about']},
         {'label': 'Blog', 'href': links['blog']},
-        {
-            'label': 'Contact',
-            'href': links['contact'],
-            'is_cta': True,
-        },
     ]
 
 

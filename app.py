@@ -46,9 +46,9 @@ SITE_CONFIG = {
     'meta_description': os.getenv(
         'SITE_META_DESCRIPTION',
         (
-            'Mentorship for technical artists, developers, and studios — tutoring '
-            'in Unreal Engine workflows, DevOps automation, and creative pipelines '
-            'that ship products faster.'
+            'Mentorship for technical artists, developers, and studios — '
+            'tutoring in Unreal Engine workflows, DevOps automation, and '
+            'creative pipelines that ship products faster.'
         ),
     ),
     'focus_areas': os.getenv(

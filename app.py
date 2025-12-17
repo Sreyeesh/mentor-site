@@ -53,6 +53,7 @@ SITE_CONFIG = {
     ).split(','),
     'asset_version': _env('ASSET_VERSION', '1'),
     'plausible_script_url': _env('PLAUSIBLE_SCRIPT_URL'),
+    'plausible_domain': _env('PLAUSIBLE_DOMAIN'),
 }
 
 

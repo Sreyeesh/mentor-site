@@ -43,7 +43,7 @@ html {
     --scroll-offset: clamp(90px, 12vh, 150px); /* For smooth scrolling offset and sticky nav spacing */
 }
 
-[data-theme="dark"] {
+html[data-theme="dark"] {
     --bg-primary: #0b1220;
     --bg-secondary: #10182a;
     --text-primary: #e6ebf2;
@@ -55,6 +55,20 @@ html {
     --card-bg: rgba(255, 255, 255, 0.03);
     --nav-bg: rgba(11, 17, 29, 0.9);
     --hero-bg: transparent;
+}
+
+html[data-theme="light"] {
+    --bg-primary: #f5f6fb;
+    --bg-secondary: #ffffff;
+    --text-primary: #0d1b2a;
+    --text-secondary: #5a6275;
+    --accent-primary: #0f62fe;
+    --accent-secondary: #7aa5ff;
+    --border-color: #e0e4f0;
+    --shadow-color: rgba(13, 19, 42, 0.1);
+    --card-bg: #ffffff;
+    --nav-bg: rgba(255, 255, 255, 0.9);
+    --hero-bg: linear-gradient(135deg, #eef2ff, #f8fbff);
 }
 
 /* Base styles using CSS variables */
@@ -3123,15 +3137,30 @@ footer::before {
 
 .process-steps li span {
     display: inline-flex;
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: var(--accent-primary);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(230, 235, 242, 0.92);
+    font-weight: 600;
+    font-size: 0.95rem;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.8rem;
+    position: relative;
+}
+
+.process-steps li span::after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #ffe071;
+    position: absolute;
+    top: 6px;
+    right: 5px;
+    opacity: 0.6;
 }
 
 .feature-list--grouped {

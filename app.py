@@ -28,7 +28,28 @@ if BASE_PATH and not BASE_PATH.startswith('/'):
     BASE_PATH = f"/{BASE_PATH}"
 
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 from blog import find_post, load_posts  # noqa: E402
+
+
+class BasePathMiddleware:
+    """Allow serving the Flask app under a sub-path when BASE_PATH is set."""
+
+    def __init__(self, wsgi_app, base_path: str):
+        self.wsgi_app = wsgi_app
+        self.base_path = base_path
+
+    def __call__(self, environ, start_response):
+        base_path = self.base_path
+        if not base_path:
+            return self.wsgi_app(environ, start_response)
+
+        path_info = environ.get('PATH_INFO', '')
+        if path_info.startswith(base_path):
+            trimmed = path_info[len(base_path) :]
+            environ['PATH_INFO'] = trimmed or '/'
+        return self.wsgi_app(environ, start_response)
 
 
 SITE_CONFIG = {
@@ -73,10 +94,23 @@ def _normalize_base_path(raw: str | None) -> str:
         return ''
     if not raw.startswith('/'):
         raw = f"/{raw}"
-    return raw.rstrip('/')
+    normalized = raw.rstrip('/')
+    if normalized == '':
+        return ''
+    return normalized
 
 
-app.config['SITE_BASE_PATH'] = _normalize_base_path(BASE_PATH)
+def configure_base_path(raw: str | None) -> None:
+    normalized = _normalize_base_path(raw)
+    app.config['SITE_BASE_PATH'] = normalized
+    original_wsgi = app.config.setdefault('_ORIGINAL_WSGI_APP', app.wsgi_app)
+    if normalized:
+        app.wsgi_app = BasePathMiddleware(original_wsgi, normalized)
+    else:
+        app.wsgi_app = original_wsgi
+
+
+configure_base_path(BASE_PATH)
 
 
 def _resolve_base_path(override: str | None = None) -> str:

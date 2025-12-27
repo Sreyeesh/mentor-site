@@ -1,6 +1,8 @@
 # Development Dockerfile - runs Flask directly with live reload
 FROM python:3.11-slim
 
+ARG BASE_PATH=/mentor-site
+
 WORKDIR /app
 
 # Install system dependencies
@@ -19,7 +21,7 @@ COPY . .
 # Set environment variables for development
 ENV FLASK_ENV=development
 ENV FLASK_DEBUG=1
-ENV BASE_PATH=
+ENV BASE_PATH=${BASE_PATH}
 
 # Expose port 5000
 EXPOSE 5000

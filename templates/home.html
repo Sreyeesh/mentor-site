@@ -4,37 +4,69 @@
 {% block meta_description %}Work directly with {{ config.name }} for structured tutoring in animation, game development, and creative tech. Clear goals, personalized plans, and accountable sessions for emerging professionals worldwide.{% endblock %}
 
 {% block content %}
-<section class="hero hero--split" id="top">
-    <div class="hero-grid">
-        <div class="hero-content">
-            <p class="section-eyebrow">Creative & Technical Tutoring</p>
-            <h1>Partner with a mentor who turns ambition into a reliable development plan.</h1>
-            <p class="hero-subtitle">
-                Weekly one-on-one sessions that blend coaching, portfolio direction, and production-ready feedback.
-                Every lesson is tailored to your goals so you can progress faster, without guesswork—no matter your background or starting point.
-            </p>
-            <ul class="hero-points">
-                <li>Structured 1:1 tutoring for animation, game dev, and interactive media</li>
-                <li>Session roadmaps, checklists, and accountability between calls</li>
-                <li>Guided support for assignments without compromising academic integrity</li>
-                <li>Open to students, independents, and career shifters worldwide</li>
-                <li>Clear communication, no jargon, and honest critique that moves the work forward</li>
-            </ul>
-            <div class="hero-actions">
-                <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book a consultation</a>
-                <a href="#program-details" class="cta-button secondary">Explore the offer</a>
+<section class="hero hero--mentoring" id="top">
+    <div class="hero-shell">
+        <div class="section-panel">
+            <div class="mentoring-hero-grid">
+                <div class="hero-copy">
+                    <p class="section-eyebrow hero-eyebrow">Creative & Technical Tutoring</p>
+                    <h1>Premium mentoring for designers & creative technologists.</h1>
+                    <p class="hero-lede">
+                        Weekly deep dives that prioritize demos, portfolio clarity, and confident communication so you keep momentum without guesswork.
+                    </p>
+                    <ul class="hero-bullets">
+                        <li>Hands-on critiques anchored to live work</li>
+                        <li>Assignments tuned to your career track</li>
+                        <li>Async feedback within 48 hours</li>
+                    </ul>
+                </div>
+                <aside class="offer-summary surface-card" aria-label="Offer summary">
+                    <div class="summary-pills">
+                        <span>60–90m weekly</span>
+                        <span>1:1 mentoring</span>
+                        <span class="pill-span">48h async review</span>
+                    </div>
+                    <div class="summary-divider" aria-hidden="true"></div>
+                    <ul class="summary-points">
+                        <li>Focus on tangible deliverables & demos</li>
+                        <li>Interview-ready communication coaching</li>
+                        <li>Limited seats to protect deep feedback</li>
+                    </ul>
+                </aside>
             </div>
-        </div>
-        <div class="hero-panel">
-            <div class="hero-panel-card">
-                <p class="hero-panel-eyebrow">At a glance</p>
-                <ul>
-                <li>Weekly 60–90 minute sessions</li>
-                <li>Dedicated 1:1 format tailored to your goals</li>
-                <li>Focus on tangible deliverables & demos</li>
-                    <li>Led by {{ config.name }}, cross-disciplinary mentor</li>
-                </ul>
-                <p class="hero-panel-note">Limited seats to protect deep, practical feedback.</p>
+            <div class="hero-cta-strip">
+                <div class="hero-actions">
+                    <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book a consultation</a>
+                    <a href="#program-details" class="cta-button secondary">See curriculum</a>
+                </div>
+                <div class="hero-microcopy">
+                    <p>You’ll leave with a clear next step + a 2-week plan.</p>
+                    <p>Limited seats to protect deep feedback.</p>
+                </div>
+            </div>
+            <div class="hero-benefits">
+                <div class="hero-benefits-heading">
+                    <h2>What we’ll work on</h2>
+                    <p>Each session blends critiques, planning, and accountability so you always know the next move.</p>
+                </div>
+                <div class="benefit-grid">
+                    <article class="benefit-item surface-card">
+                        <h3>Structured 1:1 critiques</h3>
+                        <p>Actionable walkthroughs of active projects every week.</p>
+                    </article>
+                    <article class="benefit-item surface-card">
+                        <h3>Roadmaps & rituals</h3>
+                        <p>Systems that keep production steady between calls.</p>
+                    </article>
+                    <article class="benefit-item surface-card">
+                        <h3>Assignment guidance</h3>
+                        <p>Support that keeps ownership while removing blockers.</p>
+                    </article>
+                    <article class="benefit-item surface-card">
+                        <h3>Open access worldwide</h3>
+                        <p>Remote-first mentoring for students and independents.</p>
+                    </article>
+                </div>
             </div>
         </div>
     </div>
@@ -274,11 +306,10 @@
 <section class="section final-cta" id="contact-cta">
     <div class="final-cta-card">
         <p class="section-eyebrow">Ready for professional momentum?</p>
-        <h2>Book a free intro call with {{ config.name }} to map an affordable tutoring plan.</h2>
-        <p>Share your goals, timeline, and current work. I’ll respond within 24 hours with a recommended structure, transparent pricing, and next steps.</p>
+        <h2>Book a session with {{ config.name }} to map your tutoring plan.</h2>
+        <p>Share your goals, timeline, and current work. I’ll respond within 24 hours with structure and actionable next steps for the engagement.</p>
         <div class="hero-actions">
-            <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book a free intro call</a>
-            <a href="{{ site_links.contact }}" class="cta-button secondary">Ask a quick question</a>
+            <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book a session</a>
         </div>
     </div>
 </section>

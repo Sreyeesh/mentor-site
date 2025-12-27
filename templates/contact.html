@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Book a Call | {{ config.name }}{% endblock %}
-{% block meta_description %}Get in touch to book a 30-minute strategy call or request workshops for your school or studio.{% endblock %}
+{% block title %}Book a Tutoring Call | {{ config.name }}{% endblock %}
+{% block meta_description %}Get in touch to book a free 30-minute tutoring call. Share your goals, receive honest guidance, and lock in a dedicated 1:1 plan with {{ config.name }}.{% endblock %}
 
 {% block content %}
 <section class="page-hero">
     <p class="section-eyebrow">Contact</p>
-    <h1>Book a free 30-minute strategy call.</h1>
-    <p class="lead">Share your goals and current work. We’ll map a mentoring sprint, workshop plan, or collaboration outline.</p>
+    <h1>Book a free 30-minute tutoring call.</h1>
+    <p class="lead">Share your goals and current work. We’ll map a 1:1 tutoring plan that fits your timeline and budget.</p>
 </section>
 
 <section class="section contact-section">
@@ -39,9 +39,10 @@
 
 <section class="section final-cta">
     <div class="final-cta-card">
-        <p class="section-eyebrow">Need workshops instead?</p>
-        <h2>Schools and studios can request tailored sessions.</h2>
-        <a href="{{ site_links.schools }}" class="cta-button secondary">See Workshops</a>
+        <p class="section-eyebrow">Only 1:1 tutoring</p>
+        <h2>I’m currently focused on individual tutoring clients.</h2>
+        <p>Need clarity before booking? Send a quick note and I’ll reply within 24 hours.</p>
+        <a href="mailto:{{ config.email }}" class="cta-button secondary">Email {{ config.email }}</a>
     </div>
 </section>
 {% endblock %}

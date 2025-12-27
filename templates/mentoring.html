@@ -1,135 +1,91 @@
 {% extends 'base.html' %}
 
-{% block title %}Toucan Studios OÜ Mentoring — Production-Ready Coaching{% endblock %}
-{% block meta_description %}Toucan Studios OÜ delivers four-week mentoring sprints that bridge creative vision and technical execution for artists, Unreal developers, indie teams, and studios needing production-ready coaching.{% endblock %}
+{% block title %}1:1 Tutoring for Animation & Game Dev Careers | Toucan{% endblock %}
+{% block meta_description %}Explore {{ config.name }}'s dedicated tutoring programs. Weekly 1:1 sessions, assignment support, and accountability for animation and game development students worldwide.{% endblock %}
 
 {% block content %}
 <section class="page-hero">
-    <p class="section-eyebrow">Mentoring</p>
-    <h1>Toucan Studios OÜ mentoring keeps your projects production-ready.</h1>
-    <p class="lead">I partner with Game City Kajaani and studios worldwide to mentor artists, developers, and indie teams through fully guided four-week sprints. Every engagement bridges creative vision and technical execution so you can ship real work—not just study it.</p>
-    <p class="lead">As Owner &amp; Technical Director at SG Production OÜ, I also build the pipelines, automation, and dashboards that keep these projects running, so you'll always get advice grounded in current production realities.</p>
+    <p class="section-eyebrow">1:1 Tutoring</p>
+    <h1>Private tutoring built for creative and technical careers.</h1>
+    <p class="lead">You work directly with {{ config.name }}—no groups, no assistants. Every session mixes critique, planning, and practical demos so you move from idea to studio-ready work without guesswork.</p>
     <ul class="hero-points">
-        <li>🎮 Unreal Engine mentoring from first prototype to release.</li>
-        <li>🎨 Animation workflow coaching and portfolio preparation.</li>
-        <li>⚙️ Asset pipeline, project organization, and collaborative production training.</li>
-        <li>🤝 Support for indie teams aligning gameplay, art, and engineering.</li>
-        <li>🎤 Workshops, talks, and one-on-one coaching for creative professionals.</li>
+        <li>Weekly 60–90 minute video calls with live feedback</li>
+        <li>Custom checklists for assignments, reels, or production deliverables</li>
+        <li>Async reviews between calls so you never stall out</li>
+        <li>Affordable pricing designed for students and independents</li>
     </ul>
     <div class="hero-actions">
-        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Apply for Mentorship</a>
-        <a href="#pricing" class="cta-button secondary">View Pricing</a>
-    </div>
-</section>
-
-<section class="section">
-    <div class="section-header">
-        <p class="section-eyebrow">SG Production OÜ</p>
-        <h2>Full-stack production systems that support your mentoring sprint.</h2>
-    </div>
-    <div class="bio-grid">
-        <div>
-            <p>Alongside Toucan Studios, I lead SG Production OÜ—delivering full-stack web development and pipeline automation for animation, VFX, and game studios since 2022. Remote teams in Valgjärve, Estonia and worldwide rely on our tooling to keep art, engineering, and production in sync.</p>
-        </div>
-        <div>
-            <ul class="bio-list">
-                <li>Built custom backends, dashboards, and client portals tailored to studio workflows.</li>
-                <li>Automated asset management and creative pipelines so artists can stay focused on craft.</li>
-                <li>Designed production management tools that keep distributed crews aligned.</li>
-                <li>Mentored cross-functional teams in software best practices and workflow optimization.</li>
-            </ul>
-            <p>💡 Every mentoring recommendation reflects live SG Production buildouts, so you get tactics proven inside real productions.</p>
-        </div>
+        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Start tutoring</a>
+        <a href="#packages" class="cta-button secondary">See packages</a>
     </div>
 </section>
 
 <section class="section mentoring-overview">
     <div class="section-header">
-        <p class="section-eyebrow">What’s included</p>
-        <h2>Every Toucan sprint delivers structured coaching plus SG Production-grade systems.</h2>
+        <p class="section-eyebrow">How tutoring works</p>
+        <h2>Structure that keeps progress consistent every week.</h2>
     </div>
     <div class="feature-grid">
         <article class="feature-card">
-            <h3>Weekly 60-min calls</h3>
-            <p>Production reviews over Unreal builds, animation shots, or tooling roadmaps with shared debugging, paint-overs, and milestone planning.</p>
+            <h3>Live working sessions</h3>
+            <p>Screen-share your assignments or builds while we troubleshoot, block scenes, or plan polish passes together.</p>
         </article>
         <article class="feature-card">
-            <h3>Customized assignments</h3>
-            <p>Briefs aligned to your goals—Unreal milestones, animation workflow drills, pipeline automation tasks, or portfolio upgrades.</p>
+            <h3>Assignment & portfolio support</h3>
+            <p>Every lesson ends with a written checklist covering technique, documentation, and storytelling improvements.</p>
         </article>
         <article class="feature-card">
-            <h3>Async reviews & DM support</h3>
-            <p>Annotated Loom walkthroughs plus Slack/Discord check-ins within 24 hours so blockers never stack up between builds.</p>
+            <h3>Accountability</h3>
+            <p>Async check-ins via email or shared docs keep you on track between calls—no extra fee, no group chats required.</p>
         </article>
         <article class="feature-card">
-            <h3>End-of-sprint review</h3>
-            <p>Documented outcomes, production notes, and the next four-week curriculum so momentum continues after each sprint.</p>
+            <h3>Career guidance</h3>
+            <p>We cover interview prep, presentation habits, and communication skills so you can talk about your work confidently.</p>
         </article>
     </div>
 </section>
 
-<section class="section pricing-section" id="pricing">
+<section class="section pricing-section" id="packages">
     <div class="section-header">
-        <p class="section-eyebrow">Pricing</p>
-        <h2>Pick the sprint that matches your production timeline.</h2>
+        <p class="section-eyebrow">Flat hourly rate</p>
+        <h2>Only pay for the time you need.</h2>
+        <p class="section-lede">Each hour includes prep, live working time, and follow-up notes—no retainers or hidden fees.</p>
     </div>
-    <div class="pricing-grid">
-        <article class="pricing-card">
-            <p class="pricing-label">Core Sprint</p>
-            <h3>€690 / 4 weeks</h3>
-            <ul>
-                <li>4 × live sessions covering Unreal, animation, or pipeline goals</li>
-                <li>Async notes within 48 hours</li>
-                <li>Private Notion board + SG Production documentation</li>
-            </ul>
-            <a href="{{ site_links.contact }}" class="cta-button secondary full-width">Apply for Core</a>
-        </article>
-        <article class="pricing-card pricing-card--accent">
-            <p class="pricing-label">VIP Sprint</p>
-            <h3>€1,150 / 4 weeks</h3>
-            <ul>
-                <li>2 × sessions per week for rapid Unreal or animation milestones</li>
-                <li>Daily async check-ins</li>
-                <li>Pipeline setup or optimization (GitHub Actions, GitLab CI, Buildkite)</li>
-                <li>Leadership coaching + stakeholder-ready communication templates</li>
-            </ul>
-            <a href="{{ site_links.contact }}" class="cta-button primary-cta full-width">Apply for VIP</a>
-        </article>
-        <article class="pricing-card">
-            <p class="pricing-label">DevOps Tutoring Package</p>
-            <h3>€1,350 / 4 weeks</h3>
-            <ul>
-                <li>Audit + rebuild of CI/CD, build farms, and release scripts</li>
-                <li>Infrastructure-as-code reviews (Terraform, Ansible, Pulumi)</li>
-                <li>Observability setup: dashboards, alerts, on-call runbooks</li>
-                <li>Two paired-programming/tooling sessions each week</li>
-            </ul>
-            <a href="{{ site_links.contact }}" class="cta-button secondary full-width">Apply for DevOps</a>
-        </article>
+    <div class="pricing-card pricing-card--accent">
+        <p class="pricing-label">All-access tutoring</p>
+        <h3>€15 / hour</h3>
+        <ul>
+            <li>Dedicated 60-minute sessions with {{ config.name }}</li>
+            <li>Session recaps, annotated files, and assignment checklists</li>
+            <li>Async reviews between calls (48-hour turnaround)</li>
+            <li>Shared Notion/task board to track deliverables</li>
+        </ul>
+        <a href="{{ site_links.contact }}" class="cta-button primary-cta full-width">Book tutoring</a>
+        <p class="pricing-note">Need longer deep dives? Book consecutive hours; the rate stays the same.</p>
     </div>
 </section>
 
 <section class="section track-reminder">
     <div class="section-header">
-        <p class="section-eyebrow">Tracks</p>
-        <h2>Choose the lane that mirrors your real production goals.</h2>
+        <p class="section-eyebrow">Specializations</p>
+        <h2>Focus on the discipline that matters most right now.</h2>
     </div>
     <div class="tracks-grid">
         <article class="track-card">
-            <h3>Unreal Engine & Gameplay</h3>
-            <p>Prototype-to-release coaching with system design critiques, blueprint/code reviews, optimization passes, and milestone planning.</p>
+            <h3>Unreal & Game Dev</h3>
+            <p>Blueprint reviews, gameplay pacing, and optimization passes with realistic milestone planning.</p>
         </article>
         <article class="track-card">
-            <h3>Animation Workflows</h3>
-            <p>Shot reviews, look dev, and studio-ready portfolio prep using the same workflows I teach through Game City Kajaani partnerships.</p>
+            <h3>Animation & Story</h3>
+            <p>Blocking-to-polish critiques, storytelling choices, and presentation support for reels or shorts.</p>
         </article>
         <article class="track-card">
-            <h3>Pipeline & Production</h3>
-            <p>Asset management, project organization, and collaboration tooling that keep indie and studio teams shipping.</p>
+            <h3>Pipeline & Documentation</h3>
+            <p>Guidance on asset handoffs, version control, and project organization so collaborators trust your process.</p>
         </article>
         <article class="track-card">
-            <h3>SG Production Systems</h3>
-            <p>CI/CD design, infrastructure-as-code, observability coaching, and automation lessons delivered with paired-programming support.</p>
+            <h3>Career Launch</h3>
+            <p>Application strategy, interview prep, and communication habits that show studios you can deliver.</p>
         </article>
     </div>
 </section>
@@ -141,30 +97,26 @@
     </div>
     <div class="faq-list">
         <details>
-            <summary>How do we start?</summary>
-            <p>Book the free strategy call. If we’re a fit, you’ll receive a short application, contract, and invoice to lock in your sprint.</p>
+            <summary>Is tutoring really 1:1?</summary>
+            <p>Yes. I don’t run cohorts or group office hours. Every student works with me directly.</p>
         </details>
         <details>
-            <summary>Do you offer team mentoring?</summary>
-            <p>Yes. Engineering orgs and creative teams can book shared sprints or office hours. We’ll align on objectives before kickoff so DevOps, gameplay, and art stakeholders see value.</p>
+            <summary>Do I need prior experience?</summary>
+            <p>No. We’ll build a plan from your current level. Expect honest feedback and achievable milestones.</p>
         </details>
         <details>
-            <summary>Can I continue after four weeks?</summary>
-            <p>Most mentees renew for another sprint or shift to a maintenance cadence (bi-weekly sessions).</p>
-        </details>
-        <details>
-            <summary>What if I need help between calls?</summary>
-            <p>Use the shared Notion board to drop videos or Git links at any time; you’ll receive annotated feedback within 24 hours (12 hours for VIP).</p>
+            <summary>What tools do we use?</summary>
+            <p>Sessions happen over Google Meet or Zoom with shared boards for notes. I’ll review files via Loom, Git, or your preferred drive.</p>
         </details>
     </div>
 </section>
 
 <section class="section final-cta">
     <div class="final-cta-card">
-        <p class="section-eyebrow">Toucan Studios OÜ</p>
-        <h2>Book your Toucan or SG Production sprint.</h2>
-        <p>Availability is limited to five teams or creators per month so every plan stays hands-on and production-focused.</p>
-        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Apply for Mentorship</a>
+        <p class="section-eyebrow">Ready?</p>
+        <h2>Tell me about your goals and we’ll pick the right tutoring package.</h2>
+        <p>Availability is limited each month to keep every session deep and personalized.</p>
+        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book a call</a>
     </div>
 </section>
 {% endblock %}

@@ -5,17 +5,41 @@
 
 {% block content %}
 <section class="page-hero">
-    <p class="section-eyebrow">1:1 Tutoring</p>
-    <h1>Private tutoring built for creative and technical careers.</h1>
-    <p class="lead">You work directly with {{ config.name }}—no groups, no assistants. Every session mixes critique, planning, and practical demos so you move from idea to studio-ready work without guesswork.</p>
-    <ul class="hero-points">
-        <li>Weekly 60–90 minute video calls with live feedback</li>
-        <li>Custom checklists for assignments, reels, or production deliverables</li>
-        <li>Async reviews between calls so you never stall out</li>
-        <li>Affordable pricing designed for students and independents</li>
-    </ul>
+    <div class="hero-pill">1:1 Tutoring</div>
+    <h1>Private tutoring for creative and technical careers.</h1>
+    <p class="lead">Every session happens directly with {{ config.name }}. We combine critique, milestone planning, and production troubleshooting so assignments become finished shots, levels, or tools instead of stalled drafts.</p>
+    <div class="hero-summary">
+        <div class="hero-summary-grid">
+            <div class="hero-meta">
+                <p class="meta-title">What you get</p>
+                <p class="meta-copy">Weekly or ad hoc calls, async reviews, and a shared action plan tailored to your projects.</p>
+                <ul class="meta-list">
+                    <li>Flexible scheduling</li>
+                    <li>Recorded walk-throughs</li>
+                    <li>Accountability check-ins</li>
+                </ul>
+            </div>
+            <div class="hero-points">
+                <article class="hero-point">
+                    <h3>Live lab sessions</h3>
+                    <p>Screen-share gameplay, rigs, or docs while we iterate together.</p>
+                </article>
+                <article class="hero-point">
+                    <h3>Actionable checklists</h3>
+                    <p>Each meeting ends with technique notes, polish targets, and file prep.</p>
+                </article>
+                <article class="hero-point">
+                    <h3>Async support</h3>
+                    <p>Upload progress between calls and get feedback within 48 hours.</p>
+                </article>
+                <article class="hero-point">
+                    <h3>Student-friendly rate</h3>
+                    <p>One flat hourly price, no retainers or tier juggling.</p>
+                </article>
+            </div>
+        </div>
+    </div>
     <div class="hero-actions">
-        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Start tutoring</a>
         <a href="#packages" class="cta-button secondary">See packages</a>
     </div>
 </section>
@@ -28,60 +52,72 @@
     <div class="feature-grid">
         <article class="feature-card">
             <h3>Live working sessions</h3>
-            <p>Screen-share your assignments or builds while we troubleshoot, block scenes, or plan polish passes together.</p>
+            <p>Screen-share assignments or builds while we troubleshoot, plan, or polish together.</p>
         </article>
         <article class="feature-card">
             <h3>Assignment & portfolio support</h3>
-            <p>Every lesson ends with a written checklist covering technique, documentation, and storytelling improvements.</p>
+            <p>Each lesson ends with a written checklist that keeps improvements tangible.</p>
         </article>
         <article class="feature-card">
             <h3>Accountability</h3>
-            <p>Async check-ins via email or shared docs keep you on track between calls—no extra fee, no group chats required.</p>
+            <p>Async check-ins via email or shared docs keep you on track between calls.</p>
         </article>
         <article class="feature-card">
             <h3>Career guidance</h3>
-            <p>We cover interview prep, presentation habits, and communication skills so you can talk about your work confidently.</p>
+            <p>Interview prep, presentation habits, and communication practice are baked into the process.</p>
         </article>
     </div>
 </section>
 
-<section class="section pricing-section" id="packages">
-    <div class="section-header">
-        <p class="section-eyebrow">Flat hourly rate</p>
-        <h2>Only pay for the time you need.</h2>
-        <p class="section-lede">Each hour includes prep, live working time, and follow-up notes—no retainers or hidden fees.</p>
-    </div>
-    <div class="pricing-card pricing-card--accent">
-        <p class="pricing-label">All-access tutoring</p>
-        <h3>€15 / hour</h3>
-        <ul>
-            <li>Dedicated 60-minute sessions with {{ config.name }}</li>
-            <li>Session recaps, annotated files, and assignment checklists</li>
-            <li>Async reviews between calls (48-hour turnaround)</li>
-            <li>Shared Notion/task board to track deliverables</li>
-        </ul>
-        <a href="{{ site_links.contact }}" class="cta-button primary-cta full-width">Book tutoring</a>
-        <p class="pricing-note">Need longer deep dives? Book consecutive hours; the rate stays the same.</p>
+<section class="section packages" id="packages">
+    <div class="package-card">
+        <header class="package-header">
+            <p class="section-eyebrow">Tutoring package</p>
+            <h2>One simple plan.</h2>
+            <p class="section-lede">Single hourly rate with prep, live work, and follow-up already included.</p>
+        </header>
+        <div class="package-rate">
+            <div class="rate-amount">
+                <span class="rate-currency">€</span>
+                <span class="rate-value">15</span>
+            </div>
+            <p class="rate-frequency">per 60-minute session</p>
+        </div>
+        <div class="package-details">
+            <p>You choose your cadence—weekly, biweekly, or ad hoc. Sessions stack critique, planning, and accountability, and you can add extra hours whenever a project needs deeper time.</p>
+            <ul class="package-perks">
+                <li>Prep notes and references before each call</li>
+                <li>Shared action plan with checklists and files</li>
+                <li>Async reviews between sessions (48h turnaround)</li>
+                <li>Flexible scheduling for sprint or crunch weeks</li>
+            </ul>
+        </div>
+        <div class="package-cta">
+            <a href="{{ site_links.contact }}" class="cta-button primary-cta">Start tutoring</a>
+            {% if config.stripe_payment_link %}
+            <a href="{{ config.stripe_payment_link }}" class="cta-button secondary">Pay for a session</a>
+            {% endif %}
+        </div>
     </div>
 </section>
 
 <section class="section track-reminder">
     <div class="section-header">
         <p class="section-eyebrow">Specializations</p>
-        <h2>Focus on the discipline that matters most right now.</h2>
+        <h2>Pick the focus that matters most right now.</h2>
     </div>
     <div class="tracks-grid">
         <article class="track-card">
             <h3>Unreal & Game Dev</h3>
-            <p>Blueprint reviews, gameplay pacing, and optimization passes with realistic milestone planning.</p>
+            <p>Blueprint reviews, gameplay pacing, and optimization with realistic milestone planning.</p>
         </article>
         <article class="track-card">
             <h3>Animation & Story</h3>
-            <p>Blocking-to-polish critiques, storytelling choices, and presentation support for reels or shorts.</p>
+            <p>Blocking-to-polish critiques, narrative choices, and reel presentation support.</p>
         </article>
         <article class="track-card">
             <h3>Pipeline & Documentation</h3>
-            <p>Guidance on asset handoffs, version control, and project organization so collaborators trust your process.</p>
+            <p>Guidance on handoffs, version control, and project organization teammates can follow.</p>
         </article>
         <article class="track-card">
             <h3>Career Launch</h3>
@@ -93,30 +129,22 @@
 <section class="section mentoring-faq">
     <div class="section-header">
         <p class="section-eyebrow">FAQ</p>
-        <h2>Still unsure? Here are quick answers.</h2>
+        <h2>Quick answers.</h2>
     </div>
     <div class="faq-list">
         <details>
             <summary>Is tutoring really 1:1?</summary>
-            <p>Yes. I don’t run cohorts or group office hours. Every student works with me directly.</p>
+            <p>Yes. There are no cohorts or assistants—every student works directly with me.</p>
         </details>
         <details>
             <summary>Do I need prior experience?</summary>
-            <p>No. We’ll build a plan from your current level. Expect honest feedback and achievable milestones.</p>
+            <p>No. We’ll build a plan around your current level with honest feedback and manageable milestones.</p>
         </details>
         <details>
             <summary>What tools do we use?</summary>
-            <p>Sessions happen over Google Meet or Zoom with shared boards for notes. I’ll review files via Loom, Git, or your preferred drive.</p>
+            <p>Sessions run on Google Meet or Zoom, and we use shared boards plus Loom/Git/Drive for reviews.</p>
         </details>
     </div>
 </section>
 
-<section class="section final-cta">
-    <div class="final-cta-card">
-        <p class="section-eyebrow">Ready?</p>
-        <h2>Tell me about your goals and we’ll pick the right tutoring package.</h2>
-        <p>Availability is limited each month to keep every session deep and personalized.</p>
-        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book a call</a>
-    </div>
-</section>
 {% endblock %}

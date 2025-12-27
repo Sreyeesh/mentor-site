@@ -111,6 +111,11 @@ BASE_PATH=/mentor-site
 FLASK_DEBUG=True
 PLAUSIBLE_SCRIPT_URL=https://plausible.io/js/your-site.js
 PLAUSIBLE_DOMAIN=mentor.your-domain.com
+STRIPE_SECRET_KEY=sk_test_yourkey
+STRIPE_PUBLISHABLE_KEY=pk_test_yourkey
+STRIPE_PRICE_ID=price_yourplan
+STRIPE_SUCCESS_URL=https://your-domain.com/mentoring/?checkout=success
+STRIPE_CANCEL_URL=https://your-domain.com/mentoring/?checkout=cancelled
 ```
 
 `SITE_URL` should be the fully qualified domain for the deployed site (for example,
@@ -123,6 +128,10 @@ Plausible analytics loader plus the initialization snippet so you can enable
 privacy-friendly tracking without editing templates. Set `PLAUSIBLE_DOMAIN` to
 the exact domain you registered with Plausible so the script includes the
 required `data-domain` attribute for automatic detection.
+
+`STRIPE_*` values are optional but power the hosted Checkout button on the mentoring
+page. Define them when you are ready to accept subscription payments. The success
+and cancel URLs must be fully qualified links that Stripe can redirect to.
 
 If you prefer to drop in the Plausible snippet manually, add this block inside
 `<head>` of `templates/base.html`:
@@ -140,21 +149,6 @@ If you prefer to drop in the Plausible snippet manually, add this block inside
   plausible.init();
 </script>
 ```
-
-### SEO Essentials
-
-- `sitemap.xml` is generated dynamically from every static page and published blog
-  post. Visit `http://localhost:5000/sitemap.xml` (or your deployed URL) to
-  confirm the XML output before submitting it to search engines.
-- `robots.txt` is also served automatically at `/robots.txt` with a pointer to
-  the sitemap. Run `curl http://localhost:5000/robots.txt` to double-check the
-  contents in development.
-- To connect Google Search Console: add your verified domain (recommended),
-  upload the provided DNS TXT record at your registrar, then submit the sitemap
-  URL (`https://your-domain.com/sitemap.xml`) once verification succeeds.
-- The frontend uses a responsive layout with lightweight CSS/JS; keep static
-  assets optimized (images in `static/`) to maintain fast load times on mobile
-  devices.
 
 ### SEO Essentials
 
@@ -227,6 +221,15 @@ docker compose --profile authoring up authoring-tool
 - Uses `Dockerfile.dev` and launches `python author_app.py` inside the container.
 - The UI is available at `http://localhost:5001/authoring/`.
 - Content is stored in your local `content/` directory via a bind mount, so edits persist outside the container.
+
+### Stripe subscriptions (optional)
+Add a hosted Stripe Checkout button on `/mentoring/`:
+
+1. Create a recurring product/price in Stripe and note the **price ID**.
+2. Populate `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_ID`, `STRIPE_SUCCESS_URL`, and `STRIPE_CANCEL_URL` in `.env`.
+3. Restart the Flask server (or rebuild the Docker containers) so the new environment variables load.
+
+When those variables are set, visitors see a simple form that posts to `/stripe/create-checkout-session/`. The Flask route creates a Checkout Session, redirects the visitor to Stripe, and then returns them to the URLs you supplied after they confirm or cancel payment. The same endpoint also accepts JSON if you need to trigger Checkout from custom JavaScript.
 
 ### Run tests in Docker
 Execute the test suite in an isolated container:

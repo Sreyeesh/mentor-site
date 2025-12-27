@@ -202,6 +202,8 @@ The script stops any running containers, rebuilds the static-site image, and bri
 ## Docker workflows
 The repository ships with Compose services for both the static site and the authoring tool.
 
+> **Heads-up:** The containers read `BASE_PATH` from your environment (defaults to `/mentor-site` which matches GitHub Pages). Export `BASE_PATH=/` before running Compose if you want the app served from the root locally.
+
 ### Static site via Nginx
 ```
 docker compose up --build mentor-site
@@ -215,7 +217,7 @@ If you want to iterate on templates without rebuilding:
 ```
 docker compose --profile dev up mentor-site-dev
 ```
-This mounts the repository into the container and serves the site on `http://localhost:3001/`.
+This mounts the repository into the container and now serves the site on `http://127.0.0.1:5000/` by default (the dev service sets `BASE_PATH=/`). Thanks to the bind mount and Flask’s debug reloader, code and template edits reflect instantly without rebuilding the image. If you need to test a different base path, export `BASE_PATH=/your-path` before launching.
 
 ### Authoring tool container
 Run the Markdown editor without installing Python locally:

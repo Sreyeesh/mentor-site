@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (darkModeToggle) {
         // Set initial theme
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
         console.log('🎨 Initial theme set to:', savedTheme);
 

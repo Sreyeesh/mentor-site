@@ -1,11 +1,17 @@
+import json
 import os
 from datetime import datetime
+from urllib import error as urllib_error
+from urllib import parse as urllib_parse
+from urllib import request as urllib_request
 
 from dotenv import load_dotenv
 from flask import (
     Flask,
     abort,
+    jsonify,
     make_response,
+    redirect,
     render_template,
     request,
     url_for,
@@ -83,7 +89,20 @@ SITE_CONFIG = {
     'asset_version': _env('ASSET_VERSION', '1'),
     'plausible_script_url': _env('PLAUSIBLE_SCRIPT_URL'),
     'plausible_domain': _env('PLAUSIBLE_DOMAIN'),
+    'stripe_publishable_key': _env('STRIPE_PUBLISHABLE_KEY'),
+    'stripe_price_id': _env('STRIPE_PRICE_ID'),
+    'stripe_payment_link': _env('STRIPE_PAYMENT_LINK'),
+    'social_image': _env('SITE_SOCIAL_IMAGE', 'images/SreyeeshProfilePic.jpg'),
 }
+
+STRIPE_SECRET_KEY = _env('STRIPE_SECRET_KEY')
+STRIPE_PRICE_ID = SITE_CONFIG['stripe_price_id']
+STRIPE_SUCCESS_URL = _env('STRIPE_SUCCESS_URL')
+STRIPE_CANCEL_URL = _env('STRIPE_CANCEL_URL')
+STRIPE_API_BASE = 'https://api.stripe.com/v1'
+SITE_CONFIG['stripe_checkout_enabled'] = bool(
+    STRIPE_SECRET_KEY and STRIPE_PRICE_ID
+)
 
 
 def _normalize_base_path(raw: str | None) -> str:
@@ -149,18 +168,47 @@ def build_primary_nav(base_path_override: str | None = None) -> list:
     ]
 
 
+def _build_canonical_url(base_path_value: str) -> str:
+    site_url = SITE_CONFIG.get('site_url', '').rstrip('/')
+    request_path = request.path or '/'
+    if base_path_value and not request_path.startswith(base_path_value):
+        if request_path == '/':
+            request_path = f"{base_path_value}/"
+        else:
+            request_path = f"{base_path_value}{request_path}"
+    if site_url:
+        return f"{site_url}{request_path}"
+    return f"{request.url_root.rstrip('/')}{request_path}"
+
+
+def _build_social_image_url() -> str:
+    social_image = SITE_CONFIG.get('social_image') or ''
+    if social_image.startswith('http://') or social_image.startswith('https://'):
+        return social_image
+    image_path = social_image or 'images/SreyeeshProfilePic.jpg'
+    asset_path = url_for('static', filename=image_path)
+    site_url = SITE_CONFIG.get('site_url', '').rstrip('/')
+    if site_url:
+        return f"{site_url}{asset_path}"
+    return url_for('static', filename=image_path, _external=True)
+
+
 def build_page_context(
     *,
     base_path_override: str | None = None,
     **extra: object,
 ) -> dict:
     base_path_value = _resolve_base_path(base_path_override)
+    canonical_url = _build_canonical_url(base_path_value)
+    social_image_url = _build_social_image_url()
     context = {
         'config': SITE_CONFIG,
         'current_year': datetime.now().year,
         'base_path': base_path_value,
         'site_links': build_site_links(base_path_override),
         'nav_links': build_primary_nav(base_path_override),
+        'canonical_url': canonical_url,
+        'social_image_url': social_image_url,
     }
     context.update(extra)
     return context
@@ -175,6 +223,28 @@ def build_absolute_url(path: str) -> str:
         return f"{site_url}{normalized_path}"
     base = request.url_root.rstrip('/')
     return f"{base}{normalized_path}"
+
+
+def _create_stripe_checkout_session(body_params: list[tuple[str, str]]) -> dict:
+    """Create a Checkout Session using Stripe's REST API."""
+
+    if not STRIPE_SECRET_KEY:
+        raise RuntimeError('Stripe secret key is not configured.')
+
+    encoded = urllib_parse.urlencode(body_params).encode()
+    request_obj = urllib_request.Request(
+        f"{STRIPE_API_BASE}/checkout/sessions",
+        data=encoded,
+        method='POST',
+    )
+    request_obj.add_header('Authorization', f"Bearer {STRIPE_SECRET_KEY}")
+    request_obj.add_header(
+        'Content-Type',
+        'application/x-www-form-urlencoded',
+    )
+    with urllib_request.urlopen(request_obj) as response:  # nosec: B310
+        payload = response.read().decode('utf-8')
+    return json.loads(payload)
 
 
 @app.route('/')
@@ -270,6 +340,7 @@ def blog_detail(slug: str):
             blog_index_href=links['blog'],
             canonical_url=canonical_url,
             hero_image_url=hero_image_url,
+            social_image_url=hero_image_url or _build_social_image_url(),
         ),
     )
 
@@ -326,6 +397,70 @@ def robots_txt():
     response = make_response("\n".join(lines) + "\n")
     response.headers['Content-Type'] = 'text/plain'
     return response
+
+
+@app.route('/stripe/create-checkout-session/', methods=['POST'])
+def stripe_create_checkout_session():
+    if not STRIPE_SECRET_KEY or not STRIPE_PRICE_ID:
+        abort(404)
+
+    payload = request.get_json(silent=True) if request.is_json else request.form
+    payload = payload or {}
+    price_id = payload.get('price_id') or STRIPE_PRICE_ID
+    customer_email = payload.get('customer_email') or None
+
+    mentoring_path = url_for('mentoring')
+    success_url = payload.get('success_url') or STRIPE_SUCCESS_URL
+    cancel_url = payload.get('cancel_url') or STRIPE_CANCEL_URL
+
+    if not success_url:
+        success_url = build_absolute_url(f"{mentoring_path}?checkout=success")
+    if not cancel_url:
+        cancel_url = build_absolute_url(f"{mentoring_path}?checkout=cancelled")
+
+    body_params = [
+        ('mode', 'subscription'),
+        ('allow_promotion_codes', 'true'),
+        ('automatic_tax[enabled]', 'true'),
+        ('line_items[0][price]', price_id),
+        ('line_items[0][quantity]', '1'),
+        ('success_url', success_url),
+        ('cancel_url', cancel_url),
+    ]
+    if customer_email:
+        body_params.append(('customer_email', customer_email))
+
+    try:
+        session = _create_stripe_checkout_session(body_params)
+    except urllib_error.HTTPError as exc:
+        message = exc.reason
+        try:
+            error_payload = json.loads(exc.read().decode('utf-8'))
+            message = (
+                error_payload.get('error', {}).get('message')
+                or message
+                or 'Unable to contact Stripe.'
+            )
+        except Exception:
+            message = message or 'Unable to contact Stripe.'
+        if request.is_json:
+            return jsonify({'error': message}), exc.code
+        abort(exc.code or 502, description=message)
+    except Exception as exc:  # pragma: no cover - defensive
+        message = str(exc)
+        if request.is_json:
+            return jsonify({'error': message}), 400
+        abort(502, description=message)
+
+    checkout_url = session.get('url')
+    if not checkout_url:
+        if request.is_json:
+            return jsonify({'error': 'Stripe response was missing a redirect URL.'}), 500
+        abort(502, description='Stripe response was missing a redirect URL.')
+
+    if request.is_json:
+        return jsonify({'url': checkout_url})
+    return redirect(checkout_url, code=303)
 
 
 if __name__ == '__main__':

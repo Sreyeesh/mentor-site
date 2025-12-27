@@ -3,8 +3,7 @@
 {% block title %}{{ post.title }} — {{ config.name }} Blog{% endblock %}
 {% block meta_description %}{{ post.description or post.excerpt }}{% endblock %}
 
-{% block head_extra %}
-    <link rel="canonical" href="{{ canonical_url }}">
+{% block social_meta %}
     {% set social_description = (post.description or post.excerpt) %}
     {% set hero_path = post.hero_image and url_for('static', filename=post.hero_image) %}
     {% if hero_path %}
@@ -22,6 +21,7 @@
         {% endif %}
     {% endif %}
 
+    <link rel="canonical" href="{{ canonical_url }}">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="{{ config.name }}">
     <meta property="og:title" content="{{ post.title }}">

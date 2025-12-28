@@ -6,3 +6,4 @@ pytest-cov==4.1.0
 flake8==6.1.0
 markdown==3.5.2
 python-frontmatter==1.0.0
+stripe==9.12.0

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% set stripe_payment_link = config.stripe_payment_link or 'https://book.stripe.com/3cIbIUdV5aK94M0bWP4F200' %}
 
 {% block title %}Art, Animation & Game Dev Tutoring | Toucan.ee{% endblock %}
 {% block meta_description %}Book a calm, 60-minute €15 session to get hands-on tutoring in art, animation, or game dev. Finish something small each call with live feedback, practice tasks, and a next-step plan.{% endblock %}
@@ -12,8 +13,8 @@
             <p class="hero-refresh__lede">Bring whatever you’re building and I’ll sit side-by-side with you, fix the piece that’s stuck, and line up the next milestone with studio-level care.</p>
             <p class="legacy-marker">Launch your creative career with calm, practical tutoring that keeps your art and code moving.</p>
             <div class="hero-refresh__cta">
-                {% if config.stripe_payment_link %}
-                <a class="btn btn-primary" href="{{ config.stripe_payment_link }}">Book a €15 Session</a>
+                {% if stripe_payment_link %}
+                <a class="btn btn-primary" href="{{ stripe_payment_link }}">Book a €15 Session</a>
                 {% else %}
                 <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-form">
                     <button type="submit" class="btn btn-primary">Book a €15 Session</button>
@@ -140,8 +141,8 @@
             </article>
         </div>
         <div class="tracks-cta">
-            {% if config.stripe_payment_link %}
-            <a class="btn btn-primary" href="{{ config.stripe_payment_link }}">Book a €15 Session</a>
+            {% if stripe_payment_link %}
+            <a class="btn btn-primary" href="{{ stripe_payment_link }}">Book a €15 Session</a>
             {% else %}
             <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-stack">
                 <button type="submit" class="btn btn-primary">Book a €15 Session</button>

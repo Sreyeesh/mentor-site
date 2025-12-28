@@ -554,6 +554,45 @@ html[data-theme='dark'] .btn-outline {
     line-height: 1.6;
 }
 
+.fieldwork-section {
+    padding-top: 0;
+}
+
+.fieldwork-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+}
+
+.fieldwork-card {
+    border: 1px solid color-mix(in srgb, var(--border-color) 80%, transparent);
+    border-radius: 22px;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    background: color-mix(in srgb, var(--card-bg) 92%, var(--bg-secondary));
+    box-shadow: 0 25px 45px color-mix(in srgb, var(--shadow-color) 65%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.fieldwork-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.fieldwork-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.fieldwork-card p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
 .section-headline {
     display: flex;
     flex-direction: column;

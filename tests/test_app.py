@@ -14,34 +14,47 @@ def client():
 def test_home_page(client):
     """Test that the home page loads successfully."""
     response = client.get('/')
+    body = response.get_data(as_text=True)
     assert response.status_code == 200
-    assert b'creative & technical tutoring' in response.data.lower()
-    assert b'animation, game dev, and interactive media' in response.data.lower()
+    assert '€15' in body
+    assert 'Launch your creative career' in body
 
 
 def test_home_page_content(client):
     """Test that the page contains expected content."""
     response = client.get('/')
-    assert b'What You Get' in response.data
-    assert b'Simple pricing' in response.data
-    assert (
-        b'Personalized tutoring that feels like working with a calm lead'
-        in response.data
-    )
+    body = response.get_data(as_text=True)
+    assert 'This is for you if' in body
+    assert 'What happens in one session' in body
+    assert 'Book the €15 session' in body
 
 
 def test_new_pages_load(client):
     """Ensure the new top-level pages render."""
     pages = [
-        ('/mentoring/', b'Private tutoring built for creative and technical careers.'),
+        ('/mentoring/', b'Private tutoring for creative and technical careers.'),
         ('/schools-and-programs/', b'Depth beats breadth.'),
         ('/about/', b'I tutor artists and developers so they can hit studio standards'),
-        ('/contact/', b'Book a free 30-minute tutoring call.'),
+        ('/contact/', b'Book a 30-minute tutoring call.'),
     ]
     for path, marker in pages:
         response = client.get(path)
         assert response.status_code == 200
         assert marker in response.data
+
+
+def test_sitemap_endpoint(client):
+    response = client.get('/sitemap.xml')
+    assert response.status_code == 200
+    assert response.headers['Content-Type'] == 'application/xml'
+    assert b'<url>' in response.data
+
+
+def test_robots_endpoint(client):
+    response = client.get('/robots.txt')
+    assert response.status_code == 200
+    assert response.headers['Content-Type'] == 'text/plain'
+    assert b'Sitemap:' in response.data
 
 
 def test_static_files(client):

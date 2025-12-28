@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Book the €15 Beginner Sprint{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="section-header">
+        <p class="section-eyebrow">Toucan.ee</p>
+        <h1>Book the €15 session that plugs you into studio-grade mentorship.</h1>
+        <p>Every sprint is run personally by {{ config.name }}, who’s led animation, tech-art, and game teams at Disney, Blizzard, and European indie studios.</p>
+    </div>
+    <ul class="hero-proof">
+        <li>Screen-share your current file—we troubleshoot live together.</li>
+        <li>Recording available on request, plus written notes and links within 12 hours.</li>
+        <li>Money-back guarantee if we can’t unlock progress during the call.</li>
+    </ul>
+    <form action="{{ url_for('create_checkout_session') }}" method="post" class="cta-stack">
+        <button type="submit" class="btn btn-primary">Book the €15 session</button>
+        <p class="microcopy">Stripe Checkout → instant Calendly link → prep form.</p>
+    </form>
+</section>
+
+<section class="section split">
+    <div>
+        <h2>Perfect for</h2>
+        <ul class="bullet-list">
+            <li>Self-taught creatives who need pro critique before submitting.</li>
+            <li>Students balancing coursework with portfolio goals.</li>
+            <li>Indie builders stuck on animation, gameplay, or tech-art issues.</li>
+        </ul>
+    </div>
+    <div>
+        <h2>Not covered</h2>
+        <ul class="bullet-list">
+            <li>Scoped freelance work, retainer, or production staffing.</li>
+            <li>Full CV rewrites or job placement services.</li>
+            <li>Multi-session mentorship (book again if you want more).</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-header">
+        <h2>Session flow</h2>
+        <p>Expect a calm, execution-focused hour:</p>
+    </div>
+    <ol class="session-steps">
+        <li><strong>Intake (5 min)</strong> — align on the goal + blocker.</li>
+        <li><strong>Precision audit (15 min)</strong> — critique and prioritize fixes.</li>
+        <li><strong>Demo + co-build (25 min)</strong> — implement live so you can repeat it.</li>
+        <li><strong>Next steps (10 min)</strong> — clarify checklist, resources, and timeline.</li>
+        <li><strong>Wrap (5 min)</strong> — confirm follow-up email + link delivery.</li>
+    </ol>
+</section>
+
+<section class="section">
+    <div class="section-header">
+        <h2>Why people keep booking</h2>
+        <p>You’re tapping into systems that have shipped for global studios, but in a format designed for beginners.</p>
+    </div>
+    <div class="split">
+        <div class="card card--outline">
+            <h3>Real experience on your side</h3>
+            <ul class="bullet-list">
+                <li>12+ years directing teams across animation, tech-art, and gameplay engineering.</li>
+                <li>Mentored 50+ students into junior roles or indie launches.</li>
+                <li>Built pipelines and creative reviews at Disney Animation, Blizzard, and indie studios.</li>
+            </ul>
+        </div>
+        <div class="card card--outline">
+            <h3>Simple, risk-free booking</h3>
+            <ul class="bullet-list">
+                <li>Pay €15 via Stripe, get instant access to the scheduler.</li>
+                <li>Session recording + written notes delivered within 12 hours.</li>
+                <li>If we can’t unblock your project during the hour, you’re refunded.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

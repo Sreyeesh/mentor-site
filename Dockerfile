@@ -14,7 +14,14 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     FLASK_ENV=production \
     PYTHONPATH=/app \
     BASE_PATH=${BASE_PATH} \
-    GITHUB_PAGES_BASE_PATH=${BASE_PATH}
+    GITHUB_PAGES_BASE_PATH=${BASE_PATH} \
+    SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link \
+    STRIPE_SECRET_KEY= \
+    STRIPE_PUBLISHABLE_KEY= \
+    STRIPE_PRICE_ID= \
+    STRIPE_SUCCESS_URL= \
+    STRIPE_CANCEL_URL= \
+    STRIPE_ENDPOINT_SECRET=
 
 # Install system dependencies
 RUN apt-get update \

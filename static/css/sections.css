@@ -451,6 +451,64 @@ html[data-theme='dark'] .hero-refresh {
     font-size: 1rem;
 }
 
+.session-value-card {
+    border-radius: 26px;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 1px solid color-mix(in srgb, var(--border-color) 80%, transparent);
+    background: color-mix(in srgb, var(--card-bg) 90%, var(--bg-secondary));
+    box-shadow: 0 25px 55px color-mix(in srgb, var(--shadow-color) 75%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.session-value-card__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    position: relative;
+    padding-left: 1.75rem;
+}
+
+.session-value-card__item::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--accent-deep);
+    opacity: 0.85;
+    position: absolute;
+    left: 0.5rem;
+    top: 0.55rem;
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-deep) 20%, transparent);
+}
+
+.session-value-card__item + .session-value-card__item {
+    border-top: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
+    padding-top: 1.15rem;
+}
+
+.session-value-card__label {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.session-value-card__text {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.session-value-card__item--primary .session-value-card__label {
+    font-size: 1.15rem;
+}
+
+.session-value-card__item--primary .session-value-card__text {
+    font-size: 1rem;
+}
+
 .btn-outline {
     border: 1px solid rgba(10, 21, 40, 0.2);
     color: var(--text-primary);
@@ -529,12 +587,65 @@ html[data-theme='dark'] .btn-outline {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
+.outcomes-card {
+    border-radius: 30px;
+    border: 1px solid color-mix(in srgb, var(--border-color) 80%, transparent);
+    background: color-mix(in srgb, var(--card-bg) 92%, var(--bg-secondary));
+    box-shadow: 0 40px 70px color-mix(in srgb, var(--shadow-color) 65%, transparent);
+    padding: clamp(1.75rem, 5vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.outcomes-card__lead h3 {
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+}
+
+.outcomes-card__eyebrow {
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
 .outcomes-list {
-    border-radius: 28px;
-    border: 1px solid var(--border-color);
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    background: var(--card-bg);
-    box-shadow: 0 15px 40px var(--shadow-color);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.outcomes-list li {
+    padding-left: 1.8rem;
+    position: relative;
+}
+
+.outcomes-list li::before {
+    content: '';
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--accent-deep);
+    opacity: 0.8;
+    position: absolute;
+    left: 0;
+    top: 0.35rem;
+}
+
+.outcomes-list__label {
+    font-weight: 600;
+    margin: 0;
+}
+
+.outcomes-list__text {
+    margin: 0.15rem 0 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
 }
 
 .tracks-grid {

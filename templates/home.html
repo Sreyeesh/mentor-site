@@ -12,9 +12,13 @@
             <p class="hero-refresh__lede">Bring whatever you’re building and I’ll sit side-by-side with you, fix the piece that’s stuck, and line up the next milestone with studio-level care.</p>
             <p class="legacy-marker">Launch your creative career with calm, practical tutoring that keeps your art and code moving.</p>
             <div class="hero-refresh__cta">
+                {% if config.stripe_payment_link %}
+                <a class="btn btn-primary" href="{{ config.stripe_payment_link }}">Book a €15 Session</a>
+                {% else %}
                 <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-form">
                     <button type="submit" class="btn btn-primary">Book a €15 Session</button>
                 </form>
+                {% endif %}
                 <a class="btn btn-outline" href="#tracks">See the focus areas</a>
             </div>
             <p class="microcopy">Stripe checkout · Calendly unlocks instantly · Refund if I can’t help.</p>
@@ -136,9 +140,13 @@
             </article>
         </div>
         <div class="tracks-cta">
+            {% if config.stripe_payment_link %}
+            <a class="btn btn-primary" href="{{ config.stripe_payment_link }}">Book a €15 Session</a>
+            {% else %}
             <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-stack">
                 <button type="submit" class="btn btn-primary">Book a €15 Session</button>
             </form>
+            {% endif %}
             <p class="legacy-marker">Book the €15 session when you’re ready for calm, structured progress.</p>
         </div>
     </div>

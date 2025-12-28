@@ -13,10 +13,17 @@
         <li>Recording available on request, plus written notes and links within 12 hours.</li>
         <li>Money-back guarantee if we can’t unlock progress during the call.</li>
     </ul>
+    {% if config.stripe_payment_link %}
+    <div class="cta-stack">
+        <a class="btn btn-primary" href="{{ config.stripe_payment_link }}">Book the €15 session</a>
+        <p class="microcopy">Stripe Checkout → instant Calendly link → prep form.</p>
+    </div>
+    {% else %}
     <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-stack">
         <button type="submit" class="btn btn-primary">Book the €15 session</button>
         <p class="microcopy">Stripe Checkout → instant Calendly link → prep form.</p>
     </form>
+    {% endif %}
 </section>
 
 <section class="section split">

@@ -340,5 +340,13 @@ Railway, Fly.io, a VPS, etc.):
 This split keeps GitHub Pages fast while the hosted Flask app powers Stripe
 Checkout and webhook endpoints.
 
+### Stripe checkout workflow (local → master → live)
+
+1. **Local sanity checks** – Copy `.env.example` to `.env`, fill in every `STRIPE_*` value, and point `BACKEND_BASE_URL` to your local server (for example `http://localhost:5000`). Run `flask run` and hit any checkout form; it should redirect to Stripe or return JSON when you `POST` via curl. Run `pytest tests/test_checkout_flow.py` for an automated check.
+2. **Master / CI builds** – The GitHub Actions workflow reads the same variables from repository secrets. Ensure `BACKEND_BASE_URL` matches your deployed backend host so generated HTML keeps POSTing to Flask instead of GitHub Pages (otherwise you will see 405 errors). The workflow already runs the checkout tests, so a failing Stripe configuration blocks merges.
+3. **Live verification** – After Pages finishes publishing, use the live site with Stripe test cards to confirm subscriptions and one-off payments both reach the backend. Because the HTML contains the fully qualified backend URLs, live testing is the only remaining step to guarantee parity with master.
+
+Following this path means every environment (local, master, and live) exercises the same Flask routes, Stripe keys, and redirect URLs before customers ever see the page.
+
 ## License
 This project is private and proprietary. All rights reserved.

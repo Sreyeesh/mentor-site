@@ -1,12 +1,22 @@
 services:
   mentor-site:
-    build: .
+    build:
+      context: .
+      args:
+        BASE_PATH: ${BASE_PATH:-/mentor-site}
     container_name: mentor-site-prod
     ports:
       # Map host port 3000 to container port 80 (nginx)
       - "3000:80"
     environment:
       - NODE_ENV=production
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
+      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY:-}
+      - STRIPE_PRICE_ID=${STRIPE_PRICE_ID:-}
+      - STRIPE_SUCCESS_URL=${STRIPE_SUCCESS_URL:-}
+      - STRIPE_CANCEL_URL=${STRIPE_CANCEL_URL:-}
+      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET:-}
+      - SITE_CALENDLY_LINK=${SITE_CALENDLY_LINK:-https://calendly.com/toucan-sg/consulting-link}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
@@ -19,6 +29,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      args:
+        BASE_PATH: ${BASE_PATH:-/mentor-site}
     container_name: mentor-site-authoring
     command: python author_app.py
     ports:
@@ -28,6 +40,9 @@ services:
     environment:
       - AUTHORING_CONTENT_DIR=/app/content/posts
       - AUTHORING_SECRET_KEY=authoring-dev-secret
+      - BASE_PATH=${BASE_PATH:-/mentor-site}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
+      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET:-}
     restart: unless-stopped
     profiles:
       - authoring
@@ -37,13 +52,25 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      args:
+        BASE_PATH: ${BASE_PATH:-/mentor-site}
     container_name: mentor-site-dev
     ports:
-      - "3001:5000"  # Map host 3001 to Flask dev server
+      - "5000:5000"  # Map host 5000 to Flask dev server
     command: python app.py
     environment:
       - FLASK_ENV=development
       - FLASK_DEBUG=1
+      - BASE_PATH=${BASE_PATH:-/}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
+      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY:-}
+      - STRIPE_PRICE_ID=${STRIPE_PRICE_ID:-}
+      - STRIPE_SUCCESS_URL=${STRIPE_SUCCESS_URL:-}
+      - STRIPE_CANCEL_URL=${STRIPE_CANCEL_URL:-}
+      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET:-}
+      - SITE_CALENDLY_LINK=${SITE_CALENDLY_LINK:-https://calendly.com/toucan-sg/consulting-link}
+    volumes:
+      - ./:/app
     profiles:
       - dev  # Only start with --profile dev
     restart: "no"
@@ -61,6 +88,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      args:
+        BASE_PATH: ${BASE_PATH:-/mentor-site}
     command: pytest
     volumes:
       - ./:/app
@@ -69,6 +98,8 @@ services:
     working_dir: /app
     environment:
       - PYTHONDONTWRITEBYTECODE=1
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
+      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET:-}
     restart: "no"
 
 networks:

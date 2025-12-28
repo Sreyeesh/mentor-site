@@ -1,6 +1,9 @@
 # Use Python 3.11 slim image for smaller size
 FROM python:3.11-slim
 
+# Allow overriding the URL base path (useful for GitHub Pages)
+ARG BASE_PATH=/mentor-site
+
 # Set working directory
 WORKDIR /app
 
@@ -9,7 +12,16 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     FLASK_APP=app.py \
     FLASK_ENV=production \
-    PYTHONPATH=/app
+    PYTHONPATH=/app \
+    BASE_PATH=${BASE_PATH} \
+    GITHUB_PAGES_BASE_PATH=${BASE_PATH} \
+    SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link \
+    STRIPE_SECRET_KEY= \
+    STRIPE_PUBLISHABLE_KEY= \
+    STRIPE_PRICE_ID= \
+    STRIPE_SUCCESS_URL= \
+    STRIPE_CANCEL_URL= \
+    STRIPE_ENDPOINT_SECRET=
 
 # Install system dependencies
 RUN apt-get update \
@@ -27,9 +39,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY . .
-
-# For custom domain, no base path needed
-ENV BASE_PATH=
 
 # Generate static site for production and verify it worked
 RUN python freeze.py && ls -la build/

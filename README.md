@@ -111,6 +111,11 @@ BASE_PATH=/mentor-site
 FLASK_DEBUG=True
 PLAUSIBLE_SCRIPT_URL=https://plausible.io/js/your-site.js
 PLAUSIBLE_DOMAIN=mentor.your-domain.com
+STRIPE_SECRET_KEY=sk_test_yourkey
+STRIPE_PUBLISHABLE_KEY=pk_test_yourkey
+STRIPE_PRICE_ID=price_yourplan
+STRIPE_SUCCESS_URL=https://your-domain.com/mentoring/?checkout=success
+STRIPE_CANCEL_URL=https://your-domain.com/mentoring/?checkout=cancelled
 ```
 
 `SITE_URL` should be the fully qualified domain for the deployed site (for example,
@@ -123,6 +128,10 @@ Plausible analytics loader plus the initialization snippet so you can enable
 privacy-friendly tracking without editing templates. Set `PLAUSIBLE_DOMAIN` to
 the exact domain you registered with Plausible so the script includes the
 required `data-domain` attribute for automatic detection.
+
+`STRIPE_*` values are optional but power the hosted Checkout button on the mentoring
+page. Define them when you are ready to accept subscription payments. The success
+and cancel URLs must be fully qualified links that Stripe can redirect to.
 
 If you prefer to drop in the Plausible snippet manually, add this block inside
 `<head>` of `templates/base.html`:
@@ -187,6 +196,8 @@ The script stops any running containers, rebuilds the static-site image, and bri
 ## Docker workflows
 The repository ships with Compose services for both the static site and the authoring tool.
 
+> **Heads-up:** The containers read `BASE_PATH` from your environment (defaults to `/mentor-site` which matches GitHub Pages). Export `BASE_PATH=/` before running Compose if you want the app served from the root locally.
+
 ### Static site via Nginx
 ```
 docker compose up --build mentor-site
@@ -200,7 +211,7 @@ If you want to iterate on templates without rebuilding:
 ```
 docker compose --profile dev up mentor-site-dev
 ```
-This mounts the repository into the container and serves the site on `http://localhost:3001/`.
+This mounts the repository into the container and now serves the site on `http://127.0.0.1:5000/` by default (the dev service sets `BASE_PATH=/`). Thanks to the bind mount and Flask’s debug reloader, code and template edits reflect instantly without rebuilding the image. If you need to test a different base path, export `BASE_PATH=/your-path` before launching.
 
 ### Authoring tool container
 Run the Markdown editor without installing Python locally:
@@ -210,6 +221,15 @@ docker compose --profile authoring up authoring-tool
 - Uses `Dockerfile.dev` and launches `python author_app.py` inside the container.
 - The UI is available at `http://localhost:5001/authoring/`.
 - Content is stored in your local `content/` directory via a bind mount, so edits persist outside the container.
+
+### Stripe subscriptions (optional)
+Add a hosted Stripe Checkout button on `/mentoring/`:
+
+1. Create a recurring product/price in Stripe and note the **price ID**.
+2. Populate `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_ID`, `STRIPE_SUCCESS_URL`, and `STRIPE_CANCEL_URL` in `.env`.
+3. Restart the Flask server (or rebuild the Docker containers) so the new environment variables load.
+
+When those variables are set, visitors see a simple form that posts to `/stripe/create-checkout-session/`. The Flask route creates a Checkout Session, redirects the visitor to Stripe, and then returns them to the URLs you supplied after they confirm or cancel payment. The same endpoint also accepts JSON if you need to trigger Checkout from custom JavaScript.
 
 ### Run tests in Docker
 Execute the test suite in an isolated container:

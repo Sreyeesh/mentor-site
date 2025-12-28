@@ -15,6 +15,21 @@ def test_tutoring_page_contains_cta(client):
     assert 'Book the €15 session' in response.get_data(as_text=True)
 
 
+def test_home_page_uses_payment_link_when_configured(monkeypatch, client):
+    payment_link = 'https://stripe.test/pay'
+    monkeypatch.setitem(
+        app_module.SITE_CONFIG,
+        'stripe_payment_link',
+        payment_link,
+    )
+
+    response = client.get('/')
+    body = response.get_data(as_text=True)
+    assert response.status_code == 200
+    assert body.count(f'href="{payment_link}"') >= 2
+    assert 'create-checkout-session' not in body
+
+
 def test_create_checkout_session_redirects(monkeypatch, client):
     captured = {}
     fake_session = SimpleNamespace(

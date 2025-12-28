@@ -131,7 +131,10 @@ required `data-domain` attribute for automatic detection.
 
 `STRIPE_*` values are optional but power the hosted Checkout button on the mentoring
 page. Define them when you are ready to accept subscription payments. The success
-and cancel URLs must be fully qualified links that Stripe can redirect to.
+and cancel URLs must be fully qualified links that Stripe can redirect to. Set
+`BACKEND_BASE_URL` to the public host of your live Flask API (for example,
+`https://api.your-domain.com`) so static checkout forms submit to the backend.
+Leave it empty in local development to keep posting to the same origin.
 
 If you prefer to drop in the Plausible snippet manually, add this block inside
 `<head>` of `templates/base.html`:
@@ -284,6 +287,7 @@ The `.env.example` file documents every supported key. Common ones are listed be
 | `SITE_META_DESCRIPTION` | SEO description injected into templates | preset marketing copy |
 | `SITE_FOCUS_AREAS` | Comma-separated list rendered as focus areas | preset sample values |
 | `BASE_PATH` | Optional URL prefix when hosting under a subdirectory | empty |
+| `BACKEND_BASE_URL` | Fully qualified host for live API endpoints | _(empty => same origin)_ |
 | `AUTHORING_CONTENT_DIR` | Filesystem path that stores Markdown posts | `content/posts` |
 | `AUTHORING_SECRET_KEY` | Flask secret key for the authoring app | `authoring-dev-secret` |
 
@@ -317,6 +321,24 @@ Test the production static site locally before deploying:
 ./deploy.sh                    # Static site only on http://localhost:5000/
 ./deploy.sh --with-authoring   # Includes authoring tool
 ```
+
+### Backend API for Stripe checkout
+
+GitHub Pages only serves static HTML, so Stripe’s POST routes must be hosted on
+a separate backend. Deploy `app.py` to a platform that can run Flask (Render,
+Railway, Fly.io, a VPS, etc.):
+
+1. Build from `Dockerfile.dev` or run `gunicorn app:app` on your platform.
+2. Set environment variables on that service: `BASE_PATH=/mentor-site`,
+   `SITE_URL`, `STRIPE_*` keys, `STRIPE_ENDPOINT_SECRET`, etc.
+3. Assign a public hostname such as `https://api.toucan.ee`.
+4. Add that hostname as `BACKEND_BASE_URL` in GitHub Actions secrets (along with
+   your live `STRIPE_*` values).
+5. Push to `master` so GitHub Pages rebuilds the static site; the templates now
+   POST directly to the backend host, avoiding 405 errors on Pages.
+
+This split keeps GitHub Pages fast while the hosted Flask app powers Stripe
+Checkout and webhook endpoints.
 
 ## License
 This project is private and proprietary. All rights reserved.

@@ -65,10 +65,8 @@
                 </div>
                 <div class="nav-links" id="nav-links">
                     {% for item in nav_links %}
-                        {% set is_contact_link = item.href == site_links.contact %}
                         <a href="{{ item.href }}"
-                            class="{% if item.is_cta %}nav-link--cta{% endif %}{% if is_contact_link %} js-calendly-trigger{% endif %}"
-                            {% if is_contact_link %}data-calendly-url="{{ config.calendly_link }}"{% endif %}>
+                            class="{% if item.is_cta %}nav-link--cta{% endif %}">
                             {{ item.label }}
                         </a>
                     {% endfor %}
@@ -119,10 +117,9 @@
                     <p class="footer-description">
                         Dedicated 1:1 tutoring for animation, game development, and creative tech students worldwide.
                     </p>
-                    <div class="footer-contact">
-                        <a href="mailto:{{ config.email }}" class="footer-contact-link">{{ config.email }}</a>
-                        <a href="{{ site_links.contact }}" class="footer-contact-link">Book a Strategy Call</a>
-                    </div>
+                <div class="footer-contact">
+                    <a href="mailto:{{ config.email }}" class="footer-contact-link">{{ config.email }}</a>
+                </div>
                 </div>
                 <div class="footer-column">
                     <p class="footer-heading">Explore</p>
@@ -138,7 +135,6 @@
                         <li><a href="{{ site_links.mentoring }}">Programs & Pricing</a></li>
                         <li><a href="{{ site_links.home }}#program-details">What You Get</a></li>
                         <li><a href="{{ site_links.blog }}">Insights & Blog</a></li>
-                        <li><a href="{{ site_links.contact }}">Contact & Booking</a></li>
                     </ul>
                 </div>
             </div>
@@ -148,7 +144,6 @@
                     <a href="{{ site_links.about }}">About</a>
                     <a href="{{ site_links.mentoring }}">Tutoring</a>
                     <a href="{{ site_links.blog }}">Blog</a>
-                    <a href="{{ site_links.contact }}">Contact</a>
                 </div>
             </div>
         </div>

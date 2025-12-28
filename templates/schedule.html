@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Schedule your tutoring slot{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="section-header">
+        <h1>Schedule your call</h1>
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+    {% if show_calendly and calendly_link %}
+    <div class="calendly-embed">
+        <iframe src="{{ calendly_link }}" title="Calendly" style="width:100%;height:600px;border:0;" loading="lazy"></iframe>
+    </div>
+    {% else %}
+    <p>Once your payment completes you'll see the Calendly scheduler here.</p>
+    {% endif %}
+</section>
+{% endblock %}

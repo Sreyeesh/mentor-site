@@ -16,6 +16,9 @@ from flask import (
     request,
     url_for,
 )
+import stripe
+
+import db
 
 load_dotenv()
 
@@ -100,10 +103,17 @@ STRIPE_PRICE_ID = SITE_CONFIG['stripe_price_id']
 STRIPE_SUCCESS_URL = _env('STRIPE_SUCCESS_URL')
 STRIPE_CANCEL_URL = _env('STRIPE_CANCEL_URL')
 STRIPE_API_BASE = 'https://api.stripe.com/v1'
+STRIPE_ENDPOINT_SECRET = _env('STRIPE_ENDPOINT_SECRET')
+ONE_OFF_PRICE_AMOUNT = 1500
+ONE_OFF_CURRENCY = 'eur'
 SITE_CONFIG['stripe_checkout_enabled'] = bool(
     STRIPE_SECRET_KEY and STRIPE_PRICE_ID
 )
 
+if STRIPE_SECRET_KEY:
+    stripe.api_key = STRIPE_SECRET_KEY
+
+db.init_db()
 
 def _normalize_base_path(raw: str | None) -> str:
     if not raw:
@@ -461,6 +471,151 @@ def stripe_create_checkout_session():
     if request.is_json:
         return jsonify({'url': checkout_url})
     return redirect(checkout_url, code=303)
+
+
+@app.route('/tutoring')
+def tutoring():
+    return render_template(
+        'tutoring.html',
+        **build_page_context(page_slug='tutoring'),
+    )
+
+
+def _build_success_url() -> str:
+    if STRIPE_SUCCESS_URL:
+        return STRIPE_SUCCESS_URL
+    base = url_for('schedule', _external=True)
+    return f"{base}?session_id={{CHECKOUT_SESSION_ID}}"
+
+
+def _build_cancel_url() -> str:
+    if STRIPE_CANCEL_URL:
+        return STRIPE_CANCEL_URL
+    return url_for('tutoring', _external=True)
+
+
+@app.route('/create-checkout-session', methods=['POST'])
+def create_checkout_session():
+    if not STRIPE_SECRET_KEY:
+        abort(500, description='Stripe not configured.')
+
+    payload = request.get_json(silent=True) or request.form or {}
+    customer_email = payload.get('customer_email')
+
+    session = stripe.checkout.Session.create(
+        mode='payment',
+        line_items=[
+            {
+                'quantity': 1,
+                'price_data': {
+                    'currency': ONE_OFF_CURRENCY,
+                    'unit_amount': ONE_OFF_PRICE_AMOUNT,
+                    'product_data': {
+                        'name': '1:1 Tutoring Session',
+                        'description': 'One-off mentoring session',
+                    },
+                },
+            }
+        ],
+        success_url=_build_success_url(),
+        cancel_url=_build_cancel_url(),
+        customer_email=customer_email,
+    )
+    response = redirect(session.url, code=303)
+    if request.is_json:
+        response.headers['X-Checkout-URL'] = session.url
+    return response
+
+
+@app.route('/schedule/')
+@app.route('/schedule')
+def schedule():
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return (
+            render_template(
+                'schedule.html',
+                **build_page_context(
+                    page_slug='schedule',
+                    error='Missing session_id parameter.',
+                    show_calendly=False,
+                ),
+            ),
+            400,
+        )
+
+    try:
+        checkout_session = stripe.checkout.Session.retrieve(session_id)
+    except Exception:
+        return (
+            render_template(
+                'schedule.html',
+                **build_page_context(
+                    page_slug='schedule',
+                    error='Unable to verify your payment. Please contact support.',
+                    show_calendly=False,
+                ),
+            ),
+            400,
+        )
+
+    customer_email = None
+    customer_details = checkout_session.get('customer_details') or {}
+    if isinstance(customer_details, dict):
+        customer_email = customer_details.get('email')
+
+    payment_status = checkout_session.get('payment_status') or checkout_session.get(
+        'status'
+    )
+    db.upsert_checkout_session(
+        session_id,
+        customer_email=customer_email,
+        payment_status=payment_status,
+    )
+
+    is_paid = (payment_status or '').lower() in {'paid', 'complete'}
+    return render_template(
+        'schedule.html',
+        **build_page_context(
+            page_slug='schedule',
+            show_calendly=is_paid,
+            message='Payment received' if is_paid else 'Waiting for payment confirmation.',
+            error=None if is_paid else None,
+            calendly_link=SITE_CONFIG['calendly_link'],
+            session_id=session_id,
+        ),
+    )
+
+
+@app.route('/stripe/webhook', methods=['POST'])
+def stripe_webhook():
+    if not STRIPE_ENDPOINT_SECRET:
+        abort(500, description='Stripe webhook secret is not configured.')
+
+    payload = request.data
+    sig_header = request.headers.get('Stripe-Signature', '')
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload,
+            sig_header,
+            STRIPE_ENDPOINT_SECRET,
+        )
+    except ValueError:
+        return 'Invalid payload', 400
+    except stripe.error.SignatureVerificationError:
+        return 'Invalid signature', 400
+
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        customer_details = session.get('customer_details') or {}
+        db.upsert_checkout_session(
+            session['id'],
+            customer_email=customer_details.get('email'),
+            payment_status=session.get('payment_status'),
+        )
+
+    return jsonify({'status': 'ok'})
 
 
 if __name__ == '__main__':

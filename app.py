@@ -56,7 +56,7 @@ class BasePathMiddleware:
 
         path_info = environ.get('PATH_INFO', '')
         if path_info.startswith(base_path):
-            trimmed = path_info[len(base_path) :]
+            trimmed = path_info[len(base_path):]
             environ['PATH_INFO'] = trimmed or '/'
         return self.wsgi_app(environ, start_response)
 
@@ -114,6 +114,7 @@ if STRIPE_SECRET_KEY:
     stripe.api_key = STRIPE_SECRET_KEY
 
 db.init_db()
+
 
 def _normalize_base_path(raw: str | None) -> str:
     if not raw:
@@ -464,9 +465,10 @@ def stripe_create_checkout_session():
 
     checkout_url = session.get('url')
     if not checkout_url:
+        missing_url_msg = 'Stripe response was missing a redirect URL.'
         if request.is_json:
-            return jsonify({'error': 'Stripe response was missing a redirect URL.'}), 500
-        abort(502, description='Stripe response was missing a redirect URL.')
+            return jsonify({'error': missing_url_msg}), 500
+        abort(502, description=missing_url_msg)
 
     if request.is_json:
         return jsonify({'url': checkout_url})
@@ -579,7 +581,11 @@ def schedule():
         **build_page_context(
             page_slug='schedule',
             show_calendly=is_paid,
-            message='Payment received' if is_paid else 'Waiting for payment confirmation.',
+            message=(
+                'Payment received'
+                if is_paid
+                else 'Waiting for payment confirmation.'
+            ),
             error=None if is_paid else None,
             calendly_link=SITE_CONFIG['calendly_link'],
             session_id=session_id,

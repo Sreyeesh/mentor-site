@@ -81,7 +81,11 @@ def get_checkout_session(
     conn = sqlite3.connect(path)
     conn.row_factory = sqlite3.Row
     row = conn.execute(
-        "SELECT session_id, customer_email, payment_status, updated_at FROM checkout_sessions WHERE session_id = ?",
+        """
+        SELECT session_id, customer_email, payment_status, updated_at
+        FROM checkout_sessions
+        WHERE session_id = ?
+        """,
         (session_id,),
     ).fetchone()
     conn.close()

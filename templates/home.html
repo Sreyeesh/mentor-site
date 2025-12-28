@@ -1,80 +1,88 @@
 {% extends 'base.html' %}
 
-{% block title %}Professional Online Tutoring for Creative & Technical Careers | Toucan{% endblock %}
-{% block meta_description %}Work directly with {{ config.name }} for structured tutoring in animation, game development, and creative tech. Clear goals, personalized plans, and accountable sessions for emerging professionals worldwide.{% endblock %}
+{% block title %}Toucan.ee — One €15 Session to Unblock Your Work{% endblock %}
+{% block meta_description %}Calm, expert tutoring for beginners in animation, game dev, and technical art. Book a single €15 session to diagnose your block, watch the fix, and leave with a concrete plan.{% endblock %}
 
 {% block content %}
-<section class="hero hero--mentoring" id="top">
-    <div class="hero-shell">
-        <div class="section-panel">
-            <div class="mentoring-hero-grid">
-                <div class="hero-copy">
-                    <p class="section-eyebrow hero-eyebrow">Creative & Technical Tutoring</p>
-                    <h1>Premium mentoring for designers & creative technologists.</h1>
-                    <p class="hero-lede">
-                        Weekly deep dives that prioritize demos, portfolio clarity, and confident communication so you keep momentum without guesswork.
-                    </p>
-                    <ul class="hero-bullets">
-                        <li>Hands-on critiques anchored to live work</li>
-                        <li>Assignments tuned to your career track</li>
-                        <li>Async feedback within 48 hours</li>
-                    </ul>
-                </div>
-                <aside class="offer-summary surface-card" aria-label="Offer summary">
-                    <div class="summary-pills">
-                        <span>60–90m weekly</span>
-                        <span>1:1 mentoring</span>
-                        <span class="pill-span">48h async review</span>
-                    </div>
-                    <div class="summary-divider" aria-hidden="true"></div>
-                    <ul class="summary-points">
-                        <li>Focus on tangible deliverables & demos</li>
-                        <li>Interview-ready communication coaching</li>
-                        <li>Limited seats to protect deep feedback</li>
-                    </ul>
-                </aside>
+<section class="section hero hero--single-column">
+    <div class="wrap hero-stack">
+        <p class="pill">€15 · 60-minute beginner sprint</p>
+        <h1>Work directly with a studio lead, even on your first project.</h1>
+        <div class="hero-grid">
+            <p class="lede">
+                12+ years building animation and game tech at Disney, Blizzard, and indie studios. Bring one blocker, we fix it together, and you leave with the plan to keep moving.
+            </p>
+            <ul class="hero-proof">
+                <li><span>Live co-build:</span> Screen-share your file, implement together.</li>
+                <li><span>Clarity kit:</span> Recording (optional) + written notes inside 12 hours.</li>
+                <li><span>Low risk:</span> 100% refund if we can’t unlock progress.</li>
+            </ul>
+        </div>
+        <form action="{{ url_for('create_checkout_session') }}" method="post" class="cta-stack">
+            <button type="submit" class="btn btn-primary">Book the €15 session</button>
+            <p class="microcopy">Stripe checkout · Calendly unlocks immediately · 100% refund if we can’t help.</p>
+        </form>
+    </div>
+</section>
+
+<section class="section trust-section">
+    <div class="wrap trust-cards">
+        <article class="trust-card trust-card--intro">
+            <h2>Why trust toucan.ee</h2>
+            <p>Toucan.ee runs the platform; every session remains 1:1. Sessions on toucan.ee are led by {{ config.name }}, an animation and game-tech mentor with more than a decade in production.</p>
+        </article>
+        <article class="trust-card trust-card--grid">
+            <ul class="trust-list">
+                <li>
+                    <strong>12+ years</strong>
+                    <p>Studio leadership at Disney, Blizzard, and European indie teams.</p>
+                </li>
+                <li>
+                    <strong>50+ mentees</strong>
+                    <p>From self-taught practice to paid roles or indie launches.</p>
+                </li>
+                <li>
+                    <strong>12-hour recap</strong>
+                    <p>Optional recording and written notes within 12 hours.</p>
+                </li>
+                <li>
+                    <strong>1:1 focus</strong>
+                    <p>Only you and the mentor—no assistants, no packages.</p>
+                </li>
+            </ul>
+            <div class="guarantee-card">
+                <p>If we can’t unlock progress in 60 minutes, the €15 is refunded—no questions asked.</p>
             </div>
-            <div class="hero-cta-strip">
-                <div class="hero-actions">
-                    <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book a consultation</a>
-                    <a href="#program-details" class="cta-button secondary">See curriculum</a>
-                </div>
-                <div class="hero-microcopy">
-                    <p>You’ll leave with a clear next step + a 2-week plan.</p>
-                    <p>Limited seats to protect deep feedback.</p>
-                </div>
-            </div>
-            <div class="hero-benefits">
-                <div class="hero-benefits-heading">
-                    <h2>What we’ll work on</h2>
-                    <p>Each session blends critiques, planning, and accountability so you always know the next move.</p>
-                </div>
-                <div class="benefit-grid">
-                    <article class="benefit-item surface-card">
-                        <h3>Structured 1:1 critiques</h3>
-                        <p>Actionable walkthroughs of active projects every week.</p>
-                    </article>
-                    <article class="benefit-item surface-card">
-                        <h3>Roadmaps & rituals</h3>
-                        <p>Systems that keep production steady between calls.</p>
-                    </article>
-                    <article class="benefit-item surface-card">
-                        <h3>Assignment guidance</h3>
-                        <p>Support that keeps ownership while removing blockers.</p>
-                    </article>
-                    <article class="benefit-item surface-card">
-                        <h3>Open access worldwide</h3>
-                        <p>Remote-first mentoring for students and independents.</p>
-                    </article>
-                </div>
-            </div>
+        </article>
+    </div>
+</section>
+
+<section class="section experience-section">
+    <div class="wrap">
+        <div class="section-headline">
+            <h2>Experience you tap into</h2>
+            <p>You’re borrowing the same systems used to ship for global studios, distilled into one beginner-friendly sprint.</p>
+        </div>
+        <div class="experience-grid cards">
+            <article>
+                <h3>Pipeline build-outs</h3>
+                <p>Directed tooling and mentoring for animation + game teams at Disney Animation, Blizzard, and indies.</p>
+            </article>
+            <article>
+                <h3>Indie launch support</h3>
+                <p>Helped small studios secure milestones, pitch decks, and playable builds on tight budgets.</p>
+            </article>
+            <article>
+                <h3>Career transitions</h3>
+                <p>Guided 50+ mentees from self-taught practice to studio-ready submissions and interviews.</p>
+            </article>
         </div>
     </div>
 </section>
 
 <section class="company-logos">
     <div class="wrap">
-        <h3>Trusted by creative professionals worldwide</h3>
+        <h3>Trusted by teams across animation, games, and indie studios</h3>
         <div class="logos-carousel">
             <div class="logos-track">
                 <img src="{{ url_for('static', filename='images/Walt_Disney_Animation_Studios_logo.svg.png') }}" alt="Disney Animation Studios" class="company-logo">
@@ -94,223 +102,120 @@
     </div>
 </section>
 
-<section class="section value-section" id="program-details">
-    <div class="section-header">
-        <p class="section-eyebrow">Why students choose Toucan</p>
-        <h2>Personalized tutoring that feels like working with a calm lead focused on your growth.</h2>
-        <p class="section-lede">Sessions are built around your target role, portfolio stage, and production environment—so you see progress you can measure, whether you are self-taught or studying formally.</p>
-    </div>
-    <div class="value-grid">
-        <article class="value-card">
-            <h3>Weekly structure</h3>
-            <p>Live online sessions with guided walkthroughs, critique, and decision-making support. You leave with a prioritized checklist every time.</p>
-        </article>
-        <article class="value-card">
-            <h3>Production insight</h3>
-            <p>Guidance from {{ config.name }}, an animator, programmer, and game dev with shipped projects—bringing studio expectations into each lesson.</p>
-        </article>
-        <article class="value-card">
-            <h3>Clear pricing</h3>
-            <p>Transparent packages with flexible commitment—no hidden upsells. Choose what fits your cadence and goals.</p>
-        </article>
-        <article class="value-card">
-            <h3>Accountability</h3>
-            <p>Progress reviews and async check-ins keep momentum high between calls, without overwhelming your schedule.</p>
-        </article>
-    </div>
-</section>
-
-<section class="section features-section" id="what-you-get">
-    <div class="section-header">
-        <p class="section-eyebrow">What You Get</p>
-        <h2>Tutoring that adapts to your goals.</h2>
-        <p class="section-lede">Each engagement blends hands-on instruction, portfolio strategy, and momentum-building rituals so you always know what to do next.</p>
-    </div>
-    <div class="feature-list feature-list--grouped">
-        <article class="feature-card feature-card--stacked">
-            <p class="feature-eyebrow">Master the craft</p>
-            <h3>Production-grade creative direction</h3>
-            <p>Work through complex scenes and systems with live feedback so your decisions match studio expectations.</p>
-            <ul class="feature-points">
-                <li><strong>Game development workflow help:</strong> Diagnose gameplay pacing, pipelines, and communication habits used by leads.</li>
-                <li><strong>Animation workflow support:</strong> Refine blocking, polish, and rig optimisation while strengthening your storytelling voice.</li>
-                <li><strong>Assignment support:</strong> Tackle coursework for art, animation, and game dev while retaining ownership of the final submission.</li>
-            </ul>
-        </article>
-        <article class="feature-card feature-card--stacked">
-            <p class="feature-eyebrow">Show the work</p>
-            <h3>Portfolio and career positioning</h3>
-            <p>Translate practice into compelling reels, pages, and case studies that recruiters can read in minutes.</p>
-            <ul class="feature-points">
-                <li><strong>Portfolio guidance:</strong> Present context, metrics, and documentation so reviewers see your judgment as well as your craft.</li>
-                <li><strong>Career mindset:</strong> Build internship plans, collaborative projects, and learning sprints mapped to your timeline.</li>
-                <li><strong>Open Q&amp;A:</strong> Clarify terminology, tooling, and expectations before interviews or milestone reviews.</li>
-            </ul>
-        </article>
-        <article class="feature-card feature-card--stacked">
-            <p class="feature-eyebrow">Stay accountable</p>
-            <h3>Structure that keeps momentum high</h3>
-            <p>Never leave a session without clear next steps, supporting links, and checkpoints for the week ahead.</p>
-            <ul class="feature-points">
-                <li><strong>Session summaries:</strong> Receive written recaps, annotated files, and checklists for async progress.</li>
-                <li><strong>Roadmaps &amp; check-ins:</strong> Use lightweight trackers to measure progress without micromanagement.</li>
-                <li><strong>Community mindset:</strong> Blend solo focus with optional peer touchpoints to stay motivated.</li>
-            </ul>
-        </article>
-    </div>
-</section>
-
-<section class="section programs-section" id="signature-programs">
-    <div class="section-header">
-        <p class="section-eyebrow">Engagement options</p>
-        <h2>Choose the program that fits your pace and budget.</h2>
-        <p class="section-lede">Every option includes prep materials, async check-ins, and access to shared notes, so the value compounds each week.</p>
-    </div>
-    <div class="tracks-grid">
-        <article class="track-card">
-            <p class="section-eyebrow">New to mentoring</p>
-            <h3>Starter Intensive</h3>
-            <p>Four focused sessions in one month to diagnose foundations, set goals, and build a repeatable practice loop.</p>
-            <ul>
-                <li>Weekly 60-minute 1:1 calls</li>
-                <li>Custom roadmap &amp; resource vault</li>
-                <li>Slack/Email check-ins between calls</li>
-            </ul>
-        </article>
-        <article class="track-card">
-            <p class="section-eyebrow">Most popular</p>
-            <h3>Guided Momentum</h3>
-            <p>Ongoing 1:1 mentorship for artists and developers balancing studies, freelance, or studio work.</p>
-            <ul>
-                <li>Biweekly deep dives + async reviews</li>
-                <li>Portfolio, assignment, and production support</li>
-                <li>Progress tracking tailored to your deliverables</li>
-            </ul>
-        </article>
-        <article class="track-card">
-            <p class="section-eyebrow">Deep specialization</p>
-            <h3>Signature Intensive</h3>
-            <p>High-touch 1:1 tutoring for complex goals—short films, senior portfolio prep, or technical career pivots.</p>
-            <ul>
-                <li>Weekly 90-minute strategy + working sessions</li>
-                <li>Annotated file reviews and async critiques between calls</li>
-                <li>Flexible sprint planning aligned to milestones</li>
-            </ul>
-        </article>
-    </div>
-</section>
-
-<section class="section process-section" id="process">
-    <div class="section-header">
-        <p class="section-eyebrow">How it works</p>
-        <h2>A clear path from first call to finished deliverables.</h2>
-    </div>
-    <ul class="process-steps">
-        <li>
-            <span>1</span>
-            <h3>Discovery call</h3>
-            <p>Dig into goals, constraints, and prior work so we can outline a tutoring plan with measurable checkpoints.</p>
-        </li>
-        <li>
-            <span>2</span>
-            <h3>Onboarding sprint</h3>
-            <p>Share files, reels, and assignments. We establish tooling access, feedback cadence, and the first set of tasks.</p>
-        </li>
-        <li>
-            <span>3</span>
-            <h3>Working sessions</h3>
-            <p>Live walkthroughs, critiques, and decision-making support. Expect annotated takeaways after each call.</p>
-        </li>
-        <li>
-            <span>4</span>
-            <h3>Review &amp; adjust</h3>
-            <p>We assess progress every month, adjust the roadmap, and celebrate wins so motivation stays high.</p>
-        </li>
-    </ul>
-</section>
-
-<section class="section faq-section" id="faq">
-    <div class="section-header">
-        <p class="section-eyebrow">Questions</p>
-        <h2>What else should you know?</h2>
-    </div>
-    <div class="faq-grid">
-        <article class="faq-card">
-            <h3>Do I need a certain skill level?</h3>
-            <p>No. We start from wherever you are—beginner to mid-career—and set goals that respect your timeline and current responsibilities.</p>
-        </article>
-        <article class="faq-card">
-            <h3>Can we cover software specifics?</h3>
-            <p>Yes. Sessions can dive into Unreal, Maya, Blender, scripting, or production tooling. You’ll get recordings or notes to reference later.</p>
-        </article>
-        <article class="faq-card">
-            <h3>What if I miss a session?</h3>
-            <p>Give 24 hours notice and we reschedule. Session summaries and async reviews keep you moving even when weeks get busy.</p>
-        </article>
-        <article class="faq-card">
-            <h3>How do payments work?</h3>
-            <p>You’ll receive an invoice at the start of the month. Pause or adjust with a quick message—no hidden fees or long contracts.</p>
-        </article>
-    </div>
-</section>
-
-<section class="section audience-section" id="who">
-    <div class="section-header">
-        <p class="section-eyebrow">Who I work with</p>
-        <h2>Tutoring for ambitious learners who want clarity and steady progress.</h2>
-        <p class="section-lede">Whether you’re starting from scratch or rebuilding momentum after years in another role, tutoring gives you a calm, consistent partner in your corner.</p>
-    </div>
-    <div class="audience-rows">
-        <article class="audience-row">
-            <div class="audience-row-label">
-                <span>01</span>
-                <h3>Curious learners</h3>
-            </div>
-            <p>Exploring art, animation, or game development for the first time and need structure, critique, and someone to answer the “silly” questions.</p>
-        </article>
-        <article class="audience-row">
-            <div class="audience-row-label">
-                <span>02</span>
-                <h3>Portfolio builders</h3>
-            </div>
-            <p>Students, independents, or career shifters who want feedback loops that actually translate into competitive, industry-ready work.</p>
-        </article>
-        <article class="audience-row">
-            <div class="audience-row-label">
-                <span>03</span>
-                <h3>Returning professionals</h3>
-            </div>
-            <p>Folks who stepped away for management or adjacent roles and now want to get their hands dirty again—with modern workflows and accountability.</p>
-        </article>
-    </div>
-</section>
-
-<section class="section pricing-section" id="pricing">
-    <div class="section-header">
-        <p class="section-eyebrow">Simple pricing</p>
-        <h2>One flat rate for dedicated 1:1 tutoring.</h2>
-        <p class="section-lede">Every month includes weekly sessions, async feedback, and all prep materials—no tiers, no upsells.</p>
-    </div>
-    <div class="pricing-card">
-        <p class="pricing-amount">€15<span>/hour</span></p>
-        <ul>
-            <li>Dedicated 1:1 sessions scheduled as you need them</li>
-            <li>Session summaries, briefs, and critique notes</li>
-            <li>Async reviews between meetings</li>
-            <li>Pause or reschedule with 24 hours notice</li>
+<section class="section audience-section">
+    <div class="wrap narrow">
+        <h2>This is for you if…</h2>
+        <ul class="checklist">
+            <li>You’re self-taught (0–2 years) in animation, game dev, or tech art and want pro-level standards.</li>
+            <li>You’re polishing the same scene but aren’t sure what “done” looks like.</li>
+            <li>You have an interview, submission, or milestone coming and need a calm lead’s critique.</li>
+            <li>You want expert direction without committing to a long mentorship program.</li>
         </ul>
-        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Check availability</a>
     </div>
 </section>
 
-<section class="section final-cta" id="contact-cta">
-    <div class="final-cta-card">
-        <p class="section-eyebrow">Ready for professional momentum?</p>
-        <h2>Book a session with {{ config.name }} to map your tutoring plan.</h2>
-        <p>Share your goals, timeline, and current work. I’ll respond within 24 hours with structure and actionable next steps for the engagement.</p>
-        <div class="hero-actions">
-            <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book a session</a>
+<section class="section scope-section">
+    <div class="wrap split">
+        <div class="card card--outline">
+            <h3>Included in the session</h3>
+            <ul class="bullet-list">
+                <li>Live critique of one project or assignment.</li>
+                <li>Workflow triage in Unreal, Blender, Houdini, or scripting basics.</li>
+                <li>Story/communication polish so your work reads like a professional submission.</li>
+                <li>Mini assignment + resources tailored to your next milestone.</li>
+            </ul>
         </div>
+        <div class="card card--outline">
+            <h3>Not included</h3>
+            <ul class="bullet-list">
+                <li>Full project delivery or retainer work.</li>
+                <li>Agency staffing or long-term production engagements.</li>
+                <li>Large codebase refactors or team training.</li>
+                <li>Resume or cover-letter rewriting (we can discuss direction only).</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="section process-section">
+    <div class="wrap">
+        <div class="section-headline">
+            <h2>How the hour flows</h2>
+            <p>Each step is intentionally timed so you know exactly where your focus goes.</p>
+        </div>
+        <ol class="session-steps stepper">
+            <li>
+                <div class="step-badge">1</div>
+                <div class="step-card">
+                    <span class="time-chip">5 min</span>
+                    <h3>Intake</h3>
+                    <p>Share your goal, file link, and the blocker hurting the most.</p>
+                </div>
+            </li>
+            <li>
+                <div class="step-badge">2</div>
+                <div class="step-card">
+                    <span class="time-chip">15 min</span>
+                    <h3>Precision audit</h3>
+                    <p>We diagnose the single change with the biggest payoff, anchored to studio expectations.</p>
+                </div>
+            </li>
+            <li class="step-highlight">
+                <div class="step-badge">3</div>
+                <div class="step-card">
+                    <span class="time-chip">25 min</span>
+                    <h3>Live demo &amp; co-build</h3>
+                    <p>I show the fix, then you drive while I coach so you leave with repeatable muscle memory.</p>
+                </div>
+            </li>
+            <li>
+                <div class="step-badge">4</div>
+                <div class="step-card">
+                    <span class="time-chip">10 min</span>
+                    <h3>Action plan</h3>
+                    <p>We convert insight into a checklist with links, references, and estimated effort.</p>
+                </div>
+            </li>
+            <li>
+                <div class="step-badge">5</div>
+                <div class="step-card">
+                    <span class="time-chip">5 min</span>
+                    <h3>Follow-up</h3>
+                    <p>You receive notes and resources within 12 hours, plus one follow-up email for clarity.</p>
+                </div>
+            </li>
+        </ol>
+    </div>
+</section>
+
+<section class="section funnel-section">
+    <div class="wrap narrow">
+        <h2>Simple flow from payment to call</h2>
+        <ul class="timeline-list">
+            <li>
+                <strong>Book:</strong> Click the button, pay via Stripe Checkout in under a minute.
+            </li>
+            <li>
+                <strong>Schedule:</strong> Calendly unlocks instantly—pick your slot and fill the prep form.
+            </li>
+            <li>
+                <strong>Call:</strong> We meet on Zoom/Meet and implement the fix together.
+            </li>
+            <li>
+                <strong>After:</strong> Checklist + resources hit your inbox within 12 hours, with a refund if we couldn’t move you forward.
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section class="section final-cta">
+    <div class="wrap narrow">
+        <h2>Ready for hands-on guidance?</h2>
+        <p>Secure your €15 session now. No subscription, no upsell—just a calm expert in your corner for one focused hour.</p>
+        <form action="{{ url_for('create_checkout_session') }}" method="post" class="cta-stack">
+            <button type="submit" class="btn btn-primary">Book the €15 session</button>
+            <p class="microcopy">Questions? <a href="mailto:{{ config.email }}">{{ config.email }}</a></p>
+        </form>
     </div>
 </section>
 {% endblock %}

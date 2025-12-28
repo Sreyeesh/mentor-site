@@ -93,9 +93,9 @@
             </ul>
         </div>
         <div class="package-cta">
-            <a href="{{ site_links.contact }}" class="cta-button primary-cta">Start tutoring</a>
             {% if config.stripe_payment_link %}
-            <a href="{{ config.stripe_payment_link }}" class="cta-button secondary">Pay for a session</a>
+            <a href="{{ config.stripe_payment_link }}" class="cta-button primary-cta">Pay for a session</a>
+            <p class="pricing-note">Complete payment first and you’ll instantly receive the scheduling link.</p>
             {% endif %}
         </div>
     </div>

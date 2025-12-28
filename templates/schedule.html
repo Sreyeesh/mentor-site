@@ -1,23 +1,44 @@
 {% extends 'base.html' %}
 
-{% block title %}Schedule your tutoring slot{% endblock %}
+{% block title %}You’re booked — choose a time{% endblock %}
+{% block meta_description %}Thanks for your payment! Choose a time for your €15 tutoring session and keep the Calendly link handy for later changes.{% endblock %}
+
 {% block content %}
-<section class="section">
-    <div class="section-header">
-        <h1>Schedule your call</h1>
+<section class="section schedule-hero">
+    <div class="wrap narrow">
+        <p class="pill">Step 2 · Schedule</p>
+        <h1>You’re booked — choose a time</h1>
+        <p class="hero-refresh__lede">Thanks for confirming your session. Pick a slot below so we can prep the right exercises.</p>
         {% if message %}
-        <p>{{ message }}</p>
+        <p class="status-chip">{{ message }}</p>
         {% endif %}
         {% if error %}
         <p class="error">{{ error }}</p>
         {% endif %}
     </div>
-    {% if show_calendly and calendly_link %}
-    <div class="calendly-embed">
-        <iframe src="{{ calendly_link }}" title="Calendly" style="width:100%;height:600px;border:0;" loading="lazy"></iframe>
+</section>
+<section class="section schedule-body">
+    <div class="wrap narrow">
+        {% if show_calendly and calendly_link %}
+        <div class="calendly-embed">
+            <iframe src="{{ calendly_link }}" title="Calendly booking" loading="lazy" style="width: 100%; height: 700px; border: 1px solid var(--border-color); border-radius: 18px; background: var(--bg-secondary);"></iframe>
+        </div>
+        <div class="schedule-actions">
+            <a href="{{ calendly_link }}" target="_blank" rel="noopener" class="btn btn-primary">Open Calendly in a new tab</a>
+            <p class="microcopy">If the embed does not load, the button opens Calendly directly.</p>
+        </div>
+        <div class="schedule-reminder">
+            <h2>If you don’t book right now</h2>
+            <p>Bookmark <a href="{{ calendly_link }}" target="_blank" rel="noopener">this Calendly link</a> so you can grab a time later. You also received the same link via email for easy access.</p>
+            <p>Need help? Email <a href="mailto:{{ config.email }}">{{ config.email }}</a> with your Stripe receipt and we’ll make sure you’re on the calendar.</p>
+        </div>
+        {% else %}
+        <div class="schedule-reminder">
+            <h2>Almost there</h2>
+            <p>We’re waiting for Stripe to confirm your payment. Refresh this page in a moment or check your receipt email for the scheduling link.</p>
+            <p>If this persists, forward your receipt to <a href="mailto:{{ config.email }}">{{ config.email }}</a> and we’ll unlock Calendly for you.</p>
+        </div>
+        {% endif %}
     </div>
-    {% else %}
-    <p>Once your payment completes you'll see the Calendly scheduler here.</p>
-    {% endif %}
 </section>
 {% endblock %}

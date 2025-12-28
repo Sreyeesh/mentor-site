@@ -1,221 +1,129 @@
 {% extends 'base.html' %}
 
-{% block title %}Toucan.ee — One €15 Session to Unblock Your Work{% endblock %}
-{% block meta_description %}Calm, expert tutoring for beginners in animation, game dev, and technical art. Book a single €15 session to diagnose your block, watch the fix, and leave with a concrete plan.{% endblock %}
+{% block title %}Art, Animation & Game Dev Tutoring | Toucan.ee{% endblock %}
+{% block meta_description %}Book a calm, 60-minute €15 session to get hands-on tutoring in art, animation, or game dev. Finish something small each call with live feedback, practice tasks, and a next-step plan.{% endblock %}
 
 {% block content %}
-<section class="section hero hero--single-column">
-    <div class="wrap hero-stack">
-        <p class="pill">€15 · 60-minute beginner sprint</p>
-        <h1>Work directly with a studio lead, even on your first project.</h1>
-        <div class="hero-grid">
-            <p class="lede">
-                12+ years building animation and game tech at Disney, Blizzard, and indie studios. Bring one blocker, we fix it together, and you leave with the plan to keep moving.
-            </p>
-            <ul class="hero-proof">
-                <li><span>Live co-build:</span> Screen-share your file, implement together.</li>
-                <li><span>Clarity kit:</span> Recording (optional) + written notes inside 12 hours.</li>
-                <li><span>Low risk:</span> 100% refund if we can’t unlock progress.</li>
-            </ul>
-        </div>
-        <form action="{{ url_for('create_checkout_session') }}" method="post" class="cta-stack">
-            <button type="submit" class="btn btn-primary">Book the €15 session</button>
-            <p class="microcopy">Stripe checkout · Calendly unlocks immediately · 100% refund if we can’t help.</p>
-        </form>
-    </div>
-</section>
-
-<section class="section trust-section">
-    <div class="wrap trust-cards">
-        <article class="trust-card trust-card--intro">
-            <h2>Why trust toucan.ee</h2>
-            <p>Toucan.ee runs the platform; every session remains 1:1. Sessions on toucan.ee are led by {{ config.name }}, an animation and game-tech mentor with more than a decade in production.</p>
-        </article>
-        <article class="trust-card trust-card--grid">
-            <ul class="trust-list">
-                <li>
-                    <strong>12+ years</strong>
-                    <p>Studio leadership at Disney, Blizzard, and European indie teams.</p>
-                </li>
-                <li>
-                    <strong>50+ mentees</strong>
-                    <p>From self-taught practice to paid roles or indie launches.</p>
-                </li>
-                <li>
-                    <strong>12-hour recap</strong>
-                    <p>Optional recording and written notes within 12 hours.</p>
-                </li>
-                <li>
-                    <strong>1:1 focus</strong>
-                    <p>Only you and the mentor—no assistants, no packages.</p>
-                </li>
-            </ul>
-            <div class="guarantee-card">
-                <p>If we can’t unlock progress in 60 minutes, the €15 is refunded—no questions asked.</p>
+<section class="section hero hero-refresh">
+    <div class="wrap hero-refresh__grid">
+        <div class="hero-refresh__copy">
+            <p class="pill">€15 · 60-minute 1:1 session</p>
+            <h1>Art, Animation &amp; Game Dev Tutoring for Every Level</h1>
+            <p class="hero-refresh__lede">Practical, calm guidance. Finish something small each session with a mentor who has shipped art, animation, and tools for global studios.</p>
+            <div class="hero-refresh__cta">
+                <form action="{{ url_for('create_checkout_session') }}" method="post" class="cta-form">
+                    <button type="submit" class="btn btn-primary">Book a €15 Session</button>
+                </form>
+                <a class="btn btn-outline" href="#tracks">See what we’ll work on</a>
             </div>
-        </article>
-    </div>
-</section>
-
-<section class="section experience-section">
-    <div class="wrap">
-        <div class="section-headline">
-            <h2>Experience you tap into</h2>
-            <p>You’re borrowing the same systems used to ship for global studios, distilled into one beginner-friendly sprint.</p>
+            <p class="microcopy">Stripe checkout · Calendly unlocks instantly · Refund if we can’t help.</p>
         </div>
-        <div class="experience-grid cards">
-            <article>
-                <h3>Pipeline build-outs</h3>
-                <p>Directed tooling and mentoring for animation + game teams at Disney Animation, Blizzard, and indies.</p>
-            </article>
-            <article>
-                <h3>Indie launch support</h3>
-                <p>Helped small studios secure milestones, pitch decks, and playable builds on tight budgets.</p>
-            </article>
-            <article>
-                <h3>Career transitions</h3>
-                <p>Guided 50+ mentees from self-taught practice to studio-ready submissions and interviews.</p>
-            </article>
-        </div>
-    </div>
-</section>
-
-<section class="company-logos">
-    <div class="wrap">
-        <h3>Trusted by teams across animation, games, and indie studios</h3>
-        <div class="logos-carousel">
-            <div class="logos-track">
-                <img src="{{ url_for('static', filename='images/Walt_Disney_Animation_Studios_logo.svg.png') }}" alt="Disney Animation Studios" class="company-logo">
-                <img src="{{ url_for('static', filename='images/Blizzard_Entertainment_Logo_2015.svg.png') }}" alt="Blizzard Entertainment" class="company-logo">
-                <img src="{{ url_for('static', filename='images/DNEG_Animation_2025.svg.png') }}" alt="DNEG Animation" class="company-logo">
-                <img src="{{ url_for('static', filename='images/GameCity.png') }}" alt="GameCity Kajaani" class="company-logo">
-                <img src="{{ url_for('static', filename='images/Overwatch_2_logo.svg.png') }}" alt="Overwatch 2" class="company-logo">
-                <img src="{{ url_for('static', filename='images/Boulder_Media.png') }}" alt="Boulder Media" class="company-logo">
-                <img src="{{ url_for('static', filename='images/Walt_Disney_Animation_Studios_logo.svg.png') }}" alt="Disney Animation Studios" class="company-logo">
-                <img src="{{ url_for('static', filename='images/Blizzard_Entertainment_Logo_2015.svg.png') }}" alt="Blizzard Entertainment" class="company-logo">
-                <img src="{{ url_for('static', filename='images/DNEG_Animation_2025.svg.png') }}" alt="DNEG Animation" class="company-logo">
-                <img src="{{ url_for('static', filename='images/GameCity.png') }}" alt="GameCity Kajaani" class="company-logo">
-                <img src="{{ url_for('static', filename='images/Overwatch_2_logo.svg.png') }}" alt="Overwatch 2" class="company-logo">
-                <img src="{{ url_for('static', filename='images/Boulder_Media.png') }}" alt="Boulder Media" class="company-logo">
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="section audience-section">
-    <div class="wrap narrow">
-        <h2>This is for you if…</h2>
-        <ul class="checklist">
-            <li>You’re self-taught (0–2 years) in animation, game dev, or tech art and want pro-level standards.</li>
-            <li>You’re polishing the same scene but aren’t sure what “done” looks like.</li>
-            <li>You have an interview, submission, or milestone coming and need a calm lead’s critique.</li>
-            <li>You want expert direction without committing to a long mentorship program.</li>
+        <ul class="hero-refresh__list">
+            <li>60 minutes of focused, live co-working.</li>
+            <li>Recording + written recap (optional) within 12 hours.</li>
+            <li>Beginner-friendly pacing with pro standards.</li>
         </ul>
     </div>
 </section>
 
-<section class="section scope-section">
-    <div class="wrap split">
-        <div class="card card--outline">
-            <h3>Included in the session</h3>
-            <ul class="bullet-list">
-                <li>Live critique of one project or assignment.</li>
-                <li>Workflow triage in Unreal, Blender, Houdini, or scripting basics.</li>
-                <li>Story/communication polish so your work reads like a professional submission.</li>
-                <li>Mini assignment + resources tailored to your next milestone.</li>
-            </ul>
-        </div>
-        <div class="card card--outline">
-            <h3>Not included</h3>
-            <ul class="bullet-list">
-                <li>Full project delivery or retainer work.</li>
-                <li>Agency staffing or long-term production engagements.</li>
-                <li>Large codebase refactors or team training.</li>
-                <li>Resume or cover-letter rewriting (we can discuss direction only).</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<section class="section process-section">
-    <div class="wrap">
-        <div class="section-headline">
-            <h2>How the hour flows</h2>
-            <p>Each step is intentionally timed so you know exactly where your focus goes.</p>
-        </div>
-        <ol class="session-steps stepper">
-            <li>
-                <div class="step-badge">1</div>
-                <div class="step-card">
-                    <span class="time-chip">5 min</span>
-                    <h3>Intake</h3>
-                    <p>Share your goal, file link, and the blocker hurting the most.</p>
-                </div>
-            </li>
-            <li>
-                <div class="step-badge">2</div>
-                <div class="step-card">
-                    <span class="time-chip">15 min</span>
-                    <h3>Precision audit</h3>
-                    <p>We diagnose the single change with the biggest payoff, anchored to studio expectations.</p>
-                </div>
-            </li>
-            <li class="step-highlight">
-                <div class="step-badge">3</div>
-                <div class="step-card">
-                    <span class="time-chip">25 min</span>
-                    <h3>Live demo &amp; co-build</h3>
-                    <p>I show the fix, then you drive while I coach so you leave with repeatable muscle memory.</p>
-                </div>
-            </li>
-            <li>
-                <div class="step-badge">4</div>
-                <div class="step-card">
-                    <span class="time-chip">10 min</span>
-                    <h3>Action plan</h3>
-                    <p>We convert insight into a checklist with links, references, and estimated effort.</p>
-                </div>
-            </li>
-            <li>
-                <div class="step-badge">5</div>
-                <div class="step-card">
-                    <span class="time-chip">5 min</span>
-                    <h3>Follow-up</h3>
-                    <p>You receive notes and resources within 12 hours, plus one follow-up email for clarity.</p>
-                </div>
-            </li>
-        </ol>
-    </div>
-</section>
-
-<section class="section funnel-section">
+<section class="section trust-bites">
     <div class="wrap narrow">
-        <h2>Simple flow from payment to call</h2>
-        <ul class="timeline-list">
-            <li>
-                <strong>Book:</strong> Click the button, pay via Stripe Checkout in under a minute.
-            </li>
-            <li>
-                <strong>Schedule:</strong> Calendly unlocks instantly—pick your slot and fill the prep form.
-            </li>
-            <li>
-                <strong>Call:</strong> We meet on Zoom/Meet and implement the fix together.
-            </li>
-            <li>
-                <strong>After:</strong> Checklist + resources hit your inbox within 12 hours, with a refund if we couldn’t move you forward.
-            </li>
+        <h2 class="section-title">Calm, real-time guidance when you need it.</h2>
+        <p class="section-subhead">We sit in the same file, untangle the blocker, and map the next tiny win so you’re not stuck alone later.</p>
+        <ul class="info-bullets">
+            <li>Transparent feedback that pairs craft and technical art.</li>
+            <li>Hands-on mentoring from someone who still builds shots and tools.</li>
+            <li>Beginner-safe pace with notes you can revisit after the call.</li>
         </ul>
     </div>
 </section>
 
-<section class="section final-cta">
+<section class="section session-outcomes" id="outcomes">
     <div class="wrap narrow">
-        <h2>Ready for hands-on guidance?</h2>
-        <p>Secure your €15 session now. No subscription, no upsell—just a calm expert in your corner for one focused hour.</p>
-        <form action="{{ url_for('create_checkout_session') }}" method="post" class="cta-stack">
-            <button type="submit" class="btn btn-primary">Book the €15 session</button>
-            <p class="microcopy">Questions? <a href="mailto:{{ config.email }}">{{ config.email }}</a></p>
-        </form>
+        <h2 class="section-title">What you’ll get in every session</h2>
+        <ul class="outcomes-list">
+            <li>A clear goal for the session.</li>
+            <li>Live feedback and corrections.</li>
+            <li>A simple practice task for the week.</li>
+            <li>A next-step plan.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section tracks-section" id="tracks">
+    <div class="wrap">
+        <div class="section-headline">
+            <h2>What we can solve in a session</h2>
+            <p>We pick one problem, fix it together live, and wrap with clear next steps so you can keep shipping on your own.</p>
+        </div>
+        <div class="tracks-grid">
+            <article class="track-card">
+                <h3>Art fundamentals tune-up</h3>
+                <p>Use the hour to identify the single tweak that will level up your drawings.</p>
+                <ul class="track-list">
+                    <li>Review sketches live and spot the root issue.</li>
+                    <li>See the fix demonstrated before you try it.</li>
+                    <li>Get a short drill to repeat during the week.</li>
+                </ul>
+            </article>
+            <article class="track-card">
+                <h3>Animation polish sprint</h3>
+                <p>We focus on one shot or cycle and leave with a confident plan for the next pass.</p>
+                <ul class="track-list">
+                    <li>Playblast review with precise timing notes.</li>
+                    <li>Block new poses or arcs together on screen.</li>
+                    <li>Document the checklist for your next polish session.</li>
+                </ul>
+            </article>
+            <article class="track-card">
+                <h3>Game dev scope reset</h3>
+                <p>We debug one system or feel issue, then set a realistic sprint you can actually finish.</p>
+                <ul class="track-list">
+                    <li>Screen-share the build and trace the blocker.</li>
+                    <li>Co-edit blueprints or scripts until it behaves.</li>
+                    <li>Capture a mini roadmap so you know what to build next.</li>
+                </ul>
+            </article>
+        </div>
+        <div class="tracks-cta">
+            <form action="{{ url_for('create_checkout_session') }}" method="post" class="cta-stack">
+                <button type="submit" class="btn btn-primary">Book a €15 Session</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="section faq-section" id="faq">
+    <div class="wrap narrow">
+        <div class="section-headline">
+            <h2>FAQ</h2>
+            <p>Quick answers so you can book with confidence.</p>
+        </div>
+        <div class="faq-list">
+            <article class="faq-item">
+                <h3>Do I need experience?</h3>
+                <p>No. Sessions are built for beginner to intermediate artists. We scope to your pace and focus on one achievable improvement.</p>
+            </article>
+            <article class="faq-item">
+                <h3>What tools do I need?</h3>
+                <p>A reliable internet connection, your project file, and whatever software you’re already using (Blender, Krita, Unreal, etc.). I’ll screen-share or demo as needed.</p>
+            </article>
+            <article class="faq-item">
+                <h3>Can I bring my own project?</h3>
+                <p>Absolutely. Bring a scene, animation, or build you’re stuck on. We’ll diagnose, fix, and create a lightweight checklist for the next week.</p>
+            </article>
+            <article class="faq-item">
+                <h3>What happens after I pay?</h3>
+                <p>Stripe sends you to the schedule page where Calendly unlocks. Pick a time, fill a quick prep form, and you’ll get confirmation plus reminders.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section contact-strip" id="contact">
+    <div class="wrap contact-strip__inner">
+        <p>Questions before you book? Email <a href="mailto:{{ config.email }}">{{ config.email }}</a> anytime.</p>
+        <a href="{{ site_links.mentoring }}" class="policies-link">Read the tutoring policies</a>
     </div>
 </section>
 {% endblock %}

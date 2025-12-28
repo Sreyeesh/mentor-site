@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}About {{ config.name }} | Mentor & Director{% endblock %}
-{% block meta_description %}Discover how {{ config.name }} mentors artists, developers, and studios with production-ready coaching informed by experience at Disney, Blizzard Entertainment, DNEG, and indie teams worldwide.{% endblock %}
+{% block title %}About {{ config.name }} | 1:1 Tutor{% endblock %}
+{% block meta_description %}Learn why {{ config.name }} now focuses exclusively on 1:1 tutoring for animation and game development students, bringing experience from Disney, Blizzard Entertainment, and DNEG into every lesson.{% endblock %}
 
 {% block content %}
 <section class="page-hero">
     <p class="section-eyebrow">About</p>
-    <h1>I help artists, developers, and studios work smarter, create faster, and deliver at industry standards.</h1>
-    <p class="lead">Disney, Blizzard Entertainment, DNEG, and indie teams around the globe have trusted me to bridge the gap between creative vision and technical execution because I’ve lived in both the animation/VFX pipeline and the engineering/DevOps space.</p>
+    <h1>I mentor animation, art, and game development teams so their work hits studio standards with confidence.</h1>
+    <p class="lead">After leading crews at Disney, Blizzard Entertainment, DNEG, and indie productions, I now dedicate my time to 1:1 mentoring. You get the same production rigor—without needing to hire an entire consulting crew.</p>
 </section>
 
 <section class="section bio-section">
@@ -16,17 +16,26 @@
             <img src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}" alt="Portrait of {{ config.name }}" loading="lazy">
         </div>
         <div>
-            <h2>Hands-on mentoring built for production reality.</h2>
-            <p>My mentoring and coaching practice is fully immersive and results-focused. Whether I’m guiding a junior artist through their first production-ready project, helping a developer adapt to a creative pipeline, or advising an indie team on how to take their idea from concept to delivery, I stay in the trenches with you until the work meets the bar.</p>
-            <p>Because I’ve been responsible for both the artistic craft and the technical infrastructure, I know how to translate between creative language and engineering constraints—so you can stay focused on making something incredible.</p>
+            <h2>Hands-on tutoring built for production reality.</h2>
+            <p>My tutoring practice is immersive and focused on measurable wins. Whether I’m helping a student structure their first reel or coaching a professional through a complex Unreal build, I move step-by-step with them until the work is ready for review.</p>
+            <p>Because I’ve been responsible for both artistic craft and technical infrastructure, I can translate between creative language and engineering constraints—so you stay focused on making something incredible.</p>
         </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="wrap narrow">
+        <h2>About me</h2>
+        <p>I studied art and animation and wrapped my degree in 2012, then jumped straight into production work across animation, game development, and VFX. Since then I’ve had the chance to build shots, rigs, pipelines, and tools for major studios as well as tiny indie teams. That mix is why I’m just as comfortable mentoring storyboard artists as I am coaching technical artists or indie devs—I’ve lived in every corner of the pipeline.</p>
+        <p>Today I spend most of my time mentoring and teaching artists, animators, and engineers who want real production-ready workflows. I dig into technical art, animation pipeline habits, and the kind of game development coaching that keeps scope honest. I bridge the creative and technical worlds so you always understand both the “why” and the “how,” whether that’s dialing in timing, refining compositions, or planning the next milestone.</p>
+        <p>The through-line is simple: collaborative coaching that makes you faster, calmer, and more confident on your own work. If you need a grounded guide who’s shipped projects and still loves the craft, that’s what toucan.ee is built for.</p>
     </div>
 </section>
 
 <section class="section">
     <div class="bio-grid">
         <div>
-            <p>I partner with individuals and studios that want feedback grounded in real-world production. Every engagement is tailored, but the throughline is the same: clear goals, transparent critiques, and actionable next steps that accelerate growth.</p>
+        <p>I partner with individuals who want feedback grounded in real production. Every tutoring plan is tailored, but the throughline is the same: clear goals, transparent critiques, and actionable next steps that accelerate growth.</p>
         </div>
         <div>
             <h3>People work with me because I bring:</h3>
@@ -43,18 +52,17 @@
     <div class="bio-grid">
         <div>
             <h2>Toucan Studios OÜ</h2>
-            <p>I run Toucan Studios OÜ where I mentor artists, developers, and game teams to deliver production-ready projects. Together with Game City Kajaani I provide mentorship, technical guidance, and creative direction that prepares emerging talent for the realities of the games industry.</p>
+            <p>Through Toucan Studios OÜ I provide dedicated 1:1 tutoring for animation, game development, and creative tech students. Partnerships like Game City Kajaani keep me close to classrooms, but every engagement is still centered on individual progress.</p>
             <ul class="bio-list">
-                <li>🎮 Mentor Unreal Engine developers from first prototype through release.</li>
-                <li>🎨 Guide animation students through industry workflows and portfolio preparation.</li>
-                <li>⚙️ Deliver training on asset pipelines, project organization, and collaborative production.</li>
-                <li>🤝 Help indie teams align gameplay, art, and technical systems seamlessly.</li>
-                <li>🎤 Host workshops, talks, and one-on-one coaching for creative professionals.</li>
+                <li>🎮 Mentor game developers from first prototype through release across engines.</li>
+                <li>🎨 Guide animation and art students through industry workflows, critiques, and portfolio prep.</li>
+                <li>⚙️ Coach creatives on asset pipelines, project organization, and collaborative production.</li>
+                <li>🧭 Provide assignment support and critique loops that mirror studio reviews.</li>
             </ul>
         </div>
         <div>
             <h3>Mission</h3>
-            <p>I’m here to bridge the gap between creative vision and technical execution. Every coaching engagement pushes projects from concept to completion with workflows that match industry-ready practices.</p>
+            <p>I’m here to bridge the gap between creative vision and technical execution. Every tutoring engagement pushes projects from concept to completion with workflows that match industry-ready practices.</p>
         </div>
     </div>
 </section>
@@ -62,9 +70,9 @@
 <section class="section">
     <div class="bio-grid">
         <div>
-            <h2>SG Production OÜ — Owner &amp; Technical Director</h2>
-            <p>Since July 2022 I’ve led SG Production OÜ remotely from Valgjärve, Estonia, delivering full-stack web development and creative pipeline automation for animation, VFX, and game studios. My role is part engineering lead, part technical director, and part mentor for teams that want dependable production infrastructure.</p>
-            <p>Key contributions include:</p>
+            <h2>Industry background that informs every lesson</h2>
+            <p>Before focusing solely on tutoring, I led SG Production OÜ—delivering full-stack development and pipeline automation for animation, VFX, and game studios. That work keeps my tutoring grounded in today’s production realities even though I no longer take on consulting retainers.</p>
+            <p>Highlights from that era:</p>
             <ul class="bio-list">
                 <li>Building custom backends and web applications tailored to studio needs.</li>
                 <li>Developing frontend dashboards for producers, artists, and clients.</li>
@@ -74,7 +82,7 @@
             </ul>
         </div>
         <div>
-            <p>At SG Production my mission is to transform creative pipelines into scalable, reliable, and artist-friendly systems so studios can keep their focus on telling stories and building worlds.</p>
+            <p>This cross-disciplinary background is why tutoring sessions cover both craft and process. I’ve sat in the director’s chair and the lead engineer seat—now I use that experience to elevate your personal projects.</p>
         </div>
     </div>
 </section>
@@ -82,8 +90,8 @@
 <section class="section">
     <div class="bio-grid">
         <div>
-            <h3>Open for mentorship, coaching, and consulting</h3>
-            <p>I collaborate with individuals, teams, and studios who want to level up their skills, workflows, and results. If you need someone who speaks both artistry and infrastructure—and can guide you through the realities of production—I’d love to connect.</p>
+            <h3>Open for 1:1 tutoring only</h3>
+            <p>I now work exclusively with individual students and professionals. If you’re ready for focused guidance—as opposed to group workshops or consulting retainers—let’s connect.</p>
         </div>
     </div>
 </section>
@@ -91,8 +99,8 @@
 <section class="section final-cta">
     <div class="final-cta-card">
         <p class="section-eyebrow">Let’s work together</p>
-        <h2>Ready to bring studio-level rigor to your project or classroom?</h2>
-        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book a Call</a>
+        <h2>Ready to build a tutoring plan that fits your goals?</h2>
+        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Start Tutoring</a>
     </div>
 </section>
 {% endblock %}

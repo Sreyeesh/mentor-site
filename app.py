@@ -1,15 +1,24 @@
+import json
 import os
 from datetime import datetime
+from urllib import error as urllib_error
+from urllib import parse as urllib_parse
+from urllib import request as urllib_request
 
 from dotenv import load_dotenv
 from flask import (
     Flask,
     abort,
+    jsonify,
     make_response,
+    redirect,
     render_template,
     request,
     url_for,
 )
+import stripe
+
+import db
 
 load_dotenv()
 
@@ -28,7 +37,28 @@ if BASE_PATH and not BASE_PATH.startswith('/'):
     BASE_PATH = f"/{BASE_PATH}"
 
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 from blog import find_post, load_posts  # noqa: E402
+
+
+class BasePathMiddleware:
+    """Allow serving the Flask app under a sub-path when BASE_PATH is set."""
+
+    def __init__(self, wsgi_app, base_path: str):
+        self.wsgi_app = wsgi_app
+        self.base_path = base_path
+
+    def __call__(self, environ, start_response):
+        base_path = self.base_path
+        if not base_path:
+            return self.wsgi_app(environ, start_response)
+
+        path_info = environ.get('PATH_INFO', '')
+        if path_info.startswith(base_path):
+            trimmed = path_info[len(base_path) :]
+            environ['PATH_INFO'] = trimmed or '/'
+        return self.wsgi_app(environ, start_response)
 
 
 SITE_CONFIG = {
@@ -62,8 +92,28 @@ SITE_CONFIG = {
     'asset_version': _env('ASSET_VERSION', '1'),
     'plausible_script_url': _env('PLAUSIBLE_SCRIPT_URL'),
     'plausible_domain': _env('PLAUSIBLE_DOMAIN'),
+    'stripe_publishable_key': _env('STRIPE_PUBLISHABLE_KEY'),
+    'stripe_price_id': _env('STRIPE_PRICE_ID'),
+    'stripe_payment_link': _env('STRIPE_PAYMENT_LINK'),
+    'social_image': _env('SITE_SOCIAL_IMAGE', 'images/SreyeeshProfilePic.jpg'),
 }
 
+STRIPE_SECRET_KEY = _env('STRIPE_SECRET_KEY')
+STRIPE_PRICE_ID = SITE_CONFIG['stripe_price_id']
+STRIPE_SUCCESS_URL = _env('STRIPE_SUCCESS_URL')
+STRIPE_CANCEL_URL = _env('STRIPE_CANCEL_URL')
+STRIPE_API_BASE = 'https://api.stripe.com/v1'
+STRIPE_ENDPOINT_SECRET = _env('STRIPE_ENDPOINT_SECRET')
+ONE_OFF_PRICE_AMOUNT = 1500
+ONE_OFF_CURRENCY = 'eur'
+SITE_CONFIG['stripe_checkout_enabled'] = bool(
+    STRIPE_SECRET_KEY and STRIPE_PRICE_ID
+)
+
+if STRIPE_SECRET_KEY:
+    stripe.api_key = STRIPE_SECRET_KEY
+
+db.init_db()
 
 def _normalize_base_path(raw: str | None) -> str:
     if not raw:
@@ -73,10 +123,23 @@ def _normalize_base_path(raw: str | None) -> str:
         return ''
     if not raw.startswith('/'):
         raw = f"/{raw}"
-    return raw.rstrip('/')
+    normalized = raw.rstrip('/')
+    if normalized == '':
+        return ''
+    return normalized
 
 
-app.config['SITE_BASE_PATH'] = _normalize_base_path(BASE_PATH)
+def configure_base_path(raw: str | None) -> None:
+    normalized = _normalize_base_path(raw)
+    app.config['SITE_BASE_PATH'] = normalized
+    original_wsgi = app.config.setdefault('_ORIGINAL_WSGI_APP', app.wsgi_app)
+    if normalized:
+        app.wsgi_app = BasePathMiddleware(original_wsgi, normalized)
+    else:
+        app.wsgi_app = original_wsgi
+
+
+configure_base_path(BASE_PATH)
 
 
 def _resolve_base_path(override: str | None = None) -> str:
@@ -109,16 +172,35 @@ def build_primary_nav(base_path_override: str | None = None) -> list:
     links = build_site_links(base_path_override)
     return [
         {'label': 'Home', 'href': links['home']},
-        {'label': 'Mentoring', 'href': links['mentoring']},
-        {'label': 'For Schools & Programs', 'href': links['schools']},
+        {'label': 'Tutoring', 'href': links['mentoring']},
         {'label': 'About', 'href': links['about']},
         {'label': 'Blog', 'href': links['blog']},
-        {
-            'label': 'Contact',
-            'href': links['contact'],
-            'is_cta': True,
-        },
     ]
+
+
+def _build_canonical_url(base_path_value: str) -> str:
+    site_url = SITE_CONFIG.get('site_url', '').rstrip('/')
+    request_path = request.path or '/'
+    if base_path_value and not request_path.startswith(base_path_value):
+        if request_path == '/':
+            request_path = f"{base_path_value}/"
+        else:
+            request_path = f"{base_path_value}{request_path}"
+    if site_url:
+        return f"{site_url}{request_path}"
+    return f"{request.url_root.rstrip('/')}{request_path}"
+
+
+def _build_social_image_url() -> str:
+    social_image = SITE_CONFIG.get('social_image') or ''
+    if social_image.startswith('http://') or social_image.startswith('https://'):
+        return social_image
+    image_path = social_image or 'images/SreyeeshProfilePic.jpg'
+    asset_path = url_for('static', filename=image_path)
+    site_url = SITE_CONFIG.get('site_url', '').rstrip('/')
+    if site_url:
+        return f"{site_url}{asset_path}"
+    return url_for('static', filename=image_path, _external=True)
 
 
 def build_page_context(
@@ -127,12 +209,16 @@ def build_page_context(
     **extra: object,
 ) -> dict:
     base_path_value = _resolve_base_path(base_path_override)
+    canonical_url = _build_canonical_url(base_path_value)
+    social_image_url = _build_social_image_url()
     context = {
         'config': SITE_CONFIG,
         'current_year': datetime.now().year,
         'base_path': base_path_value,
         'site_links': build_site_links(base_path_override),
         'nav_links': build_primary_nav(base_path_override),
+        'canonical_url': canonical_url,
+        'social_image_url': social_image_url,
     }
     context.update(extra)
     return context
@@ -147,6 +233,28 @@ def build_absolute_url(path: str) -> str:
         return f"{site_url}{normalized_path}"
     base = request.url_root.rstrip('/')
     return f"{base}{normalized_path}"
+
+
+def _create_stripe_checkout_session(body_params: list[tuple[str, str]]) -> dict:
+    """Create a Checkout Session using Stripe's REST API."""
+
+    if not STRIPE_SECRET_KEY:
+        raise RuntimeError('Stripe secret key is not configured.')
+
+    encoded = urllib_parse.urlencode(body_params).encode()
+    request_obj = urllib_request.Request(
+        f"{STRIPE_API_BASE}/checkout/sessions",
+        data=encoded,
+        method='POST',
+    )
+    request_obj.add_header('Authorization', f"Bearer {STRIPE_SECRET_KEY}")
+    request_obj.add_header(
+        'Content-Type',
+        'application/x-www-form-urlencoded',
+    )
+    with urllib_request.urlopen(request_obj) as response:  # nosec: B310
+        payload = response.read().decode('utf-8')
+    return json.loads(payload)
 
 
 @app.route('/')
@@ -242,6 +350,7 @@ def blog_detail(slug: str):
             blog_index_href=links['blog'],
             canonical_url=canonical_url,
             hero_image_url=hero_image_url,
+            social_image_url=hero_image_url or _build_social_image_url(),
         ),
     )
 
@@ -298,6 +407,215 @@ def robots_txt():
     response = make_response("\n".join(lines) + "\n")
     response.headers['Content-Type'] = 'text/plain'
     return response
+
+
+@app.route('/stripe/create-checkout-session/', methods=['POST'])
+def stripe_create_checkout_session():
+    if not STRIPE_SECRET_KEY or not STRIPE_PRICE_ID:
+        abort(404)
+
+    payload = request.get_json(silent=True) if request.is_json else request.form
+    payload = payload or {}
+    price_id = payload.get('price_id') or STRIPE_PRICE_ID
+    customer_email = payload.get('customer_email') or None
+
+    mentoring_path = url_for('mentoring')
+    success_url = payload.get('success_url') or STRIPE_SUCCESS_URL
+    cancel_url = payload.get('cancel_url') or STRIPE_CANCEL_URL
+
+    if not success_url:
+        success_url = build_absolute_url(f"{mentoring_path}?checkout=success")
+    if not cancel_url:
+        cancel_url = build_absolute_url(f"{mentoring_path}?checkout=cancelled")
+
+    body_params = [
+        ('mode', 'subscription'),
+        ('allow_promotion_codes', 'true'),
+        ('automatic_tax[enabled]', 'true'),
+        ('line_items[0][price]', price_id),
+        ('line_items[0][quantity]', '1'),
+        ('success_url', success_url),
+        ('cancel_url', cancel_url),
+    ]
+    if customer_email:
+        body_params.append(('customer_email', customer_email))
+
+    try:
+        session = _create_stripe_checkout_session(body_params)
+    except urllib_error.HTTPError as exc:
+        message = exc.reason
+        try:
+            error_payload = json.loads(exc.read().decode('utf-8'))
+            message = (
+                error_payload.get('error', {}).get('message')
+                or message
+                or 'Unable to contact Stripe.'
+            )
+        except Exception:
+            message = message or 'Unable to contact Stripe.'
+        if request.is_json:
+            return jsonify({'error': message}), exc.code
+        abort(exc.code or 502, description=message)
+    except Exception as exc:  # pragma: no cover - defensive
+        message = str(exc)
+        if request.is_json:
+            return jsonify({'error': message}), 400
+        abort(502, description=message)
+
+    checkout_url = session.get('url')
+    if not checkout_url:
+        if request.is_json:
+            return jsonify({'error': 'Stripe response was missing a redirect URL.'}), 500
+        abort(502, description='Stripe response was missing a redirect URL.')
+
+    if request.is_json:
+        return jsonify({'url': checkout_url})
+    return redirect(checkout_url, code=303)
+
+
+@app.route('/tutoring')
+def tutoring():
+    return render_template(
+        'tutoring.html',
+        **build_page_context(page_slug='tutoring'),
+    )
+
+
+def _build_success_url() -> str:
+    if STRIPE_SUCCESS_URL:
+        return STRIPE_SUCCESS_URL
+    base = url_for('schedule', _external=True)
+    return f"{base}?session_id={{CHECKOUT_SESSION_ID}}"
+
+
+def _build_cancel_url() -> str:
+    if STRIPE_CANCEL_URL:
+        return STRIPE_CANCEL_URL
+    return url_for('tutoring', _external=True)
+
+
+@app.route('/create-checkout-session', methods=['POST'])
+def create_checkout_session():
+    if not STRIPE_SECRET_KEY:
+        abort(500, description='Stripe not configured.')
+
+    payload = request.get_json(silent=True) or request.form or {}
+    customer_email = payload.get('customer_email')
+
+    session = stripe.checkout.Session.create(
+        mode='payment',
+        line_items=[
+            {
+                'quantity': 1,
+                'price_data': {
+                    'currency': ONE_OFF_CURRENCY,
+                    'unit_amount': ONE_OFF_PRICE_AMOUNT,
+                    'product_data': {
+                        'name': '1:1 Tutoring Session',
+                        'description': 'One-off mentoring session',
+                    },
+                },
+            }
+        ],
+        success_url=_build_success_url(),
+        cancel_url=_build_cancel_url(),
+        customer_email=customer_email,
+    )
+    response = redirect(session.url, code=303)
+    if request.is_json:
+        response.headers['X-Checkout-URL'] = session.url
+    return response
+
+
+@app.route('/schedule/')
+@app.route('/schedule')
+def schedule():
+    session_id = request.args.get('session_id')
+    if not session_id:
+        return (
+            render_template(
+                'schedule.html',
+                **build_page_context(
+                    page_slug='schedule',
+                    error='Missing session_id parameter.',
+                    show_calendly=False,
+                ),
+            ),
+            400,
+        )
+
+    try:
+        checkout_session = stripe.checkout.Session.retrieve(session_id)
+    except Exception:
+        return (
+            render_template(
+                'schedule.html',
+                **build_page_context(
+                    page_slug='schedule',
+                    error='Unable to verify your payment. Please contact support.',
+                    show_calendly=False,
+                ),
+            ),
+            400,
+        )
+
+    customer_email = None
+    customer_details = checkout_session.get('customer_details') or {}
+    if isinstance(customer_details, dict):
+        customer_email = customer_details.get('email')
+
+    payment_status = checkout_session.get('payment_status') or checkout_session.get(
+        'status'
+    )
+    db.upsert_checkout_session(
+        session_id,
+        customer_email=customer_email,
+        payment_status=payment_status,
+    )
+
+    is_paid = (payment_status or '').lower() in {'paid', 'complete'}
+    return render_template(
+        'schedule.html',
+        **build_page_context(
+            page_slug='schedule',
+            show_calendly=is_paid,
+            message='Payment received' if is_paid else 'Waiting for payment confirmation.',
+            error=None if is_paid else None,
+            calendly_link=SITE_CONFIG['calendly_link'],
+            session_id=session_id,
+        ),
+    )
+
+
+@app.route('/stripe/webhook', methods=['POST'])
+def stripe_webhook():
+    if not STRIPE_ENDPOINT_SECRET:
+        abort(500, description='Stripe webhook secret is not configured.')
+
+    payload = request.data
+    sig_header = request.headers.get('Stripe-Signature', '')
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload,
+            sig_header,
+            STRIPE_ENDPOINT_SECRET,
+        )
+    except ValueError:
+        return 'Invalid payload', 400
+    except stripe.error.SignatureVerificationError:
+        return 'Invalid signature', 400
+
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        customer_details = session.get('customer_details') or {}
+        db.upsert_checkout_session(
+            session['id'],
+            customer_email=customer_details.get('email'),
+            payment_status=session.get('payment_status'),
+        )
+
+    return jsonify({'status': 'ok'})
 
 
 if __name__ == '__main__':

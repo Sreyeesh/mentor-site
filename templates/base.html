@@ -1,14 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% set page_title = (self.title() | striptags) %}
+    {% set page_description = (self.meta_description() | striptags) %}
     <title>{% block title %}{{ config.name }} — Mentoring & Coaching{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ config.meta_description }}{% endblock %}">
+    {% block social_meta %}
+        <link rel="canonical" href="{{ canonical_url }}">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="{{ config.name }}">
+        <meta property="og:title" content="{{ page_title }}">
+        <meta property="og:description" content="{{ page_description }}">
+        <meta property="og:url" content="{{ canonical_url }}">
+        <meta property="og:image" content="{{ social_image_url }}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ page_title }}">
+        <meta name="twitter:description" content="{{ page_description }}">
+        <meta name="twitter:image" content="{{ social_image_url }}">
+    {% endblock %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://assets.calendly.com" crossorigin>
     <link rel="dns-prefetch" href="https://assets.calendly.com">
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('theme');
+                if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                }
+            } catch (err) {
+                console.warn('Theme preference unavailable', err);
+            }
+        })();
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
     <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
@@ -38,10 +65,8 @@
                 </div>
                 <div class="nav-links" id="nav-links">
                     {% for item in nav_links %}
-                        {% set is_contact_link = item.href == site_links.contact %}
                         <a href="{{ item.href }}"
-                            class="{% if item.is_cta %}nav-link--cta{% endif %}{% if is_contact_link %} js-calendly-trigger{% endif %}"
-                            {% if is_contact_link %}data-calendly-url="{{ config.calendly_link }}"{% endif %}>
+                            class="{% if item.is_cta %}nav-link--cta{% endif %}">
                             {{ item.label }}
                         </a>
                     {% endfor %}
@@ -90,12 +115,11 @@
                         <p class="footer-tagline">{{ config.tagline }}</p>
                     {% endif %}
                     <p class="footer-description">
-                        1:1 mentoring, pipeline reviews, and creative direction for studios, schools, and independent teams.
+                        Dedicated 1:1 tutoring for animation, game development, and creative tech students worldwide.
                     </p>
-                    <div class="footer-contact">
-                        <a href="mailto:{{ config.email }}" class="footer-contact-link">{{ config.email }}</a>
-                        <a href="{{ site_links.contact }}" class="footer-contact-link">Book a Strategy Call</a>
-                    </div>
+                <div class="footer-contact">
+                    <a href="mailto:{{ config.email }}" class="footer-contact-link">{{ config.email }}</a>
+                </div>
                 </div>
                 <div class="footer-column">
                     <p class="footer-heading">Explore</p>
@@ -106,12 +130,11 @@
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <p class="footer-heading">Mentoring</p>
+                    <p class="footer-heading">Tutoring</p>
                     <ul class="footer-list">
                         <li><a href="{{ site_links.mentoring }}">Programs & Pricing</a></li>
-                        <li><a href="{{ site_links.schools }}">For Schools & Programs</a></li>
+                        <li><a href="{{ site_links.home }}#program-details">What You Get</a></li>
                         <li><a href="{{ site_links.blog }}">Insights & Blog</a></li>
-                        <li><a href="{{ site_links.contact }}">Contact & Booking</a></li>
                     </ul>
                 </div>
             </div>
@@ -119,9 +142,8 @@
                 <p>&copy; {{ current_year }} {{ config.name }}. All rights reserved.</p>
                 <div class="footer-bottom-links">
                     <a href="{{ site_links.about }}">About</a>
-                    <a href="{{ site_links.mentoring }}">Mentoring</a>
+                    <a href="{{ site_links.mentoring }}">Tutoring</a>
                     <a href="{{ site_links.blog }}">Blog</a>
-                    <a href="{{ site_links.contact }}">Contact</a>
                 </div>
             </div>
         </div>

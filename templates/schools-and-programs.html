@@ -1,60 +1,32 @@
 {% extends 'base.html' %}
 
-{% block title %}Workshops for Schools & Programs | {{ config.name }}{% endblock %}
-{% block meta_description %}Guest lectures, portfolio reviews, and Unreal/Git workflow workshops for creative schools across Estonia and Finland.{% endblock %}
+{% block title %}Tutoring Availability Update | {{ config.name }}{% endblock %}
+{% block meta_description %}{{ config.name }} currently offers only 1:1 tutoring engagements. Learn why workshops and school programs are paused and how to join the tutoring roster.{% endblock %}
 
 {% block content %}
 <section class="page-hero">
-    <p class="section-eyebrow">For Schools & Programs</p>
-    <h1>Workshops, guest lectures, and production support for creative schools in Estonia & Finland.</h1>
+    <p class="section-eyebrow">Availability</p>
+    <h1>I’m focused on 1:1 tutoring at the moment.</h1>
+    <p class="lead">Workshops, residencies, and school-wide programs are paused so every student receives dedicated attention. If you’re looking for personalized tutoring, I’d love to chat.</p>
     <div class="hero-actions">
-        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Contact for Collaborations</a>
+        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Book a tutoring call</a>
+        <a href="{{ site_links.mentoring }}" class="cta-button secondary">See tutoring packages</a>
     </div>
 </section>
 
-<section class="section schools-section">
+<section class="section">
     <div class="section-header">
-        <p class="section-eyebrow">Offerings</p>
-        <h2>Flexible formats for different cohorts.</h2>
-    </div>
-    <div class="feature-grid">
-        <article class="feature-card">
-            <h3>Guest Lectures</h3>
-            <p>Stories and breakdowns from productions like Overwatch 2 and My Little Pony, plus Q&A tailored to students’ capstones.</p>
-        </article>
-        <article class="feature-card">
-            <h3>Hands-on Workshops</h3>
-            <p>Unreal Engine bootcamps, Git/LFS onboarding, portfolio teardown days, and rapid prototyping labs.</p>
-        </article>
-        <article class="feature-card">
-            <h3>Program Consulting</h3>
-            <p>Curriculum tuning, project briefs, and mentor training so faculty can maintain the workflows after the engagement.</p>
-        </article>
-    </div>
-</section>
-
-<section class="section format-section">
-    <div class="section-header">
-        <p class="section-eyebrow">Popular formats</p>
-        <h2>Mix and match to suit your semester.</h2>
-    </div>
-    <div class="tracks-grid">
-        <article class="track-card">
-            <h3>Portfolio Review Week</h3>
-            <p>Rapid-fire critiques with action plans for each student, plus a rubric template teachers can reuse.</p>
-        </article>
-        <article class="track-card">
-            <h3>Industry Mentorship Residency</h3>
-            <p>Ongoing remote office hours across the semester to keep teams unblocked as they ship capstone games or shorts.</p>
-        </article>
+        <p class="section-eyebrow">Why the shift?</p>
+        <h2>Depth beats breadth.</h2>
+        <p class="section-lede">Focusing on individual tutoring means students get more feedback, accountability, and measurable results. Workshops will return in the future—but only when I can guarantee the same quality.</p>
     </div>
 </section>
 
 <section class="section final-cta">
     <div class="final-cta-card">
-        <p class="section-eyebrow">Let’s plan your next semester</p>
-        <h2>Share your dates and course goals to design a custom workshop bundle.</h2>
-        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Contact for Workshops & Collaborations</a>
+        <p class="section-eyebrow">Need clarity?</p>
+        <h2>Tell me what you’re working on and I’ll suggest a tutoring plan.</h2>
+        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Contact me</a>
     </div>
 </section>
 {% endblock %}

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (darkModeToggle) {
         // Set initial theme
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
         console.log('🎨 Initial theme set to:', savedTheme);
 
@@ -173,22 +173,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.head.appendChild(script);
         });
 
-        const initBadgeWidget = () => {
-            if (window.__calendlyBadgeInitialized) {
-                return;
-            }
-            if (window.Calendly && typeof window.Calendly.initBadgeWidget === 'function') {
-                window.Calendly.initBadgeWidget({
-                    url: calendlyLink,
-                    text: 'Schedule time with me',
-                    color: '#0069ff',
-                    textColor: '#ffffff',
-                    branding: true
-                });
-                window.__calendlyBadgeInitialized = true;
-            }
-        };
-
         const markContactLinks = () => {
             if (!contactLinkHref) {
                 return;
@@ -232,9 +216,8 @@ document.addEventListener('DOMContentLoaded', function() {
         attachCalendlyTriggers();
         ensureCalendlyScript()
             .then(() => {
-                initBadgeWidget();
                 attachCalendlyTriggers();
-                console.log('✅ Calendly badge initialized');
+                console.log('✅ Calendly popup ready');
             })
             .catch((error) => {
                 console.error('❌ Calendly widget failed to load', error);

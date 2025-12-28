@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% set stripe_payment_link = config.stripe_payment_link or 'https://book.stripe.com/3cIbIUdV5aK94M0bWP4F200' %}
 
 {% block title %}Book the €15 Beginner Sprint{% endblock %}
 {% block content %}
@@ -13,9 +14,9 @@
         <li>Recording available on request, plus written notes and links within 12 hours.</li>
         <li>Money-back guarantee if we can’t unlock progress during the call.</li>
     </ul>
-    {% if config.stripe_payment_link %}
+    {% if stripe_payment_link %}
     <div class="cta-stack">
-        <a class="btn btn-primary" href="{{ config.stripe_payment_link }}">Book the €15 session</a>
+        <a class="btn btn-primary" href="{{ stripe_payment_link }}">Book the €15 session</a>
         <p class="microcopy">Stripe Checkout → instant Calendly link → prep form.</p>
     </div>
     {% else %}

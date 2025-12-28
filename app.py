@@ -496,8 +496,12 @@ def _build_cancel_url() -> str:
     return url_for('tutoring', _external=True)
 
 
-@app.route('/create-checkout-session', methods=['POST'])
+@app.route('/create-checkout-session', methods=['GET', 'POST'])
 def create_checkout_session():
+    if request.method != 'POST':
+        mentoring_url = build_absolute_url(url_for('mentoring'))
+        return redirect(mentoring_url, code=302)
+
     if not STRIPE_SECRET_KEY:
         abort(500, description='Stripe not configured.')
 

@@ -65,7 +65,7 @@ SITE_CONFIG = {
     'name': os.getenv('SITE_NAME', 'Sreyeesh Garimella'),
     'tagline': os.getenv(
         'SITE_TAGLINE',
-        'Technical Art, Direction, Game Dev & DevOps Tutoring',
+        'Technical Art, Direction & Game Dev Tutoring',
     ),
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
     'calendly_link': os.getenv(
@@ -77,16 +77,16 @@ SITE_CONFIG = {
         'SITE_META_DESCRIPTION',
         (
             'Mentorship for technical artists, developers, and studios — '
-            'tutoring in Unreal Engine workflows, DevOps automation, and '
-            'creative pipelines that ship products faster.'
+            'tutoring in Unreal Engine workflows and creative pipelines that '
+            'ship products faster.'
         ),
     ),
     'focus_areas': os.getenv(
         'SITE_FOCUS_AREAS',
         (
             'Technical art & tools tutoring,Art direction & cinematic '
-            'feedback,Game development & Unreal mentoring,DevOps/'
-            'programming automation coaching'
+            'feedback,Game development & Unreal mentoring,Pipeline programming '
+            'and automation coaching'
         ),
     ).split(','),
     'asset_version': _env('ASSET_VERSION', '1'),

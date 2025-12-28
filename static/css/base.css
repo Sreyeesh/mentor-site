@@ -46,18 +46,37 @@ html {
     --pill-bg: rgba(15, 23, 42, 0.08);
     --divider-color: rgba(15, 23, 42, 0.08);
     --scroll-offset: clamp(90px, 12vh, 150px); /* For smooth scrolling offset and sticky nav spacing */
+    --link-color-light: #0f62fe;
+    --link-hover-color-light: #2541ff;
+    --link-focus-ring: rgba(15, 98, 254, 0.35);
+    --link-color: var(--link-color-light);
+    --link-hover-color: var(--link-hover-color-light);
+    --footer-bg: #0c1424;
+    --footer-text: #f7f9ff;
+    --footer-muted: rgba(247, 249, 255, 0.78);
+    --footer-heading: rgba(247, 249, 255, 0.92);
+    --footer-link: #f7f9ff;
+    --footer-link-hover: #2541ff;
+    --footer-focus: rgba(37, 65, 255, 0.45);
+    --bg-dark: #050b16;
+    --bg-secondary-dark: #0e1628;
+    --text-primary-dark: #f4f7ff;
+    --text-secondary-dark: #d4def8;
+    --border-dark: rgba(255, 255, 255, 0.24);
+    --link-dark: #9ec5ff;
+    --link-hover-dark: #ffe071;
 }
 
 html[data-theme="dark"] {
-    --bg-primary: #050b16;
-    --bg-secondary: #0e1628;
-    --text-primary: #f9fbff;
-    --text-secondary: rgba(249, 251, 255, 0.9);
-    --text-muted: rgba(249, 251, 255, 0.7);
+    --bg-primary: var(--bg-dark);
+    --bg-secondary: var(--bg-secondary-dark);
+    --text-primary: var(--text-primary-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --text-muted: rgba(244, 248, 255, 0.78);
     --accent-primary: #ffe071;
     --accent-secondary: #f8c35f;
     --accent-deep: #7ecaff;
-    --border-color: rgba(255, 255, 255, 0.18);
+    --border-color: var(--border-dark);
     --shadow-color: rgba(0, 0, 0, 0.6);
     --card-bg: rgba(255, 255, 255, 0.05);
     --nav-bg: rgba(5, 11, 22, 0.92);
@@ -65,6 +84,16 @@ html[data-theme="dark"] {
     --panel-bg: rgba(255, 255, 255, 0.04);
     --pill-bg: rgba(255, 255, 255, 0.12);
     --divider-color: rgba(255, 255, 255, 0.15);
+    --link-color: var(--link-dark);
+    --link-hover-color: var(--link-hover-dark);
+    --link-focus-ring: rgba(158, 197, 255, 0.55);
+    --footer-bg: #030711;
+    --footer-text: rgba(242, 245, 255, 0.92);
+    --footer-muted: rgba(225, 231, 255, 0.75);
+    --footer-heading: rgba(255, 255, 255, 0.9);
+    --footer-link: #ffffff;
+    --footer-link-hover: #ffe071;
+    --footer-focus: rgba(255, 224, 113, 0.65);
 }
 
 html[data-theme="light"] {
@@ -105,6 +134,24 @@ p {
     color: var(--text-primary);
     line-height: 1.65;
     max-width: 65ch;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+    font-weight: 500;
+}
+
+a:hover,
+a:focus-visible {
+    color: var(--link-hover-color);
+}
+
+a:focus-visible {
+    outline: 2px solid var(--link-focus-ring);
+    outline-offset: 3px;
 }
 
 /* Smooth scroll container */

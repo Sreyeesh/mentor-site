@@ -96,6 +96,7 @@ SITE_CONFIG = {
     'stripe_price_id': _env('STRIPE_PRICE_ID'),
     'stripe_payment_link': _env('STRIPE_PAYMENT_LINK'),
     'social_image': _env('SITE_SOCIAL_IMAGE', 'images/SreyeeshProfilePic.jpg'),
+    'backend_base_url': _env('BACKEND_BASE_URL', '').rstrip('/'),
 }
 
 STRIPE_SECRET_KEY = _env('STRIPE_SECRET_KEY')
@@ -109,6 +110,7 @@ ONE_OFF_CURRENCY = 'eur'
 SITE_CONFIG['stripe_checkout_enabled'] = bool(
     STRIPE_SECRET_KEY and STRIPE_PRICE_ID
 )
+BACKEND_BASE_URL = SITE_CONFIG['backend_base_url']
 
 if STRIPE_SECRET_KEY:
     stripe.api_key = STRIPE_SECRET_KEY
@@ -179,6 +181,25 @@ def build_primary_nav(base_path_override: str | None = None) -> list:
     ]
 
 
+def _build_backend_endpoint(endpoint: str, **values) -> str:
+    relative_url = url_for(endpoint, **values)
+    if BACKEND_BASE_URL:
+        return f"{BACKEND_BASE_URL}{relative_url}"
+    site_url = SITE_CONFIG.get('site_url', '').rstrip('/')
+    if site_url:
+        return f"{site_url}{relative_url}"
+    return relative_url
+
+
+def build_checkout_endpoints() -> dict:
+    return {
+        'subscription': _build_backend_endpoint(
+            'stripe_create_checkout_session'
+        ),
+        'one_time': _build_backend_endpoint('create_checkout_session'),
+    }
+
+
 def _build_canonical_url(base_path_value: str) -> str:
     site_url = SITE_CONFIG.get('site_url', '').rstrip('/')
     request_path = request.path or '/'
@@ -218,6 +239,7 @@ def build_page_context(
         'base_path': base_path_value,
         'site_links': build_site_links(base_path_override),
         'nav_links': build_primary_nav(base_path_override),
+        'checkout_endpoints': build_checkout_endpoints(),
         'canonical_url': canonical_url,
         'social_image_url': social_image_url,
     }

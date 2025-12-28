@@ -13,7 +13,7 @@
         <li>Recording available on request, plus written notes and links within 12 hours.</li>
         <li>Money-back guarantee if we can’t unlock progress during the call.</li>
     </ul>
-    <form action="{{ url_for('create_checkout_session') }}" method="post" class="cta-stack">
+    <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-stack">
         <button type="submit" class="btn btn-primary">Book the €15 session</button>
         <p class="microcopy">Stripe Checkout → instant Calendly link → prep form.</p>
     </form>

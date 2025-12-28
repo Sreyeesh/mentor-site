@@ -410,8 +410,12 @@ def robots_txt():
     return response
 
 
-@app.route('/stripe/create-checkout-session/', methods=['POST'])
+@app.route('/stripe/create-checkout-session/', methods=['GET', 'POST'])
 def stripe_create_checkout_session():
+    if request.method != 'POST':
+        mentoring_url = build_absolute_url(url_for('mentoring'))
+        return redirect(mentoring_url, code=302)
+
     if not STRIPE_SECRET_KEY or not STRIPE_PRICE_ID:
         abort(404)
 

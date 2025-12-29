@@ -26,7 +26,7 @@ Mentor Site workflow targets:
 | `make run` / `make docker-dev` | `docker compose --profile dev up mentor-site-dev` | Launch the Flask dev server with live reload on port 5000. Uses `.env.dev` by default. |
 | `make freeze`   | `docker compose --profile dev run --rm mentor-site-dev python freeze.py` | Generate the static site inside the dev container. Automatically runs before `make docker-build`. |
 | `make test`     | `docker compose run --rm tests` | Execute the Pytest suite inside the dedicated test container. |
-| `make docker-build` | `docker build -t mentor-site .` (after `make freeze`) | Create the production image. Runs `freeze.py` beforehand to ensure `build/` is current. |
+| `make docker-build` | `docker build …` (after `make freeze`, passing secrets from `.env`) | Create the production image. Pulls build args from your `.env`, so verify that file has the correct Stripe links before running. |
 | `make docker-up` | `docker compose up --build mentor-site` | Run the production-style nginx container locally on port 3000. Good for staging/testing the static build. |
 | `make authoring` | `docker compose --profile authoring up authoring-tool` | Start the CMS/authoring tool on port 5001 to edit blog posts via the UI. |
 | `make down`     | `docker compose down` | Stop every running service defined in `docker-compose.yml`. |
@@ -38,6 +38,6 @@ Mentor Site workflow targets:
 1. **Auto-freeze on builds**: You rarely need to call `make freeze` manually—`make docker-build` already depends on it and will refresh `build/` automatically.
 2. **Profiles keep things isolated**: Dev (`--profile dev`) and authoring (`--profile authoring`) containers stay separate. Use `make authoring` to run the CMS alongside the dev server if needed.
 3. **Hot reload**: The `mentor-site-dev` service mounts the repo and uses Flask’s debug reload, so saving local files reloads the app instantly.
-4. **Environment files**: `.env` holds production values; `.env.dev` contains local/test defaults and is consumed automatically by the dev container. Update `.env.dev` for local experiments.
+4. **Environment files**: `.env` holds production values used for builds; `.env.dev` contains local/test defaults and is consumed automatically by the dev container. Update `.env.dev` for local experiments, but keep secrets only in `.env` before running `make docker-build`.
 
 Feel free to extend the Makefile with additional shortcuts if your workflow grows—just keep each target mapped to a single Compose action so teammates can reason about it quickly.

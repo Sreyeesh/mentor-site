@@ -18,6 +18,12 @@ print_error() {
     echo -e "\033[0;31m✖\033[0m $1"
 }
 
+DEFAULT_PYTHON="python3"
+if [[ -x ".venv/bin/python" ]]; then
+    DEFAULT_PYTHON=".venv/bin/python"
+fi
+PYTHON_BIN=${PYTHON_BIN:-$DEFAULT_PYTHON}
+
 load_env_file() {
     local file="$1"
     if [[ ! -f "$file" ]]; then
@@ -26,7 +32,7 @@ load_env_file() {
     fi
     print_status "Loading environment from ${file}"
     eval "$(
-python - "$file" <<'PY'
+${PYTHON_BIN} - "$file" <<'PY'
 import shlex
 import sys
 from dotenv import dotenv_values
@@ -46,7 +52,7 @@ GH_BRANCH="${GITHUB_PAGES_BRANCH:-gh-pages}"
 load_env_file "$ENV_FILE"
 
 print_status "Generating static site with freeze.py…"
-python freeze.py
+${PYTHON_BIN} freeze.py
 print_success "Static site generated into ./build"
 
 WORKTREE_DIR=$(mktemp -d)

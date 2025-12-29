@@ -20,7 +20,34 @@ import stripe
 
 import db
 
-load_dotenv()
+
+def _load_environment() -> None:
+    """Load variables from the appropriate .env file.
+
+    Precedence:
+        1. ENV_FILE override
+        2. .env.dev when FLASK_ENV/APP_ENV indicates development
+        3. .env
+        4. Fallback to dotenv defaults
+    """
+
+    env_file = os.getenv('ENV_FILE')
+    env_hint = os.getenv('APP_ENV') or os.getenv('FLASK_ENV')
+
+    if not env_file and env_hint:
+        if env_hint.lower().startswith('dev') and os.path.exists('.env.dev'):
+            env_file = '.env.dev'
+
+    if not env_file:
+        if os.path.exists('.env'):
+            env_file = '.env'
+        elif os.path.exists('.env.dev'):
+            env_file = '.env.dev'
+
+    load_dotenv(env_file)
+
+
+_load_environment()
 
 
 def _env(key: str, default: str = '') -> str:

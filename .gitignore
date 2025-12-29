@@ -1,5 +1,6 @@
 # Environment variables
 .env
+.env.dev
 
 # Python
 __pycache__/
@@ -32,4 +33,3 @@ Thumbs.db
 # Newsletter and lead data
 newsletter_subscriptions.json
 leads.json
-.env

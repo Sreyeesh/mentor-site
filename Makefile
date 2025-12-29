@@ -30,7 +30,16 @@ test:
 	$(COMPOSE) run --rm tests
 
 docker-build: freeze
-	$(DOCKER) build -t mentor-site .
+	$(DOCKER) build \
+		--build-arg BASE_PATH=$$(grep -m1 BASE_PATH .env | cut -d'=' -f2-) \
+		--build-arg STRIPE_SECRET_KEY=$$(grep -m1 STRIPE_SECRET_KEY .env | cut -d'=' -f2-) \
+		--build-arg STRIPE_PUBLISHABLE_KEY=$$(grep -m1 STRIPE_PUBLISHABLE_KEY .env | cut -d'=' -f2-) \
+		--build-arg STRIPE_PRICE_ID=$$(grep -m1 STRIPE_PRICE_ID .env | cut -d'=' -f2-) \
+		--build-arg STRIPE_PAYMENT_LINK=$$(grep -m1 STRIPE_PAYMENT_LINK .env | cut -d'=' -f2-) \
+		--build-arg STRIPE_SUCCESS_URL=$$(grep -m1 STRIPE_SUCCESS_URL .env | cut -d'=' -f2-) \
+		--build-arg STRIPE_CANCEL_URL=$$(grep -m1 STRIPE_CANCEL_URL .env | cut -d'=' -f2-) \
+		--build-arg STRIPE_ENDPOINT_SECRET=$$(grep -m1 STRIPE_ENDPOINT_SECRET .env | cut -d'=' -f2-) \
+		-t mentor-site .
 
 docker-up:
 	$(COMPOSE) up --build mentor-site

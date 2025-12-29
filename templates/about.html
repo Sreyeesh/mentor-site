@@ -3,6 +3,8 @@
 {% block title %}About {{ config.name }} | 1:1 Tutor{% endblock %}
 {% block meta_description %}Learn why {{ config.name }} now focuses exclusively on 1:1 tutoring for animation and game development students, bringing experience from Disney, Blizzard Entertainment, and DNEG into every lesson.{% endblock %}
 
+{% set stripe_payment_link = config.stripe_payment_link %}
+
 {% block content %}
 <section class="page-hero">
     <p class="section-eyebrow">About</p>
@@ -101,7 +103,7 @@
     <div class="final-cta-card">
         <p class="section-eyebrow">Let’s work together</p>
         <h2>Ready to build a tutoring plan that fits your goals?</h2>
-        <a href="{{ site_links.contact }}" class="cta-button primary-cta">Start Tutoring</a>
+        <a href="{{ stripe_payment_link }}" class="cta-button primary-cta">Start Tutoring</a>
     </div>
 </section>
 {% endblock %}

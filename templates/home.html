@@ -5,152 +5,153 @@
 {% block meta_description %}Book a calm, 60-minute €15 session to get hands-on tutoring in art, animation, or game dev. Finish something small each call with live feedback, practice tasks, and a next-step plan.{% endblock %}
 
 {% block content %}
-<section class="section hero hero-refresh">
+<section class="section hero hero-refresh" id="top">
     <div class="wrap hero-refresh__grid">
         <div class="hero-refresh__copy">
             <p class="pill">€15 · 60-minute 1:1 session</p>
-            <h1>Mentoring for artists, animators &amp; indie game makers shipping their next scene.</h1>
-            <p class="hero-refresh__lede">Bring whatever you’re building and I’ll sit side-by-side with you, fix the piece that’s stuck, and line up the next milestone with studio-level care.</p>
-            <p class="legacy-marker">Launch your creative career with calm, practical tutoring that keeps your art and code moving.</p>
-            <p>I also run paid consultation calls through this site—book when you need business or pipeline guidance without free intro chats.</p>
+            <h1>One session to steady your art, animation, or game build.</h1>
+            <p class="hero-refresh__lede">Bring the scene, shot, or mechanic you’re stuck on. We fix it together live, capture the next passes, and you leave ready to keep shipping.</p>
+            <p class="legacy-marker">Beginner-safe, calm mentoring for students, self-taught creators, and early-career creatives.</p>
+            <p>Book whenever you need targeted help—no free discovery calls, no sales funnel, just steady support when you hit a blocker.</p>
             <div class="hero-refresh__cta">
                 {% if stripe_payment_link %}
-                <a class="btn btn-primary" href="{{ stripe_payment_link }}">Book session</a>
+                <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="hero-book-session">Book a €15 session</a>
                 {% else %}
                 <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-form">
-                    <button type="submit" class="btn btn-primary">Book session</button>
+                    <button type="submit" class="btn btn-primary" data-cta-id="hero-book-session">Book a €15 session</button>
                 </form>
                 {% endif %}
-                <a class="btn btn-outline" href="#tracks">See the focus areas</a>
+                <a class="btn btn-outline" href="#outcomes" data-cta-id="hero-secondary">See what you’ll leave with</a>
             </div>
-            <p class="microcopy">Stripe checkout · Calendly unlocks instantly · Refund if I can’t help.</p>
+            <p class="microcopy">No long-term commitment—book a single session whenever you need help. Stripe checkout · instant scheduling · refund if I can’t help.</p>
         </div>
         <div class="session-value-card">
             <div class="session-value-card__item session-value-card__item--primary">
-                <p class="session-value-card__label">60 minutes of focused, live co-working</p>
-                <p class="session-value-card__text">Screen-share the current shot or scene. I diagnose the artistic + technical blocker and build the fix with you.</p>
+                <p class="session-value-card__label">Live co-working with real files</p>
+                <p class="session-value-card__text">Screen-share the current shot or scene. I diagnose the artistic + technical blocker and rebuild the fix with you.</p>
             </div>
             <div class="session-value-card__item">
-                <p class="session-value-card__label">Recording + written recap</p>
-                <p class="session-value-card__text">(optional) within 12 hours so you can replay the draw-over, rig tweak, or blueprint walkthrough.</p>
+                <p class="session-value-card__label">Written recap + recording</p>
+                <p class="session-value-card__text">(optional) follow-up within 12 hours so you can replay the draw-over, rig tweak, or blueprint walkthrough.</p>
             </div>
             <div class="session-value-card__item">
-                <p class="session-value-card__label">Beginner-friendly pacing</p>
-                <p class="session-value-card__text">Calm coaching that still anchors to pro art direction and production standards.</p>
+                <p class="session-value-card__label">Beginner-safe pacing</p>
+                <p class="session-value-card__text">Grounded coaching that still anchors to pro art direction and production standards.</p>
             </div>
         </div>
     </div>
 </section>
 
-<section class="section trust-bites">
+<section class="section trust-bites" id="who">
     <div class="wrap narrow">
-        <h2 class="section-title">Real-time notes from someone who still draws, animates, and scripts daily.</h2>
-        <p class="section-subhead">Expect the same candor you’d hear inside a studio—minus the crunch. I edit, re-time, and refactor alongside you until the work reads.</p>
-        <p class="legacy-marker">This is for you if you want studio-level clarity without the burnout culture.</p>
+        <h2 class="section-title">Who this mentoring is for</h2>
+        <p class="section-subhead">You’re exploring art, animation, or indie game development and want a calm co-pilot who keeps the work honest without crushing your pace.</p>
+        <p class="legacy-marker">You only need to book when you’re ready for precise help—no ongoing contract and no pressure to “join a program.”</p>
         <ul class="info-bullets">
-            <li>Transparent draw-overs and graph editor notes that pair craft with technical art.</li>
-            <li>Hands-on mentoring from someone who still ships shots, rigs, shaders, and tools.</li>
-            <li>Beginner-safe pace with written notes you can revisit after the call.</li>
+            <li>Students who want clarity and proof before critiques, exams, or portfolio reviews.</li>
+            <li>Self-taught builders who need feedback from someone who still ships rigs, shots, shaders, and tools.</li>
+            <li>Early-career creatives who want steady accountability without feeling judged.</li>
         </ul>
-    </div>
-</section>
-
-<section class="section fieldwork-section">
-    <div class="wrap fieldwork-grid">
-        <article class="fieldwork-card">
-            <p class="fieldwork-eyebrow">In the classroom</p>
-            <h3>University &amp; academy mentor</h3>
-            <p>I currently coach animation, technical art, and Unreal workflows for GameCity Kajaani and partner schools, guiding cohorts from first blocking passes to portfolio-ready reels.</p>
-        </article>
-        <article class="fieldwork-card">
-            <p class="fieldwork-eyebrow">In production</p>
-            <h3>Hands-on art &amp; game dev lead</h3>
-            <p>I actively build shot templates, tools, and prototypes for indie studios—so every tutoring call shares the same systems I rely on when directing live projects.</p>
-        </article>
-        <article class="fieldwork-card">
-            <p class="fieldwork-eyebrow">Why it matters</p>
-            <h3>Teaching + doing = sharper feedback</h3>
-            <p>You’re learning from someone who balances lesson plans with real deliverables, which means critiques come with current references, not dated theory.</p>
-        </article>
     </div>
 </section>
 
 <section class="section session-outcomes" id="outcomes">
     <div class="wrap narrow">
         <div class="outcomes-card">
-            <h2 class="section-title">What happens in one session</h2>
+            <h2 class="section-title">You’ll leave with...</h2>
             <div class="outcomes-card__lead">
-                <p class="outcomes-card__eyebrow">Every 60-minute sprint ends with clarity.</p>
-                <h3>One focused goal, the fixes you need, and a calm plan forward.</h3>
+                <p class="outcomes-card__eyebrow">Every session ends with proof you can keep building.</p>
+                <h3>We keep the scope tiny so the blocker is fixed on-call and the next week already has a plan.</h3>
             </div>
             <ul class="outcomes-list">
                 <li>
-                    <p class="outcomes-list__label">A clear goal for the session</p>
-                    <p class="outcomes-list__text">I anchor the hour to one artistic or technical win—cleaner values, sharper timing, smoother input feel.</p>
+                    <p class="outcomes-list__label">A solved blocker or rebuilt section</p>
+                    <p class="outcomes-list__text">We edit your actual scene, animation, blueprint, or design file and leave it working or clearly prototyped.</p>
                 </li>
                 <li>
-                    <p class="outcomes-list__label">Live feedback and corrections</p>
-                    <p class="outcomes-list__text">I annotate directly in your file, fix the node tree, and rehearse it with you so it sticks.</p>
+                    <p class="outcomes-list__label">A short checklist for the next pass</p>
+                    <p class="outcomes-list__text">You walk away with a 3–5 step plan that keeps your next work session organized and realistic.</p>
                 </li>
                 <li>
-                    <p class="outcomes-list__label">A simple practice task for the week</p>
-                    <p class="outcomes-list__text">One small drill keeps momentum—a thumbnail set, mocap cleanup pass, or feel test.</p>
+                    <p class="outcomes-list__label">A practice drill or scene snippet</p>
+                    <p class="outcomes-list__text">I hand over a small repetition task (thumbnail batch, mocap cleanup pass, blueprint variation) so you can reinforce the win.</p>
                 </li>
                 <li>
-                    <p class="outcomes-list__label">A next-step plan</p>
-                    <p class="outcomes-list__text">You leave with a short checklist so the next pass starts confidently and references stay organized.</p>
+                    <p class="outcomes-list__label">Optional recording &amp; recap</p>
+                    <p class="outcomes-list__text">Need to replay the draw-over or graph editor timing? I send a written recap and link within 12 hours.</p>
                 </li>
             </ul>
         </div>
     </div>
 </section>
 
+<section class="section how-it-works" id="process">
+    <div class="wrap narrow">
+        <h2 class="section-title">How it works</h2>
+        <ol class="info-bullets">
+            <li><strong>Book the €15 session.</strong> Stripe checkout unlocks the private Calendly link instantly—no intro call or subscription.</li>
+            <li><strong>Share your file and goal.</strong> Drop a few lines in the prep form plus any links, builds, or questions. I review everything before the call.</li>
+            <li><strong>We build, then document.</strong> We co-work for 60 minutes, fix the problem live, and capture next steps, drills, and references so you can keep going solo.</li>
+        </ol>
+    </div>
+</section>
 
 <section class="section tracks-section" id="tracks">
     <div class="wrap">
         <div class="section-headline">
-            <h2>What gets solved in a session</h2>
-            <p>You bring one problem, I fix it with you live, and I make sure you leave with clear next steps so you can keep shipping on your own.</p>
+            <h2>What we can cover</h2>
+            <p>Every call is scoped to one clear win so you can prove progress after just one session.</p>
         </div>
         <div class="tracks-grid">
             <article class="track-card">
-                <h3>Art fundamentals tune-up</h3>
-                <p>Use the hour to identify the single tweak that will level up your drawings.</p>
+                <h3>Art &amp; design tune-ups</h3>
+                <p>We tighten drawings, color, layout, or visual development so critiques feel calm and intentional.</p>
                 <ul class="track-list">
-                    <li>Review sketches live and spot the root issue.</li>
-                    <li>See the fix demonstrated before you try it.</li>
-                    <li>Get a short drill to repeat during the week.</li>
+                    <li>Live draw-overs on characters, props, or environments.</li>
+                    <li>Simple value/color plans you can reapply to other pieces.</li>
+                    <li>Portfolio-ready framing tips for critiques and submissions.</li>
                 </ul>
             </article>
             <article class="track-card">
-                <h3>Animation polish sprint</h3>
-                <p>I guide you through one shot or cycle and make sure you leave with a confident plan for the next pass.</p>
+                <h3>Animation &amp; motion polish</h3>
+                <p>We bring one shot, cycle, or motion capture pass up to review-ready quality.</p>
                 <ul class="track-list">
-                    <li>Playblast review with precise timing notes.</li>
-                    <li>Block new poses or arcs together on screen.</li>
-                    <li>Document the checklist for your next polish session.</li>
+                    <li>Playblast feedback with frame-specific notes.</li>
+                    <li>Blocking or polish sessions done together in your software.</li>
+                    <li>Checklists for arcs, spacing, and timing you can reuse.</li>
                 </ul>
             </article>
             <article class="track-card">
-                <h3>Game dev scope reset</h3>
-                <p>I help you debug one system or feel issue, then set a realistic sprint you can actually finish.</p>
+                <h3>Game dev &amp; tech art support</h3>
+                <p>We debug a feature, rebuild a shader, or reset scope so your next sprint is realistic.</p>
                 <ul class="track-list">
-                    <li>Screen-share the build and trace the blocker.</li>
-                    <li>Co-edit blueprints or scripts until it behaves.</li>
-                    <li>Capture a mini roadmap so you know what to build next.</li>
+                    <li>Live blueprint or script walkthroughs until it behaves.</li>
+                    <li>Feel tests, tuning, and instrumentation to measure progress.</li>
+                    <li>Mini roadmaps that still account for homework, jobs, or exams.</li>
                 </ul>
             </article>
         </div>
         <div class="tracks-cta">
             {% if stripe_payment_link %}
-            <a class="btn btn-primary" href="{{ stripe_payment_link }}">Book session</a>
+            <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="tracks-book-session">Book a €15 session</a>
             {% else %}
             <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-stack">
-                <button type="submit" class="btn btn-primary">Book session</button>
+                <button type="submit" class="btn btn-primary" data-cta-id="tracks-book-session">Book a €15 session</button>
             </form>
             {% endif %}
-            <p class="legacy-marker">Book the €15 session when you’re ready for calm, structured progress.</p>
+            <p class="legacy-marker">No subscription, no minimum commitment—book the single session exactly when you need it.</p>
         </div>
+    </div>
+</section>
+
+<section class="section fieldwork-section about-mentor" id="about">
+    <div class="wrap fieldwork-grid">
+        <article class="fieldwork-card fieldwork-card--wide">
+            <p class="fieldwork-eyebrow">About the mentor</p>
+            <h3>I mentor creative students and junior teams through the full pipeline.</h3>
+            <p>I’m the mentor behind Toucan.ee and I still draw, animate, and build tools daily. I’ve coached university cohorts, indie studios, and solo artists through art direction, Unreal workflows, and production planning.</p>
+            <p>Sessions stay humble and practical—no hype, no ego. You get the same production rigor I use on paid studio work, but in a single, student-safe call that respects your pace and budget.</p>
+        </article>
     </div>
 </section>
 
@@ -162,20 +163,24 @@
         </div>
         <div class="faq-list">
             <article class="faq-item">
-                <h3>Do I need experience?</h3>
-                <p>No. Sessions are built for beginner to intermediate artists. I scope to your pace and focus on one achievable improvement.</p>
+                <h3>What if I’m a complete beginner?</h3>
+                <p>That’s who most sessions are for. We keep the hour focused on one improvement, explain every tool we touch, and capture notes so you can practice safely afterward.</p>
             </article>
             <article class="faq-item">
-                <h3>What tools do I need?</h3>
-                <p>A reliable internet connection, your project file, and whatever software you’re already using (Blender, Krita, Unreal, etc.). I’ll screen-share or demo as needed.</p>
+                <h3>What do I need before the call?</h3>
+                <p>Just your current file or build, a short description of what’s stuck, and the software you already use (Blender, Krita, Unreal, Godot, etc.). I review everything before we meet.</p>
             </article>
             <article class="faq-item">
-                <h3>Can I bring my own project?</h3>
-                <p>Absolutely. Bring a scene, animation, or build you’re stuck on. I’ll diagnose, fix, and create a lightweight checklist for the next week.</p>
+                <h3>Can I only book one session?</h3>
+                <p>Yes. There’s no long-term contract. Most students book when they need a confidence check or have a big critique coming up, and that single call is enough.</p>
             </article>
             <article class="faq-item">
-                <h3>What happens after I pay?</h3>
-                <p>Stripe sends you to the schedule page where Calendly unlocks. Pick a time, fill a quick prep form, and you’ll get confirmation plus reminders.</p>
+                <h3>What happens if I need to reschedule?</h3>
+                <p>You can move or cancel the slot up to 12 hours before the call. If something urgent happens, email me and we’ll find a new time or I’ll refund you.</p>
+            </article>
+            <article class="faq-item">
+                <h3>What if we can’t finish everything?</h3>
+                <p>We still document what changed, what to practice, and what to tackle next. If I can’t meaningfully help, I refund the session.</p>
             </article>
         </div>
     </div>

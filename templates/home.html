@@ -14,10 +14,10 @@
             <p class="legacy-marker">Launch your creative career with calm, practical tutoring that keeps your art and code moving.</p>
             <div class="hero-refresh__cta">
                 {% if stripe_payment_link %}
-                <a class="btn btn-primary" href="{{ stripe_payment_link }}">Book a €15 Session</a>
+                <a class="btn btn-primary" href="{{ stripe_payment_link }}">Book session</a>
                 {% else %}
                 <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-form">
-                    <button type="submit" class="btn btn-primary">Book a €15 Session</button>
+                    <button type="submit" class="btn btn-primary">Book session</button>
                 </form>
                 {% endif %}
                 <a class="btn btn-outline" href="#tracks">See the focus areas</a>
@@ -142,10 +142,10 @@
         </div>
         <div class="tracks-cta">
             {% if stripe_payment_link %}
-            <a class="btn btn-primary" href="{{ stripe_payment_link }}">Book a €15 Session</a>
+            <a class="btn btn-primary" href="{{ stripe_payment_link }}">Book session</a>
             {% else %}
             <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-stack">
-                <button type="submit" class="btn btn-primary">Book a €15 Session</button>
+                <button type="submit" class="btn btn-primary">Book session</button>
             </form>
             {% endif %}
             <p class="legacy-marker">Book the €15 session when you’re ready for calm, structured progress.</p>

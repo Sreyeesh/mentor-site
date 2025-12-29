@@ -61,6 +61,7 @@ services:
     environment:
       - FLASK_ENV=development
       - FLASK_DEBUG=1
+      - ENV_FILE=.env.dev
       - BASE_PATH=${BASE_PATH:-/}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
       - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY:-}

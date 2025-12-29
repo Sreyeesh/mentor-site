@@ -136,6 +136,25 @@ and cancel URLs must be fully qualified links that Stripe can redirect to. Set
 `https://api.your-domain.com`) so static checkout forms submit to the backend.
 Leave it empty in local development to keep posting to the same origin.
 
+#### Local vs. production env files
+
+- `.env` &mdash; production/CI secrets. Keep this file out of version control.
+- `.env.dev` &mdash; developer-friendly defaults (Stripe test mode, localhost
+  URLs, etc.). Set `ENV_FILE=.env.dev` or `FLASK_ENV=development` before running
+  `flask run` so the app loads this file automatically. The Docker `dev` profile
+  already sets `ENV_FILE=.env.dev`, so `docker compose --profile dev up
+  mentor-site-dev` uses the test configuration out of the box.
+
+Switch environments by exporting a different `ENV_FILE` value:
+
+```bash
+# Local hacking
+ENV_FILE=.env.dev flask run
+
+# Production parity
+ENV_FILE=.env python freeze.py
+```
+
 If you prefer to drop in the Plausible snippet manually, add this block inside
 `<head>` of `templates/base.html`:
 

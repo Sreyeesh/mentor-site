@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <title>Pipely v0.1.16 — Natural-Language Pipelines for Artists — Animation &amp; Game Development Mentoring Blog</title>
+    <meta name="description" content="This week’s Pipely update is one of the most meaningful steps toward my long-term goal: making creative pipelines feel as welcoming as your favorite sketchbook.
+With v0.1.16, artists get a smoother workflow, production teams get more consistency, and everyone gets fewer reasons to fear the command line.
+
+Here’s what’s new, why it matters, and how to try it.">
+    
+    
+    
+    
+        
+        
+            
+        
+    
+
+    <link rel="canonical" href="http://localhost/blog/pipely-v0-1-16-natural-language-pipelines-for-artists/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Animation &amp; Game Development Mentoring">
+    <meta property="og:title" content="Pipely v0.1.16 — Natural-Language Pipelines for Artists">
+    
+        <meta property="og:description" content="This week’s Pipely update is one of the most meaningful steps toward my long-term goal: making creative pipelines feel as welcoming as your favorite sketchbook.
+With v0.1.16, artists get a smoother workflow, production teams get more consistency, and everyone gets fewer reasons to fear the command line.
+
+Here’s what’s new, why it matters, and how to try it.">
+    
+    <meta property="og:url" content="http://localhost/blog/pipely-v0-1-16-natural-language-pipelines-for-artists/">
+    
+        <meta property="og:image" content="/static/images/SreyeeshProfilePic.jpg">
+    
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pipely v0.1.16 — Natural-Language Pipelines for Artists">
+    
+        <meta name="twitter:description" content="This week’s Pipely update is one of the most meaningful steps toward my long-term goal: making creative pipelines feel as welcoming as your favorite sketchbook.
+With v0.1.16, artists get a smoother workflow, production teams get more consistency, and everyone gets fewer reasons to fear the command line.
+
+Here’s what’s new, why it matters, and how to try it.">
+    
+    
+        <meta name="twitter:image" content="/static/images/SreyeeshProfilePic.jpg">
+    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://assets.calendly.com" crossorigin>
+    <link rel="dns-prefetch" href="https://assets.calendly.com">
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('theme');
+                if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                }
+            } catch (err) {
+                console.warn('Theme preference unavailable', err);
+            }
+        })();
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css?v=2024020202">
+    <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
+    
+    
+</head>
+<body class="" data-calendly-link="https://calendly.com/toucan-sg/consulting-link" data-contact-link="/contact/">
+    <nav class="navbar">
+        <div class="wrap">
+            <div class="nav-content">
+                <div class="nav-brand">
+                    <a href="/" class="nav-name-link">Animation &amp; Game Development Mentoring</a>
+                    
+                        <span class="nav-tagline">Break Into the Industry with Expert Guidance</span>
+                    
+                </div>
+                <div class="nav-links" id="nav-links">
+                    
+                        <a href="/"
+                            class="">
+                            Home
+                        </a>
+                    
+                        <a href="/mentoring/"
+                            class="">
+                            Tutoring
+                        </a>
+                    
+                        <a href="/about/"
+                            class="">
+                            About
+                        </a>
+                    
+                        <a href="/blog/"
+                            class="">
+                            Blog
+                        </a>
+                    
+                </div>
+                <div class="nav-controls">
+                    <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="hamburger" id="hamburger" aria-label="Toggle navigation" role="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="site-main" id="top">
+        
+<div class="wrap">
+    
+<article class="blog-post">
+    <header class="blog-post-header">
+        <p class="blog-post-date">December 08, 2025 • 1 min read</p>
+        <h1>Pipely v0.1.16 — Natural-Language Pipelines for Artists</h1>
+    </header>
+
+    
+
+    <div class="blog-post-body">
+        <p>What’s New in v0.1.16
+Artist-first commands, written like real language</p>
+<p>Pipely now understands plain, natural phrases. You can literally type:</p>
+<p>open project 1 with blender</p>
+<p>add environment asset called Forest_BG for show DMO</p>
+<p>mark task Paint for DMO_ENV_Forest_BG done</p>
+<p>Pipely interprets the intent and handles the pipeline plumbing: paths, naming, folders, tasks, and version updates.
+Less typing, less thinking, more creating.</p>
+<p>Smarter asset + task flow</p>
+<p>Natural language now covers:</p>
+<p>Creating assets and tasks</p>
+<p>Editing and completing tasks</p>
+<p>Opening workfiles directly in Blender or Krita</p>
+<p>Navigating projects without touching the filesystem</p>
+<p>Artists stay focused; Pipely handles the structure.</p>
+<p>Packaged admin templates (Animation Bible included)</p>
+<p>Every install now ships with the full admin template set.
+Studios and solo artists get:</p>
+<p>Consistent show structure</p>
+<p>Reference documents ready on day one</p>
+<p>Zero manual copying or setup</p>
+<p>Every new project starts clean and aligned.</p>
+<p>A hardened release pipeline</p>
+<p>CI now builds and tests directly from the local source tree.
+What gets released is exactly what you developed.</p>
+<p>Production teams get fewer surprises, more trust, and a repeatable installation experience.</p>
+<p>Docs written for humans</p>
+<p>The README now includes ready-to-use natural-language commands.
+New artists can start immediately—no manual, no training session, no flags to memorize.</p>
+<p>Why It Matters
+Less command anxiety</p>
+<p>Plain-language commands remove the fear of syntax.
+Artists stay in a creative mindset instead of a technical one.</p>
+<p>Consistent structure, zero guesswork</p>
+<p>Assets, tasks, shots, and folders land where they should, with the right naming.
+This reduces misfiled work, confusion, and rework.</p>
+<p>Faster onboarding</p>
+<p>New team members follow a simple ritual:</p>
+<p>Open project.</p>
+<p>Pick application.</p>
+<p>Start creating.</p>
+<p>They don't need to be technical to be productive.</p>
+<p>Production-ready confidence</p>
+<p>Templates ship with the package, tests validate every release, and the workflow stays predictable across machines.
+This keeps leads happy and teams aligned.</p>
+    </div>
+
+    <footer class="blog-post-footer">
+        <a class="back-to-blog" href="/blog/">← Back to all posts</a>
+    </footer>
+</article>
+
+<aside class="blog-related">
+    <h2>More to explore</h2>
+    <ul>
+        
+        
+            
+                <li>
+                    <a href="/blog/pipely-0-1-17-when-artists-talk-the-pipeline-listens/">
+                        <span class="related-title">Pipely 0.1.17: When Artists Talk, the Pipeline Listens</span>
+                        <span class="related-meta">December 16, 2025 • 2 min read</span>
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/pipely-v0-1-8-ship-animation-game-content-faster-without-fighting-your-pipeline/">
+                        <span class="related-title">Pipely v0.1.8 – Ship animation &amp; game content faster, without fighting your pipeline</span>
+                        <span class="related-meta">December 01, 2025 • 4 min read</span>
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/why-readme-files-matter/">
+                        <span class="related-title">Why README Files Matter: The Hidden Cost of Skipping Documentation</span>
+                        <span class="related-meta">November 27, 2025 • 6 min read</span>
+                    </a>
+                </li>
+            
+        
+    </ul>
+</aside>
+
+</div>
+
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <div class="footer-grid">
+                <div class="footer-column footer-column--brand">
+                    <a href="/" class="footer-logo">Animation &amp; Game Development Mentoring</a>
+                    
+                        <p class="footer-tagline">Break Into the Industry with Expert Guidance</p>
+                    
+                    <p class="footer-description">
+                        Dedicated 1:1 tutoring for animation, game development, and creative tech students worldwide.
+                    </p>
+                <div class="footer-contact">
+                    <a href="mailto:toucan.sg@gmail.com" class="footer-contact-link">toucan.sg@gmail.com</a>
+                </div>
+                </div>
+                <div class="footer-column">
+                    <p class="footer-heading">Explore</p>
+                    <ul class="footer-list">
+                        
+                            <li><a href="/">Home</a></li>
+                        
+                            <li><a href="/mentoring/">Tutoring</a></li>
+                        
+                            <li><a href="/about/">About</a></li>
+                        
+                            <li><a href="/blog/">Blog</a></li>
+                        
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <p class="footer-heading">Tutoring</p>
+                    <ul class="footer-list">
+                        <li><a href="/mentoring/">Programs & Pricing</a></li>
+                        <li><a href="/#program-details">What You Get</a></li>
+                        <li><a href="/blog/">Insights & Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Animation &amp; Game Development Mentoring. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="/about/">About</a>
+                    <a href="/mentoring/">Tutoring</a>
+                    <a href="/blog/">Blog</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/script.js?v=2024020202"></script>
+    
+</body>
+</html>

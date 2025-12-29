@@ -1,0 +1,4 @@
+/* style.css now composes modular styles to keep files focused and manageable */
+@import url('base.css');
+@import url('components.css');
+@import url('sections.css');

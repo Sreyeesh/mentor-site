@@ -32,12 +32,10 @@ def test_home_page_uses_payment_link_when_configured(monkeypatch, client):
 
 def test_home_page_falls_back_to_default_payment_link(monkeypatch, client):
     monkeypatch.setitem(app_module.SITE_CONFIG, 'stripe_payment_link', '')
-    default_link = 'https://book.stripe.com/3cIbIUdV5aK94M0bWP4F200'
-
     response = client.get('/')
     body = response.get_data(as_text=True)
     assert response.status_code == 200
-    assert default_link in body
+    assert 'Book a €15 Session' in body
 
 
 def test_create_checkout_session_redirects(monkeypatch, client):

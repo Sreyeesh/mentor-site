@@ -138,12 +138,11 @@ Leave it empty in local development to keep posting to the same origin.
 
 #### Local vs. production env files
 
-- `.env` &mdash; production/CI secrets. Keep this file out of version control.
-- `.env.dev` &mdash; developer-friendly defaults (Stripe test mode, localhost
-  URLs, etc.). Set `ENV_FILE=.env.dev` or `FLASK_ENV=development` before running
-  `flask run` so the app loads this file automatically. The Docker `dev` profile
-  already sets `ENV_FILE=.env.dev`, so `docker compose --profile dev up
-  mentor-site-dev` uses the test configuration out of the box.
+- `.env` — production/CI secrets. Keep this file out of version control.
+- `.env.dev` — developer-friendly defaults (Stripe test mode, localhost URLs, etc.). Set
+  `ENV_FILE=.env.dev` or `FLASK_ENV=development` before running `flask run` so the app loads
+  this file automatically. The Docker `dev` profile already exports `ENV_FILE=.env.dev`, so
+  `docker compose --profile dev up mentor-site-dev` uses the test configuration out of the box.
 
 Switch environments by exporting a different `ENV_FILE` value:
 
@@ -151,10 +150,25 @@ Switch environments by exporting a different `ENV_FILE` value:
 # Local hacking
 ENV_FILE=.env.dev flask run
 
-# Production parity
+# Production parity build
 ENV_FILE=.env python freeze.py
 ```
 
+#### Deploying to GitHub Pages
+
+Use the helper script to regenerate the static build and push it to your Pages branch:
+
+```bash
+# Builds with ENV_FILE=.env and pushes build/ to gh-pages
+./deploy-gh-pages.sh
+
+# Target a different branch or env file
+ENV_FILE=.env.prod GITHUB_PAGES_BRANCH=production-pages ./deploy-gh-pages.sh
+```
+
+The script runs `python freeze.py`, syncs `build/` into a temporary worktree for the target branch,
+commits, and pushes to `origin`. Ensure you have access to the remote and that the branch exists
+(the script can create it locally if missing but still expects it on the remote).
 If you prefer to drop in the Plausible snippet manually, add this block inside
 `<head>` of `templates/base.html`:
 

@@ -52,6 +52,31 @@ print_error() {
     echo -e "${RED}❌${NC} $1"
 }
 
+load_env_file() {
+    local file="$1"
+    if [[ ! -f "$file" ]]; then
+        print_warning "Environment file $file not found. Continuing with current shell vars."
+        return
+    fi
+    print_status "Loading environment from $file"
+    eval "$(
+python - "$file" <<'PY'
+import shlex
+import sys
+from dotenv import dotenv_values
+
+path = sys.argv[1]
+for key, value in (dotenv_values(path) or {}).items():
+    if value is None:
+        continue
+    print(f'export {key}={shlex.quote(value)}')
+PY
+)"
+}
+
+ENV_FILE="${ENV_FILE:-.env.dev}"
+load_env_file "$ENV_FILE"
+
 # Function to check if port is in use
 check_port() {
     local port=$1

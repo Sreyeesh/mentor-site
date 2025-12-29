@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <title>Pipely 0.1.17: When Artists Talk, the Pipeline Listens — Animation &amp; Game Development Mentoring Blog</title>
+    <meta name="description" content="Pipely 0.1.17 introduces natural language commands, smarter DCC detection for Blender, Krita, Godot, Unity, and Unreal, cleaner project management, and Fountain-to-PDF exports—making Pipely a creative-first pipeline tool for artists and indie studios.">
+    
+    
+    
+    
+        
+        
+            
+        
+    
+
+    <link rel="canonical" href="http://localhost/blog/pipely-0-1-17-when-artists-talk-the-pipeline-listens/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Animation &amp; Game Development Mentoring">
+    <meta property="og:title" content="Pipely 0.1.17: When Artists Talk, the Pipeline Listens">
+    
+        <meta property="og:description" content="Pipely 0.1.17 introduces natural language commands, smarter DCC detection for Blender, Krita, Godot, Unity, and Unreal, cleaner project management, and Fountain-to-PDF exports—making Pipely a creative-first pipeline tool for artists and indie studios.">
+    
+    <meta property="og:url" content="http://localhost/blog/pipely-0-1-17-when-artists-talk-the-pipeline-listens/">
+    
+        <meta property="og:image" content="/static/images/SreyeeshProfilePic.jpg">
+    
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pipely 0.1.17: When Artists Talk, the Pipeline Listens">
+    
+        <meta name="twitter:description" content="Pipely 0.1.17 introduces natural language commands, smarter DCC detection for Blender, Krita, Godot, Unity, and Unreal, cleaner project management, and Fountain-to-PDF exports—making Pipely a creative-first pipeline tool for artists and indie studios.">
+    
+    
+        <meta name="twitter:image" content="/static/images/SreyeeshProfilePic.jpg">
+    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://assets.calendly.com" crossorigin>
+    <link rel="dns-prefetch" href="https://assets.calendly.com">
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('theme');
+                if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                }
+            } catch (err) {
+                console.warn('Theme preference unavailable', err);
+            }
+        })();
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css?v=2024020202">
+    <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
+    
+    
+</head>
+<body class="" data-calendly-link="https://calendly.com/toucan-sg/consulting-link" data-contact-link="/contact/">
+    <nav class="navbar">
+        <div class="wrap">
+            <div class="nav-content">
+                <div class="nav-brand">
+                    <a href="/" class="nav-name-link">Animation &amp; Game Development Mentoring</a>
+                    
+                        <span class="nav-tagline">Break Into the Industry with Expert Guidance</span>
+                    
+                </div>
+                <div class="nav-links" id="nav-links">
+                    
+                        <a href="/"
+                            class="">
+                            Home
+                        </a>
+                    
+                        <a href="/mentoring/"
+                            class="">
+                            Tutoring
+                        </a>
+                    
+                        <a href="/about/"
+                            class="">
+                            About
+                        </a>
+                    
+                        <a href="/blog/"
+                            class="">
+                            Blog
+                        </a>
+                    
+                </div>
+                <div class="nav-controls">
+                    <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="hamburger" id="hamburger" aria-label="Toggle navigation" role="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="site-main" id="top">
+        
+<div class="wrap">
+    
+<article class="blog-post">
+    <header class="blog-post-header">
+        <p class="blog-post-date">December 16, 2025 • 2 min read</p>
+        <h1>Pipely 0.1.17: When Artists Talk, the Pipeline Listens</h1>
+    </header>
+
+    
+
+    <div class="blog-post-body">
+        <p>I just rolled out <strong>Pipely 0.1.17</strong>, and this is the update where the CLI finally stops feeling like “a tool you operate” and starts feeling like <strong>a creative assistant for artists</strong>. If you’re an indie studio, technical artist, or solo creator juggling folders, versions, and DCCs, this release is about one thing: <strong>reducing friction so you can stay in flow</strong>.</p>
+<h3>Natural Language Everywhere (CLI that understands artists)</h3>
+<p>The interactive prompt now runs on a split brain: <strong><code>interactive_commands.py</code></strong> handles NLP intent parsing, while <strong><code>interactive_ui.py</code></strong> renders workspace summaries and artist-friendly menus. The result is a pipeline UX that feels natural: you can type things like <strong>“delete AN_DMO_DemoShort30s,” “work on Forest_BG in krita,”</strong> or <strong>“show recent assets”</strong> and Pipely resolves the right <strong>database records, folders, tasks, and DCC launches</strong> automatically. Less memorizing commands, more getting work done.</p>
+<h3>Smarter DCC Detection on Windows + WSL (Blender, Krita, Godot, Unreal, Unity)</h3>
+<p>Pipely now discovers <strong>Blender, Krita, PureRef, VS Code, Godot, Unity, and Unreal Engine 5.6</strong> automatically across <strong>Windows and WSL</strong>. The launcher searches common install paths (including <strong><code>/mnt/&lt;drive&gt;/Program Files/...</code></strong>) and <strong>caches results</strong>, so <code>pipely open --list</code> reliably shows what’s installed without manual overrides. If you’ve ever lost time fighting PATH issues or launcher configs, this is the kind of “invisible improvement” that adds up fast.</p>
+<h3>Cleaner Creative Roots (no more ghost projects)</h3>
+<p>Deleting a show now removes <strong>both the DB path and any duplicate directories</strong> under your artist root, so the “Projects” picker won’t surface stale entries or “ghost” shows. This behavior is protected by tests, keeping your pipeline clean as your project list grows—especially important for long-running productions where clutter quietly becomes a productivity tax.</p>
+<h3>Fountain → PDF (writer-friendly export)</h3>
+<p>For scriptwriters, Pipely adds a simple workflow:
+<code>pipely workfiles export --file script.fountain</code>
+This generates a polished <strong>PDF screenplay</strong> via <strong>afterwriting</strong> or <strong>screenplain/reportlab</strong>, and the dependencies are installed automatically through the <strong>Ansible playbooks</strong>. That means fewer setup steps, fewer “it works on my machine” moments, and a smoother path from writing to review.</p>
+<h3>Quality-of-life fixes that make it feel “tight”</h3>
+<p>This release also brings practical refinements:</p>
+<ul>
+<li><code>pipely open --list</code> now tolerates <strong>optional DCC names</strong> when listing</li>
+<li>Admin workspace <strong>re-renders summaries</strong> correctly after commands</li>
+<li>Tests now cover <strong>DCC detection</strong>, <strong>interactive parsing</strong>, and <strong>creative-root cleanup</strong></li>
+</ul>
+<h3>Get Pipely 0.1.17</h3>
+<pre><code class="language-bash">pipx install https://github.com/Sreyeesh/pipeline-tools/releases/download/v0.1.17/pipely-0.1.17-py3-none-any.whl
+pipely
+</code></pre>
+<p><strong>Pipely 0.1.17</strong> makes the pipeline smarter, friendlier, and more aligned with how artists actually think: <em>type what you want, keep moving, stay creative.</em> Give it a try—and tell me what you build with it.</p>
+    </div>
+
+    <footer class="blog-post-footer">
+        <a class="back-to-blog" href="/blog/">← Back to all posts</a>
+    </footer>
+</article>
+
+<aside class="blog-related">
+    <h2>More to explore</h2>
+    <ul>
+        
+        
+            
+                <li>
+                    <a href="/blog/pipely-v0-1-16-natural-language-pipelines-for-artists/">
+                        <span class="related-title">Pipely v0.1.16 — Natural-Language Pipelines for Artists</span>
+                        <span class="related-meta">December 08, 2025 • 1 min read</span>
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/pipely-v0-1-8-ship-animation-game-content-faster-without-fighting-your-pipeline/">
+                        <span class="related-title">Pipely v0.1.8 – Ship animation &amp; game content faster, without fighting your pipeline</span>
+                        <span class="related-meta">December 01, 2025 • 4 min read</span>
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/why-readme-files-matter/">
+                        <span class="related-title">Why README Files Matter: The Hidden Cost of Skipping Documentation</span>
+                        <span class="related-meta">November 27, 2025 • 6 min read</span>
+                    </a>
+                </li>
+            
+        
+    </ul>
+</aside>
+
+</div>
+
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <div class="footer-grid">
+                <div class="footer-column footer-column--brand">
+                    <a href="/" class="footer-logo">Animation &amp; Game Development Mentoring</a>
+                    
+                        <p class="footer-tagline">Break Into the Industry with Expert Guidance</p>
+                    
+                    <p class="footer-description">
+                        Dedicated 1:1 tutoring for animation, game development, and creative tech students worldwide.
+                    </p>
+                <div class="footer-contact">
+                    <a href="mailto:toucan.sg@gmail.com" class="footer-contact-link">toucan.sg@gmail.com</a>
+                </div>
+                </div>
+                <div class="footer-column">
+                    <p class="footer-heading">Explore</p>
+                    <ul class="footer-list">
+                        
+                            <li><a href="/">Home</a></li>
+                        
+                            <li><a href="/mentoring/">Tutoring</a></li>
+                        
+                            <li><a href="/about/">About</a></li>
+                        
+                            <li><a href="/blog/">Blog</a></li>
+                        
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <p class="footer-heading">Tutoring</p>
+                    <ul class="footer-list">
+                        <li><a href="/mentoring/">Programs & Pricing</a></li>
+                        <li><a href="/#program-details">What You Get</a></li>
+                        <li><a href="/blog/">Insights & Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Animation &amp; Game Development Mentoring. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="/about/">About</a>
+                    <a href="/mentoring/">Tutoring</a>
+                    <a href="/blog/">Blog</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/script.js?v=2024020202"></script>
+    
+</body>
+</html>

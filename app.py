@@ -121,7 +121,9 @@ SITE_CONFIG = {
     'plausible_domain': _env('PLAUSIBLE_DOMAIN'),
     'stripe_publishable_key': _env('STRIPE_PUBLISHABLE_KEY'),
     'stripe_price_id': _env('STRIPE_PRICE_ID'),
-    'stripe_payment_link': _env('STRIPE_PAYMENT_LINK'),
+    'stripe_payment_link': _env(
+        'STRIPE_PAYMENT_LINK', 'https://book.stripe.com/00w28kbMX8C15Q43qj4F203'
+    ),
     'social_image': _env('SITE_SOCIAL_IMAGE', 'images/SreyeeshProfilePic.jpg'),
     'backend_base_url': _env('BACKEND_BASE_URL', '').rstrip('/'),
 }

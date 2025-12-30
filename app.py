@@ -615,7 +615,24 @@ def create_checkout_session():
 @app.route('/schedule')
 def schedule():
     session_id = request.args.get('session_id')
+    preview_mode = (request.args.get('preview') or '').lower() in {
+        '1',
+        'true',
+        'yes',
+    }
     if not session_id:
+        if app.debug or preview_mode:
+            return render_template(
+                'schedule.html',
+                **build_page_context(
+                    page_slug='schedule',
+                    show_calendly=True,
+                    message='Preview mode active — this is what students see after paying.',
+                    error=None,
+                    calendly_link=SITE_CONFIG['calendly_link'],
+                    session_id=None,
+                ),
+            )
         return (
             render_template(
                 'schedule.html',
@@ -631,6 +648,18 @@ def schedule():
     try:
         checkout_session = stripe.checkout.Session.retrieve(session_id)
     except Exception:
+        if preview_mode:
+            return render_template(
+                'schedule.html',
+                **build_page_context(
+                    page_slug='schedule',
+                    show_calendly=True,
+                    message='Preview mode active — this is what students see after paying.',
+                    error=None,
+                    calendly_link=SITE_CONFIG['calendly_link'],
+                    session_id=session_id,
+                ),
+            )
         return (
             render_template(
                 'schedule.html',
@@ -658,6 +687,8 @@ def schedule():
     )
 
     is_paid = (payment_status or '').lower() in {'paid', 'complete'}
+    if preview_mode:
+        is_paid = True
     return render_template(
         'schedule.html',
         **build_page_context(
@@ -665,8 +696,12 @@ def schedule():
             show_calendly=is_paid,
             message=(
                 'Payment received'
-                if is_paid
-                else 'Waiting for payment confirmation.'
+                if is_paid and not preview_mode
+                else (
+                    'Preview mode active — this is what students see after paying.'
+                    if preview_mode
+                    else 'Waiting for payment confirmation.'
+                )
             ),
             error=None if is_paid else None,
             calendly_link=SITE_CONFIG['calendly_link'],

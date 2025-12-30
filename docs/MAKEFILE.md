@@ -16,6 +16,7 @@ Mentor Site workflow targets:
   make down           # Run 'docker compose down' for all services
   make dev-down       # Stop only the mentor-site-dev container
   make quick-rebuild  # Rebuild+restart static container helper script
+  make deploy         # Freeze and deploy static site via deploy-gh-pages.sh
 ```
 
 ### Target reference
@@ -24,7 +25,7 @@ Mentor Site workflow targets:
 |-----------------|----------------------------|----------------|
 | `make install`  | `docker compose build mentor-site mentor-site-dev tests authoring-tool` | Build all container images so subsequent runs start instantly. No local pip install needed. |
 | `make run` / `make docker-dev` | `docker compose --profile dev up mentor-site-dev` | Launch the Flask dev server with live reload on port 5000. Uses `.env.dev` by default. |
-| `make freeze`   | `docker compose --profile dev run --rm mentor-site-dev python freeze.py` | Generate the static site inside the dev container. Automatically runs before `make docker-build`. |
+| `make freeze`   | `ENV_FILE=.env docker compose --profile dev run --rm mentor-site-dev python freeze.py` | Generate the static site with production env vars inside the dev container. Automatically runs before `make docker-build`. |
 | `make test`     | `docker compose run --rm tests` | Execute the Pytest suite inside the dedicated test container. |
 | `make docker-build` | `docker build …` (after `make freeze`, passing secrets from `.env`) | Create the production image. Pulls build args from your `.env`, so verify that file has the correct Stripe links before running. |
 | `make docker-up` | `docker compose up --build mentor-site` | Run the production-style nginx container locally on port 3000. Good for staging/testing the static build. |
@@ -32,6 +33,7 @@ Mentor Site workflow targets:
 | `make down`     | `docker compose down` | Stop every running service defined in `docker-compose.yml`. |
 | `make dev-down` | `docker compose --profile dev down mentor-site-dev` | Stop just the dev server while leaving other profiles untouched. |
 | `make quick-rebuild` | `./quick-rebuild.sh` | Helper script that rebuilds the static container quickly (provided separately). |
+| `make deploy`   | `ENV_FILE=.env ./deploy-gh-pages.sh` (after `make freeze`) | Freeze + push the latest `build/` directory to GitHub Pages (configure the script as needed). |
 | `make clean`    | `rm -rf build .pytest_cache` | Remove generated static files and pytest cache. |
 
 ### Tips

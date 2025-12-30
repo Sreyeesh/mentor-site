@@ -611,6 +611,11 @@ def create_checkout_session():
     return response
 
 
+PREVIEW_MODE_MESSAGE = (
+    'Preview mode active — this is what students see after paying.'
+)
+
+
 @app.route('/schedule/')
 @app.route('/schedule')
 def schedule():
@@ -627,7 +632,7 @@ def schedule():
                 **build_page_context(
                     page_slug='schedule',
                     show_calendly=True,
-                    message='Preview mode active — this is what students see after paying.',
+                    message=PREVIEW_MODE_MESSAGE,
                     error=None,
                     calendly_link=SITE_CONFIG['calendly_link'],
                     session_id=None,
@@ -654,7 +659,7 @@ def schedule():
                 **build_page_context(
                     page_slug='schedule',
                     show_calendly=True,
-                    message='Preview mode active — this is what students see after paying.',
+                    message=PREVIEW_MODE_MESSAGE,
                     error=None,
                     calendly_link=SITE_CONFIG['calendly_link'],
                     session_id=session_id,
@@ -698,8 +703,7 @@ def schedule():
                 'Payment received'
                 if is_paid and not preview_mode
                 else (
-                    'Preview mode active — this is what students see after '
-                    'paying.'
+                    PREVIEW_MODE_MESSAGE
                     if preview_mode
                     else 'Waiting for payment confirmation.'
                 )

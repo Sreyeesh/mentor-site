@@ -17,16 +17,16 @@ def test_home_page(client):
     body = response.get_data(as_text=True)
     assert response.status_code == 200
     assert '€15' in body
-    assert 'Launch your creative career' in body
+    assert 'One session to steady your art, animation, or game build.' in body
 
 
 def test_home_page_content(client):
     """Test that the page contains expected content."""
     response = client.get('/')
     body = response.get_data(as_text=True)
-    assert 'This is for you if' in body
-    assert 'What happens in one session' in body
-    assert 'Book the €15 session' in body
+    assert 'Who this mentoring is for' in body
+    assert 'You’ll leave with' in body
+    assert 'Book a €15 session' in body
 
 
 def test_new_pages_load(client):

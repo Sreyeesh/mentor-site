@@ -35,7 +35,7 @@ def test_home_page_falls_back_to_default_payment_link(monkeypatch, client):
     response = client.get('/')
     body = response.get_data(as_text=True)
     assert response.status_code == 200
-    assert 'Book session' in body
+    assert 'Book a €15 session' in body
 
 
 def test_create_checkout_session_redirects(monkeypatch, client):

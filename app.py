@@ -698,7 +698,8 @@ def schedule():
                 'Payment received'
                 if is_paid and not preview_mode
                 else (
-                    'Preview mode active — this is what students see after paying.'
+                    'Preview mode active — this is what students see after '
+                    'paying.'
                     if preview_mode
                     else 'Waiting for payment confirmation.'
                 )

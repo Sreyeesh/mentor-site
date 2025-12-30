@@ -44,6 +44,10 @@ def build_static_site() -> None:
                 ('/about/', BUILD_DIR / 'about' / 'index.html'),
                 ('/contact/', BUILD_DIR / 'contact' / 'index.html'),
                 ('/blog/', BUILD_DIR / 'blog' / 'index.html'),
+                (
+                    '/schedule/?preview=1',
+                    BUILD_DIR / 'schedule' / 'index.html',
+                ),
             ]
             for route, destination in static_routes:
                 response = client.get(route)

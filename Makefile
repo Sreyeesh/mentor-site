@@ -1,4 +1,4 @@
-.PHONY: help install run freeze test docker-build docker-up docker-dev authoring quick-rebuild clean down dev-down
+.PHONY: help install run freeze test docker-build docker-up docker-dev authoring quick-rebuild clean down dev-down deploy
 
 DOCKER ?= docker
 COMPOSE ?= docker compose
@@ -16,6 +16,7 @@ help:
 	@echo "  make down           # Run 'docker compose down' for all services"
 	@echo "  make dev-down       # Stop only the mentor-site-dev container"
 	@echo "  make quick-rebuild  # Rebuild+restart static container helper script"
+	@echo "  make deploy         # Freeze and deploy static site via deploy-gh-pages.sh"
 
 install:
 	$(COMPOSE) build mentor-site mentor-site-dev tests authoring-tool
@@ -24,7 +25,7 @@ run:
 	$(COMPOSE) --profile dev up mentor-site-dev
 
 freeze:
-	$(COMPOSE) --profile dev run --rm mentor-site-dev python freeze.py
+	ENV_FILE=.env $(COMPOSE) --profile dev run --rm mentor-site-dev python freeze.py
 
 test:
 	$(COMPOSE) run --rm tests
@@ -58,6 +59,9 @@ dev-down:
 
 quick-rebuild:
 	./quick-rebuild.sh
+
+deploy: freeze
+	ENV_FILE=.env ./deploy-gh-pages.sh
 
 clean:
 	rm -rf build .pytest_cache

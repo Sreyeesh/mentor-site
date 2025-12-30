@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}You’re booked — choose a time{% endblock %}
-{% block meta_description %}Thanks for your payment! Choose a time for your €15 tutoring session and keep the Calendly link handy for later changes.{% endblock %}
+{% block title %}Your payment is confirmed — schedule your session{% endblock %}
+{% block meta_description %}Payment received. Book your €15 tutoring session directly on this private page without leaving Toucan.ee.{% endblock %}
 
 {% block content %}
 <section class="section schedule-hero">
     <div class="wrap narrow">
         <p class="pill">Step 2 · Schedule</p>
-        <h1>You’re booked — choose a time</h1>
+        <h1>Your payment is complete. Book your session below.</h1>
         <p class="hero-refresh__lede">Thanks for confirming your session. Pick a slot below so we can prep the right exercises.</p>
         {% if message %}
         <p class="status-chip">{{ message }}</p>

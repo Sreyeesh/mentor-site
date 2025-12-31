@@ -70,6 +70,18 @@
                             {{ item.label }}
                         </a>
                     {% endfor %}
+                    <div class="language-switcher" data-language-dropdown>
+                        <button type="button" class="language-switcher__toggle" aria-haspopup="true" aria-expanded="false">
+                            <span class="language-switcher__label">EST</span>
+                            <span class="language-switcher__chevron" aria-hidden="true">▾</span>
+                        </button>
+                        <div class="language-switcher__menu" role="menu">
+                            <button type="button" class="language-switcher__menu-item" data-translate-lang="et" role="menuitem">EST</button>
+                            <button type="button" class="language-switcher__menu-item" data-translate-lang="en" role="menuitem">ENG</button>
+                            <button type="button" class="language-switcher__menu-item" data-translate-lang="fi" role="menuitem">FIN</button>
+                            <button type="button" class="language-switcher__menu-item" data-translate-lang="ru" role="menuitem">RUS</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="nav-controls">
                     <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
@@ -150,6 +162,8 @@
     </footer>
 
     <script src="{{ url_for('static', filename='js/script.js', v=config.asset_version) }}"></script>
+    <div id="google_translate_element" aria-hidden="true"></div>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

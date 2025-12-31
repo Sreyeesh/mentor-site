@@ -442,6 +442,129 @@ html[data-theme="light"] .package-rate .rate-frequency {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.language-switcher {
+    position: relative;
+}
+
+.language-switcher__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    padding: 6px 12px;
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.language-switcher__toggle:hover,
+.language-switcher__toggle:focus-visible {
+    background: rgba(15, 98, 254, 0.12);
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+    outline: none;
+}
+
+[data-theme="dark"] .language-switcher__toggle:hover,
+[data-theme="dark"] .language-switcher__toggle:focus-visible {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.language-switcher__chevron {
+    font-size: 0.7rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.language-switcher[data-open="true"] .language-switcher__chevron {
+    transform: rotate(180deg);
+}
+
+.language-switcher__menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    min-width: 140px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(5, 11, 22, 0.15);
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 1200;
+}
+
+.language-switcher[data-open="true"] .language-switcher__menu {
+    display: flex;
+}
+
+.language-switcher__menu-item {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    text-align: left;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.language-switcher__menu-item:hover,
+.language-switcher__menu-item:focus-visible {
+    background: rgba(15, 98, 254, 0.12);
+    color: var(--text-primary);
+    outline: none;
+}
+
+[data-theme="dark"] .language-switcher__menu-item:hover,
+[data-theme="dark"] .language-switcher__menu-item:focus-visible {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.language-switcher__menu-item.is-active {
+    background: var(--accent-primary);
+    color: #050b16;
+}
+
+[data-theme="dark"] .language-switcher__menu-item.is-active {
+    color: #050b16;
+}
+
+#google_translate_element {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.goog-te-banner-frame,
+.goog-te-gadget-icon {
+    display: none !important;
+}
+
+.goog-logo-link {
+    display: none !important;
+}
+
+.goog-te-gadget {
+    height: 0 !important;
+    overflow: hidden !important;
 }
 
 /* Hamburger Menu - Dark mode compatible */

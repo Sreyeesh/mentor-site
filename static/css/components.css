@@ -1699,10 +1699,8 @@ footer::after {
 /* =============================== */
 
 .blog-layout {
-    background: radial-gradient(circle at top left, rgba(102, 126, 234, 0.12), transparent 55%),
-                radial-gradient(circle at bottom right, rgba(118, 75, 162, 0.15), transparent 50%),
-                var(--background, #f6f8fb);
-    color: var(--text, #1a1a1a);
+    background: var(--bg-primary);
+    color: var(--text-primary);
 }
 
 .blog-nav {
@@ -1736,8 +1734,10 @@ footer::after {
 }
 
 .blog-hero.gradient {
-    background: radial-gradient(circle at 20% 20%, rgba(126, 202, 255, 0.18), transparent 45%), radial-gradient(circle at 85% 5%, rgba(255, 190, 92, 0.18), transparent 55%), linear-gradient(135deg, rgba(9, 12, 24, 0.97), rgba(27, 34, 62, 0.94));
-    color: #f7f9ff;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    box-shadow: 0 30px 70px rgba(15, 23, 42, 0.12);
 }
 
 .blog-hero::after {
@@ -1749,6 +1749,10 @@ footer::after {
     background: radial-gradient(circle, rgba(255, 207, 138, 0.35), transparent 70%);
     filter: blur(8px);
     pointer-events: none;
+}
+
+.blog-hero.gradient::after {
+    display: none;
 }
 
 .blog-hero-copy {
@@ -2249,17 +2253,6 @@ footer::after {
     border-top: 1px solid rgba(148, 163, 184, 0.2);
     padding-top: 1.5rem;
 }
-
-.back-to-blog {
-    font-weight: 600;
-    color: var(--accent-primary, #667eea);
-    text-decoration: none;
-}
-
-.back-to-blog:hover {
-    color: var(--accent-secondary, #764ba2);
-}
-
 .blog-related {
     margin-top: 4rem;
     padding: clamp(1.8rem, 3vw, 2.5rem);

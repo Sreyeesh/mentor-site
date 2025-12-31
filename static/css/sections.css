@@ -2021,9 +2021,7 @@ html[data-theme='dark'] .btn-outline {
 }
 
 [data-theme="dark"] .blog-layout {
-    background: radial-gradient(circle at top left, rgba(148, 163, 244, 0.22), transparent 55%),
-                radial-gradient(circle at bottom right, rgba(192, 132, 252, 0.15), transparent 50%),
-                #0f172a;
+    background: var(--bg-primary);
     color: rgba(241, 245, 249, 0.92);
 }
 

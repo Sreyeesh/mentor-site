@@ -1,14 +1,48 @@
-{% extends 'authoring/base.html' %}
-{% block content %}
-<section>
-    <header>
-        <h2>{{ post.metadata.title }}</h2>
-        <p><strong>Slug:</strong> {{ post.metadata.slug }}</p>
-        <p><strong>Date:</strong> {{ post.metadata.date }}</p>
-        <p><strong>Description:</strong> {{ post.metadata.description }}</p>
-    </header>
-    <article>
-        <pre style="white-space: pre-wrap;">{{ post.content }}</pre>
-    </article>
-</section>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview — {{ post.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            background: var(--bg-primary);
+        }
+        .preview-header {
+            padding: 1rem 0 0;
+        }
+        .preview-header a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .preview-header a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="blog-layout">
+    <div class="wrap preview-header">
+        <a href="{{ url_for('authoring.dashboard') }}">← Back to authoring</a>
+    </div>
+    <main class="blog-main">
+        <div class="wrap">
+            <article class="blog-post">
+                <header class="blog-post-header">
+                    <p class="blog-post-date">
+                        {{ post.date_display }}
+                        {% if post.reading_time %}
+                            • {{ post.reading_time }} min read
+                        {% endif %}
+                    </p>
+                    <h1>{{ post.title }}</h1>
+                </header>
+                <div class="blog-post-body">
+                    {{ post.content | safe }}
+                </div>
+            </article>
+        </div>
+    </main>
+</body>
+</html>

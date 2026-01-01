@@ -158,11 +158,27 @@ def find_post(
     return None
 
 
+def normalize_media_path(value: Optional[str]) -> tuple[Optional[str], bool]:
+    """Normalize a media reference to a static-relative path or return external URLs."""
+    if not value:
+        return None, False
+    normalized = value.strip()
+    if not normalized:
+        return None, False
+    if normalized.startswith(('http://', 'https://')):
+        return normalized, True
+    normalized = normalized.lstrip('/')
+    if normalized.startswith('static/'):
+        normalized = normalized[len('static/') :]
+    return normalized or None, False
+
+
 __all__ = [
     'CONTENT_DIR',
     'find_post',
     'get_content_dir',
     'load_posts',
+    'normalize_media_path',
     'parse_post',
     'slug_from_filename',
     'strip_leading_metadata_lines',

@@ -67,7 +67,7 @@ LEGACY_BASE_PATH = '/mentor-site'
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-from blog import find_post, load_posts  # noqa: E402
+from blog import find_post, load_posts, normalize_media_path  # noqa: E402
 
 
 class BasePathMiddleware:
@@ -400,19 +400,18 @@ def blog_detail(slug: str):
     else:
         canonical_url = request.base_url
 
+    hero_value, is_external = normalize_media_path(post.get('hero_image'))
+    hero_asset_path = None
     hero_image_url = None
-    if post.get('hero_image'):
-        hero_asset_path = url_for(
-            'static',
-            filename=post['hero_image'],
-        )
-        if site_url:
-            hero_image_url = f"{site_url}{hero_asset_path}"
+    if hero_value:
+        if is_external:
+            hero_image_url = hero_value
         else:
-            hero_image_url = url_for(
-                'static',
-                filename=post['hero_image'],
-                _external=True,
+            hero_asset_path = url_for('static', filename=hero_value)
+            hero_image_url = (
+                f"{site_url}{hero_asset_path}"
+                if site_url
+                else url_for('static', filename=hero_value, _external=True)
             )
 
     return render_template(

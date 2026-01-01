@@ -33,3 +33,4 @@ Thumbs.db
 # Newsletter and lead data
 newsletter_subscriptions.json
 leads.json
+static/uploads/

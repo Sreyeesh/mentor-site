@@ -38,6 +38,7 @@ services:
       - "5001:5000"
     volumes:
       - ./content:/app/content
+      - ./static:/app/static
     environment:
       - AUTHORING_CONTENT_DIR=/app/content/posts
       - AUTHORING_SECRET_KEY=authoring-dev-secret

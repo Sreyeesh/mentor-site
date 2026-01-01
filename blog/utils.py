@@ -169,7 +169,7 @@ def normalize_media_path(value: Optional[str]) -> tuple[Optional[str], bool]:
         return normalized, True
     normalized = normalized.lstrip('/')
     if normalized.startswith('static/'):
-        normalized = normalized[len('static/') :]
+        normalized = normalized[len('static/'):]
     return normalized or None, False
 
 

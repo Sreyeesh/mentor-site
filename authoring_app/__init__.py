@@ -18,18 +18,44 @@ def create_app() -> Flask:
         static_folder=str(static_root),
     )
 
+    default_media_dir = static_root / 'uploads'
+
     app.config.from_mapping(
         SECRET_KEY=os.getenv('AUTHORING_SECRET_KEY', 'dev-authoring-secret'),
         CONTENT_DIR=get_content_dir(
             os.getenv('AUTHORING_CONTENT_DIR')
         ).resolve(),
         STATIC_ROOT=static_root.resolve(),
+        MEDIA_UPLOAD_DIR=Path(
+            os.getenv('AUTHORING_MEDIA_DIR', default_media_dir)
+        ).resolve(),
+        MEDIA_URL_PREFIX=os.getenv(
+            'AUTHORING_MEDIA_URL_PREFIX',
+            '/static/uploads',
+        ),
+        ALLOWED_MEDIA_EXTENSIONS={
+            'png',
+            'jpg',
+            'jpeg',
+            'gif',
+            'webp',
+            'svg',
+            'mp4',
+            'mov',
+            'webm',
+            'ogv',
+            'mp3',
+            'wav',
+        },
         SITE_NAME=os.getenv('SITE_NAME', 'Mentor Site Preview'),
     )
 
     # Ensure content directory exists so authors can start immediately
     content_dir: Path = app.config['CONTENT_DIR']
     content_dir.mkdir(parents=True, exist_ok=True)
+
+    media_dir: Path = app.config['MEDIA_UPLOAD_DIR']
+    media_dir.mkdir(parents=True, exist_ok=True)
 
     app.register_blueprint(authoring_bp)
 

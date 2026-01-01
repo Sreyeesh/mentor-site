@@ -5,7 +5,15 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 import frontmatter
-from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
+from flask import (
+    Blueprint,
+    current_app,
+    flash,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from urllib.parse import urljoin, urlparse
 
 from blog.utils import parse_post

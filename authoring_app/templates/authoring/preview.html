@@ -38,6 +38,11 @@
                     </p>
                     <h1>{{ post.title }}</h1>
                 </header>
+                {% if hero_image_url %}
+                    <figure class="blog-post-hero">
+                        <img src="{{ hero_image_url }}" alt="">
+                    </figure>
+                {% endif %}
                 <div class="blog-post-body">
                     {{ post.content | safe }}
                 </div>

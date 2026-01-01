@@ -257,6 +257,7 @@ docker compose --profile authoring up authoring-tool
 - Uses `Dockerfile.dev` and launches `python author_app.py` inside the container.
 - The UI is available at `http://localhost:5001/authoring/`.
 - Content is stored in your local `content/` directory via a bind mount, so edits persist outside the container.
+- Uploaded media land in `static/uploads/` on your machine, making it easy to reference `/static/uploads/...` paths in posts and commit the assets alongside Markdown.
 
 ### Stripe subscriptions (optional)
 Add a hosted Stripe Checkout button on `/mentoring/`:

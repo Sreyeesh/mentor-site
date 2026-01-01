@@ -1773,7 +1773,7 @@ footer::after {
 
 .blog-subtitle {
     font-size: 1.05rem;
-    color: rgba(248, 250, 252, 0.85);
+    color: var(--text-secondary);
     line-height: 1.7;
     margin: 0;
 }
@@ -1782,7 +1782,7 @@ footer::after {
     text-transform: uppercase;
     letter-spacing: 0.35em;
     font-size: 0.78rem;
-    color: rgba(247, 249, 255, 0.85);
+    color: var(--text-secondary);
     margin: 0;
 }
 
@@ -1794,7 +1794,7 @@ footer::after {
     flex-direction: column;
     gap: 0.65rem;
     font-size: 0.95rem;
-    color: rgba(247, 249, 255, 0.92);
+    color: var(--text-secondary);
 }
 
 .blog-hero-bullets li {
@@ -1807,11 +1807,11 @@ footer::after {
     width: 0.4rem;
     height: 0.4rem;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--accent-primary);
     position: absolute;
     left: 0;
     top: 0.45rem;
-    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 6px rgba(15, 98, 254, 0.12);
 }
 
 .blog-featured {

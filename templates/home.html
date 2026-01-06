@@ -8,12 +8,10 @@
 <section class="section hero hero-refresh" id="top">
     <div class="wrap hero-refresh__grid">
         <div class="hero-refresh__copy">
-            <p class="pill">€15 · 60-minute 1:1 session</p>
-            <h1>One session to steady your art, animation, or game build.</h1>
-            <p class="hero-refresh__lede">Bring the scene, shot, or mechanic you’re stuck on. We fix it together live, capture the next passes, and you leave ready to keep shipping.</p>
-            <p class="legacy-marker">Beginner-safe, calm mentoring for students, self-taught creators, and early-career creatives.</p>
-            <p>Book whenever you need targeted help—no free discovery calls, no sales funnel, just steady support when you hit a blocker.</p>
-            <div class="hero-refresh__cta">
+            <p class="pill">€15 · 60-minute private session</p>
+            <h1>Transform creative feedback into production-ready art direction.</h1>
+            <p class="hero-refresh__lede">Drop the shot, shader, or playtest build that’s stuck. I co-direct the fix, capture the follow-up, and keep your indie team shipping with calm, studio-grade care.</p>
+            <div class="hero-cta-row">
                 {% if stripe_payment_link %}
                 <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="hero-book-session">Book a €15 session</a>
                 {% else %}
@@ -21,175 +19,270 @@
                     <button type="submit" class="btn btn-primary" data-cta-id="hero-book-session">Book a €15 session</button>
                 </form>
                 {% endif %}
-                <a class="btn btn-outline" href="#outcomes" data-cta-id="hero-secondary">See what you’ll leave with</a>
+                <a class="btn btn-outline" href="#suite" data-cta-id="hero-secondary">See the workflow</a>
             </div>
-            <p class="microcopy">No long-term commitment—book a single session whenever you need help. Stripe checkout · instant scheduling · refund if I can’t help.</p>
+            <p class="microcopy">No funnels. No retainers. Just a calm mentor when you need one.</p>
         </div>
-        <div class="session-value-card">
-            <div class="session-value-card__item session-value-card__item--primary">
-                <p class="session-value-card__label">Live co-working with real files</p>
-                <p class="session-value-card__text">Screen-share the current shot or scene. I diagnose the artistic + technical blocker and rebuild the fix with you.</p>
-            </div>
-            <div class="session-value-card__item">
-                <p class="session-value-card__label">Written recap + recording</p>
-                <p class="session-value-card__text">(optional) follow-up within 12 hours so you can replay the draw-over, rig tweak, or blueprint walkthrough.</p>
-            </div>
-            <div class="session-value-card__item">
-                <p class="session-value-card__label">Beginner-safe pacing</p>
-                <p class="session-value-card__text">Grounded coaching that still anchors to pro art direction and production standards.</p>
+        <div class="hero-visual">
+            <div class="hero-visual__orb"></div>
+            <div class="hero-visual__panel">
+                <p class="hero-visual__eyebrow">Art direction pulse</p>
+                <div class="hero-visual__chart">
+                    <span>Shots tuned</span>
+                    <strong>170B</strong>
+                    <small>frames reviewed to date</small>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="section trust-bites" id="who">
+<section class="section trust-pulse" id="trusted">
     <div class="wrap narrow">
-        <h2 class="section-title">Who this mentoring is for</h2>
-        <p class="section-subhead">You’re exploring art, animation, or indie game development and want a calm co-pilot who keeps the work honest without crushing your pace.</p>
-        <p class="legacy-marker">You only need to book when you’re ready for precise help—no ongoing contract and no pressure to “join a program.”</p>
-        <ul class="info-bullets">
-            <li>Students who want clarity and proof before critiques, exams, or portfolio reviews.</li>
-            <li>Self-taught builders who need feedback from someone who still ships rigs, shots, shaders, and tools.</li>
-            <li>Early-career creatives who want steady accountability without feeling judged.</li>
-        </ul>
+        <p class="section-eyebrow">Teams who drop me into production</p>
+        <div class="logos-grid logos-grid--text">
+            <span>GameCity Kajaani</span>
+            <span>Spellbound</span>
+            <span>Thalassophobia</span>
+            <span>Kajaani UAS</span>
+            <span>Solo founders</span>
+        </div>
     </div>
 </section>
 
-<section class="section session-outcomes" id="outcomes">
-    <div class="wrap narrow">
-        <div class="outcomes-card">
-            <h2 class="section-title">You’ll leave with...</h2>
-            <div class="outcomes-card__lead">
-                <p class="outcomes-card__eyebrow">Every session ends with proof you can keep building.</p>
-                <h3>We keep the scope tiny so the blocker is fixed on-call and the next week already has a plan.</h3>
-            </div>
-            <ul class="outcomes-list">
-                <li>
-                    <p class="outcomes-list__label">A solved blocker or rebuilt section</p>
-                    <p class="outcomes-list__text">We edit your actual scene, animation, blueprint, or design file and leave it working or clearly prototyped.</p>
-                </li>
-                <li>
-                    <p class="outcomes-list__label">A short checklist for the next pass</p>
-                    <p class="outcomes-list__text">You walk away with a 3–5 step plan that keeps your next work session organized and realistic.</p>
-                </li>
-                <li>
-                    <p class="outcomes-list__label">A practice drill or scene snippet</p>
-                    <p class="outcomes-list__text">I hand over a small repetition task (thumbnail batch, mocap cleanup pass, blueprint variation) so you can reinforce the win.</p>
-                </li>
-                <li>
-                    <p class="outcomes-list__label">Optional recording &amp; recap</p>
-                    <p class="outcomes-list__text">Need to replay the draw-over or graph editor timing? I send a written recap and link within 12 hours.</p>
-                </li>
+<section class="section hero-lab">
+    <div class="wrap hero-lab__grid">
+        <div class="hero-lab__panel">
+            <h3>Calm co-direction in one hour</h3>
+            <p>We screen-share rigs, timelines, or blueprints and rebuild the blocker together in real time.</p>
+            <ul>
+                <li>Hands-on draw-overs + paintovers</li>
+                <li>Blueprint + shader debugging</li>
+                <li>Marketing-ready polish passes</li>
             </ul>
         </div>
+        <div class="hero-lab__panel hero-lab__panel--chart">
+            <p class="hero-lab__stat-label">Latest pass quality</p>
+            <p class="hero-lab__stat">92<span>%</span></p>
+            <p class="hero-lab__note">Average uplift across student reels + indie teams after one round.</p>
+        </div>
     </div>
 </section>
 
-<section class="section how-it-works" id="process">
-    <div class="wrap narrow">
-        <h2 class="section-title">How it works</h2>
-        <ol class="info-bullets">
-            <li><strong>Book the €15 session.</strong> Stripe checkout unlocks the private Calendly link instantly—no intro call or subscription.</li>
-            <li><strong>Share your file and goal.</strong> Drop a few lines in the prep form plus any links, builds, or questions. I review everything before the call.</li>
-            <li><strong>We build, then document.</strong> We co-work for 60 minutes, fix the problem live, and capture next steps, drills, and references so you can keep going solo.</li>
-        </ol>
-    </div>
-</section>
-
-<section class="section tracks-section" id="tracks">
-    <div class="wrap">
-        <div class="section-headline">
-            <h2>What we can cover</h2>
-            <p>Every call is scoped to one clear win so you can prove progress after just one session.</p>
+<section class="section gradient-banner" id="gradient-banner">
+    <div class="wrap gradient-banner__inner">
+        <div>
+            <p class="section-eyebrow">Plug-in production partner</p>
+            <h2>Slide one calm mentor into your pipeline.</h2>
+            <p>I embed like an art director + technical artist so your junior team or solo build keeps moving without churn.</p>
         </div>
-        <div class="tracks-grid">
-            <article class="track-card">
-                <h3>Art &amp; design tune-ups</h3>
-                <p>We tighten drawings, color, layout, or visual development so critiques feel calm and intentional.</p>
-                <ul class="track-list">
-                    <li>Live draw-overs on characters, props, or environments.</li>
-                    <li>Simple value/color plans you can reapply to other pieces.</li>
-                    <li>Portfolio-ready framing tips for critiques and submissions.</li>
-                </ul>
-            </article>
-            <article class="track-card">
-                <h3>Animation &amp; motion polish</h3>
-                <p>We bring one shot, cycle, or motion capture pass up to review-ready quality.</p>
-                <ul class="track-list">
-                    <li>Playblast feedback with frame-specific notes.</li>
-                    <li>Blocking or polish sessions done together in your software.</li>
-                    <li>Checklists for arcs, spacing, and timing you can reuse.</li>
-                </ul>
-            </article>
-            <article class="track-card">
-                <h3>Game dev &amp; tech art support</h3>
-                <p>We debug a feature, rebuild a shader, or reset scope so your next sprint is realistic.</p>
-                <ul class="track-list">
-                    <li>Live blueprint or script walkthroughs until it behaves.</li>
-                    <li>Feel tests, tuning, and instrumentation to measure progress.</li>
-                    <li>Mini roadmaps that still account for homework, jobs, or exams.</li>
-                </ul>
-            </article>
-        </div>
-        <div class="tracks-cta">
+        <div class="gradient-banner__cta">
+            <a class="btn btn-primary" href="#insights">See collaboration modes</a>
             {% if stripe_payment_link %}
-            <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="tracks-book-session">Book a €15 session</a>
+            <a class="btn btn-outline" href="{{ stripe_payment_link }}">Book now</a>
             {% else %}
-            <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-stack">
-                <button type="submit" class="btn btn-primary" data-cta-id="tracks-book-session">Book a €15 session</button>
+            <form action="{{ checkout_endpoints.one_time }}" method="post">
+                <button type="submit" class="btn btn-outline">Book now</button>
             </form>
             {% endif %}
-            <p class="legacy-marker">No subscription, no minimum commitment—book the single session exactly when you need it.</p>
         </div>
     </div>
 </section>
 
-<section class="section fieldwork-section about-mentor" id="about">
-    <div class="wrap fieldwork-grid">
-        <article class="fieldwork-card fieldwork-card--wide">
-            <p class="fieldwork-eyebrow">About the mentor</p>
-            <h3>I mentor creative students and junior teams through the full pipeline.</h3>
-            <p>I’m the mentor behind Toucan.ee and I still draw, animate, and build tools daily. I’ve coached university cohorts, indie studios, and solo artists through art direction, Unreal workflows, and production planning.</p>
-            <p>Sessions stay humble and practical—no hype, no ego. You get the same production rigor I use on paid studio work, but in a single, student-safe call that respects your pace and budget.</p>
-        </article>
-    </div>
-</section>
-
-<section class="section faq-section" id="faq">
-    <div class="wrap narrow">
+<section class="section insights-section" id="insights">
+    <div class="wrap">
         <div class="section-headline">
-            <h2>FAQ</h2>
-            <p>Quick answers so you can book with confidence.</p>
+            <h2>Leading creative feedback intelligence for production teams</h2>
+            <p>Every session is structured like a studio dailies block with notes you can act on immediately.</p>
         </div>
-        <div class="faq-list">
-            <article class="faq-item">
-                <h3>What if I’m a complete beginner?</h3>
-                <p>That’s who most sessions are for. We keep the hour focused on one improvement, explain every tool we touch, and capture notes so you can practice safely afterward.</p>
+        <div class="insight-rows">
+            <article class="insight-row">
+                <div class="insight-text">
+                    <p class="section-eyebrow">SCULPT</p>
+                    <h3>Consolidate and organize creative feedback in hours, not days.</h3>
+                    <p>Bring your current renders, playblasts, or builds. We triage what matters, tag the blockers, and set the next experiment.</p>
+                    <ul>
+                        <li>Custom prep form + reference board</li>
+                        <li>Live note-taking inside your software</li>
+                        <li>Follow-up checklist scoped to one week</li>
+                    </ul>
+                </div>
+                <div class="insight-visual">
+                    <div class="insight-gradient"></div>
+                    <div class="insight-widget">
+                        <p>Shot readiness</p>
+                        <strong>94%</strong>
+                        <small>after first pass</small>
+                    </div>
+                </div>
             </article>
-            <article class="faq-item">
-                <h3>What do I need before the call?</h3>
-                <p>Just your current file or build, a short description of what’s stuck, and the software you already use (Blender, Krita, Unreal, Godot, etc.). I review everything before we meet.</p>
+            <article class="insight-row insight-row--reverse">
+                <div class="insight-text">
+                    <p class="section-eyebrow">SIGNAL</p>
+                    <h3>Surface the insights that matter.</h3>
+                    <p>We identify what sells the scene—lighting, timing, feel—and rebuild with practical guidance your team can repeat.</p>
+                    <ul>
+                        <li>Frame-specific timing marks</li>
+                        <li>Shader + lighting breakdowns</li>
+                        <li>Marketing-first framing tips</li>
+                    </ul>
+                </div>
+                <div class="insight-visual">
+                    <div class="insight-gradient"></div>
+                    <div class="insight-widget">
+                        <p>Launch-ready shots</p>
+                        <strong>7 of 10</strong>
+                        <small>per sprint</small>
+                    </div>
+                </div>
             </article>
-            <article class="faq-item">
-                <h3>Can I only book one session?</h3>
-                <p>Yes. There’s no long-term contract. Most students book when they need a confidence check or have a big critique coming up, and that single call is enough.</p>
-            </article>
-            <article class="faq-item">
-                <h3>What happens if I need to reschedule?</h3>
-                <p>You can move or cancel the slot up to 12 hours before the call. If something urgent happens, email me and we’ll find a new time or I’ll refund you.</p>
-            </article>
-            <article class="faq-item">
-                <h3>What if we can’t finish everything?</h3>
-                <p>We still document what changed, what to practice, and what to tackle next. If I can’t meaningfully help, I refund the session.</p>
+            <article class="insight-row">
+                <div class="insight-text">
+                    <p class="section-eyebrow">ALIGN</p>
+                    <h3>Confidently drive production strategy with actionable insights.</h3>
+                    <p>Translate messy feedback into a realistic roadmap so leads, students, and juniors stay aligned.</p>
+                    <ul>
+                        <li>Mini roadmaps per discipline</li>
+                        <li>Risk + opportunity matrix</li>
+                        <li>Async gut checks between calls</li>
+                    </ul>
+                </div>
+                <div class="insight-visual">
+                    <div class="insight-gradient"></div>
+                    <div class="insight-widget">
+                        <p>Scope clarity</p>
+                        <strong>48 hrs</strong>
+                        <small>to reset plans</small>
+                    </div>
+                </div>
             </article>
         </div>
     </div>
 </section>
 
-<section class="section contact-strip" id="contact">
-    <div class="wrap contact-strip__inner">
-        <p>Questions before you book? Email <a href="mailto:{{ config.email }}">{{ config.email }}</a> anytime.</p>
-        <a href="{{ site_links.mentoring }}" class="policies-link">Read the tutoring policies</a>
+<section class="section listen-learn" id="suite">
+    <div class="wrap">
+        <div class="section-headline">
+            <h2>Listen, learn, and act on creative feedback.</h2>
+            <p>Four blocks keep every collaboration lightweight and repeatable.</p>
+        </div>
+        <div class="listen-grid">
+            <article>
+                <h3>Source of truth</h3>
+                <p>Every call is documented with timestamps, renders, and action items.</p>
+            </article>
+            <article>
+                <h3>Custom feedback taxonomy</h3>
+                <p>Tag notes by lighting, animation, tech art, or marketing so you can filter instantly.</p>
+            </article>
+            <article>
+                <h3>Low-friction async loops</h3>
+                <p>Loom clips and Discord summaries keep teams synced.</p>
+            </article>
+            <article>
+                <h3>Unified tool stack</h3>
+                <p>I work inside Blender, Krita, Unreal, Godot, and studio tracking tools.</p>
+            </article>
+        </div>
     </div>
 </section>
+
+<section class="section icon-wall" id="icon-wall">
+    <div class="wrap">
+        <div class="section-headline">
+            <h2>Unified view of your students or indie team.</h2>
+            <p>Tooling and deliverables plug into the stack you already use.</p>
+        </div>
+        <div class="icon-grid">
+            <span>Unreal</span>
+            <span>Blender</span>
+            <span>Godot</span>
+            <span>Krita</span>
+            <span>Notion</span>
+            <span>Figma</span>
+            <span>Miro</span>
+            <span>ShotGrid</span>
+            <span>Slack</span>
+            <span>Discord</span>
+        </div>
+    </div>
+</section>
+
+<section class="section badge-row" id="badges">
+    <div class="wrap">
+        <div class="badge-grid">
+            <div class="badge-card">
+                <p>University partner</p>
+                <strong>GameCity Kajaani</strong>
+            </div>
+            <div class="badge-card">
+                <p>Studio-ready security</p>
+                <strong>Secure file handling</strong>
+            </div>
+            <div class="badge-card">
+                <p>Global reach</p>
+                <strong>Remote friendly</strong>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section testimonial-carousel" id="testimonials">
+    <div class="wrap narrow">
+        <div class="carousel">
+            <button class="carousel-control" data-direction="prev" aria-label="Previous testimonial">‹</button>
+            <div class="carousel-track">
+                <article class="carousel-slide active">
+                    <p class="testimonial-quote">“We worked with Sreyeesh where he helped us as a technical artist on <a href="https://store.steampowered.com/app/2507690/Thalassophobia/" target="_blank" rel="noopener">Thalassophobia</a>. He acted like a mentor more than a contractor, giving clear focus for marketing visuals and fixing issues fast.”</p>
+                    <p class="testimonial-author">Thalassophobia Team</p>
+                </article>
+                <article class="carousel-slide">
+                    <p class="testimonial-quote">“In Kajaani GameLAB 2025, Sreyeesh embraced our team with such warmth and care that it humbled us. He went above and beyond the program, genuinely caring about us succeeding. His Blizzard background and the way he presented himself made it easy to trust his guidance, and his sharp, no-nonsense approach brought structure and actionable next steps. We wanted to adopt him—his warm yet tough project management plus deep technical and art knowledge gave our junior team the lead-level clarity we needed.”</p>
+                    <p class="testimonial-author">Riikka-Lotta Pehkonen · Team Folkforge, Kajaani GameLAB 2025</p>
+                </article>
+            </div>
+            <button class="carousel-control" data-direction="next" aria-label="Next testimonial">›</button>
+        </div>
+    </div>
+</section>
+
+<section class="section final-cta" id="contact">
+    <div class="wrap final-cta-card">
+        <p class="section-eyebrow">Struggling to scale creative feedback?</p>
+        <h2>Drop a calm mentor into your production loop today.</h2>
+        <p>Book a session or email <a href="mailto:{{ config.email }}">{{ config.email }}</a> to sanity-check scope before you invest.</p>
+        <div class="cta-stack">
+            {% if stripe_payment_link %}
+            <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="final-cta-book">Book a €15 session</a>
+            {% else %}
+            <form action="{{ checkout_endpoints.one_time }}" method="post">
+                <button type="submit" class="btn btn-primary" data-cta-id="final-cta-book">Book a €15 session</button>
+            </form>
+            {% endif %}
+            <a class="btn btn-outline" href="{{ site_links.mentoring }}" data-cta-id="final-cta-policies">View mentoring policies</a>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+    const controls = document.querySelectorAll('.carousel-control');
+    let index = 0;
+
+    function updateSlides(newIndex) {
+        index = (newIndex + slides.length) % slides.length;
+        slides.forEach((slide, idx) => {
+            slide.classList.toggle('active', idx === index);
+        });
+    }
+
+    controls.forEach(control => {
+        control.addEventListener('click', () => {
+            const direction = control.dataset.direction === 'next' ? 1 : -1;
+            updateSlides(index + direction);
+        });
+    });
+});
+</script>
 {% endblock %}

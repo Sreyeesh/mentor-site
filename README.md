@@ -13,6 +13,13 @@ A professional Flask-based mentoring website with hybrid architecture: dynamic d
 - **CI/CD Ready**: GitHub Actions pipeline for automated deployment
 - **SEO Optimized**: Meta descriptions, canonical URLs, and social sharing support
 
+## 🗒️ Tomorrow's TODOs
+
+- [ ] Fix link descriptions across the site so previews read clearly.
+- [ ] Revisit the landing page layout to resolve the remaining design issues.
+- [ ] Refresh the mentoring/tutoring page design for consistency.
+- [ ] Update the About page design to match the new aesthetic.
+
 ## 🚀 Quick Start
 
 ### Prerequisites

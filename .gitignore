@@ -8,6 +8,8 @@ __pycache__/
 *$py.class
 *.so
 .Python
+.coverage
+coverage.xml
 env/
 venv/
 ENV/

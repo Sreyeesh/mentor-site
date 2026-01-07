@@ -32,4 +32,4 @@ Working in short, reviewable steps is the final piece. One feature. One shot. On
 
 Even with a framework, many beginners still struggle alone because they lack feedback. Questions like “Is this good enough?” or “What should I fix first?” are hard to answer in isolation. That uncertainty is where most people stall — not because they’re incapable, but because they’re working without guidance.
 
-Learning animation or game development doesn’t have to feel chaotic or draining. With structure, clear goals, and the right feedback, progress becomes calm, measurable, and sustainable.
+Learning animation or game development doesn’t have to feel chaotic or draining. With structure, clear goals, and the right feedback, progress becomes steady, measurable, and sustainable.

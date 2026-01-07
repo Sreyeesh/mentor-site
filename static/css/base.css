@@ -99,8 +99,9 @@ html[data-theme="dark"] {
 html[data-theme="light"] {
     --bg-primary: #f5f6fb;
     --bg-secondary: #ffffff;
-    --text-primary: #0d1b2a;
-    --text-secondary: #5a6275;
+    --text-primary: #0b1624;
+    --text-secondary: #2b354d;
+    --text-muted: #47536a;
     --accent-primary: #0f62fe;
     --accent-secondary: #7aa5ff;
     --border-color: #e0e4f0;

@@ -2,15 +2,15 @@
 {% set stripe_payment_link = config.stripe_payment_link %}
 
 {% block title %}Art, Animation & Game Dev Tutoring | Toucan.ee{% endblock %}
-{% block meta_description %}Book a calm, 60-minute €15 session to get hands-on tutoring in art, animation, or game dev. Finish something small each call with live feedback, practice tasks, and a next-step plan.{% endblock %}
+{% block meta_description %}Book a focused, 60-minute €15 session to get hands-on tutoring in art, animation, or game dev. Finish something small each call with live feedback, practice tasks, and a next-step plan.{% endblock %}
 
 {% block content %}
 <section class="section hero hero-refresh" id="top">
-    <div class="wrap hero-refresh__grid">
+    <div class="wrap hero-refresh__grid hero-refresh__grid--solo">
         <div class="hero-refresh__copy">
             <p class="pill">€15 · 60-minute private session</p>
             <h1>Transform creative feedback into production-ready art direction.</h1>
-            <p class="hero-refresh__lede">Drop the shot, shader, or playtest build that’s stuck. I co-direct the fix, capture the follow-up, and keep your indie team shipping with calm, studio-grade care.</p>
+            <p class="hero-refresh__lede">Drop the shot, shader, or playtest build that’s stuck. I co-direct the fix, capture the follow-up, and keep your indie team shipping with focused, studio-grade care.</p>
             <div class="hero-cta-row">
                 {% if stripe_payment_link %}
                 <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="hero-book-session">Book a €15 session</a>
@@ -21,19 +21,9 @@
                 {% endif %}
                 <a class="btn btn-outline" href="#suite" data-cta-id="hero-secondary">See the workflow</a>
             </div>
-            <p class="microcopy">No funnels. No retainers. Just a calm mentor when you need one.</p>
+            <p class="microcopy">No funnels. No retainers. Just a trusted mentor when you need one.</p>
         </div>
-        <div class="hero-visual">
-            <div class="hero-visual__orb"></div>
-            <div class="hero-visual__panel">
-                <p class="hero-visual__eyebrow">Art direction pulse</p>
-                <div class="hero-visual__chart">
-                    <span>Shots tuned</span>
-                    <strong>170B</strong>
-                    <small>frames reviewed to date</small>
-                </div>
-            </div>
-        </div>
+        <!-- removed hero visual block -->
     </div>
 </section>
 
@@ -52,7 +42,7 @@
 <section class="section hero-lab">
     <div class="wrap hero-lab__grid">
         <div class="hero-lab__panel">
-            <h3>Calm co-direction in one hour</h3>
+            <h3>Focused co-direction in one hour</h3>
             <p>We screen-share rigs, timelines, or blueprints and rebuild the blocker together in real time.</p>
             <ul>
                 <li>Hands-on draw-overs + paintovers</li>
@@ -72,7 +62,7 @@
     <div class="wrap gradient-banner__inner">
         <div>
             <p class="section-eyebrow">Plug-in production partner</p>
-            <h2>Slide one calm mentor into your pipeline.</h2>
+            <h2>Slide one senior mentor into your pipeline.</h2>
             <p>I embed like an art director + technical artist so your junior team or solo build keeps moving without churn.</p>
         </div>
         <div class="gradient-banner__cta">
@@ -186,90 +176,43 @@
     </div>
 </section>
 
-<section class="section icon-wall" id="icon-wall">
-    <div class="wrap">
-        <div class="section-headline">
-            <h2>Unified view of your students or indie team.</h2>
-            <p>Tooling and deliverables plug into the stack you already use.</p>
-        </div>
-        <div class="icon-grid">
-            <span>Unreal</span>
-            <span>Blender</span>
-            <span>Godot</span>
-            <span>Krita</span>
-            <span>Notion</span>
-            <span>Figma</span>
-            <span>Miro</span>
-            <span>ShotGrid</span>
-            <span>Slack</span>
-            <span>Discord</span>
-        </div>
-    </div>
-</section>
 
 <section class="section badge-row" id="badges">
     <div class="wrap">
         <div class="badge-grid">
             <div class="badge-card">
-                <p>University partner</p>
-                <strong>GameCity Kajaani</strong>
-            </div>
-            <div class="badge-card">
-                <p>Studio-ready security</p>
-                <strong>Secure file handling</strong>
-            </div>
-            <div class="badge-card">
-                <p>Global reach</p>
-                <strong>Remote friendly</strong>
+                <img src="/static/images/GameCity.png" alt="GameCity Kajaani logo" class="badge-card__logo">
+                <p>Partnered with GameCity Kajaani</p>
             </div>
         </div>
     </div>
 </section>
 
-<section class="section lecture-highlights" id="lectures">
+
+<section class="section testimonials-showcase" id="testimonials">
     <div class="wrap">
-        <div class="section-headline">
-            <h2>Catch a lecture replay.</h2>
-            <p>Here’s how I teach production, animation, and technical art to student cohorts.</p>
+        <div class="testimonials-showcase__header">
+            <p class="testimonials-showcase__eyebrow">Trusted collaborations</p>
+            <h2>Don’t take my word for it, see what teams say.</h2>
+            <p class="testimonials-showcase__lede">Honest feedback from studios and student teams I’ve supported with clear, production-ready guidance.</p>
         </div>
-        <div class="lecture-grid">
-            <a class="lecture-card" href="https://youtu.be/QR4YIwnxowE" target="_blank" rel="noopener">
-                <p class="lecture-card__eyebrow">Lecture · Animation workflow</p>
-                <h3>Blocking to polish in Blender</h3>
-                <p>Live demo on pushing a shot from reference through final curves.</p>
-                <span class="lecture-card__cta">Watch on YouTube →</span>
-            </a>
-            <a class="lecture-card" href="https://www.youtube.com/watch?v=D588wFHuzZo&list=PLyN-ewDaUNUhJEkczYf2JfywpAEj__8MQ&index=11" target="_blank" rel="noopener">
-                <p class="lecture-card__eyebrow">Lecture · Production planning</p>
-                <h3>Structuring your indie art pipeline</h3>
-                <p>Breaks down milestone planning, critique prep, and async accountability.</p>
-                <span class="lecture-card__cta">Watch on YouTube →</span>
-            </a>
-            <a class="lecture-card" href="https://www.youtube.com/watch?v=_QkHwhccB6k&t=334s" target="_blank" rel="noopener">
-                <p class="lecture-card__eyebrow">Lecture · Technical art</p>
-                <h3>Shader thinking for juniors</h3>
-                <p>Practical walkthrough on diagnosing stylized materials under deadline.</p>
-                <span class="lecture-card__cta">Watch on YouTube →</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-<section class="section testimonial-carousel" id="testimonials">
-    <div class="wrap narrow">
-        <div class="carousel">
-            <button class="carousel-control" data-direction="prev" aria-label="Previous testimonial">‹</button>
-            <div class="carousel-track">
-                <article class="carousel-slide active">
-                    <p class="testimonial-quote">“We worked with Sreyeesh where he helped us as a technical artist on <a href="https://store.steampowered.com/app/2507690/Thalassophobia/" target="_blank" rel="noopener">Thalassophobia</a>. He acted like a mentor more than a contractor, giving clear focus for marketing visuals and fixing issues fast.”</p>
-                    <p class="testimonial-author">Thalassophobia Team</p>
-                </article>
-                <article class="carousel-slide">
-                    <p class="testimonial-quote">“In Kajaani GameLAB 2025, Sreyeesh embraced our team with such warmth and care that it humbled us. He went above and beyond the program, genuinely caring about us succeeding. His Blizzard background and the way he presented himself made it easy to trust his guidance, and his sharp, no-nonsense approach brought structure and actionable next steps. We wanted to adopt him—his warm yet tough project management plus deep technical and art knowledge gave our junior team the lead-level clarity we needed.”</p>
-                    <p class="testimonial-author">Riikka-Lotta Pehkonen · Team Folkforge, Kajaani GameLAB 2025</p>
-                </article>
-            </div>
-            <button class="carousel-control" data-direction="next" aria-label="Next testimonial">›</button>
+        <div class="testimonials-showcase__grid">
+            <article class="testimonial-card">
+                <div class="testimonial-rating" aria-label="Five star rating">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <p class="testimonial-quote">“We worked with Sreyeesh where he helped us as a technical artist on <a href="https://store.steampowered.com/app/2507690/Thalassophobia/" target="_blank" rel="noopener">Thalassophobia</a>. He acted like a mentor more than a contractor, giving clear focus for marketing visuals and fixing issues fast.”</p>
+                <p class="testimonial-author">Thalassophobia Team</p>
+                <p class="testimonial-meta">Production partner</p>
+            </article>
+            <article class="testimonial-card">
+                <div class="testimonial-rating" aria-label="Five star rating">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <p class="testimonial-quote">“In Kajaani GameLAB 2025, Sreyeesh embraced our team with such warmth and care that it humbled us. He went above and beyond the program, genuinely caring about us succeeding.”</p>
+                <p class="testimonial-author">Riikka-Lotta Pehkonen</p>
+                <p class="testimonial-meta">Team Folkforge · Kajaani GameLAB 2025</p>
+            </article>
         </div>
     </div>
 </section>
@@ -277,7 +220,7 @@
 <section class="section final-cta" id="contact">
     <div class="wrap final-cta-card">
         <p class="section-eyebrow">Struggling to scale creative feedback?</p>
-        <h2>Drop a calm mentor into your production loop today.</h2>
+        <h2>Get hands on mentorship.</h2>
         <p>Book a session or email <a href="mailto:{{ config.email }}">{{ config.email }}</a> to sanity-check scope before you invest.</p>
         <div class="cta-stack">
             {% if stripe_payment_link %}
@@ -292,25 +235,4 @@
     </div>
 </section>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-    const controls = document.querySelectorAll('.carousel-control');
-    let index = 0;
-
-    function updateSlides(newIndex) {
-        index = (newIndex + slides.length) % slides.length;
-        slides.forEach((slide, idx) => {
-            slide.classList.toggle('active', idx === index);
-        });
-    }
-
-    controls.forEach(control => {
-        control.addEventListener('click', () => {
-            const direction = control.dataset.direction === 'next' ? 1 : -1;
-            updateSlides(index + direction);
-        });
-    });
-});
-</script>
 {% endblock %}

@@ -1507,7 +1507,8 @@ html[data-theme='dark'] .btn-outline {
     margin-bottom: 0;
 }
 
-.logos-grid--text span {
+.logos-grid--text span,
+.logos-grid--text a {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -1521,6 +1522,13 @@ html[data-theme='dark'] .btn-outline {
     letter-spacing: 0.01em;
     box-shadow: none;
     min-width: 180px;
+    text-decoration: none;
+}
+
+.logos-grid--text a:hover,
+.logos-grid--text a:focus-visible {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
 }
 
 .trust-pulse {

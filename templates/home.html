@@ -5,9 +5,9 @@
 {% block meta_description %}Book a focused, 60-minute €15 session to get hands-on tutoring in art, animation, or game dev. Finish something small each call with live feedback, practice tasks, and a next-step plan.{% endblock %}
 
 {% block content %}
-<section class="section hero hero-refresh" id="top">
-    <div class="wrap hero-refresh__grid hero-refresh__grid--solo">
-        <div class="hero-refresh__copy">
+<section class="section hero hero-refresh c-hero" id="top">
+    <div class="wrap o-container hero-refresh__grid hero-refresh__grid--solo c-hero__grid o-grid o-grid--hero">
+        <div class="hero-refresh__copy c-hero__copy">
             <p class="pill">€15 · 60-minute private session</p>
             <h1>Transform creative feedback into production-ready art direction.</h1>
             <div style="display:none">
@@ -15,8 +15,8 @@
                 <span>Who this mentoring is for</span>
                 <span>You’ll leave with</span>
             </div>
-            <p class="hero-refresh__lede">Drop the shot, shader, or playtest build that’s stuck. I co-direct the fix, capture the follow-up, and keep your indie team shipping with focused, studio-grade care.</p>
-            <div class="hero-cta-row">
+            <p class="hero-refresh__lede c-hero__lede">Drop the shot, shader, or playtest build that’s stuck. I co-direct the fix, capture the follow-up, and keep your indie team shipping with focused, studio-grade care.</p>
+            <div class="hero-cta-row o-cluster">
                 {% if stripe_payment_link %}
                 <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="hero-book-session">Book a €15 session</a>
                 {% else %}
@@ -32,8 +32,8 @@
     </div>
 </section>
 
-<section class="section trust-pulse" id="trusted">
-    <div class="wrap narrow">
+<section class="section trust-pulse c-trust" id="trusted">
+    <div class="wrap narrow o-container">
         <p class="section-eyebrow">Teams who drop me into production</p>
         <div class="logos-grid logos-grid--text">
             <a href="https://gamecitykajaani.fi/en/" target="_blank" rel="noopener">GameCity Kajaani</a>
@@ -42,9 +42,9 @@
     </div>
 </section>
 
-<section class="section hero-lab">
-    <div class="wrap hero-lab__grid">
-        <div class="hero-lab__panel">
+<section class="section hero-lab c-hero-lab">
+    <div class="wrap o-container hero-lab__grid c-hero-lab__grid o-grid o-grid--cards">
+        <div class="hero-lab__panel c-hero-lab__panel">
             <h3>Focused co-direction in one hour</h3>
             <p>We screen-share rigs, timelines, or blueprints and rebuild the blocker together in real time.</p>
             <ul>
@@ -53,22 +53,22 @@
                 <li>Marketing-ready polish passes</li>
             </ul>
         </div>
-        <div class="hero-lab__panel hero-lab__panel--chart">
+        <div class="hero-lab__panel c-hero-lab__panel hero-lab__panel--chart c-hero-lab__panel--chart">
             <p class="hero-lab__stat-label">Latest pass quality</p>
-            <p class="hero-lab__stat">92<span>%</span></p>
-            <p class="hero-lab__note">Average uplift across student reels + indie teams after one round.</p>
+            <p class="hero-lab__stat c-hero-lab__stat">92<span>%</span></p>
+            <p class="hero-lab__note c-hero-lab__note">Average uplift across student reels + indie teams after one round.</p>
         </div>
     </div>
 </section>
 
-<section class="section gradient-banner" id="gradient-banner">
-    <div class="wrap gradient-banner__inner">
+<section class="section gradient-banner c-gradient-banner" id="gradient-banner">
+    <div class="wrap o-container gradient-banner__inner c-gradient-banner__inner">
         <div>
             <p class="section-eyebrow">Plug-in production partner</p>
             <h2>Slide one senior mentor into your pipeline.</h2>
             <p>I embed like an art director + technical artist so your junior team or solo build keeps moving without churn.</p>
         </div>
-        <div class="gradient-banner__cta">
+        <div class="gradient-banner__cta c-gradient-banner__cta o-cluster">
             <a class="btn btn-primary" href="#insights">See collaboration modes</a>
             {% if stripe_payment_link %}
             <a class="btn btn-outline" href="{{ stripe_payment_link }}">Book now</a>
@@ -81,15 +81,15 @@
     </div>
 </section>
 
-<section class="section insights-section" id="insights">
-    <div class="wrap">
-        <div class="section-headline">
+<section class="section insights-section c-insights" id="insights">
+    <div class="wrap o-container">
+        <div class="section-headline c-insights__header">
             <h2>Leading creative feedback intelligence for production teams</h2>
             <p>Every session is structured like a studio dailies block with notes you can act on immediately.</p>
         </div>
-        <div class="insight-rows">
-            <article class="insight-row">
-                <div class="insight-text">
+        <div class="insight-rows c-insights__rows">
+            <article class="insight-row c-insights__row">
+                <div class="insight-text c-insights__text">
                     <p class="section-eyebrow">SCULPT</p>
                     <h3>Consolidate and organize creative feedback in hours, not days.</h3>
                     <p>Bring your current renders, playblasts, or builds. We triage what matters, tag the blockers, and set the next experiment.</p>
@@ -99,17 +99,17 @@
                         <li>Follow-up checklist scoped to one week</li>
                     </ul>
                 </div>
-                <div class="insight-visual">
-                    <div class="insight-gradient"></div>
-                    <div class="insight-widget">
+                <div class="insight-visual c-insights__visual">
+                    <div class="insight-gradient c-insights__gradient"></div>
+                    <div class="insight-widget c-insights__widget">
                         <p>Shot readiness</p>
                         <strong>94%</strong>
                         <small>after first pass</small>
                     </div>
                 </div>
             </article>
-            <article class="insight-row insight-row--reverse">
-                <div class="insight-text">
+            <article class="insight-row c-insights__row insight-row--reverse c-insights__row--reverse">
+                <div class="insight-text c-insights__text">
                     <p class="section-eyebrow">SIGNAL</p>
                     <h3>Surface the insights that matter.</h3>
                     <p>We identify what sells the scene—lighting, timing, feel—and rebuild with practical guidance your team can repeat.</p>
@@ -119,17 +119,17 @@
                         <li>Marketing-first framing tips</li>
                     </ul>
                 </div>
-                <div class="insight-visual">
-                    <div class="insight-gradient"></div>
-                    <div class="insight-widget">
+                <div class="insight-visual c-insights__visual">
+                    <div class="insight-gradient c-insights__gradient"></div>
+                    <div class="insight-widget c-insights__widget">
                         <p>Launch-ready shots</p>
                         <strong>7 of 10</strong>
                         <small>per sprint</small>
                     </div>
                 </div>
             </article>
-            <article class="insight-row">
-                <div class="insight-text">
+            <article class="insight-row c-insights__row">
+                <div class="insight-text c-insights__text">
                     <p class="section-eyebrow">ALIGN</p>
                     <h3>Confidently drive production strategy with actionable insights.</h3>
                     <p>Translate messy feedback into a realistic roadmap so leads, students, and juniors stay aligned.</p>
@@ -139,9 +139,9 @@
                         <li>Async gut checks between calls</li>
                     </ul>
                 </div>
-                <div class="insight-visual">
-                    <div class="insight-gradient"></div>
-                    <div class="insight-widget">
+                <div class="insight-visual c-insights__visual">
+                    <div class="insight-gradient c-insights__gradient"></div>
+                    <div class="insight-widget c-insights__widget">
                         <p>Scope clarity</p>
                         <strong>48 hrs</strong>
                         <small>to reset plans</small>
@@ -152,13 +152,13 @@
     </div>
 </section>
 
-<section class="section listen-learn" id="suite">
-    <div class="wrap">
-        <div class="section-headline">
+<section class="section listen-learn c-listen" id="suite">
+    <div class="wrap o-container">
+        <div class="section-headline c-listen__header">
             <h2>Listen, learn, and act on creative feedback.</h2>
             <p>Four blocks keep every collaboration lightweight and repeatable.</p>
         </div>
-        <div class="listen-grid">
+        <div class="listen-grid c-listen__grid o-grid o-grid--cards">
             <article>
                 <h3>Source of truth</h3>
                 <p>Every call is documented with timestamps, renders, and action items.</p>
@@ -180,20 +180,20 @@
 </section>
 
 
-<section class="section badge-row" id="badges">
-    <div class="wrap">
-        <div class="badge-grid">
-            <div class="badge-card">
-                <img src="/static/images/GameCity.png" alt="GameCity Kajaani logo" class="badge-card__logo">
+<section class="section badge-row c-badge" id="badges">
+    <div class="wrap o-container">
+        <div class="badge-grid c-badge__grid o-grid o-grid--cards">
+            <div class="badge-card c-badge__card">
+                <img src="/static/images/GameCity.png" alt="GameCity Kajaani logo" class="badge-card__logo c-badge__logo">
                 <p>I'm currently mentoring at GameCity Kajaani.</p>
             </div>
         </div>
     </div>
 </section>
 
-<section class="section lecture-preview" id="lecture-preview">
-    <div class="wrap">
-        <div class="section-header">
+<section class="section lecture-preview c-lecture" id="lecture-preview">
+    <div class="wrap o-container">
+        <div class="section-header c-lecture__header">
             <p class="section-eyebrow">Lecture preview</p>
             <h2>This is the type of lecturing I do for game development.</h2>
         </div>
@@ -204,14 +204,14 @@
 </section>
 
 
-<section class="section testimonials-showcase" id="testimonials">
-    <div class="wrap">
-        <div class="testimonials-showcase__header">
-            <p class="testimonials-showcase__eyebrow">Trusted collaborations</p>
+<section class="section testimonials-showcase c-testimonials" id="testimonials">
+    <div class="wrap o-container">
+        <div class="testimonials-showcase__header c-testimonials__header">
+            <p class="testimonials-showcase__eyebrow c-testimonials__eyebrow">Trusted collaborations</p>
             <h2>Don’t take my word for it, see what teams say.</h2>
-            <p class="testimonials-showcase__lede">Honest feedback from studios and student teams I’ve supported with clear, production-ready guidance.</p>
+            <p class="testimonials-showcase__lede c-testimonials__lede">Honest feedback from studios and student teams I’ve supported with clear, production-ready guidance.</p>
         </div>
-        <div class="testimonials-showcase__grid">
+        <div class="testimonials-showcase__grid c-testimonials__grid o-grid o-grid--cards">
             <article class="testimonial-card">
                 <div class="testimonial-rating" aria-label="Five star rating">
                     <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
@@ -240,8 +240,8 @@
     </div>
 </section>
 
-<section class="section final-cta" id="contact">
-    <div class="wrap final-cta-card">
+<section class="section final-cta c-final" id="contact">
+    <div class="wrap o-container final-cta-card c-final__card">
         <p class="section-eyebrow">Struggling to scale creative feedback?</p>
         <h2>Get hands on mentorship.</h2>
         <p>Book a session or email <a href="mailto:{{ config.email }}">{{ config.email }}</a> to sanity-check scope before you invest.</p>
@@ -253,7 +253,6 @@
                 <button type="submit" class="btn btn-primary" data-cta-id="final-cta-book">Book a €15 session</button>
             </form>
             {% endif %}
-            <a class="btn btn-outline" href="{{ site_links.contact }}" data-cta-id="final-cta-policies">Contact for details</a>
         </div>
     </div>
 </section>

@@ -1500,7 +1500,10 @@ html[data-theme='dark'] .btn-outline {
 }
 
 .logos-grid--text {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 1rem;
     margin-bottom: 0;
 }
 
@@ -1508,17 +1511,27 @@ html[data-theme='dark'] .btn-outline {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    padding: 0.75rem 1.25rem;
+    padding: 0.6rem 1.25rem;
     border-radius: 999px;
-    border: 1px solid var(--border-color);
-    background: var(--card-bg);
+    border: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
+    background: transparent;
     font-weight: 600;
-    color: var(--text-secondary);
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    box-shadow: none;
+    min-width: 180px;
 }
 
 .trust-pulse {
     text-align: center;
+}
+
+.trust-pulse .section-eyebrow {
+    letter-spacing: -0.01em;
+    font-size: clamp(2rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 .metrics-grid {

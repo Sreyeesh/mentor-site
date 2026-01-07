@@ -14,7 +14,7 @@
 }
 
 .hero--single-column {
-    background: linear-gradient(135deg, #f7fbff, #eef3f7);
+    background: var(--bg-secondary);
 }
 
 .hero-stack {
@@ -34,7 +34,7 @@
 }
 
 html[data-theme="dark"] .hero--single-column {
-    background: linear-gradient(135deg, rgba(9, 14, 27, 0.95), rgba(12, 20, 37, 0.9));
+    background: var(--bg-secondary);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
@@ -402,14 +402,14 @@ html[data-theme="dark"] .pill {
 
 /* === 2025 conversion homepage === */
 .hero-refresh {
-    background: var(--hero-bg);
+    background: transparent;
     border-radius: 34px;
-    box-shadow: 0 25px 60px rgba(5, 12, 32, 0.25);
+    box-shadow: none;
     margin-top: 1.5rem;
 }
 
 html[data-theme='dark'] .hero-refresh {
-    box-shadow: 0 45px 90px rgba(0, 0, 0, 0.65);
+    box-shadow: none;
 }
 
 .hero-refresh__grid {
@@ -417,6 +417,11 @@ html[data-theme='dark'] .hero-refresh {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: clamp(1.5rem, 5vw, 3rem);
     align-items: center;
+}
+
+.hero-refresh__grid--solo {
+    grid-template-columns: minmax(0, 720px);
+    justify-content: start;
 }
 
 .hero-refresh__copy h1 {
@@ -1584,7 +1589,7 @@ html[data-theme='dark'] .btn-outline {
 }
 
 .gradient-banner {
-    background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.25), transparent 45%), linear-gradient(120deg, rgba(236, 72, 153, 0.1), rgba(59, 130, 246, 0.1));
+    background: transparent;
     border-top: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
     border-bottom: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
 }
@@ -1612,7 +1617,7 @@ html[data-theme='dark'] .btn-outline {
 .gradient-card {
     border-radius: 24px;
     padding: 2rem;
-    background: linear-gradient(160deg, rgba(99,102,241,0.18), rgba(236,72,153,0.14));
+    background: var(--card-bg);
     border: 1px solid color-mix(in srgb, var(--border-color) 80%, transparent);
     box-shadow: 0 25px 70px rgba(15, 23, 42, 0.35);
 }
@@ -1642,7 +1647,7 @@ html[data-theme='dark'] .btn-outline {
     border-radius: 20px;
     border: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
     padding: 1.5rem;
-    background: radial-gradient(circle at top left, rgba(236, 72, 153, 0.18), rgba(15, 23, 42, 0)) var(--card-bg);
+    background: var(--card-bg);
     box-shadow: 0 16px 40px rgba(15, 23, 42, 0.35);
 }
 
@@ -1657,7 +1662,7 @@ html[data-theme='dark'] .btn-outline {
     position: relative;
     border-radius: 32px;
     padding: 2.5rem;
-    background: radial-gradient(circle at top, rgba(99,102,241,0.3), rgba(15,23,42,0.2));
+    background: var(--card-bg);
     border: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
     box-shadow: 0 35px 90px rgba(15, 23, 42, 0.45);
     display: flex;
@@ -1669,7 +1674,7 @@ html[data-theme='dark'] .btn-outline {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #ff7adf, #6d83ff);
+    background: var(--accent-secondary);
     opacity: 0.7;
 }
 
@@ -1702,8 +1707,27 @@ html[data-theme='dark'] .btn-outline {
     color: var(--text-secondary);
 }
 
+html[data-theme="light"] .hero-visual {
+    background: var(--card-bg);
+    border-color: color-mix(in srgb, var(--border-color) 85%, transparent);
+    box-shadow: 0 28px 70px rgba(15, 23, 42, 0.14);
+    color: var(--text-primary);
+}
+
+html[data-theme="light"] .hero-visual__panel {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: color-mix(in srgb, var(--border-color) 85%, transparent);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+}
+
+html[data-theme="light"] .hero-visual__eyebrow,
+html[data-theme="light"] .hero-visual__chart span,
+html[data-theme="light"] .hero-visual__chart small {
+    color: var(--text-secondary);
+}
+
 .hero-lab {
-    background: radial-gradient(circle at top right, rgba(99,102,241,0.15), transparent 50%);
+    background: transparent;
 }
 
 .hero-lab__grid {
@@ -1716,8 +1740,8 @@ html[data-theme='dark'] .btn-outline {
     border-radius: 28px;
     padding: 2rem;
     border: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
-    background: linear-gradient(150deg, rgba(236,72,153,0.15), rgba(15,23,42,0.75));
-    box-shadow: 0 25px 70px rgba(15, 23, 42, 0.4);
+    background: transparent;
+    box-shadow: none;
 }
 
 .hero-lab__panel ul {
@@ -1783,7 +1807,7 @@ html[data-theme='dark'] .btn-outline {
     position: relative;
     border-radius: 32px;
     padding: 2rem;
-    background: rgba(10, 15, 30, 0.8);
+    background: transparent;
     border: 1px solid color-mix(in srgb, var(--border-color) 80%, transparent);
 }
 
@@ -1791,7 +1815,7 @@ html[data-theme='dark'] .btn-outline {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: linear-gradient(135deg, rgba(236,72,153,0.25), rgba(96,165,250,0.25));
+    background: none;
     filter: blur(40px);
 }
 
@@ -1799,13 +1823,36 @@ html[data-theme='dark'] .btn-outline {
     position: relative;
     padding: 1.5rem;
     border-radius: 20px;
-    background: rgba(15,23,42,0.75);
-    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.5);
+    background: transparent;
+    box-shadow: none;
 }
 
 .insight-widget strong {
     font-size: 2rem;
     display: block;
+}
+
+html[data-theme="light"] .insight-visual {
+    background: transparent;
+    border-color: color-mix(in srgb, var(--border-color) 85%, transparent);
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+    color: var(--text-primary);
+}
+
+html[data-theme="light"] .insight-gradient {
+    background: none;
+    filter: blur(36px);
+}
+
+html[data-theme="light"] .insight-widget {
+    background: transparent;
+    color: var(--text-primary);
+    box-shadow: none;
+}
+
+html[data-theme="light"] .insight-widget p,
+html[data-theme="light"] .insight-widget small {
+    color: var(--text-secondary);
 }
 
 .listen-grid {
@@ -1836,22 +1883,42 @@ html[data-theme='dark'] .btn-outline {
     background: rgba(12, 17, 33, 0.85);
 }
 
+html[data-theme="light"] .icon-grid span {
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--text-primary);
+    border-color: color-mix(in srgb, var(--border-color) 85%, transparent);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
 .badge-row {
-    background: rgba(12, 17, 33, 0.8);
+    background: transparent;
 }
 
 .badge-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
+    justify-items: center;
 }
 
 .badge-card {
     border-radius: 18px;
     border: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
     padding: 1.5rem;
-    background: linear-gradient(120deg, rgba(59,130,246,0.12), rgba(236,72,153,0.12));
+    background: transparent;
     text-align: center;
+    width: min(860px, 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.badge-card__logo {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto 0.75rem;
+    display: block;
 }
 
 .lecture-highlights {
@@ -1868,7 +1935,7 @@ html[data-theme='dark'] .btn-outline {
     border-radius: 24px;
     border: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
     padding: 1.5rem 1.75rem;
-    background: linear-gradient(160deg, rgba(236,72,153,0.16), rgba(14,22,42,0.9));
+    background: var(--card-bg);
     box-shadow: 0 25px 60px rgba(15, 23, 42, 0.5);
     text-decoration: none;
     color: inherit;
@@ -1900,39 +1967,31 @@ html[data-theme='dark'] .btn-outline {
     color: var(--accent-primary);
 }
 
-.testimonial-carousel .carousel {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+html[data-theme="light"] .badge-row {
+    background: color-mix(in srgb, var(--bg-primary) 88%, #ffffff);
 }
 
-.carousel-track {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-}
-
-.carousel-slide {
-    display: none;
-    border: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
-    border-radius: 24px;
-    padding: 2rem;
+html[data-theme="light"] .badge-card {
     background: var(--card-bg);
-    box-shadow: 0 22px 60px rgba(15, 23, 42, 0.45);
-}
-
-.carousel-slide.active {
-    display: block;
-}
-
-.carousel-control {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    border-color: color-mix(in srgb, var(--border-color) 85%, transparent);
     color: var(--text-primary);
-    cursor: pointer;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+}
+
+html[data-theme="light"] .lecture-highlights {
+    background: color-mix(in srgb, var(--bg-primary) 92%, #ffffff);
+}
+
+html[data-theme="light"] .lecture-card {
+    background: var(--card-bg);
+    border-color: color-mix(in srgb, var(--border-color) 85%, transparent);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.16);
+    color: var(--text-primary);
+}
+
+html[data-theme="light"] .lecture-card__eyebrow,
+html[data-theme="light"] .lecture-card p {
+    color: var(--text-secondary);
 }
 
 .testimonials-grid {
@@ -1955,6 +2014,57 @@ html[data-theme='dark'] .btn-outline {
     font-style: italic;
     margin-bottom: 1rem;
     color: var(--text-primary);
+}
+
+.testimonials-showcase__header {
+    max-width: 640px;
+    margin-bottom: 2rem;
+}
+
+.testimonials-showcase__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.testimonials-showcase__lede {
+    color: var(--text-secondary);
+    margin-top: 0.75rem;
+    max-width: 52ch;
+}
+
+.testimonials-showcase__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.testimonials-showcase__grid .testimonial-card {
+    background: color-mix(in srgb, var(--card-bg) 90%, var(--bg-secondary));
+    border-radius: 20px;
+    padding: 1.75rem;
+    box-shadow: 0 22px 50px rgba(15, 23, 42, 0.08);
+    border: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
+}
+
+.testimonial-rating {
+    display: inline-flex;
+    gap: 0.25rem;
+    color: #16a34a;
+    font-size: 0.95rem;
+    margin-bottom: 0.85rem;
+}
+
+.testimonial-author {
+    font-weight: 600;
+}
+
+.testimonial-meta {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
 }
 
 .faq-list {
@@ -1980,16 +2090,42 @@ html[data-theme='dark'] .btn-outline {
 }
 
 .final-cta-card {
-    background: linear-gradient(135deg, rgba(15, 98, 254, 0.95), rgba(15, 98, 254, 0.75));
-    color: #fff;
+    background: var(--card-bg);
+    color: var(--text-primary);
     border-radius: 32px;
     padding: 3rem;
-    box-shadow: 0 25px 80px rgba(15, 98, 254, 0.35);
+    box-shadow: 0 25px 80px rgba(15, 23, 42, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
 .final-cta-card h2,
 .final-cta-card .section-eyebrow,
 .final-cta-card p {
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.final-cta-card h2 {
+    margin-top: 0.25rem;
+}
+
+.final-cta-card p {
+    max-width: 52ch;
+}
+
+.final-cta-card a:not(.btn) {
+    color: var(--link-color);
+}
+
+.final-cta-card a:not(.btn):hover,
+.final-cta-card a:not(.btn):focus-visible {
+    color: var(--link-hover-color);
+}
+
+.final-cta-card .btn-primary {
     color: #fff;
 }
 
@@ -1998,15 +2134,15 @@ html[data-theme='dark'] .btn-outline {
 }
 
 .final-cta-card .cta-button.secondary {
-    border-color: rgba(255,255,255,0.8);
-    color: #fff;
-    background: rgba(255,255,255,0.15);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+    background: transparent;
 }
 
 .final-cta-card .cta-button.secondary:hover {
-    background: rgba(255,255,255,0.25);
-    border-color: #fff;
-    color: #fff;
+    background: rgba(15, 98, 254, 0.08);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
 }
 
 .page-hero {
@@ -2181,7 +2317,7 @@ html[data-theme='dark'] .btn-outline {
 
 .pricing-card--accent {
     border: 1px solid rgba(15, 98, 254, 0.35);
-    background: linear-gradient(145deg, rgba(71, 116, 255, 0.08), rgba(71, 149, 255, 0.02));
+    background: var(--card-bg);
 }
 
 .pricing-label {

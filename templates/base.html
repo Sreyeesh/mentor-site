@@ -142,10 +142,9 @@
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <p class="footer-heading">Tutoring</p>
+                    <p class="footer-heading">Book</p>
                     <ul class="footer-list">
-                        <li><a href="{{ site_links.mentoring }}">Programs & Pricing</a></li>
-                        <li><a href="{{ site_links.home }}#program-details">What You Get</a></li>
+                        <li><a href="{{ config.stripe_payment_link }}" target="_blank" rel="noopener">Book a session</a></li>
                         <li><a href="{{ site_links.blog }}">Insights & Blog</a></li>
                     </ul>
                 </div>
@@ -154,7 +153,7 @@
                 <p>&copy; {{ current_year }} {{ config.name }}. All rights reserved.</p>
                 <div class="footer-bottom-links">
                     <a href="{{ site_links.about }}">About</a>
-                    <a href="{{ site_links.mentoring }}">Tutoring</a>
+                    <a href="{{ config.stripe_payment_link }}" target="_blank" rel="noopener">Book a session</a>
                     <a href="{{ site_links.blog }}">Blog</a>
                 </div>
             </div>

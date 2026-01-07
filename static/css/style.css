@@ -1,5 +1,6 @@
 /* style.css now composes modular styles to keep files focused and manageable */
 @import url('base.css');
-@import url('components.css');
+@import url('components-core.css');
+@import url('components-blog.css');
 @import url('sections-landing.css');
 @import url('sections-conversion.css');

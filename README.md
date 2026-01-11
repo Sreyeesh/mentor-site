@@ -34,9 +34,6 @@ A professional Flask-based mentoring website with hybrid architecture: dynamic d
 git clone <your-repo-url>
 cd mentor-site
 
-# Copy environment template
-cp .env.example .env
-
 # Start the authoring tool
 docker-compose --profile authoring up authoring-tool
 # Open http://localhost:5001/authoring/ to create content
@@ -55,9 +52,6 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Copy environment template
-cp .env.example .env
 
 # Run development server
 python app.py
@@ -110,19 +104,19 @@ mentor-site/
 ### Environment Setup
 Create a `.env` file for local development:
 ```env
-SITE_NAME=Sreyeesh Garimella
-SITE_EMAIL=toucan.sg@gmail.com
-SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link
-SITE_URL=https://your-domain.com
-BASE_PATH=/mentor-site
-FLASK_DEBUG=True
-PLAUSIBLE_SCRIPT_URL=https://plausible.io/js/your-site.js
-PLAUSIBLE_DOMAIN=mentor.your-domain.com
-STRIPE_SECRET_KEY=sk_test_yourkey
-STRIPE_PUBLISHABLE_KEY=pk_test_yourkey
-STRIPE_PRICE_ID=price_yourplan
-STRIPE_SUCCESS_URL=https://your-domain.com/mentoring/?checkout=success
-STRIPE_CANCEL_URL=https://your-domain.com/mentoring/?checkout=cancelled
+SITE_NAME=
+SITE_EMAIL=
+SITE_CALENDLY_LINK=
+SITE_URL=
+BASE_PATH=
+FLASK_DEBUG=
+PLAUSIBLE_SCRIPT_URL=
+PLAUSIBLE_DOMAIN=
+STRIPE_SECRET_KEY=
+STRIPE_PUBLISHABLE_KEY=
+STRIPE_PRICE_ID=
+STRIPE_SUCCESS_URL=
+STRIPE_CANCEL_URL=
 ```
 
 `SITE_URL` should be the fully qualified domain for the deployed site (for example,
@@ -318,7 +312,7 @@ flake8 .
 Add new tests alongside existing modules under `tests/` when you change behaviour.
 
 ## Environment variables
-The `.env.example` file documents every supported key. Common ones are listed below:
+Common environment variables are listed below:
 
 | Variable | Purpose | Default |
 | --- | --- | --- |
@@ -383,7 +377,7 @@ Checkout and webhook endpoints.
 
 ### Stripe checkout workflow (local → master → live)
 
-1. **Local sanity checks** – Copy `.env.example` to `.env`, fill in every `STRIPE_*` value, and point `BACKEND_BASE_URL` to your local server (for example `http://localhost:5000`). Run `flask run` and hit any checkout form; it should redirect to Stripe or return JSON when you `POST` via curl. Run `pytest tests/test_checkout_flow.py` for an automated check.
+1. **Local sanity checks** – Populate `.env` with every `STRIPE_*` value and point `BACKEND_BASE_URL` to your local server (for example `http://localhost:5000`). Run `flask run` and hit any checkout form; it should redirect to Stripe or return JSON when you `POST` via curl. Run `pytest tests/test_checkout_flow.py` for an automated check.
 2. **Master / CI builds** – The GitHub Actions workflow reads the same variables from repository secrets. Ensure `BACKEND_BASE_URL` matches your deployed backend host so generated HTML keeps POSTing to Flask instead of GitHub Pages (otherwise you will see 405 errors). The workflow already runs the checkout tests, so a failing Stripe configuration blocks merges.
 3. **Live verification** – After Pages finishes publishing, use the live site with Stripe test cards to confirm subscriptions and one-off payments both reach the backend. Because the HTML contains the fully qualified backend URLs, live testing is the only remaining step to guarantee parity with master.
 

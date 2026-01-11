@@ -13,13 +13,6 @@ A professional Flask-based mentoring website with hybrid architecture: dynamic d
 - **CI/CD Ready**: GitHub Actions pipeline for automated deployment
 - **SEO Optimized**: Meta descriptions, canonical URLs, and social sharing support
 
-## 🗒️ Tomorrow's TODOs
-
-- [ ] Fix link descriptions across the site so previews read clearly.
-- [ ] Revisit the landing page layout to resolve the remaining design issues.
-- [ ] Refresh the mentoring/tutoring page design for consistency.
-- [ ] Update the About page design to match the new aesthetic.
-
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -102,23 +95,6 @@ mentor-site/
 ## 🛠️ Development
 
 ### Environment Setup
-Create a `.env` file for local development:
-```env
-SITE_NAME=
-SITE_EMAIL=
-SITE_CALENDLY_LINK=
-SITE_URL=
-BASE_PATH=
-FLASK_DEBUG=
-PLAUSIBLE_SCRIPT_URL=
-PLAUSIBLE_DOMAIN=
-STRIPE_SECRET_KEY=
-STRIPE_PUBLISHABLE_KEY=
-STRIPE_PRICE_ID=
-STRIPE_SUCCESS_URL=
-STRIPE_CANCEL_URL=
-```
-
 `SITE_URL` should be the fully qualified domain for the deployed site (for example,
 `https://mentor.yourdomain.com`). It is used to build canonical URLs and social
 share links so networks like LinkedIn and X always receive a complete link to

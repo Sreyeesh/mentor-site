@@ -1,4 +1,4 @@
-# OUCAN.EE — BASIC MARKETING LIST
+# TOUCAN.EE — BASIC MARKETING LIST
 
 ## Pick one target student
 - Beginner animation / game-dev learner who feels stuck

@@ -81,7 +81,18 @@ def test_blog_index(client):
     assert b'Your creative career playbook' in response.data
 
 
-def test_blog_detail(client):
+def test_blog_detail(client, tmp_path, monkeypatch):
+    post = tmp_path / 'how-i-teach-game-development.md'
+    post.write_text(
+        "---\n"
+        "title: How I Teach Game Development\n"
+        "slug: how-i-teach-game-development\n"
+        "date: 2024-01-01\n"
+        "---\n"
+        "\n"
+        "Body text.\n"
+    )
+    monkeypatch.setenv('CONTENT_DIR', str(tmp_path))
     response = client.get('/blog/how-i-teach-game-development/')
     assert response.status_code == 200
     assert b'How I Teach Game Development' in response.data

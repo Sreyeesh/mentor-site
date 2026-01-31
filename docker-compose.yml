@@ -3,7 +3,7 @@ services:
     build:
       context: .
       args:
-        BASE_PATH: ${BASE_PATH:-/mentor-site}
+        BASE_PATH: ${BASE_PATH:-/}
     container_name: mentor-site-prod
     ports:
       # Map host port 3000 to container port 80 (nginx)
@@ -31,7 +31,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
       args:
-        BASE_PATH: ${BASE_PATH:-/mentor-site}
+        BASE_PATH: ${BASE_PATH:-/}
     container_name: mentor-site-authoring
     command: python author_app.py
     ports:
@@ -55,7 +55,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
       args:
-        BASE_PATH: ${BASE_PATH:-/mentor-site}
+        BASE_PATH: ${BASE_PATH:-/}
     container_name: mentor-site-dev
     ports:
       - "5000:5000"  # Map host 5000 to Flask dev server
@@ -89,7 +89,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
       args:
-        BASE_PATH: ${BASE_PATH:-/mentor-site}
+        BASE_PATH: ${BASE_PATH:-/}
     command: pytest
     volumes:
       - ./:/app

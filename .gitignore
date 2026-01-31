@@ -10,6 +10,11 @@ __pycache__/
 .Python
 .coverage
 coverage.xml
+.coverage.*
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
 env/
 venv/
 ENV/

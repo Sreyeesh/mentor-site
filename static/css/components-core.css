@@ -769,6 +769,7 @@ footer::after {
         gap: 30px;
         transition: left 0.3s ease, background-color 0.3s ease;
         border-top: 1px solid var(--border-color);
+        z-index: 1100;
     }
     
     .nav-links.active {
@@ -1693,4 +1694,3 @@ footer::after {
         display: none;
     }
 }
-

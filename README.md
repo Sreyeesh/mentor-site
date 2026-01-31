@@ -12,6 +12,7 @@ It also includes a lightweight authoring tool for managing Markdown posts.
 - Static build: `freeze.py` renders the site into `build/` for deployment.
 - Authoring tool: a web UI to create and edit Markdown posts in `content/posts/`.
 - Payments: optional Stripe checkout and webhook support.
+- Backlog doc: `docs/backlog.md`
 
 ## How It Works
 

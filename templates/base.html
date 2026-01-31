@@ -137,7 +137,9 @@
                     <p class="footer-heading">Explore</p>
                     <ul class="footer-list">
                         {% for item in nav_links %}
-                            <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+                            {% if item.label != 'Blog' %}
+                                <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </div>
@@ -145,7 +147,6 @@
                     <p class="footer-heading">Book</p>
                     <ul class="footer-list">
                         <li><a href="{{ config.stripe_payment_link }}" target="_blank" rel="noopener">Book a session</a></li>
-                        <li><a href="{{ site_links.blog }}">Insights & Blog</a></li>
                     </ul>
                 </div>
             </div>
@@ -154,7 +155,6 @@
                 <div class="footer-bottom-links">
                     <a href="{{ site_links.about }}">About</a>
                     <a href="{{ config.stripe_payment_link }}" target="_blank" rel="noopener">Book a session</a>
-                    <a href="{{ site_links.blog }}">Blog</a>
                 </div>
             </div>
         </div>

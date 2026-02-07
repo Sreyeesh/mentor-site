@@ -9,24 +9,23 @@
     <div class="wrap o-container hero-refresh__grid hero-refresh__grid--solo c-hero__grid o-grid o-grid--hero">
         <div class="hero-refresh__copy c-hero__copy">
             <p class="pill">€15 · 60-minute private session</p>
-            <h1>Transform creative feedback into production-ready art direction.</h1>
+            <h1>Game Development Tutoring Unreal and Unity</h1>
             <div style="display:none">
-                One session to steady your art, animation, or game build.
-                <span>Who this mentoring is for</span>
+                1:1 mentoring to help students and solo devs build, debug, and ship real games.
+                <span>Who this tutoring is for</span>
                 <span>You’ll leave with</span>
             </div>
-            <p class="hero-refresh__lede c-hero__lede">Drop the shot, shader, or playtest build that’s stuck. I co-direct the fix, capture the follow-up, and keep your indie team shipping with focused, studio-grade care.</p>
+            <p class="hero-refresh__lede c-hero__lede">1:1 mentoring to help students and solo devs build, debug, and ship real games.</p>
             <div class="hero-cta-row o-cluster">
                 {% if stripe_payment_link %}
-                <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="hero-book-session">Book a €15 session</a>
+                <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="hero-book-session">Book a session</a>
                 {% else %}
                 <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-form">
-                    <button type="submit" class="btn btn-primary" data-cta-id="hero-book-session">Book a €15 session</button>
+                    <button type="submit" class="btn btn-primary" data-cta-id="hero-book-session">Book a session</button>
                 </form>
                 {% endif %}
-                <a class="btn btn-outline" href="#suite" data-cta-id="hero-secondary">See the workflow</a>
             </div>
-            <p class="microcopy">No funnels. No retainers. Just a trusted mentor when you need one.</p>
+            <p class="microcopy">Mentoring focused on gameplay systems, debugging, and production thinking.</p>
         </div>
         <!-- removed hero visual block -->
     </div>

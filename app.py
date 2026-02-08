@@ -692,6 +692,22 @@ def schedule():
     is_paid = (payment_status or '').lower() in {'paid', 'complete'}
     if preview_mode:
         is_paid = True
+    elif is_paid and not db.claim_schedule_access(session_id):
+        return (
+            render_template(
+                'schedule.html',
+                **build_page_context(
+                    page_slug='schedule',
+                    error=(
+                        'This scheduling link has already been used. '
+                        'Please contact support for help.'
+                    ),
+                    show_calendly=False,
+                ),
+            ),
+            410,
+        )
+
     return render_template(
         'schedule.html',
         **build_page_context(

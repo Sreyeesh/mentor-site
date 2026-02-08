@@ -13,8 +13,8 @@ services:
         STRIPE_ENDPOINT_SECRET: ${STRIPE_ENDPOINT_SECRET:-}
     container_name: mentor-site-prod
     ports:
-      # Map host port 3000 to container port 80 (nginx)
-      - "3000:80"
+      # Map configurable host port to container port 80 (nginx)
+      - "${MENTOR_SITE_PORT:-3000}:80"
     environment:
       - NODE_ENV=production
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}

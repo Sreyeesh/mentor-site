@@ -152,6 +152,15 @@ docker compose --profile dev up mentor-site-dev
 
 Runs the Flask dev server inside the container at `http://localhost:5000/`.
 
+To preview the static/Nginx container with test Stripe links from `.env.dev`:
+
+```bash
+docker compose --env-file .env.dev build mentor-site
+docker compose --env-file .env.dev up -d mentor-site
+```
+
+Without `--env-file .env.dev`, Docker Compose uses `.env` by default.
+
 ### Authoring tool
 
 Local Python:

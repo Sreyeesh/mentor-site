@@ -38,9 +38,9 @@
         </div>
         {% else %}
         <div class="schedule-reminder">
-            <h2>Almost there</h2>
-            <p>We’re waiting for Stripe to confirm your payment. Refresh this page in a moment or check your receipt email for the scheduling link.</p>
-            <p>If this persists, forward your receipt to <a href="mailto:{{ config.email }}">{{ config.email }}</a> and we’ll unlock Calendly for you.</p>
+            <h2>Booking access pending</h2>
+            <p>We could not confirm payment access for this page yet. Please check your payment receipt and retry from the redirect link.</p>
+            <p>If this continues, email <a href="mailto:{{ config.email }}">{{ config.email }}</a> and include your Stripe receipt.</p>
         </div>
         {% endif %}
     </div>

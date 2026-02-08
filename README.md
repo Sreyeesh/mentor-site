@@ -14,12 +14,13 @@ It also includes a lightweight authoring tool for managing Markdown posts.
 - Payments: optional Stripe checkout and webhook support.
 - Backlog doc: `docs/backlog.md`
 - Codebase tour: `docs/codebase-tour.md`
+- Workflow guide: `docs/workflow-guide.md`
 
 ## How It Works
 
 1. `app.py` reads environment variables, builds site config, and serves routes.
 2. `freeze.py` uses a Flask test client to render pages into `build/`.
-3. GitHub Actions runs `freeze.py` on `master` and deploys the static build.
+3. GitHub Actions runs CI on pull requests and supports manual Pages deploy from `master`.
 4. Stripe POST routes must run on a live Flask backend; static pages call it via `BACKEND_BASE_URL`.
 
 ## Project Layout
@@ -48,7 +49,8 @@ mentor-site/
 ├── tests/                      # Pytest test suite
 │
 └── .github/workflows/
-    └── deploy-pages.yml        # CI/CD pipeline
+    ├── ci.yml                  # PR validation (lint, tests, static build check)
+    └── deploy-pages.yml        # Manual GitHub Pages deployment
 ```
 
 ## Quick Start (Docker)
@@ -203,16 +205,18 @@ docker compose run --rm tests
 
 ## Deployment
 
-### GitHub Pages via CI
+### GitHub Pages via Actions
 
-`master` is deployed automatically by `.github/workflows/deploy-pages.yml`:
+Current workflow setup:
 
-- Lint + tests
-- `python freeze.py`
-- Upload `build/` as a Pages artifact
-- Deploy to GitHub Pages
+- CI (`.github/workflows/ci.yml`):
+  - Runs on pull requests to `dev` and `master`
+  - Runs lint, tests, and `python freeze.py`
+- Deploy (`.github/workflows/deploy-pages.yml`):
+  - Manual trigger only (`workflow_dispatch`)
+  - Deploys only when run against `master`
 
-You do not need to commit `build/` to `master` for CI deploys.
+You do not need to commit `build/` to `master` for Actions-based deploys.
 
 ### Manual GitHub Pages deploy
 

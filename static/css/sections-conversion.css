@@ -731,6 +731,45 @@ html[data-theme='dark'] .btn-outline {
     margin-bottom: 0.6rem;
 }
 
+.schedule-rules {
+    margin-top: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: clamp(1.5rem, 3vw, 2.2rem);
+    background: var(--bg-secondary);
+}
+
+.schedule-rules__eyebrow {
+    margin: 0 0 0.35rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent-deep);
+}
+
+.schedule-rules h2 {
+    margin-bottom: 0.75rem;
+}
+
+.schedule-rules__title {
+    color: #b42318;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+.schedule-rules__list {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.5rem;
+}
+
+.schedule-rules__note {
+    margin-top: 0.95rem;
+    color: var(--text-secondary);
+}
+
 .status-chip {
     display: inline-flex;
     align-items: center;

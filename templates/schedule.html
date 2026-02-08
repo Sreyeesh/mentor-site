@@ -2,6 +2,7 @@
 
 {% block title %}Your payment is confirmed — schedule your session{% endblock %}
 {% block meta_description %}Payment received. Book your €15 tutoring session directly on this private page without leaving Toucan.ee.{% endblock %}
+{% block head_extra %}<meta name="robots" content="noindex, nofollow">{% endblock %}
 
 {% block content %}
 <section class="section schedule-hero">
@@ -20,12 +21,20 @@
 <section class="section schedule-body">
     <div class="wrap narrow">
         {% if show_calendly and calendly_link %}
+        <div class="schedule-rules">
+            <p class="schedule-rules__eyebrow">NB</p>
+            <h2 class="schedule-rules__title">RULES</h2>
+            <ul class="schedule-rules__list">
+                <li>Book only one session slot per payment.</li>
+                <li>Use the same email used at checkout when booking.</li>
+                <li>Reschedule at least 24 hours in advance.</li>
+                <li>No-shows or misuse can lead to cancellation without refund.</li>
+                <li>Sharing this scheduling access with others is not allowed.</li>
+            </ul>
+            <p class="schedule-rules__note">If any rule is broken, your booking can be removed and future access may be blocked.</p>
+        </div>
         <div class="calendly-embed">
             <iframe src="{{ calendly_link }}" title="Calendly booking" loading="lazy" style="width: 100%; height: 700px; border: 1px solid var(--border-color); border-radius: 18px; background: var(--bg-secondary);"></iframe>
-        </div>
-        <div class="schedule-reminder">
-            <h2>If you don’t book right now</h2>
-            <p>Need help? Email <a href="mailto:{{ config.email }}">{{ config.email }}</a> with your Stripe receipt and we’ll make sure you’re on the calendar.</p>
         </div>
         {% else %}
         <div class="schedule-reminder">

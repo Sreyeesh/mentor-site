@@ -1,39 +1,48 @@
 {% extends 'base.html' %}
 {% set stripe_payment_link = config.stripe_payment_link %}
 
-{% block title %}Art, Animation & Game Dev Tutoring | Toucan.ee{% endblock %}
-{% block meta_description %}Book a focused, 60-minute €15 session to get hands-on tutoring in art, animation, or game dev. Finish something small each call with live feedback, practice tasks, and a next-step plan.{% endblock %}
+{% block title %}Game Development Tutoring for Unreal & Unity | Toucan.ee{% endblock %}
+{% block meta_description %}Book a focused 60-minute, €15 private session to debug faster, improve gameplay systems, and ship cleaner builds in Unreal or Unity with live 1:1 mentoring.{% endblock %}
 
 {% block content %}
-<section class="section hero hero-refresh c-hero" id="top">
-    <div class="wrap o-container hero-refresh__grid hero-refresh__grid--solo c-hero__grid o-grid o-grid--hero">
-        <div class="hero-refresh__copy c-hero__copy">
+<section class="section lp-hero" id="top" data-reveal="up">
+    <div class="wrap o-container lp-hero__grid">
+        <div class="lp-hero__copy">
             <p class="pill">€15 · 60-minute private session</p>
-            <h1>Game Development Tutoring Unreal and Unity</h1>
-            <div style="display:none">
-                1:1 mentoring to help students and solo devs build, debug, and ship real games.
-                <span>Who this tutoring is for</span>
-                <span>You’ll leave with</span>
-            </div>
-            <p class="hero-refresh__lede c-hero__lede">1:1 mentoring to help students and solo devs build, debug, and ship real games.</p>
-            <div class="hero-cta-row o-cluster">
+            <h1>Unreal and Unity tutoring that helps you ship faster</h1>
+            <p class="lp-hero__lede">Bring your current build, blocker, or prototype. We solve it together live, and you leave with a clear next-step plan.</p>
+            <ul class="lp-hero__bullets">
+                <li>Live debugging for gameplay systems and blueprints/scripts</li>
+                <li>Production-minded feedback, not vague theory</li>
+                <li>Action checklist for the next 7 days</li>
+            </ul>
+            <div class="hero-cta-row">
                 {% if stripe_payment_link %}
-                <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="hero-book-session">Book a session</a>
+                <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="hero-book-session">Book my session</a>
                 {% else %}
                 <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-form">
-                    <button type="submit" class="btn btn-primary" data-cta-id="hero-book-session">Book a session</button>
+                    <button type="submit" class="btn btn-primary" data-cta-id="hero-book-session">Book my session</button>
                 </form>
                 {% endif %}
+                <a class="btn btn-outline" href="#how">How it works</a>
             </div>
-            <p class="microcopy">Mentoring focused on gameplay systems, debugging, and production thinking.</p>
+            <p class="microcopy">Limited intro offer while new tutoring slots are being opened.</p>
         </div>
-        <!-- removed hero visual block -->
+        <aside class="lp-hero__panel" data-reveal="up" data-reveal-delay="120">
+            <p class="lp-hero__panel-eyebrow">Inside one session</p>
+            <ol class="lp-hero__steps">
+                <li><strong>10 min:</strong> pinpoint blocker and define one outcome</li>
+                <li><strong>35 min:</strong> hands-on fix inside your project</li>
+                <li><strong>15 min:</strong> roadmap, priorities, and follow-up tasks</li>
+            </ol>
+            <p class="lp-hero__panel-note">Best for students, solo developers, and indie teams who need fast technical clarity.</p>
+        </aside>
     </div>
 </section>
 
-<section class="section trust-pulse c-trust" id="trusted">
+<section class="section trust-pulse lp-trust" id="trusted" data-reveal="up">
     <div class="wrap narrow o-container">
-        <p class="section-eyebrow">Teams who drop me into production</p>
+        <p class="section-eyebrow">Trusted by teams in active production</p>
         <div class="logos-grid logos-grid--text">
             <a href="https://gamecitykajaani.fi/en/" target="_blank" rel="noopener">GameCity Kajaani</a>
             <a href="https://store.steampowered.com/app/2507690/Thalassophobia/" target="_blank" rel="noopener">Thalassophobia</a>
@@ -41,197 +50,88 @@
     </div>
 </section>
 
-<section class="section hero-lab c-hero-lab">
-    <div class="wrap o-container hero-lab__grid c-hero-lab__grid o-grid o-grid--cards">
-        <div class="hero-lab__panel c-hero-lab__panel">
-            <h3>Focused co-direction in one hour</h3>
-            <p>We screen-share rigs, timelines, or blueprints and rebuild the blocker together in real time.</p>
-            <ul>
-                <li>Hands-on draw-overs + paintovers</li>
-                <li>Blueprint + shader debugging</li>
-                <li>Marketing-ready polish passes</li>
-            </ul>
-        </div>
-        <div class="hero-lab__panel c-hero-lab__panel hero-lab__panel--chart c-hero-lab__panel--chart">
-            <p class="hero-lab__stat-label">Latest pass quality</p>
-            <p class="hero-lab__stat c-hero-lab__stat">92<span>%</span></p>
-            <p class="hero-lab__note c-hero-lab__note">Average uplift across student reels + indie teams after one round.</p>
-        </div>
-    </div>
-</section>
-
-<section class="section gradient-banner c-gradient-banner" id="gradient-banner">
-    <div class="wrap o-container gradient-banner__inner c-gradient-banner__inner">
-        <div>
-            <p class="section-eyebrow">Plug-in production partner</p>
-            <h2>Slide one senior mentor into your pipeline.</h2>
-            <p>I embed like an art director + technical artist so your junior team or solo build keeps moving without churn.</p>
-        </div>
-        <div class="gradient-banner__cta c-gradient-banner__cta o-cluster">
-            <a class="btn btn-primary" href="#insights">See collaboration modes</a>
-            {% if stripe_payment_link %}
-            <a class="btn btn-outline" href="{{ stripe_payment_link }}">Book now</a>
-            {% else %}
-            <form action="{{ checkout_endpoints.one_time }}" method="post">
-                <button type="submit" class="btn btn-outline">Book now</button>
-            </form>
-            {% endif %}
-        </div>
-    </div>
-</section>
-
-<section class="section insights-section c-insights" id="insights">
+<section class="section lp-process" id="how" data-reveal="up">
     <div class="wrap o-container">
-        <div class="section-headline c-insights__header">
-            <h2>Leading creative feedback intelligence for production teams</h2>
-            <p>Every session is structured like a studio dailies block with notes you can act on immediately.</p>
+        <div class="section-headline">
+            <p class="section-eyebrow">How It Works</p>
+            <h2>Simple process, measurable progress each call</h2>
+            <p>Each session is built to remove one real production blocker and move your game forward immediately.</p>
         </div>
-        <div class="insight-rows c-insights__rows">
-            <article class="insight-row c-insights__row">
-                <div class="insight-text c-insights__text">
-                    <p class="section-eyebrow">SCULPT</p>
-                    <h3>Consolidate and organize creative feedback in hours, not days.</h3>
-                    <p>Bring your current renders, playblasts, or builds. We triage what matters, tag the blockers, and set the next experiment.</p>
-                    <ul>
-                        <li>Custom prep form + reference board</li>
-                        <li>Live note-taking inside your software</li>
-                        <li>Follow-up checklist scoped to one week</li>
-                    </ul>
-                </div>
-                <div class="insight-visual c-insights__visual">
-                    <div class="insight-gradient c-insights__gradient"></div>
-                    <div class="insight-widget c-insights__widget">
-                        <p>Shot readiness</p>
-                        <strong>94%</strong>
-                        <small>after first pass</small>
-                    </div>
-                </div>
+        <div class="lp-process__grid">
+            <article class="lp-process__card" data-reveal="up" data-reveal-delay="60">
+                <p class="lp-process__index">01</p>
+                <h3>Share your current build</h3>
+                <p>You bring your Unity or Unreal project, recordings, or notes before the call.</p>
             </article>
-            <article class="insight-row c-insights__row insight-row--reverse c-insights__row--reverse">
-                <div class="insight-text c-insights__text">
-                    <p class="section-eyebrow">SIGNAL</p>
-                    <h3>Surface the insights that matter.</h3>
-                    <p>We identify what sells the scene—lighting, timing, feel—and rebuild with practical guidance your team can repeat.</p>
-                    <ul>
-                        <li>Frame-specific timing marks</li>
-                        <li>Shader + lighting breakdowns</li>
-                        <li>Marketing-first framing tips</li>
-                    </ul>
-                </div>
-                <div class="insight-visual c-insights__visual">
-                    <div class="insight-gradient c-insights__gradient"></div>
-                    <div class="insight-widget c-insights__widget">
-                        <p>Launch-ready shots</p>
-                        <strong>7 of 10</strong>
-                        <small>per sprint</small>
-                    </div>
-                </div>
+            <article class="lp-process__card" data-reveal="up" data-reveal-delay="120">
+                <p class="lp-process__index">02</p>
+                <h3>Fix the blocker live</h3>
+                <p>We screen-share and solve performance, gameplay, art-tech, or production workflow issues together.</p>
             </article>
-            <article class="insight-row c-insights__row">
-                <div class="insight-text c-insights__text">
-                    <p class="section-eyebrow">ALIGN</p>
-                    <h3>Confidently drive production strategy with actionable insights.</h3>
-                    <p>Translate messy feedback into a realistic roadmap so leads, students, and juniors stay aligned.</p>
-                    <ul>
-                        <li>Mini roadmaps per discipline</li>
-                        <li>Risk + opportunity matrix</li>
-                        <li>Async gut checks between calls</li>
-                    </ul>
-                </div>
-                <div class="insight-visual c-insights__visual">
-                    <div class="insight-gradient c-insights__gradient"></div>
-                    <div class="insight-widget c-insights__widget">
-                        <p>Scope clarity</p>
-                        <strong>48 hrs</strong>
-                        <small>to reset plans</small>
-                    </div>
-                </div>
+            <article class="lp-process__card" data-reveal="up" data-reveal-delay="180">
+                <p class="lp-process__index">03</p>
+                <h3>Leave with a weekly plan</h3>
+                <p>You get concise next actions so momentum continues after the session ends.</p>
             </article>
         </div>
     </div>
 </section>
 
-<section class="section listen-learn c-listen" id="suite">
+<section class="section lp-focus" id="focus" data-reveal="up">
     <div class="wrap o-container">
-        <div class="section-headline c-listen__header">
-            <h2>Listen, learn, and act on creative feedback.</h2>
-            <p>Four blocks keep every collaboration lightweight and repeatable.</p>
+        <div class="section-headline">
+            <p class="section-eyebrow">What We Can Work On</p>
+            <h2>Focused support across the game-dev pipeline</h2>
         </div>
-        <div class="listen-grid c-listen__grid o-grid o-grid--cards">
-            <article>
-                <h3>Source of truth</h3>
-                <p>Every call is documented with timestamps, renders, and action items.</p>
+        <div class="lp-focus__grid">
+            <article class="lp-focus__card" data-reveal="up" data-reveal-delay="50">
+                <h3>Gameplay Systems</h3>
+                <p>Core loop, state flow, interaction logic, and system clarity.</p>
             </article>
-            <article>
-                <h3>Custom feedback taxonomy</h3>
-                <p>Tag notes by lighting, animation, tech art, or marketing so you can filter instantly.</p>
+            <article class="lp-focus__card" data-reveal="up" data-reveal-delay="100">
+                <h3>Debugging and Optimization</h3>
+                <p>Trace bottlenecks, remove instability, and improve frame behavior.</p>
             </article>
-            <article>
-                <h3>Low-friction async loops</h3>
-                <p>Loom clips and Discord summaries keep teams synced.</p>
+            <article class="lp-focus__card" data-reveal="up" data-reveal-delay="150">
+                <h3>Art-Tech Pipeline</h3>
+                <p>Materials, shaders, lighting setup, and visual implementation flow.</p>
             </article>
-            <article>
-                <h3>Unified tool stack</h3>
-                <p>I work inside Blender, Krita, Unreal, Godot, and studio tracking tools.</p>
+            <article class="lp-focus__card" data-reveal="up" data-reveal-delay="200">
+                <h3>Portfolio and Production Thinking</h3>
+                <p>Turn raw work into clear, shippable, presentation-ready outcomes.</p>
             </article>
         </div>
     </div>
 </section>
 
-
-<section class="section badge-row c-badge" id="badges">
+<section class="section testimonials-showcase lp-testimonials" id="testimonials" data-reveal="up">
     <div class="wrap o-container">
-        <div class="badge-grid c-badge__grid o-grid o-grid--cards">
-            <div class="badge-card c-badge__card">
-                <img src="/static/images/GameCity.png" alt="GameCity Kajaani logo" class="badge-card__logo c-badge__logo">
-                <p>I'm currently mentoring at GameCity Kajaani.</p>
-            </div>
+        <div class="testimonials-showcase__header">
+            <p class="testimonials-showcase__eyebrow">Client Feedback</p>
+            <h2>What teams and students say after working together</h2>
         </div>
-    </div>
-</section>
-
-<section class="section lecture-preview c-lecture" id="lecture-preview">
-    <div class="wrap o-container">
-        <div class="section-header c-lecture__header">
-            <p class="section-eyebrow">Lecture preview</p>
-            <h2>This is the type of lecturing I do for game development.</h2>
-        </div>
-        <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/_QkHwhccB6k" title="Quest Lecture #17 Sreyeesh Garimella &quot;How Game Developers Think&quot;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
-        </div>
-    </div>
-</section>
-
-
-<section class="section testimonials-showcase c-testimonials" id="testimonials">
-    <div class="wrap o-container">
-        <div class="testimonials-showcase__header c-testimonials__header">
-            <p class="testimonials-showcase__eyebrow c-testimonials__eyebrow">Trusted collaborations</p>
-            <h2>Don’t take my word for it, see what teams say.</h2>
-            <p class="testimonials-showcase__lede c-testimonials__lede">Honest feedback from studios and student teams I’ve supported with clear, production-ready guidance.</p>
-        </div>
-        <div class="testimonials-showcase__grid c-testimonials__grid o-grid o-grid--cards">
-            <article class="testimonial-card">
+        <div class="testimonials-showcase__grid o-grid o-grid--cards">
+            <article class="testimonial-card" data-reveal="up" data-reveal-delay="60">
                 <div class="testimonial-rating" aria-label="Five star rating">
                     <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                 </div>
-                <p class="testimonial-quote">“We worked with Sreyeesh where he helped us as a technical artist on <a href="https://store.steampowered.com/app/2507690/Thalassophobia/" target="_blank" rel="noopener">Thalassophobia</a>. He acted like a mentor more than a contractor, giving clear focus for marketing visuals and fixing issues fast.”</p>
+                <p class="testimonial-quote">“He helped us as a technical artist on Thalassophobia and gave clear focus for marketing visuals while fixing issues fast.”</p>
                 <p class="testimonial-author">Thalassophobia Team</p>
                 <p class="testimonial-meta">Production partner</p>
             </article>
-            <article class="testimonial-card">
+            <article class="testimonial-card" data-reveal="up" data-reveal-delay="120">
                 <div class="testimonial-rating" aria-label="Five star rating">
                     <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                 </div>
-                <p class="testimonial-quote">“Sreyeesh is a total standout. It’s pretty rare to find someone with his kind of ‘big studio’ background who can actually sit down and talk to you like a normal person. He has this way of cutting through all the corporate jargon to give you advice that actually works for a small team. He jumped into our project and caught these optimization bottlenecks we'd been struggling with almost instantly—and his fixes were solid. Honestly, what I liked most was that he didn’t just drop a fix and leave; he walked us through the ‘why’ behind it. We ended up walking away as much better developers because of him.”</p>
+                <p class="testimonial-quote">“He caught optimization bottlenecks quickly and explained the why behind every fix. Our team left stronger.”</p>
                 <p class="testimonial-author">Indie Studio Team</p>
                 <p class="testimonial-meta">Optimization mentorship</p>
             </article>
-            <article class="testimonial-card">
+            <article class="testimonial-card" data-reveal="up" data-reveal-delay="180">
                 <div class="testimonial-rating" aria-label="Five star rating">
                     <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                 </div>
-                <p class="testimonial-quote">“In Kajaani GameLAB 2025, Sreyeesh embraced our team with such warmth and care that it humbled us. He went above and beyond the program, genuinely caring about us succeeding.”</p>
+                <p class="testimonial-quote">“He went beyond the program and genuinely cared that our team succeeded.”</p>
                 <p class="testimonial-author">Riikka-Lotta Pehkonen</p>
                 <p class="testimonial-meta">Team Folkforge · Kajaani GameLAB 2025</p>
             </article>
@@ -239,21 +139,69 @@
     </div>
 </section>
 
-<section class="section final-cta c-final" id="contact">
-    <div class="wrap o-container final-cta-card c-final__card">
-        <p class="section-eyebrow">Struggling to scale creative feedback?</p>
-        <h2>Get hands on mentorship.</h2>
-        <p>Book a session or email <a href="mailto:{{ config.email }}">{{ config.email }}</a> to sanity-check scope before you invest.</p>
+<section class="section lp-offer" id="offer" data-reveal="up">
+    <div class="wrap o-container">
+        <div class="lp-offer__card">
+            <div>
+                <p class="section-eyebrow">Intro Offer</p>
+                <h2>One focused hour for €15</h2>
+                <p>Use this session to remove a blocker, upgrade your build quality, and get a practical roadmap.</p>
+                <ul>
+                    <li>Private 1:1 live session</li>
+                    <li>Project-specific feedback and fixes</li>
+                    <li>Post-session action plan</li>
+                </ul>
+            </div>
+            <div class="lp-offer__cta">
+                {% if stripe_payment_link %}
+                <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="offer-book-session">Book a €15 session</a>
+                {% else %}
+                <form action="{{ checkout_endpoints.one_time }}" method="post">
+                    <button type="submit" class="btn btn-primary" data-cta-id="offer-book-session">Book a €15 session</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section lp-faq" id="faq" data-reveal="up">
+    <div class="wrap o-container">
+        <div class="section-headline">
+            <p class="section-eyebrow">FAQ</p>
+            <h2>Before you book</h2>
+        </div>
+        <div class="faq-list">
+            <details>
+                <summary>Is this beginner-friendly?</summary>
+                <p>Yes. Sessions are adapted to your current level, whether you are early in learning or already building production-ready work.</p>
+            </details>
+            <details>
+                <summary>Can we work on my live project?</summary>
+                <p>Yes. Bring your current project files, recordings, or issue list and we will work directly on real blockers.</p>
+            </details>
+            <details>
+                <summary>Which tools are supported?</summary>
+                <p>Mainly Unreal and Unity, plus common art-tech workflows used around them.</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<section class="section final-cta lp-final" id="contact" data-reveal="up">
+    <div class="wrap o-container final-cta-card">
+        <p class="section-eyebrow">Ready to move your project forward?</p>
+        <h2>Book your 1:1 mentoring session.</h2>
+        <p>Or email <a href="mailto:{{ config.email }}">{{ config.email }}</a> if you want help deciding what to focus on first.</p>
         <div class="cta-stack">
             {% if stripe_payment_link %}
-            <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="final-cta-book">Book a €15 session</a>
+            <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="final-cta-book">Book now</a>
             {% else %}
             <form action="{{ checkout_endpoints.one_time }}" method="post">
-                <button type="submit" class="btn btn-primary" data-cta-id="final-cta-book">Book a €15 session</button>
+                <button type="submit" class="btn btn-primary" data-cta-id="final-cta-book">Book now</button>
             </form>
             {% endif %}
         </div>
     </div>
 </section>
-
 {% endblock %}

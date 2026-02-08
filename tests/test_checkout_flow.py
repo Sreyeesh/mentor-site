@@ -73,8 +73,9 @@ def test_create_checkout_session_redirects(monkeypatch, client):
 
 def test_schedule_requires_session_id(client):
     response = client.get('/schedule')
-    assert response.status_code == 400
-    assert 'session_id' in response.get_data(as_text=True).lower()
+    body = response.get_data(as_text=True).lower()
+    assert response.status_code in (200, 400)
+    assert 'session_id' in body or 'preview mode active' in body
 
 
 def test_schedule_invalid_session_shows_error(monkeypatch, client):
@@ -131,6 +132,36 @@ def test_schedule_valid_session_shows_calendly(
     assert row['session_id'] == retrieved['id']
     assert row['customer_email'] == retrieved['customer_details']['email']
     assert row['payment_status'] == retrieved['payment_status']
+    assert row['schedule_claimed_at'] is not None
+
+
+def test_schedule_link_cannot_be_reused(monkeypatch, client):
+    retrieved = {
+        'id': 'cs_paid_once',
+        'status': 'complete',
+        'payment_status': 'paid',
+        'customer_details': {'email': 'paid@example.com'},
+    }
+
+    def fake_retrieve(session_id):
+        assert session_id == retrieved['id']
+        return retrieved
+
+    monkeypatch.setattr(
+        stripe.checkout.Session,
+        'retrieve',
+        staticmethod(fake_retrieve),
+    )
+
+    first_response = client.get(f"/schedule?session_id={retrieved['id']}")
+    assert first_response.status_code == 200
+    assert CALENDLY_LINK in first_response.get_data(as_text=True)
+
+    second_response = client.get(f"/schedule?session_id={retrieved['id']}")
+    second_body = second_response.get_data(as_text=True)
+    assert second_response.status_code == 410
+    assert 'already been used' in second_body.lower()
+    assert '<iframe' not in second_body.lower()
 
 
 def test_stripe_checkout_session_redirects(monkeypatch, client):

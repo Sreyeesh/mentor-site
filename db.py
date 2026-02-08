@@ -35,10 +35,19 @@ def init_db(database_path: Optional[str] = None) -> Path:
             session_id TEXT PRIMARY KEY,
             customer_email TEXT,
             payment_status TEXT,
+            schedule_claimed_at TEXT,
             updated_at TEXT DEFAULT CURRENT_TIMESTAMP
         )
         """
     )
+    columns = {
+        row[1]
+        for row in conn.execute("PRAGMA table_info(checkout_sessions)").fetchall()
+    }
+    if 'schedule_claimed_at' not in columns:
+        conn.execute(
+            "ALTER TABLE checkout_sessions ADD COLUMN schedule_claimed_at TEXT"
+        )
     conn.commit()
     conn.close()
     return path
@@ -94,8 +103,37 @@ def get_checkout_session(
     return dict(row)
 
 
+def claim_schedule_access(
+    session_id: str,
+    *,
+    database_path: Optional[str] = None,
+) -> bool:
+    """Mark a checkout session as claimed exactly once.
+
+    Returns True when claim succeeds for the first time, False if it was already
+    claimed.
+    """
+
+    path = _database_path(database_path)
+    conn = sqlite3.connect(path)
+    cursor = conn.execute(
+        """
+        UPDATE checkout_sessions
+        SET schedule_claimed_at = CURRENT_TIMESTAMP,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE session_id = ?
+          AND (schedule_claimed_at IS NULL OR schedule_claimed_at = '')
+        """,
+        (session_id,),
+    )
+    conn.commit()
+    conn.close()
+    return cursor.rowcount == 1
+
+
 __all__ = [
     'init_db',
     'upsert_checkout_session',
     'get_checkout_session',
+    'claim_schedule_access',
 ]

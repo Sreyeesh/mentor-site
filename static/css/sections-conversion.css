@@ -1,3 +1,271 @@
+/* === Landing page refresh (conversion + reveal animations) === */
+.lp-hero {
+    position: relative;
+    overflow: clip;
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.lp-hero::before {
+    content: '';
+    position: absolute;
+    width: min(45vw, 540px);
+    height: min(45vw, 540px);
+    right: -120px;
+    top: -180px;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent-primary) 32%, transparent) 0%, transparent 68%);
+    pointer-events: none;
+}
+
+.lp-hero::after {
+    content: '';
+    position: absolute;
+    width: min(42vw, 460px);
+    height: min(42vw, 460px);
+    left: -150px;
+    bottom: -260px;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent-deep) 24%, transparent) 0%, transparent 72%);
+    pointer-events: none;
+}
+
+.lp-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(320px, 1.15fr) minmax(280px, 0.85fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: start;
+}
+
+.lp-hero__copy h1 {
+    font-size: clamp(2.2rem, 5.2vw, 3.8rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    max-width: 14ch;
+}
+
+.lp-hero__lede {
+    margin-top: 1rem;
+    color: var(--text-secondary);
+    font-size: clamp(1.02rem, 1.8vw, 1.18rem);
+    max-width: 58ch;
+}
+
+.lp-hero__bullets {
+    margin: 1.35rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.8rem;
+}
+
+.lp-hero__bullets li {
+    position: relative;
+    padding-left: 1.35rem;
+    color: var(--text-primary);
+}
+
+.lp-hero__bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--accent-primary);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-primary) 20%, transparent);
+}
+
+.lp-hero__panel {
+    position: relative;
+    border: 1px solid color-mix(in srgb, var(--border-color) 78%, transparent);
+    background: color-mix(in srgb, var(--card-bg) 90%, var(--bg-secondary));
+    border-radius: 28px;
+    padding: clamp(1.5rem, 3vw, 2.2rem);
+    box-shadow: 0 24px 60px color-mix(in srgb, var(--shadow-color) 80%, transparent);
+}
+
+.lp-hero__panel-eyebrow {
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.lp-hero__steps {
+    margin: 0;
+    padding: 0 0 0 1.1rem;
+    display: grid;
+    gap: 0.85rem;
+}
+
+.lp-hero__steps li {
+    color: var(--text-primary);
+}
+
+.lp-hero__steps strong {
+    color: var(--accent-primary);
+}
+
+.lp-hero__panel-note {
+    margin: 1.1rem 0 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.lp-trust .section-eyebrow {
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    letter-spacing: -0.01em;
+}
+
+.lp-process__grid,
+.lp-focus__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.15rem;
+}
+
+.lp-process__card,
+.lp-focus__card {
+    border-radius: 22px;
+    border: 1px solid color-mix(in srgb, var(--border-color) 72%, transparent);
+    background: color-mix(in srgb, var(--card-bg) 92%, var(--bg-secondary));
+    padding: 1.45rem;
+    box-shadow: 0 18px 44px color-mix(in srgb, var(--shadow-color) 65%, transparent);
+}
+
+.lp-process__index {
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    color: var(--accent-primary);
+    font-weight: 700;
+    margin: 0 0 0.35rem;
+}
+
+.lp-process__card h3,
+.lp-focus__card h3 {
+    margin-bottom: 0.45rem;
+}
+
+.lp-process__card p,
+.lp-focus__card p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.lp-offer__card {
+    border-radius: 30px;
+    border: 1px solid color-mix(in srgb, var(--border-color) 70%, transparent);
+    background: linear-gradient(140deg, color-mix(in srgb, var(--card-bg) 95%, transparent), color-mix(in srgb, var(--bg-secondary) 92%, transparent));
+    box-shadow: 0 28px 64px color-mix(in srgb, var(--shadow-color) 78%, transparent);
+    padding: clamp(1.5rem, 4vw, 2.8rem);
+    display: grid;
+    grid-template-columns: minmax(280px, 1.1fr) minmax(220px, 0.9fr);
+    gap: 1.4rem;
+    align-items: center;
+}
+
+.lp-offer__card h2 {
+    margin: 0.2rem 0 0.5rem;
+}
+
+.lp-offer__card ul {
+    margin: 1rem 0 0;
+    padding-left: 1.2rem;
+    color: var(--text-secondary);
+    display: grid;
+    gap: 0.5rem;
+}
+
+.lp-offer__cta {
+    display: flex;
+    justify-content: center;
+}
+
+.lp-faq .faq-list {
+    max-width: 900px;
+}
+
+.lp-faq .faq-list details p {
+    margin-top: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.lp-final .final-cta-card {
+    max-width: 900px;
+}
+
+[data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0) scale(0.985);
+    filter: blur(2px);
+    transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: transform, opacity, filter;
+}
+
+[data-reveal='up'] {
+    transform: translate3d(0, 30px, 0) scale(0.985);
+}
+
+[data-reveal='left'] {
+    transform: translate3d(30px, 0, 0) scale(0.985);
+}
+
+[data-reveal='right'] {
+    transform: translate3d(-30px, 0, 0) scale(0.985);
+}
+
+[data-reveal].is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+        opacity: 1;
+        filter: none;
+        transform: none;
+        transition: none;
+    }
+}
+
+@media (max-width: 980px) {
+    .lp-hero__grid,
+    .lp-offer__card {
+        grid-template-columns: 1fr;
+    }
+
+    .lp-hero__copy h1 {
+        max-width: 16ch;
+    }
+
+    .lp-offer__cta {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 640px) {
+    .lp-hero {
+        padding-top: 1.5rem;
+    }
+
+    .lp-hero__copy h1 {
+        font-size: clamp(2rem, 10vw, 2.75rem);
+        max-width: 100%;
+    }
+
+    .lp-hero__panel {
+        border-radius: 20px;
+    }
+
+    .lp-process__card,
+    .lp-focus__card {
+        padding: 1.2rem;
+    }
+}
+
 /* === 2025 conversion homepage === */
 .hero-refresh {
     background: transparent;
@@ -25,6 +293,11 @@ html[data-theme='dark'] .hero-refresh {
 .hero-refresh__copy h1 {
     font-size: clamp(2.4rem, 5vw, 3.8rem);
     line-height: 1.1;
+}
+
+.hero-refresh__copy .pill {
+    margin-top: -0.35rem;
+    margin-bottom: 0.85rem;
 }
 
 .hero-refresh__lede {

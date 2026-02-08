@@ -13,6 +13,7 @@ It also includes a lightweight authoring tool for managing Markdown posts.
 - Authoring tool: a web UI to create and edit Markdown posts in `content/posts/`.
 - Payments: optional Stripe checkout and webhook support.
 - Backlog doc: `docs/backlog.md`
+- Codebase tour: `docs/codebase-tour.md`
 
 ## How It Works
 

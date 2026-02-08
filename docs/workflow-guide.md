@@ -80,6 +80,17 @@ Local dev:
 docker compose --profile dev up mentor-site-dev
 ```
 
+Local static preview with Stripe test link from `.env.dev`:
+
+```bash
+docker compose --env-file .env.dev build mentor-site
+docker compose --env-file .env.dev up -d mentor-site
+```
+
+Note:
+- `docker compose up mentor-site` (without `--env-file`) reads `.env` by default.
+- Use `--env-file .env.dev` when you want test payment links in the built static output.
+
 Manual deploy to Pages:
 
 1. Open GitHub Actions.

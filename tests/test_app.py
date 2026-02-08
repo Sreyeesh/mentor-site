@@ -34,7 +34,13 @@ def test_new_pages_load(client):
     pages = [
         ('/mentoring/', b'Private tutoring for creative and technical careers.'),
         ('/schools-and-programs/', b'Depth beats breadth.'),
-        ('/about/', b'I help artists and game developers reach studio-ready quality with focused 1:1 mentoring.'),
+        (
+            '/about/',
+            (
+                b'I help artists and game developers reach studio-ready quality '
+                b'with focused 1:1 mentoring.'
+            ),
+        ),
         ('/contact/', b'Book a 30-minute tutoring call.'),
     ]
     for path, marker in pages:

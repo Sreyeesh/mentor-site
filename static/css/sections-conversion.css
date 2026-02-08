@@ -1,30 +1,15 @@
 /* === Landing page refresh (conversion + reveal animations) === */
 .lp-hero {
     position: relative;
-    overflow: clip;
     padding-top: clamp(2.5rem, 5vw, 4rem);
 }
 
 .lp-hero::before {
-    content: '';
-    position: absolute;
-    width: min(45vw, 540px);
-    height: min(45vw, 540px);
-    right: -120px;
-    top: -180px;
-    background: radial-gradient(circle, color-mix(in srgb, var(--accent-primary) 32%, transparent) 0%, transparent 68%);
-    pointer-events: none;
+    content: none;
 }
 
 .lp-hero::after {
-    content: '';
-    position: absolute;
-    width: min(42vw, 460px);
-    height: min(42vw, 460px);
-    left: -150px;
-    bottom: -260px;
-    background: radial-gradient(circle, color-mix(in srgb, var(--accent-deep) 24%, transparent) 0%, transparent 72%);
-    pointer-events: none;
+    content: none;
 }
 
 .lp-hero__grid {

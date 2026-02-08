@@ -27,6 +27,44 @@ window.googleTranslateElementInit = function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 DOM loaded!');
+
+    const initScrollReveal = () => {
+        const revealElements = Array.from(document.querySelectorAll('[data-reveal]'));
+        if (!revealElements.length) {
+            return;
+        }
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduceMotion || !('IntersectionObserver' in window)) {
+            revealElements.forEach((element) => element.classList.add('is-visible'));
+            return;
+        }
+
+        revealElements.forEach((element) => {
+            const delay = element.dataset.revealDelay;
+            if (delay) {
+                element.style.setProperty('--reveal-delay', `${delay}ms`);
+            }
+        });
+
+        const observer = new IntersectionObserver(
+            (entries, obs) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+                    entry.target.classList.add('is-visible');
+                    obs.unobserve(entry.target);
+                });
+            },
+            {
+                threshold: 0.18,
+                rootMargin: '0px 0px -8% 0px'
+            }
+        );
+
+        revealElements.forEach((element) => observer.observe(element));
+    };
     
     // ===== DARK MODE TOGGLE =====
     const darkModeToggle = document.getElementById('dark-mode-toggle');
@@ -125,6 +163,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    initScrollReveal();
 
     // ===== LANGUAGE SWITCHER =====
     const languageSwitcher = document.querySelector('[data-language-dropdown]');

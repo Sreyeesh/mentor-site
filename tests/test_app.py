@@ -17,16 +17,16 @@ def test_home_page(client):
     body = response.get_data(as_text=True)
     assert response.status_code == 200
     assert '€15' in body
-    assert 'One session to steady your art, animation, or game build.' in body
+    assert 'Unreal and Unity tutoring that helps you ship faster' in body
 
 
 def test_home_page_content(client):
     """Test that the page contains expected content."""
     response = client.get('/')
     body = response.get_data(as_text=True)
-    assert 'Who this mentoring is for' in body
-    assert 'You’ll leave with' in body
-    assert 'Book a €15 session' in body
+    assert 'How It Works' in body
+    assert 'Trusted by teams shipping real projects' in body
+    assert 'Book my session' in body
 
 
 def test_new_pages_load(client):
@@ -34,7 +34,7 @@ def test_new_pages_load(client):
     pages = [
         ('/mentoring/', b'Private tutoring for creative and technical careers.'),
         ('/schools-and-programs/', b'Depth beats breadth.'),
-        ('/about/', b'I tutor artists and developers so they can hit studio standards'),
+        ('/about/', b'I help artists and game developers reach studio-ready quality with focused 1:1 mentoring.'),
         ('/contact/', b'Book a 30-minute tutoring call.'),
     ]
     for path, marker in pages:

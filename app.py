@@ -610,7 +610,7 @@ def create_checkout_session():
 
 
 PREVIEW_MODE_MESSAGE = (
-    'Preview mode active — this is what students see after paying.'
+    'Access confirmed. Book your session below.'
 )
 
 

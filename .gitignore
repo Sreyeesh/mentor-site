@@ -41,4 +41,5 @@ Thumbs.db
 newsletter_subscriptions.json
 leads.json
 static/uploads/
+instance/newsletter.db
 instance/tutoring.sqlite

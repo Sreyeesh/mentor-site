@@ -1,49 +1,43 @@
 {% extends 'base.html' %}
 
-{% block title %}Book a Tutoring Call | {{ config.name }}{% endblock %}
-{% block meta_description %}Get in touch to book a paid 30-minute tutoring call. Share your goals, receive honest guidance, and lock in a dedicated 1:1 plan with {{ config.name }}.{% endblock %}
+{% block title %}Contact | {{ config.name }}{% endblock %}
+{% block meta_description %}Get in touch with {{ config.name }} — full-stack developer and technical artist. Available for collaboration, questions, or just a conversation.{% endblock %}
 
 {% block content %}
 <section class="page-hero">
     <p class="section-eyebrow">Contact</p>
-    <h1>Book a 30-minute mentoring call.</h1>
-    <p class="legacy-marker">Book a 30-minute tutoring call.</p>
-    <p class="lead">Bring your current shot, level blockout, or art pack. I’ll scope the outcome you need for animation, art, or game development and map your 1:1 plan.</p>
+    <h1>Get in touch.</h1>
+    <p class="lead">Have a project in mind, a question, or just want to say hello? I'd love to hear from you.</p>
 </section>
 
 <section class="section contact-section">
     <div class="contact-grid">
         <div class="contact-card">
-            <h2>How to reach out</h2>
+            <h2>How to reach me</h2>
             <ul class="contact-list">
                 <li><strong>Email:</strong> <a href="mailto:{{ config.email }}">{{ config.email }}</a></li>
-                <li><strong>Calendly:</strong> <a href="{{ config.calendly_link }}" target="_blank" rel="noopener">Book a slot</a></li>
-                <li><strong>Location:</strong> Remote from Estonia & Finland time zones</li>
+                <li><strong>Location:</strong> Remote — Estonia &amp; Finland time zones</li>
             </ul>
-            <p>Expect a reply within 24 hours with a quick questionnaire so I can focus the conversation on your scene, build, or pipeline.</p>
+            <p>I typically respond within 24 hours.</p>
         </div>
         <div class="contact-card">
-            <h2>Booking widget</h2>
-            <div class="booking-placeholder">
-            <p>Tap the badge to open Calendly and lock a slot that fits your production schedule.</p>
-                <button class="calendly-badge-button js-calendly-trigger" type="button"
-                    data-calendly-url="{{ config.calendly_link }}">
-                    Schedule time with me
-                </button>
-                <p class="calendly-fallback">
-                    Prefer a new tab? <a href="{{ config.calendly_link }}" target="_blank" rel="noopener">Open Calendly directly</a>.
-                </p>
-            </div>
+            <h2>What I'm open to</h2>
+            <ul class="contact-list">
+                <li>Full-stack development collaborations</li>
+                <li>Developer tooling and pipeline projects</li>
+                <li>Technical art and game development work</li>
+                <li>Questions about my writing</li>
+            </ul>
         </div>
     </div>
 </section>
 
 <section class="section final-cta">
     <div class="final-cta-card">
-        <p class="section-eyebrow">Only 1:1 tutoring</p>
-        <h2>I’m currently focused on individual animation, art, and game development clients.</h2>
-        <p>Need clarity before booking? Send a quick note with the project you’re building and I’ll reply within 24 hours.</p>
-        <a href="mailto:{{ config.email }}" class="cta-button secondary">Email {{ config.email }}</a>
+        <p class="section-eyebrow">Let's talk</p>
+        <h2>Drop me a line.</h2>
+        <p>The best way to reach me is email.</p>
+        <a href="mailto:{{ config.email }}" class="btn btn-primary">Email {{ config.email }}</a>
     </div>
 </section>
 {% endblock %}

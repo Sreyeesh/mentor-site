@@ -36,18 +36,9 @@ def build_static_site() -> None:
         with app.test_client() as client:
             static_routes = [
                 ('/', BUILD_DIR / 'index.html'),
-                ('/mentoring/', BUILD_DIR / 'mentoring' / 'index.html'),
-                (
-                    '/schools-and-programs/',
-                    BUILD_DIR / 'schools-and-programs' / 'index.html',
-                ),
                 ('/about/', BUILD_DIR / 'about' / 'index.html'),
                 ('/contact/', BUILD_DIR / 'contact' / 'index.html'),
                 ('/blog/', BUILD_DIR / 'blog' / 'index.html'),
-                (
-                    '/schedule/?preview=1',
-                    BUILD_DIR / 'schedule' / 'index.html',
-                ),
             ]
             for route, destination in static_routes:
                 response = client.get(route)

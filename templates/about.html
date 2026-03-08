@@ -1,22 +1,20 @@
 {% extends 'base.html' %}
 
-{% block title %}About {{ config.name }} | 1:1 Tutor{% endblock %}
-{% block meta_description %}Meet {{ config.name }} and learn how years across animation, VFX, and game production now translate into focused 1:1 tutoring for artists and developers.{% endblock %}
-
-{% set stripe_payment_link = config.stripe_payment_link %}
+{% block title %}About {{ config.name }} | Full-Stack Developer{% endblock %}
+{% block meta_description %}Meet {{ config.name }} — full-stack developer and technical artist with production experience across Disney, Blizzard, DNEG, and indie game studios.{% endblock %}
 
 {% block content %}
 <section class="section about-hero" data-reveal="up">
     <div class="wrap o-container about-hero__grid">
         <div class="about-hero__copy">
             <p class="section-eyebrow">About</p>
-            <h1>I help artists and game developers reach studio-ready quality with focused 1:1 mentoring.</h1>
-            <p class="lead">After leading work across Disney, Blizzard Entertainment, DNEG, and indie teams, I now focus fully on tutoring. You get practical production guidance without the overhead of a consulting engagement.</p>
+            <h1>I'm a full-stack developer and technical artist.</h1>
+            <p class="lead">With a background spanning animation, VFX, and game development at studios like Disney, Blizzard Entertainment, and DNEG, I now build software and write about the craft of making things work.</p>
             <div class="about-hero__chips">
-                <span>Animation</span>
-                <span>Game Development</span>
+                <span>Full-Stack Development</span>
                 <span>Technical Art</span>
-                <span>Production Workflows</span>
+                <span>Game Development</span>
+                <span>Pipeline &amp; Tooling</span>
             </div>
         </div>
         <div class="about-hero__media" data-reveal="up" data-reveal-delay="120">
@@ -29,23 +27,23 @@
     <div class="wrap o-container">
         <div class="section-headline">
             <p class="section-eyebrow">Journey</p>
-            <h2>From production floors to dedicated mentoring</h2>
+            <h2>From production floors to software development</h2>
         </div>
         <div class="about-story__grid">
             <article class="about-story__card" data-reveal="up" data-reveal-delay="60">
                 <p class="about-story__year">2012</p>
                 <h3>Started in production</h3>
-                <p>I finished my art and animation degree and moved directly into real-world production across animation, VFX, and games.</p>
+                <p>Finished an art and animation degree and moved directly into real-world production across animation, VFX, and game development.</p>
             </article>
             <article class="about-story__card" data-reveal="up" data-reveal-delay="120">
                 <p class="about-story__year">Studio Years</p>
                 <h3>Built cross-disciplinary depth</h3>
-                <p>I worked across shots, rigs, tooling, and pipelines, learning how creative quality and technical systems must align.</p>
+                <p>Worked across shots, rigs, tools, and pipelines at Disney, Blizzard, DNEG, and indie teams — learning how creative quality and technical systems must align.</p>
             </article>
             <article class="about-story__card" data-reveal="up" data-reveal-delay="180">
                 <p class="about-story__year">Today</p>
-                <h3>Focused on 1:1 tutoring</h3>
-                <p>I now work directly with students and professionals to turn uncertainty into clear execution plans and stronger output.</p>
+                <h3>Building software and writing</h3>
+                <p>Focused on full-stack development and developer tooling, writing about what I learn along the way.</p>
             </article>
         </div>
     </div>
@@ -55,37 +53,14 @@
     <div class="wrap o-container about-approach__grid">
         <div>
             <p class="section-eyebrow">Approach</p>
-            <h2>How I mentor</h2>
-            <p>Every tutoring plan is tailored, but the structure stays consistent: define outcome, identify blockers, execute with clarity, and leave with next actions.</p>
+            <h2>How I work</h2>
+            <p>I care about clear code, practical architecture, and shipping things that actually work. My production background means I think about systems end-to-end — from the user-facing layer down to the pipeline.</p>
         </div>
         <ul class="about-list">
-            <li><strong>Industry context:</strong> Feedback grounded in real production constraints and review standards.</li>
-            <li><strong>Cross-disciplinary translation:</strong> Bridge creative intent with technical implementation.</li>
-            <li><strong>Action-first feedback:</strong> Notes that map directly to your next pass, not abstract theory.</li>
+            <li><strong>Production mindset:</strong> Shaped by real-world delivery constraints across film and game studios.</li>
+            <li><strong>Cross-disciplinary thinking:</strong> Bridge creative intent with technical implementation.</li>
+            <li><strong>Clarity over cleverness:</strong> Code and tools that are easy to reason about and maintain.</li>
         </ul>
-    </div>
-</section>
-
-<section class="section about-offer" data-reveal="up">
-    <div class="wrap o-container">
-        <div class="section-headline">
-            <p class="section-eyebrow">What You Get</p>
-            <h2>Support built for real project momentum</h2>
-        </div>
-        <div class="about-offer__grid">
-            <article class="about-offer__card" data-reveal="up" data-reveal-delay="70">
-                <h3>Project-specific sessions</h3>
-                <p>Bring your current build, reel, or assignment and we work directly on what matters now.</p>
-            </article>
-            <article class="about-offer__card" data-reveal="up" data-reveal-delay="140">
-                <h3>Studio-style critique loops</h3>
-                <p>Receive concise, actionable notes that simulate production reviews and keep quality rising each pass.</p>
-            </article>
-            <article class="about-offer__card" data-reveal="up" data-reveal-delay="210">
-                <h3>Clear weekly direction</h3>
-                <p>Each session ends with priorities and concrete next steps so progress continues between calls.</p>
-            </article>
-        </div>
     </div>
 </section>
 
@@ -93,15 +68,15 @@
     <div class="wrap o-container about-company__grid">
         <div>
             <p class="section-eyebrow">Toucan Studios OÜ</p>
-            <h2>Open for 1:1 tutoring engagements</h2>
-            <p>Through Toucan Studios OÜ, I provide mentoring for animation, game development, and creative tech learners. Partnerships like GameCity Kajaani keep me close to active classrooms and emerging teams.</p>
+            <h2>Based in Estonia</h2>
+            <p>I operate through Toucan Studios OÜ and have worked with partners including GameCity Kajaani. Remote-first, collaborating with teams across Europe and beyond.</p>
         </div>
         <div class="about-company__panel">
             <h3>Current focus</h3>
             <ul class="about-list">
-                <li>Mentoring game developers from prototype to polished delivery.</li>
-                <li>Guiding artists and animators through portfolio and pipeline improvements.</li>
-                <li>Coaching production habits that reduce churn and improve team clarity.</li>
+                <li>Full-stack web development and APIs.</li>
+                <li>Developer tooling and pipeline automation.</li>
+                <li>Technical art and game development tools.</li>
             </ul>
         </div>
     </div>
@@ -109,16 +84,9 @@
 
 <section class="section final-cta" id="contact" data-reveal="up">
     <div class="wrap o-container final-cta-card">
-        <p class="section-eyebrow">Let’s Work Together</p>
-        <h2>Ready to build a tutoring plan around your goals?</h2>
-        <p>Book a session, or email <a href="mailto:{{ config.email }}">{{ config.email }}</a> if you want help choosing what to focus on first.</p>
-        {% if stripe_payment_link %}
-        <a href="{{ stripe_payment_link }}" class="btn btn-primary">Start tutoring</a>
-        {% else %}
-        <form action="{{ checkout_endpoints.one_time }}" method="post">
-            <button type="submit" class="btn btn-primary">Start tutoring</button>
-        </form>
-        {% endif %}
+        <p class="section-eyebrow">Get in touch</p>
+        <h2>Want to work together or just say hello?</h2>
+        <p>Email <a href="mailto:{{ config.email }}">{{ config.email }}</a> or visit the <a href="{{ site_links.contact }}">contact page</a>.</p>
     </div>
 </section>
 {% endblock %}

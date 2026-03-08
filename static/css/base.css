@@ -29,101 +29,80 @@ html {
 
 /* CSS Variables for theming */
 :root {
-    --bg-primary: #f4f6fb;
-    --bg-secondary: #ffffff;
-    --text-primary: #0a1528;
-    --text-secondary: #2f3a51;
-    --text-muted: #596077;
-    --accent-primary: #0f62fe;
-    --accent-secondary: #7aa5ff;
-    --accent-deep: #1f7a8c;
-    --border-color: #e0e4f0;
-    --shadow-color: rgba(13, 19, 42, 0.1);
+    --bg-primary: #ffffff;
+    --bg-secondary: #f6f8fa;
+    --text-primary: #1f2328;
+    --text-secondary: #636c76;
+    --text-muted: #9198a1;
+    --accent-primary: #0969da;
+    --accent-secondary: #218bff;
+    --border-color: #d0d7de;
+    --shadow-color: rgba(31, 35, 40, 0.04);
     --card-bg: #ffffff;
-    --nav-bg: rgba(255, 255, 255, 0.9);
-    --hero-bg: linear-gradient(135deg, #eef2ff, #f8fbff);
-    --panel-bg: rgba(15, 23, 42, 0.04);
-    --pill-bg: rgba(15, 23, 42, 0.08);
-    --divider-color: rgba(15, 23, 42, 0.08);
-    --scroll-offset: clamp(90px, 12vh, 150px); /* For smooth scrolling offset and sticky nav spacing */
-    --link-color-light: #0f62fe;
-    --link-hover-color-light: #2541ff;
-    --link-focus-ring: rgba(15, 98, 254, 0.35);
-    --link-color: var(--link-color-light);
-    --link-hover-color: var(--link-hover-color-light);
-    --footer-bg: #0c1424;
-    --footer-text: #f7f9ff;
-    --footer-muted: rgba(247, 249, 255, 0.78);
-    --footer-heading: rgba(247, 249, 255, 0.92);
-    --footer-link: #f7f9ff;
-    --footer-link-hover: #2541ff;
-    --footer-focus: rgba(37, 65, 255, 0.45);
-    --bg-dark: #050b16;
-    --bg-secondary-dark: #0e1628;
-    --text-primary-dark: #f4f7ff;
-    --text-secondary-dark: #d4def8;
-    --border-dark: rgba(255, 255, 255, 0.24);
-    --link-dark: #9ec5ff;
-    --link-hover-dark: #ffe071;
+    --nav-bg: #ffffff;
+    --panel-bg: #f6f8fa;
+    --pill-bg: rgba(31, 35, 40, 0.08);
+    --divider-color: #d0d7de;
+    --scroll-offset: 60px;
+    --link-color: #0969da;
+    --link-hover-color: #0550ae;
+    --link-focus-ring: rgba(9, 105, 218, 0.35);
+    --footer-bg: #f6f8fa;
+    --footer-text: #1f2328;
+    --footer-muted: #636c76;
+    --footer-heading: #1f2328;
+    --footer-link: #1f2328;
+    --footer-link-hover: #0969da;
 }
 
 html[data-theme="dark"] {
-    --bg-primary: var(--bg-dark);
-    --bg-secondary: var(--bg-secondary-dark);
-    --text-primary: var(--text-primary-dark);
-    --text-secondary: var(--text-secondary-dark);
-    --text-muted: rgba(244, 248, 255, 0.78);
-    --accent-primary: #7ecaff;
-    --accent-secondary: #4cb5ff;
-    --accent-deep: #4cc9f0;
-    --border-color: var(--border-dark);
-    --shadow-color: rgba(0, 0, 0, 0.6);
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --nav-bg: rgba(5, 11, 22, 0.92);
-    --hero-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --text-primary: #e6edf3;
+    --text-secondary: #8d96a0;
+    --text-muted: #6e7681;
+    --accent-primary: #2f81f7;
+    --accent-secondary: #58a6ff;
+    --border-color: #30363d;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --card-bg: #161b22;
+    --nav-bg: #0d1117;
     --panel-bg: rgba(255, 255, 255, 0.04);
-    --pill-bg: rgba(255, 255, 255, 0.12);
-    --divider-color: rgba(255, 255, 255, 0.15);
-    --link-color: var(--link-dark);
-    --link-hover-color: var(--accent-secondary);
-    --link-focus-ring: rgba(126, 202, 255, 0.45);
-    --footer-bg: #030711;
-    --footer-text: rgba(242, 245, 255, 0.92);
-    --footer-muted: rgba(225, 231, 255, 0.75);
-    --footer-heading: rgba(255, 255, 255, 0.9);
-    --footer-link: #ffffff;
-    --footer-link-hover: var(--accent-primary);
-    --footer-focus: rgba(126, 202, 255, 0.55);
+    --pill-bg: rgba(255, 255, 255, 0.1);
+    --divider-color: #30363d;
+    --link-color: #58a6ff;
+    --link-hover-color: #79c0ff;
+    --link-focus-ring: rgba(47, 129, 247, 0.45);
+    --footer-bg: #161b22;
+    --footer-text: #e6edf3;
+    --footer-muted: #8d96a0;
+    --footer-heading: #e6edf3;
+    --footer-link: #e6edf3;
+    --footer-link-hover: #58a6ff;
 }
 
 html[data-theme="light"] {
-    --bg-primary: #f5f6fb;
-    --bg-secondary: #ffffff;
-    --text-primary: #0b1624;
-    --text-secondary: #2b354d;
-    --text-muted: #47536a;
-    --accent-primary: #0f62fe;
-    --accent-secondary: #7aa5ff;
-    --border-color: #e0e4f0;
-    --shadow-color: rgba(13, 19, 42, 0.1);
-    --card-bg: #ffffff;
-    --nav-bg: rgba(255, 255, 255, 0.9);
-    --hero-bg: linear-gradient(135deg, #eef2ff, #f8fbff);
-    --panel-bg: rgba(15, 23, 42, 0.04);
-    --pill-bg: rgba(15, 23, 42, 0.08);
-    --divider-color: rgba(15, 23, 42, 0.08);
+    --bg-primary: #ffffff;
+    --bg-secondary: #f6f8fa;
+    --text-primary: #1f2328;
+    --text-secondary: #636c76;
+    --accent-primary: #0969da;
+    --border-color: #d0d7de;
+    --shadow-color: rgba(31, 35, 40, 0.04);
+    --nav-bg: #ffffff;
+    --footer-bg: #f6f8fa;
+    --footer-text: #1f2328;
 }
 
 /* Base styles using CSS variables */
 /* Page background + typography */
 body {
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.7;
     color: var(--text-primary);
     background-color: var(--bg-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    padding-top: var(--scroll-offset, 100px); /* Keep content clear of the fixed navbar */
+    overflow-x: hidden;
 }
 
 ::selection {
@@ -250,16 +229,13 @@ section.fade-in.visible {
 
 /* Navigation */
 .navbar {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     background: var(--nav-bg);
-    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
     z-index: 1000;
-    padding: 15px 0;
-    box-shadow: 0 2px 20px var(--shadow-color);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    padding: 10px 0;
+    transition: background-color 0.3s ease;
 }
 
 .nav-content {
@@ -277,48 +253,38 @@ section.fade-in.visible {
 }
 
 .nav-name-link {
-    color: var(--accent-primary);
+    color: var(--text-primary);
     text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: 700;
-    transition: color 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 600;
     line-height: 1.1;
 }
 
 .nav-name-link:hover {
-    color: var(--accent-secondary);
+    color: var(--accent-primary);
 }
 
 .nav-tagline {
-    font-size: 0.75rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
+    display: none;
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 24px;
 }
 
 .nav-links a {
-    color: var(--text-primary);
+    color: var(--text-secondary);
     text-decoration: none;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    transition: color 0.3s ease;
-    position: relative;
-    padding-bottom: 4px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color 0.2s ease;
     white-space: nowrap;
 }
 
 .nav-links .nav-link--cta {
-    border: 1px solid rgba(15, 27, 42, 0.35);
-    border-radius: 999px;
-    padding: 10px 24px;
-    font-weight: 600;
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    color: var(--text-secondary);
 }
 
 .nav-links .nav-link--cta:hover {
@@ -328,35 +294,13 @@ section.fade-in.visible {
     box-shadow: 0 12px 25px rgba(15, 98, 254, 0.35);
 }
 
-[data-theme="dark"] .nav-links .nav-link--cta {
-    border-color: rgba(255,255,255,0.6);
-    color: #fff;
-}
-
-[data-theme="dark"] .nav-links .nav-link--cta:hover {
-    background: #fff;
-    color: #0b0f1d;
-}
-
 .nav-links a:hover {
-    color: var(--accent-primary);
+    color: var(--text-primary);
 }
 
 .nav-links a.active {
-    color: var(--accent-primary);
-    font-weight: 600;
-    position: relative;
-}
-
-.nav-links a.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--accent-primary);
-    border-radius: 1px;
+    color: var(--text-primary);
+    font-weight: 500;
 }
 
 .nav-controls {

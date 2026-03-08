@@ -1,209 +1,74 @@
 {% extends 'base.html' %}
-{% set stripe_payment_link = config.stripe_payment_link %}
 
-{% block title %}Game Development Tutoring for Unreal & Unity | Toucan.ee{% endblock %}
-{% block meta_description %}Book a focused 60-minute, €15 private session to debug faster, improve gameplay systems, and ship cleaner builds in Unreal or Unity with live 1:1 mentoring.{% endblock %}
+{% block title %}{{ config.name }} — Full-Stack Developer{% endblock %}
+{% block meta_description %}{{ config.meta_description }}{% endblock %}
 
 {% block content %}
 <section class="section lp-hero" id="top" data-reveal="up">
     <div class="wrap o-container lp-hero__grid">
         <div class="lp-hero__copy">
-            <p class="pill">€15 · 60-minute private session</p>
-            <h1>Unreal and Unity tutoring that helps you ship faster</h1>
-            <p class="lp-hero__lede">Bring your current build, blocker, or prototype. We solve it together live, and you leave with a clear next-step plan.</p>
-            <ul class="lp-hero__bullets">
-                <li>Live debugging for gameplay systems and blueprints/scripts</li>
-                <li>Production-minded feedback, not vague theory</li>
-                <li>Action checklist for the next 7 days</li>
-            </ul>
+            <p class="pill">Full-Stack Developer</p>
+            <h1>Hi, I'm {{ config.name }}.</h1>
+            <p class="lp-hero__lede">I build software and write about it. From web applications to game tools, I care about craft, clarity, and shipping things that work.</p>
             <div class="hero-cta-row">
-                {% if stripe_payment_link %}
-                <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="hero-book-session">Book my session</a>
-                {% else %}
-                <form action="{{ checkout_endpoints.one_time }}" method="post" class="cta-form">
-                    <button type="submit" class="btn btn-primary" data-cta-id="hero-book-session">Book my session</button>
-                </form>
-                {% endif %}
-                <a class="btn btn-outline" href="#how">How it works</a>
+                <a class="btn btn-primary" href="{{ site_links.blog }}">Read the blog</a>
+                <a class="btn btn-outline" href="{{ site_links.about }}">About me</a>
             </div>
-            <p class="microcopy">Limited intro offer while new tutoring slots are being opened.</p>
         </div>
         <aside class="lp-hero__panel" data-reveal="up" data-reveal-delay="120">
-            <p class="lp-hero__panel-eyebrow">Inside one session</p>
+            <p class="lp-hero__panel-eyebrow">What I work with</p>
             <ol class="lp-hero__steps">
-                <li><strong>10 min:</strong> pinpoint blocker and define one outcome</li>
-                <li><strong>35 min:</strong> hands-on fix inside your project</li>
-                <li><strong>15 min:</strong> roadmap, priorities, and follow-up tasks</li>
+                <li>Full-stack web development</li>
+                <li>Game tooling &amp; technical art</li>
+                <li>Pipeline automation &amp; developer tools</li>
             </ol>
-            <p class="lp-hero__panel-note">Best for students, solo developers, and indie teams who need fast technical clarity.</p>
         </aside>
     </div>
 </section>
 
-<section class="section trust-pulse lp-trust" id="trusted" data-reveal="up">
+<section class="section trust-pulse lp-trust" id="background" data-reveal="up">
     <div class="wrap narrow o-container">
-        <p class="lp-trust__kicker">Proof of Work</p>
-        <h2 class="lp-trust__title">Trusted by teams shipping real projects</h2>
-        <p class="lp-trust__lede">Recent collaborators who brought me in for production mentoring and technical support.</p>
+        <p class="lp-trust__kicker">Background</p>
+        <h2 class="lp-trust__title">Previously worked with</h2>
+        <p class="lp-trust__lede">Production experience across animation, VFX, and game development studios.</p>
         <div class="logos-grid logos-grid--text">
-            <a href="https://gamecitykajaani.fi/en/" target="_blank" rel="noopener">GameCity Kajaani</a>
-            <a href="https://store.steampowered.com/app/2507690/Thalassophobia/" target="_blank" rel="noopener">Thalassophobia</a>
+            <span>Disney</span>
+            <span>Blizzard Entertainment</span>
+            <span>DNEG</span>
+            <span>GameCity Kajaani</span>
         </div>
     </div>
 </section>
 
-<section class="section lp-process" id="how" data-reveal="up">
+{% if posts %}
+<section class="section lp-process" id="writing" data-reveal="up">
     <div class="wrap o-container">
         <div class="section-headline">
-            <p class="section-eyebrow">How It Works</p>
-            <h2>Simple process, measurable progress each call</h2>
-            <p>Each session is built to remove one real production blocker and move your game forward immediately.</p>
+            <p class="section-eyebrow">Latest Writing</p>
+            <h2>From the blog</h2>
+            <p>Notes on software, tools, and building things.</p>
         </div>
         <div class="lp-process__grid">
-            <article class="lp-process__card" data-reveal="up" data-reveal-delay="60">
-                <p class="lp-process__index">01</p>
-                <h3>Share your current build</h3>
-                <p>You bring your Unity or Unreal project, recordings, or notes before the call.</p>
+            {% for post in posts[:3] %}
+            <article class="lp-process__card" data-reveal="up" data-reveal-delay="{{ loop.index * 60 }}">
+                <p class="blog-meta">{{ post.date_display }} · {{ post.reading_time }} min read</p>
+                <h3><a href="{{ site_links.blog }}{{ post.slug }}/">{{ post.title }}</a></h3>
+                <p>{{ post.excerpt }}</p>
             </article>
-            <article class="lp-process__card" data-reveal="up" data-reveal-delay="120">
-                <p class="lp-process__index">02</p>
-                <h3>Fix the blocker live</h3>
-                <p>We screen-share and solve performance, gameplay, art-tech, or production workflow issues together.</p>
-            </article>
-            <article class="lp-process__card" data-reveal="up" data-reveal-delay="180">
-                <p class="lp-process__index">03</p>
-                <h3>Leave with a weekly plan</h3>
-                <p>You get concise next actions so momentum continues after the session ends.</p>
-            </article>
+            {% endfor %}
+        </div>
+        <div style="text-align:center;margin-top:2rem">
+            <a class="btn btn-outline" href="{{ site_links.blog }}">All posts →</a>
         </div>
     </div>
 </section>
-
-<section class="section lp-focus" id="focus" data-reveal="up">
-    <div class="wrap o-container">
-        <div class="section-headline">
-            <p class="section-eyebrow">What We Can Work On</p>
-            <h2>Focused support across the game-dev pipeline</h2>
-        </div>
-        <div class="lp-focus__grid">
-            <article class="lp-focus__card" data-reveal="up" data-reveal-delay="50">
-                <h3>Gameplay Systems</h3>
-                <p>Core loop, state flow, interaction logic, and system clarity.</p>
-            </article>
-            <article class="lp-focus__card" data-reveal="up" data-reveal-delay="100">
-                <h3>Debugging and Optimization</h3>
-                <p>Trace bottlenecks, remove instability, and improve frame behavior.</p>
-            </article>
-            <article class="lp-focus__card" data-reveal="up" data-reveal-delay="150">
-                <h3>Art-Tech Pipeline</h3>
-                <p>Materials, shaders, lighting setup, and visual implementation flow.</p>
-            </article>
-            <article class="lp-focus__card" data-reveal="up" data-reveal-delay="200">
-                <h3>Portfolio and Production Thinking</h3>
-                <p>Turn raw work into clear, shippable, presentation-ready outcomes.</p>
-            </article>
-        </div>
-    </div>
-</section>
-
-<section class="section testimonials-showcase lp-testimonials" id="testimonials" data-reveal="up">
-    <div class="wrap o-container">
-        <div class="testimonials-showcase__header">
-            <p class="testimonials-showcase__eyebrow">Client Feedback</p>
-            <h2>What teams and students say after working together</h2>
-        </div>
-        <div class="testimonials-showcase__grid o-grid o-grid--cards">
-            <article class="testimonial-card" data-reveal="up" data-reveal-delay="60">
-                <div class="testimonial-rating" aria-label="Five star rating">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <p class="testimonial-quote">“He helped us as a technical artist on Thalassophobia and gave clear focus for marketing visuals while fixing issues fast.”</p>
-                <p class="testimonial-author">Thalassophobia Team</p>
-                <p class="testimonial-meta">Production partner</p>
-            </article>
-            <article class="testimonial-card" data-reveal="up" data-reveal-delay="120">
-                <div class="testimonial-rating" aria-label="Five star rating">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <p class="testimonial-quote">“He caught optimization bottlenecks quickly and explained the why behind every fix. Our team left stronger.”</p>
-                <p class="testimonial-author">Indie Studio Team</p>
-                <p class="testimonial-meta">Optimization mentorship</p>
-            </article>
-            <article class="testimonial-card" data-reveal="up" data-reveal-delay="180">
-                <div class="testimonial-rating" aria-label="Five star rating">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <p class="testimonial-quote">“He went beyond the program and genuinely cared that our team succeeded.”</p>
-                <p class="testimonial-author">Riikka-Lotta Pehkonen</p>
-                <p class="testimonial-meta">Team Folkforge · Kajaani GameLAB 2025</p>
-            </article>
-        </div>
-    </div>
-</section>
-
-<section class="section lp-offer" id="offer" data-reveal="up">
-    <div class="wrap o-container">
-        <div class="lp-offer__card">
-            <div>
-                <p class="section-eyebrow">Intro Offer</p>
-                <h2>One focused hour for €15</h2>
-                <p>Use this session to remove a blocker, upgrade your build quality, and get a practical roadmap.</p>
-                <ul>
-                    <li>Private 1:1 live session</li>
-                    <li>Project-specific feedback and fixes</li>
-                    <li>Post-session action plan</li>
-                </ul>
-            </div>
-            <div class="lp-offer__cta">
-                {% if stripe_payment_link %}
-                <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="offer-book-session">Book a €15 session</a>
-                {% else %}
-                <form action="{{ checkout_endpoints.one_time }}" method="post">
-                    <button type="submit" class="btn btn-primary" data-cta-id="offer-book-session">Book a €15 session</button>
-                </form>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="section lp-faq" id="faq" data-reveal="up">
-    <div class="wrap o-container">
-        <div class="section-headline">
-            <p class="section-eyebrow">FAQ</p>
-            <h2>Before you book</h2>
-        </div>
-        <div class="faq-list">
-            <details>
-                <summary>Is this beginner-friendly?</summary>
-                <p>Yes. Sessions are adapted to your current level, whether you are early in learning or already building production-ready work.</p>
-            </details>
-            <details>
-                <summary>Can we work on my live project?</summary>
-                <p>Yes. Bring your current project files, recordings, or issue list and we will work directly on real blockers.</p>
-            </details>
-            <details>
-                <summary>Which tools are supported?</summary>
-                <p>Mainly Unreal and Unity, plus common art-tech workflows used around them.</p>
-            </details>
-        </div>
-    </div>
-</section>
+{% endif %}
 
 <section class="section final-cta lp-final" id="contact" data-reveal="up">
     <div class="wrap o-container final-cta-card">
-        <p class="section-eyebrow">Ready to move your project forward?</p>
-        <h2>Book your 1:1 mentoring session.</h2>
-        <p>Or email <a href="mailto:{{ config.email }}">{{ config.email }}</a> if you want help deciding what to focus on first.</p>
-        <div class="cta-stack">
-            {% if stripe_payment_link %}
-            <a class="btn btn-primary" href="{{ stripe_payment_link }}" data-cta-id="final-cta-book">Book now</a>
-            {% else %}
-            <form action="{{ checkout_endpoints.one_time }}" method="post">
-                <button type="submit" class="btn btn-primary" data-cta-id="final-cta-book">Book now</button>
-            </form>
-            {% endif %}
-        </div>
+        <p class="section-eyebrow">Get in touch</p>
+        <h2>Let's talk.</h2>
+        <p>Reach me at <a href="mailto:{{ config.email }}">{{ config.email }}</a> or find me on <a href="{{ site_links.contact }}">the contact page</a>.</p>
     </div>
 </section>
 {% endblock %}

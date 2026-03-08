@@ -1,14 +1,4 @@
-import pytest
-
-from app import app
 from blog import load_posts
-
-
-@pytest.fixture
-def client():
-    app.config['TESTING'] = True
-    with app.test_client() as client:
-        yield client
 
 
 def test_home_page(client):
@@ -16,32 +6,22 @@ def test_home_page(client):
     response = client.get('/')
     body = response.get_data(as_text=True)
     assert response.status_code == 200
-    assert '€15' in body
-    assert 'Unreal and Unity tutoring that helps you ship faster' in body
+    assert 'Full-Stack Developer' in body
 
 
 def test_home_page_content(client):
     """Test that the page contains expected content."""
     response = client.get('/')
     body = response.get_data(as_text=True)
-    assert 'How It Works' in body
-    assert 'Trusted by teams shipping real projects' in body
-    assert 'Book my session' in body
+    assert 'Read the blog' in body
+    assert 'Previously worked with' in body
 
 
-def test_new_pages_load(client):
-    """Ensure the new top-level pages render."""
+def test_pages_load(client):
+    """Ensure top-level pages render."""
     pages = [
-        ('/mentoring/', b'Private tutoring for creative and technical careers.'),
-        ('/schools-and-programs/', b'Depth beats breadth.'),
-        (
-            '/about/',
-            (
-                b'I help artists and game developers reach studio-ready quality '
-                b'with focused 1:1 mentoring.'
-            ),
-        ),
-        ('/contact/', b'Book a 30-minute tutoring call.'),
+        ('/about/', b'full-stack developer'),
+        ('/contact/', b'Get in touch'),
     ]
     for path, marker in pages:
         response = client.get(path)
@@ -84,7 +64,7 @@ def test_markdown_posts_available():
 def test_blog_index(client):
     response = client.get('/blog/')
     assert response.status_code == 200
-    assert b'Your creative career playbook' in response.data
+    assert b'Writing' in response.data
 
 
 def test_blog_detail(client, tmp_path, monkeypatch):

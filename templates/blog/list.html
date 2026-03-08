@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}{{ config.name }} Blog{% endblock %}
+{% block title %}Blog | {{ config.name }}{% endblock %}
 
 {% block content %}
 {% set featured = posts[0] if posts else None %}
@@ -8,21 +8,15 @@
 
 <section class="blog-hero gradient">
     <div class="blog-hero-copy">
-        <p class="blog-hero-eyebrow">Toucan Field Notes</p>
-        <h1>Art &amp; animation insights for people who build worlds.</h1>
-        <p class="legacy-marker">Your creative career playbook, updated weekly.</p>
-        <p class="blog-subtitle">Process logs, breakdowns, and mentoring lessons for artists, animators, and technical storytellers.</p>
-        <ul class="blog-hero-bullets">
-            <li>Lighting &amp; layout critiques pulled from real sessions</li>
-            <li>Game feel experiments inside Unreal, Blender, and Godot</li>
-            <li>Mindset shifts for balancing creative intent with tech realities</li>
-        </ul>
+        <p class="blog-hero-eyebrow">Writing</p>
+        <h1>Notes on software, tools, and building things.</h1>
+        <p class="blog-subtitle">Process logs, breakdowns, and lessons learned — from full-stack development to game tooling and beyond.</p>
     </div>
 </section>
 
 {% if featured %}
 <section class="blog-featured">
-    <p class="blog-featured-label">Latest deep dive</p>
+    <p class="blog-featured-label">Latest post</p>
     <article class="blog-featured-card{% if featured.hero_image %} blog-featured-card--with-media{% else %} blog-featured-card--simple{% endif %}">
         {% if featured.hero_image %}
             <div class="blog-featured-media">
@@ -33,7 +27,7 @@
             <p class="blog-meta">{{ featured.date_display }} • {{ featured.reading_time }} min read</p>
             <h2><a href="{{ blog_index_href }}{{ featured.slug }}/">{{ featured.title }}</a></h2>
             <p class="blog-featured-excerpt">{{ featured.excerpt }}</p>
-            <a class="blog-featured-link" href="{{ blog_index_href }}{{ featured.slug }}/">Read the full walkthrough</a>
+            <a class="blog-featured-link" href="{{ blog_index_href }}{{ featured.slug }}/">Read more →</a>
         </div>
     </article>
 </section>
@@ -42,8 +36,7 @@
 {% if more_posts %}
 <section class="blog-post-list">
     <header class="blog-section-heading">
-        <h2>Fresh sketches &amp; breakdowns</h2>
-        <p>Short reads that capture what we learned in recent mentoring sessions and prototypes.</p>
+        <h2>More posts</h2>
     </header>
     <ul class="blog-card-grid">
         {% for post in more_posts %}
@@ -58,7 +51,7 @@
                         <p class="blog-card-date">{{ post.date_display }} • {{ post.reading_time }} min read</p>
                         <h3><a href="{{ blog_index_href }}{{ post.slug }}/">{{ post.title }}</a></h3>
                         <p class="blog-card-excerpt">{{ post.excerpt }}</p>
-                        <a class="blog-card-read-more" href="{{ blog_index_href }}{{ post.slug }}/">Open logbook →</a>
+                        <a class="blog-card-read-more" href="{{ blog_index_href }}{{ post.slug }}/">Read more →</a>
                     </div>
                 </article>
             </li>

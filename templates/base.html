@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% set page_title = (self.title() | striptags) %}
     {% set page_description = (self.meta_description() | striptags) %}
-    <title>{% block title %}{{ config.name }} — Mentoring & Coaching{% endblock %}</title>
+    <title>{% block title %}{{ config.name }} — Full-Stack Developer{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ config.meta_description }}{% endblock %}">
     {% block social_meta %}
         <link rel="canonical" href="{{ canonical_url }}">
@@ -22,8 +22,6 @@
     {% endblock %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://assets.calendly.com" crossorigin>
-    <link rel="dns-prefetch" href="https://assets.calendly.com">
     <script>
         (function () {
             try {
@@ -38,7 +36,6 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
-    <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
     {% if config.plausible_script_url %}
         <script
             defer
@@ -53,7 +50,7 @@
     {% endif %}
     {% block head_extra %}{% endblock %}
 </head>
-<body class="{{ body_class | default('') }}" data-calendly-link="{{ config.calendly_link }}" data-contact-link="{{ site_links.contact }}">
+<body class="{{ body_class | default('') }}" data-contact-link="{{ site_links.contact }}">
     <nav class="navbar">
         <div class="wrap">
             <div class="nav-content">
@@ -127,26 +124,25 @@
                         <p class="footer-tagline">{{ config.tagline }}</p>
                     {% endif %}
                     <p class="footer-description">
-                        Dedicated 1:1 tutoring for animation, game development, and creative tech students worldwide.
+                        Full-stack developer writing about software, tooling, and the craft of building things.
                     </p>
-                <div class="footer-contact">
-                    <a href="mailto:{{ config.email }}" class="footer-contact-link">{{ config.email }}</a>
-                </div>
+                    <div class="footer-contact">
+                        <a href="mailto:{{ config.email }}" class="footer-contact-link">{{ config.email }}</a>
+                    </div>
                 </div>
                 <div class="footer-column">
                     <p class="footer-heading">Explore</p>
                     <ul class="footer-list">
                         {% for item in nav_links %}
-                            {% if item.label != 'Blog' %}
-                                <li><a href="{{ item.href }}">{{ item.label }}</a></li>
-                            {% endif %}
+                            <li><a href="{{ item.href }}">{{ item.label }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <p class="footer-heading">Book</p>
+                    <p class="footer-heading">Contact</p>
                     <ul class="footer-list">
-                        <li><a href="{{ config.stripe_payment_link }}" target="_blank" rel="noopener">Book a session</a></li>
+                        <li><a href="mailto:{{ config.email }}">Email</a></li>
+                        <li><a href="{{ site_links.contact }}">Contact page</a></li>
                     </ul>
                 </div>
             </div>
@@ -154,7 +150,7 @@
                 <p>&copy; {{ current_year }} {{ config.name }}. All rights reserved.</p>
                 <div class="footer-bottom-links">
                     <a href="{{ site_links.about }}">About</a>
-                    <a href="{{ config.stripe_payment_link }}" target="_blank" rel="noopener">Book a session</a>
+                    <a href="{{ site_links.blog }}">Blog</a>
                 </div>
             </div>
         </div>

@@ -1,30 +1,15 @@
 services:
-  mentor-site:
+  toucan-ee:
     build:
       context: .
       args:
         BASE_PATH: ${BASE_PATH:-/}
-        STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
-        STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY:-}
-        STRIPE_PRICE_ID: ${STRIPE_PRICE_ID:-}
-        STRIPE_PAYMENT_LINK: ${STRIPE_PAYMENT_LINK:-}
-        STRIPE_SUCCESS_URL: ${STRIPE_SUCCESS_URL:-}
-        STRIPE_CANCEL_URL: ${STRIPE_CANCEL_URL:-}
-        STRIPE_ENDPOINT_SECRET: ${STRIPE_ENDPOINT_SECRET:-}
-    container_name: mentor-site-prod
+    container_name: toucan-ee-prod
     ports:
       # Map configurable host port to container port 80 (nginx)
-      - "${MENTOR_SITE_PORT:-3000}:80"
+      - "${TOUCAN_PORT:-3000}:80"
     environment:
       - NODE_ENV=production
-      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
-      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY:-}
-      - STRIPE_PRICE_ID=${STRIPE_PRICE_ID:-}
-      - STRIPE_PAYMENT_LINK=${STRIPE_PAYMENT_LINK:-}
-      - STRIPE_SUCCESS_URL=${STRIPE_SUCCESS_URL:-}
-      - STRIPE_CANCEL_URL=${STRIPE_CANCEL_URL:-}
-      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET:-}
-      - SITE_CALENDLY_LINK=${SITE_CALENDLY_LINK:-https://calendly.com/toucan-sg/consulting-link}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
@@ -39,7 +24,7 @@ services:
       dockerfile: Dockerfile.dev
       args:
         BASE_PATH: ${BASE_PATH:-/}
-    container_name: mentor-site-authoring
+    container_name: toucan-ee-authoring
     command: python author_app.py
     ports:
       - "5001:5000"
@@ -49,21 +34,19 @@ services:
     environment:
       - AUTHORING_CONTENT_DIR=/app/content/posts
       - AUTHORING_SECRET_KEY=authoring-dev-secret
-      - BASE_PATH=${BASE_PATH:-/mentor-site}
-      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
-      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET:-}
+      - BASE_PATH=${BASE_PATH:-/}
     restart: unless-stopped
     profiles:
       - authoring
 
   # Alternative service for development
-  mentor-site-dev:
+  toucan-ee-dev:
     build:
       context: .
       dockerfile: Dockerfile.dev
       args:
         BASE_PATH: ${BASE_PATH:-/}
-    container_name: mentor-site-dev
+    container_name: toucan-ee-dev
     ports:
       - "5000:5000"  # Map host 5000 to Flask dev server
     command: python app.py
@@ -71,7 +54,6 @@ services:
       - FLASK_ENV=development
       - FLASK_DEBUG=1
       - BASE_PATH=${BASE_PATH:-/}
-      - SITE_CALENDLY_LINK=${SITE_CALENDLY_LINK:-https://calendly.com/toucan-sg/consulting-link}
     volumes:
       - ./:/app
     env_file:
@@ -105,10 +87,8 @@ services:
     working_dir: /app
     environment:
       - PYTHONDONTWRITEBYTECODE=1
-      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
-      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET:-}
     restart: "no"
 
 networks:
   default:
-    name: mentor-site-network
+    name: toucan-ee-network

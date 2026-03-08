@@ -113,8 +113,8 @@ Deploy build/ to static host
 
 | Service | Port | Dockerfile | Purpose |
 |---------|------|-----------|---------|
-| `mentor-site` | 3000 | `Dockerfile` | Nginx serving frozen `build/` |
-| `mentor-site-dev` | 5000 | `Dockerfile.dev` | Flask dev server with hot reload |
+| `toucan-ee` | 3000 | `Dockerfile` | Nginx serving frozen `build/` |
+| `toucan-ee-dev` | 5000 | `Dockerfile.dev` | Flask dev server with hot reload |
 | `authoring-tool` | 5001 | `Dockerfile.dev` | Authoring CMS |
 | `tests` | — | `Dockerfile.dev` | pytest in isolation |
 
@@ -123,7 +123,7 @@ Deploy build/ to static host
 ## Project Layout
 
 ```
-mentor-site/
+toucan-ee/
 ├── app.py                    # Main Flask app (public site)
 ├── author_app.py             # Authoring CMS entry point
 ├── freeze.py                 # Static site generator

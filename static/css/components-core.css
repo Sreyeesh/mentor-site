@@ -475,25 +475,6 @@ section h2 {
     font-size: 1.3rem;
 }
 
-/* Booking Section */
-.booking {
-    background: var(--bg-secondary);
-}
-
-.booking-text {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.calendly-inline-widget {
-    margin: 0 auto;
-    max-width: 800px;
-}
-
 /* Contact Section */
 .contact {
     padding: 80px 0;

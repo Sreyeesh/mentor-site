@@ -781,9 +781,6 @@ html[data-theme='dark'] .btn-outline {
     margin-top: 0.75rem;
 }
 
-.calendly-embed {
-    margin-top: 1.5rem;
-}
 
 .hero-check-grid {
     display: grid;
@@ -882,20 +879,6 @@ html[data-theme='dark'] .btn-outline {
     opacity: 0.7;
 }
 
-/* Mentoring hero layout */
-.hero--mentoring {
-    background: transparent;
-    color: var(--text-primary);
-    padding: clamp(4rem, 10vw, 6rem) 1.5rem clamp(3rem, 8vw, 5rem);
-}
-
-.hero--mentoring .hero-shell {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(2rem, 5vw, 2.75rem);
-}
 
 /* Section panel container */
 .section-panel {
@@ -908,34 +891,6 @@ html[data-theme='dark'] .btn-outline {
     gap: 2.5rem;
 }
 
-.hero--mentoring .mentoring-hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.65fr) minmax(280px, 0.35fr);
-    gap: clamp(2rem, 4vw, 3rem);
-    align-items: start;
-}
-
-.hero--mentoring .hero-copy {
-    gap: 1.1rem;
-}
-
-.hero--mentoring .hero-eyebrow {
-    color: var(--text-secondary);
-    letter-spacing: 0.2em;
-}
-
-.hero--mentoring h1 {
-    font-size: clamp(2.375rem, 4.2vw, 3.5rem);
-    line-height: 1.1;
-    font-weight: 700;
-    margin: 0;
-}
-
-.hero--mentoring .hero-lede {
-    font-size: 1.2rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-}
 
 .hero-bullets {
     list-style: none;
@@ -964,26 +919,6 @@ html[data-theme='dark'] .btn-outline {
     box-shadow: 0 0 10px rgba(255, 224, 113, 0.7);
 }
 
-.hero--mentoring .hero-actions {
-    gap: 1rem;
-}
-
-.hero--mentoring .cta-button.primary-cta {
-    background: #ffe071;
-    color: #1a1a26;
-    border-color: #ffe071;
-    font-weight: 600;
-    box-shadow: 0 15px 35px rgba(255, 224, 113, 0.35);
-}
-
-.hero--mentoring .cta-button.primary-cta:hover {
-    transform: translateY(-1px);
-}
-
-.hero--mentoring .cta-button.secondary {
-    border-color: var(--border-color);
-    color: var(--text-primary);
-}
 
 /* Card system */
 .surface-card {
@@ -1113,17 +1048,7 @@ html[data-theme='dark'] .btn-outline {
     line-height: 1.4;
 }
 
-@media (max-width: 1024px) {
-    .hero--mentoring .mentoring-hero-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 @media (max-width: 640px) {
-    .hero--mentoring {
-        padding: 3.5rem 1rem 2.5rem;
-    }
-
     .summary-pills {
         grid-template-columns: 1fr;
     }
@@ -2399,41 +2324,6 @@ html[data-theme="light"] .lecture-card p {
     gap: 0.5rem;
 }
 
-.booking-placeholder {
-    border: 2px dashed var(--border-color);
-    border-radius: 16px;
-    padding: 2rem;
-    text-align: center;
-    color: var(--text-secondary);
-    margin-top: 1rem;
-}
-
-.calendly-badge-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin: 1rem auto;
-    padding: 0.75rem 1.5rem;
-    border-radius: 999px;
-    border: none;
-    background: #0069ff;
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 12px 30px rgba(0, 105, 255, 0.35);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.calendly-badge-button:hover,
-.calendly-badge-button:focus-visible {
-    transform: translateY(-1px);
-    box-shadow: 0 18px 36px rgba(0, 105, 255, 0.4);
-}
-
-.calendly-fallback {
-    margin: 0;
-    font-size: 0.95rem;
-}
 
 .bio-grid {
     display: grid;

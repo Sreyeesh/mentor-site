@@ -43,6 +43,10 @@ The project has three distinct Flask applications that share templates and conte
 - `FLASK_ENV`/`APP_ENV` controls which env file loads
 - Key vars: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `BASE_PATH` (for subdirectory deployments), `PLAUSIBLE_SCRIPT_URL` (optional analytics)
 
+## Git Commits
+Use [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): description`
+Common types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
+
 ## CI/CD
 - GitHub Actions runs lint → tests → static build check on PRs to `dev` and `master`
 - Deployment to GitHub Pages is manual (`workflow_dispatch` only)

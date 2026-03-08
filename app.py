@@ -83,7 +83,7 @@ class BasePathMiddleware:
 
 SITE_CONFIG = {
     'name': os.getenv('SITE_NAME', 'Sreyeesh Garimella'),
-    'tagline': os.getenv('SITE_TAGLINE', 'Full-Stack Developer'),
+    'tagline': os.getenv('SITE_TAGLINE', 'Full-Stack Developer · Toucan.ee'),
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),
     'meta_description': os.getenv(

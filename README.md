@@ -81,7 +81,7 @@ Copy `.env.example` to `.env` (or `.env.dev` for local dev). Key variables:
 | `SITE_NAME` | Your name |
 | `SITE_EMAIL` | Contact email |
 | `SITE_URL` | Full public URL (for canonical links) |
-| `BASE_PATH` | URL prefix for subdirectory hosting (e.g. `/mentor-site`) |
+| `BASE_PATH` | URL prefix for subdirectory hosting (e.g. `/toucan-ee`) |
 | `PLAUSIBLE_SCRIPT_URL` | Optional analytics script URL |
 | `PLAUSIBLE_DOMAIN` | Optional Plausible domain |
 

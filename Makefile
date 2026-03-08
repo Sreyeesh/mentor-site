@@ -4,7 +4,7 @@ DOCKER ?= docker
 COMPOSE ?= docker compose
 
 help:
-	@echo "Mentor Site workflow targets:"
+	@echo "Toucan.ee workflow targets:"
 	@echo "  make install        # Build all Docker images (no local pip install)"
 	@echo "  make run            # Run live dev container (visit http://127.0.0.1:5000/)"
 	@echo "  make freeze         # Run python freeze.py inside the dev container"
@@ -14,18 +14,18 @@ help:
 	@echo "  make docker-dev     # Run live-editing dev container on port 5000"
 	@echo "  make authoring      # Start authoring tool container on port 5001"
 	@echo "  make down           # Run 'docker compose down' for all services"
-	@echo "  make dev-down       # Stop only the mentor-site-dev container"
+	@echo "  make dev-down       # Stop only the toucan-ee-dev container"
 	@echo "  make quick-rebuild  # Rebuild+restart static container helper script"
 	@echo "  make deploy         # Freeze and deploy static site via deploy-gh-pages.sh"
 
 install:
-	$(COMPOSE) build mentor-site mentor-site-dev tests authoring-tool
+	$(COMPOSE) build toucan-ee toucan-ee-dev tests authoring-tool
 
 run:
-	$(COMPOSE) --profile dev up mentor-site-dev
+	$(COMPOSE) --profile dev up toucan-ee-dev
 
 freeze:
-	ENV_FILE=.env $(COMPOSE) --profile dev run --rm mentor-site-dev python freeze.py
+	ENV_FILE=.env $(COMPOSE) --profile dev run --rm toucan-ee-dev python freeze.py
 
 test:
 	$(COMPOSE) run --rm tests
@@ -33,20 +33,13 @@ test:
 docker-build: freeze
 	$(DOCKER) build \
 		--build-arg BASE_PATH=$$(grep -m1 BASE_PATH .env | cut -d'=' -f2-) \
-		--build-arg STRIPE_SECRET_KEY=$$(grep -m1 STRIPE_SECRET_KEY .env | cut -d'=' -f2-) \
-		--build-arg STRIPE_PUBLISHABLE_KEY=$$(grep -m1 STRIPE_PUBLISHABLE_KEY .env | cut -d'=' -f2-) \
-		--build-arg STRIPE_PRICE_ID=$$(grep -m1 STRIPE_PRICE_ID .env | cut -d'=' -f2-) \
-		--build-arg STRIPE_PAYMENT_LINK=$$(grep -m1 STRIPE_PAYMENT_LINK .env | cut -d'=' -f2-) \
-		--build-arg STRIPE_SUCCESS_URL=$$(grep -m1 STRIPE_SUCCESS_URL .env | cut -d'=' -f2-) \
-		--build-arg STRIPE_CANCEL_URL=$$(grep -m1 STRIPE_CANCEL_URL .env | cut -d'=' -f2-) \
-		--build-arg STRIPE_ENDPOINT_SECRET=$$(grep -m1 STRIPE_ENDPOINT_SECRET .env | cut -d'=' -f2-) \
-		-t mentor-site .
+		-t toucan-ee .
 
 docker-up:
-	$(COMPOSE) up --build mentor-site
+	$(COMPOSE) up --build toucan-ee
 
 docker-dev:
-	$(COMPOSE) --profile dev up mentor-site-dev
+	$(COMPOSE) --profile dev up toucan-ee-dev
 
 authoring:
 	$(COMPOSE) --profile authoring up authoring-tool
@@ -55,7 +48,7 @@ down:
 	$(COMPOSE) down
 
 dev-down:
-	$(COMPOSE) --profile dev down mentor-site-dev
+	$(COMPOSE) --profile dev down toucan-ee-dev
 
 quick-rebuild:
 	./quick-rebuild.sh

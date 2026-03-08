@@ -11,14 +11,14 @@ NC='\033[0m' # No Color
 
 # Paths & configuration
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONTAINER_NAME="mentor-site-prod"
-IMAGE_NAME="mentor-site"
+CONTAINER_NAME="toucan-ee-prod"
+IMAGE_NAME="toucan-ee"
 HOST_PORT="5000"
 CONTAINER_PORT="80"
 
 AUTHORING_ENABLED=0
-AUTHORING_CONTAINER_NAME="mentor-site-authoring"
-AUTHORING_IMAGE_NAME="mentor-site-authoring"
+AUTHORING_CONTAINER_NAME="toucan-ee-authoring"
+AUTHORING_IMAGE_NAME="toucan-ee-authoring"
 AUTHORING_CONTAINER_PORT="5000"
 AUTHORING_HOST_PORT="5001"
 AUTHORING_DOCKERFILE="Dockerfile.dev"
@@ -246,22 +246,22 @@ if [ $? -eq 0 ] && [ -n "$CONTAINER_ID" ]; then
 
         echo ""
         print_success "🌍 Site should be available at:"
-        echo "   http://localhost:$HOST_PORT/mentor-site/"
-        echo "   http://127.0.0.1:$HOST_PORT/mentor-site/"
+        echo "   http://localhost:$HOST_PORT/"
+        echo "   http://127.0.0.1:$HOST_PORT/"
 
         # Test if the site is responding
         print_status "Testing site availability..."
         sleep 3
 
         if command -v curl >/dev/null 2>&1; then
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$HOST_PORT/mentor-site/" || echo "000")
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$HOST_PORT/" || echo "000")
             if [[ "$HTTP_CODE" =~ ^[23] ]]; then
                 print_success "Site is responding! (HTTP $HTTP_CODE)"
 
                 # Test static files
                 print_status "Testing static file access..."
-                CSS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$HOST_PORT/mentor-site/static/css/style.css" || echo "000")
-                JS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$HOST_PORT/mentor-site/static/js/script.js" || echo "000")
+                CSS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$HOST_PORT/static/css/style.css" || echo "000")
+                JS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$HOST_PORT/static/js/script.js" || echo "000")
 
                 if [[ "$CSS_CODE" =~ ^[23] ]]; then
                     print_success "CSS file accessible! (HTTP $CSS_CODE)"

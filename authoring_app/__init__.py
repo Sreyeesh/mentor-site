@@ -47,7 +47,7 @@ def create_app() -> Flask:
             'mp3',
             'wav',
         },
-        SITE_NAME=os.getenv('SITE_NAME', 'Mentor Site Preview'),
+        SITE_NAME=os.getenv('SITE_NAME', 'Toucan.ee Preview'),
     )
 
     # Ensure content directory exists so authors can start immediately

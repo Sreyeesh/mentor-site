@@ -54,7 +54,7 @@ def _env(key: str, default: str = '') -> str:
 BASE_PATH = _env('BASE_PATH')
 if BASE_PATH and not BASE_PATH.startswith('/'):
     BASE_PATH = f"/{BASE_PATH}"
-LEGACY_BASE_PATH = '/mentor-site'
+LEGACY_BASE_PATH = '/toucan-ee'
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -129,7 +129,7 @@ configure_base_path(BASE_PATH)
 
 @app.before_request
 def _redirect_legacy_base_path():
-    """Redirect /mentor-site/* requests when no base path is configured."""
+    """Redirect legacy base path requests when no base path is configured."""
 
     if _resolve_base_path():
         return

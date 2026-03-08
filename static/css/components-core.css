@@ -16,12 +16,12 @@
 .btn-primary {
     background: var(--accent-deep);
     color: #fff;
-    box-shadow: 0 14px 35px rgba(31, 122, 140, 0.35);
+    box-shadow: 0 14px 35px rgba(53, 120, 229, 0.3);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 18px 40px rgba(31, 122, 140, 0.4);
+    box-shadow: 0 18px 40px rgba(53, 120, 229, 0.35);
 }
 
 .btn-primary:focus-visible {
@@ -35,7 +35,7 @@
     border-radius: 999px;
     font-size: 0.95rem;
     letter-spacing: 0.05em;
-    background: rgba(31, 122, 140, 0.12);
+    background: rgba(53, 120, 229, 0.1);
     color: var(--accent-deep);
 }
 
@@ -88,10 +88,10 @@
 
 /* Enhanced CTA Buttons - Professional Gradient Design */
 .primary-cta {
-    background: linear-gradient(135deg, #0f62fe, #06c0f6);
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
     color: #fff;
     border: none;
-    box-shadow: 0 25px 45px rgba(15, 98, 254, 0.35);
+    box-shadow: 0 25px 45px rgba(53, 120, 229, 0.3);
     position: relative;
     overflow: hidden;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
@@ -125,7 +125,7 @@
 }
 
 .cta-button.secondary:hover {
-    background: rgba(15, 98, 254, 0.1);
+    background: rgba(53, 120, 229, 0.1);
     border-color: var(--accent-secondary);
     color: var(--accent-secondary);
 }
@@ -515,7 +515,7 @@ section h2 {
 .email-link {
     display: block;
     text-align: center;
-    color: #667eea;
+    color: var(--accent-primary);
     font-size: 1.2rem;
     text-decoration: none;
     margin-bottom: 30px;
@@ -1027,7 +1027,7 @@ footer::after {
 .form-group textarea:focus {
     outline: none;
     border-color: var(--accent-primary, #667eea);
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(53, 120, 229, 0.1);
     transform: translateY(-1px);
 }
 
@@ -1165,12 +1165,12 @@ footer::after {
     font-weight: 600;
     font-size: 16px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 18px rgba(15, 98, 254, 0.25);
+    box-shadow: 0 4px 18px rgba(53, 120, 229, 0.2);
 }
 
 .schedule-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(15, 98, 254, 0.35);
+    box-shadow: 0 10px 28px rgba(53, 120, 229, 0.3);
     color: #fff;
 }
 

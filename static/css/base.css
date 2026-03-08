@@ -29,39 +29,39 @@ html {
 
 /* CSS Variables for theming */
 :root {
-    --bg-primary: #f4f6fb;
-    --bg-secondary: #ffffff;
-    --text-primary: #0a1528;
-    --text-secondary: #2f3a51;
-    --text-muted: #596077;
-    --accent-primary: #0f62fe;
-    --accent-secondary: #7aa5ff;
-    --accent-deep: #1f7a8c;
-    --border-color: #e0e4f0;
-    --shadow-color: rgba(13, 19, 42, 0.1);
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f7fa;
+    --text-primary: #1c1e21;
+    --text-secondary: #606770;
+    --text-muted: #8d95a1;
+    --accent-primary: #3578e5;
+    --accent-secondary: #6b97f0;
+    --accent-deep: #2563eb;
+    --border-color: #e3e8ee;
+    --shadow-color: rgba(28, 30, 33, 0.08);
     --card-bg: #ffffff;
-    --nav-bg: rgba(255, 255, 255, 0.9);
-    --hero-bg: linear-gradient(135deg, #eef2ff, #f8fbff);
-    --panel-bg: rgba(15, 23, 42, 0.04);
-    --pill-bg: rgba(15, 23, 42, 0.08);
-    --divider-color: rgba(15, 23, 42, 0.08);
+    --nav-bg: rgba(255, 255, 255, 0.97);
+    --hero-bg: #ffffff;
+    --panel-bg: rgba(53, 120, 229, 0.06);
+    --pill-bg: rgba(53, 120, 229, 0.1);
+    --divider-color: #e3e8ee;
     --scroll-offset: clamp(90px, 12vh, 150px); /* For smooth scrolling offset and sticky nav spacing */
-    --link-color-light: #0f62fe;
-    --link-hover-color-light: #2541ff;
-    --link-focus-ring: rgba(15, 98, 254, 0.35);
+    --link-color-light: #3578e5;
+    --link-hover-color-light: #2563eb;
+    --link-focus-ring: rgba(53, 120, 229, 0.35);
     --link-color: var(--link-color-light);
     --link-hover-color: var(--link-hover-color-light);
-    --footer-bg: #0c1424;
+    --footer-bg: #1c1e21;
     --footer-text: #f7f9ff;
     --footer-muted: rgba(247, 249, 255, 0.78);
     --footer-heading: rgba(247, 249, 255, 0.92);
     --footer-link: #f7f9ff;
-    --footer-link-hover: #2541ff;
-    --footer-focus: rgba(37, 65, 255, 0.45);
-    --bg-dark: #050b16;
-    --bg-secondary-dark: #0e1628;
-    --text-primary-dark: #f4f7ff;
-    --text-secondary-dark: #d4def8;
+    --footer-link-hover: #4e89e8;
+    --footer-focus: rgba(53, 120, 229, 0.45);
+    --bg-dark: #1b1b1d;
+    --bg-secondary-dark: #242526;
+    --text-primary-dark: #e3e3e3;
+    --text-secondary-dark: #adadad;
     --border-dark: rgba(255, 255, 255, 0.24);
     --link-dark: #9ec5ff;
     --link-hover-dark: #ffe071;
@@ -72,46 +72,46 @@ html[data-theme="dark"] {
     --bg-secondary: var(--bg-secondary-dark);
     --text-primary: var(--text-primary-dark);
     --text-secondary: var(--text-secondary-dark);
-    --text-muted: rgba(244, 248, 255, 0.78);
-    --accent-primary: #7ecaff;
-    --accent-secondary: #4cb5ff;
-    --accent-deep: #4cc9f0;
+    --text-muted: rgba(227, 227, 227, 0.78);
+    --accent-primary: #4e89e8;
+    --accent-secondary: #7aabf0;
+    --accent-deep: #6b97f0;
     --border-color: var(--border-dark);
-    --shadow-color: rgba(0, 0, 0, 0.6);
+    --shadow-color: rgba(0, 0, 0, 0.4);
     --card-bg: rgba(255, 255, 255, 0.05);
-    --nav-bg: rgba(5, 11, 22, 0.92);
-    --hero-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
-    --panel-bg: rgba(255, 255, 255, 0.04);
-    --pill-bg: rgba(255, 255, 255, 0.12);
+    --nav-bg: rgba(27, 27, 29, 0.97);
+    --hero-bg: #1b1b1d;
+    --panel-bg: rgba(78, 137, 232, 0.08);
+    --pill-bg: rgba(78, 137, 232, 0.14);
     --divider-color: rgba(255, 255, 255, 0.15);
     --link-color: var(--link-dark);
     --link-hover-color: var(--accent-secondary);
     --link-focus-ring: rgba(126, 202, 255, 0.45);
-    --footer-bg: #030711;
-    --footer-text: rgba(242, 245, 255, 0.92);
-    --footer-muted: rgba(225, 231, 255, 0.75);
+    --footer-bg: #141414;
+    --footer-text: rgba(227, 227, 227, 0.92);
+    --footer-muted: rgba(200, 200, 200, 0.75);
     --footer-heading: rgba(255, 255, 255, 0.9);
     --footer-link: #ffffff;
     --footer-link-hover: var(--accent-primary);
-    --footer-focus: rgba(126, 202, 255, 0.55);
+    --footer-focus: rgba(78, 137, 232, 0.55);
 }
 
 html[data-theme="light"] {
-    --bg-primary: #f5f6fb;
-    --bg-secondary: #ffffff;
-    --text-primary: #0b1624;
-    --text-secondary: #2b354d;
-    --text-muted: #47536a;
-    --accent-primary: #0f62fe;
-    --accent-secondary: #7aa5ff;
-    --border-color: #e0e4f0;
-    --shadow-color: rgba(13, 19, 42, 0.1);
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f7fa;
+    --text-primary: #1c1e21;
+    --text-secondary: #606770;
+    --text-muted: #8d95a1;
+    --accent-primary: #3578e5;
+    --accent-secondary: #6b97f0;
+    --border-color: #e3e8ee;
+    --shadow-color: rgba(28, 30, 33, 0.08);
     --card-bg: #ffffff;
-    --nav-bg: rgba(255, 255, 255, 0.9);
-    --hero-bg: linear-gradient(135deg, #eef2ff, #f8fbff);
-    --panel-bg: rgba(15, 23, 42, 0.04);
-    --pill-bg: rgba(15, 23, 42, 0.08);
-    --divider-color: rgba(15, 23, 42, 0.08);
+    --nav-bg: rgba(255, 255, 255, 0.97);
+    --hero-bg: #ffffff;
+    --panel-bg: rgba(53, 120, 229, 0.06);
+    --pill-bg: rgba(53, 120, 229, 0.1);
+    --divider-color: #e3e8ee;
 }
 
 /* Base styles using CSS variables */
@@ -405,7 +405,7 @@ html[data-theme="light"] .package-rate .rate-frequency {
     background: var(--accent-primary);
     border-color: transparent;
     color: #fff;
-    box-shadow: 0 12px 25px rgba(15, 98, 254, 0.35);
+    box-shadow: 0 12px 25px rgba(53, 120, 229, 0.3);
 }
 
 [data-theme="dark"] .nav-links .nav-link--cta {
@@ -471,7 +471,7 @@ html[data-theme="light"] .package-rate .rate-frequency {
 
 .language-switcher__toggle:hover,
 .language-switcher__toggle:focus-visible {
-    background: rgba(15, 98, 254, 0.12);
+    background: rgba(53, 120, 229, 0.1);
     color: var(--text-primary);
     border-color: var(--accent-primary);
     outline: none;
@@ -529,7 +529,7 @@ html[data-theme="light"] .package-rate .rate-frequency {
 
 .language-switcher__menu-item:hover,
 .language-switcher__menu-item:focus-visible {
-    background: rgba(15, 98, 254, 0.12);
+    background: rgba(53, 120, 229, 0.1);
     color: var(--text-primary);
     outline: none;
 }

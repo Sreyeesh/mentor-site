@@ -433,7 +433,7 @@ html[data-theme='dark'] .btn-outline {
 
 .btn-outline:hover,
 .btn-outline:focus-visible {
-    background: rgba(31, 122, 140, 0.12);
+    background: rgba(37, 99, 235, 0.1);
     border-color: var(--accent-deep);
 }
 
@@ -449,7 +449,7 @@ html[data-theme='dark'] .btn-outline {
 }
 
 .btn-link:focus-visible {
-    outline: 3px solid rgba(31, 122, 140, 0.3);
+    outline: 3px solid rgba(37, 99, 235, 0.25);
     outline-offset: 3px;
 }
 
@@ -775,7 +775,7 @@ html[data-theme='dark'] .btn-outline {
     align-items: center;
     padding: 0.35rem 1rem;
     border-radius: 999px;
-    background: rgba(31, 122, 140, 0.18);
+    background: rgba(37, 99, 235, 0.12);
     color: var(--accent-deep);
     font-weight: 600;
     margin-top: 0.75rem;
@@ -1494,7 +1494,7 @@ html[data-theme='dark'] .btn-outline {
 
 .logos-grid--text a:hover,
 .logos-grid--text a:focus-visible {
-    background-color: rgba(15, 98, 254, 0.12);
+    background-color: rgba(53, 120, 229, 0.1);
     border-color: var(--accent-primary);
     color: var(--accent-primary);
     box-shadow: 0 12px 26px rgba(15, 23, 42, 0.22);
@@ -2131,7 +2131,7 @@ html[data-theme="light"] .lecture-card p {
 }
 
 .final-cta-card .cta-button.secondary:hover {
-    background: rgba(15, 98, 254, 0.08);
+    background: rgba(53, 120, 229, 0.08);
     border-color: var(--accent-primary);
     color: var(--text-primary);
 }
@@ -2149,7 +2149,7 @@ html[data-theme="light"] .lecture-card p {
     justify-content: center;
     padding: 0.3rem 1rem;
     border-radius: 999px;
-    background: rgba(15, 98, 254, 0.1);
+    background: rgba(53, 120, 229, 0.1);
     color: var(--accent-primary);
     font-weight: 600;
     text-transform: uppercase;
@@ -2307,7 +2307,7 @@ html[data-theme="light"] .lecture-card p {
 }
 
 .pricing-card--accent {
-    border: 1px solid rgba(15, 98, 254, 0.35);
+    border: 1px solid rgba(53, 120, 229, 0.3);
     background: var(--card-bg);
 }
 
@@ -2820,7 +2820,7 @@ html[data-theme="light"] .lecture-card p {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(31, 122, 140, 0.15);
+    background: rgba(37, 99, 235, 0.1);
     color: var(--accent-deep);
     margin-bottom: 0.75rem;
 }

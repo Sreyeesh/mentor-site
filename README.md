@@ -1,6 +1,6 @@
-# Sreyeesh Garimella — Personal Site
+# Toucan.ee — Sreyeesh Garimella
 
-A personal developer portfolio and blog. Built with Flask in development, deployed as a frozen static site.
+Personal developer portfolio and blog. Built with Flask in development, deployed as a frozen static site.
 
 → **Architecture & tech stack:** [`docs/architecture.md`](docs/architecture.md)
 → **Makefile reference:** [`docs/MAKEFILE.md`](docs/MAKEFILE.md)

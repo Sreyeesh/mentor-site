@@ -24,7 +24,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The project has three distinct Flask applications that share templates and content:
 
-1. **`app.py`** — Main site. Serves all public routes (home, about, blog, scheduling, contact). Also handles Stripe checkout and webhooks via `/checkout/` and `/webhook/` endpoints.
+1. **`app.py`** — Main site. Serves all public routes (home, about, blog, contact). Static site config lives in `SITE_CONFIG` dict near the top.
 
 2. **`freeze.py`** — Static site generator. Uses Flask's test client to render every route to HTML files in `build/`. Production deploys are this frozen output served by Nginx or GitHub Pages.
 
@@ -35,19 +35,23 @@ The project has three distinct Flask applications that share templates and conte
 - `blog/utils.py` handles parsing, metadata extraction, and rendering (with syntax highlighting and safe HTML)
 - Content directory is configurable via env vars
 
-### Database (`db.py`)
-- Minimal SQLite usage — only for Stripe `checkout_sessions` table tracking payment status and schedule access
-
 ### Environment
 - Copy `.env.example` to `.env` (or `.env.dev` for dev mode)
 - `FLASK_ENV`/`APP_ENV` controls which env file loads
-- Key vars: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `BASE_PATH` (for subdirectory deployments), `PLAUSIBLE_SCRIPT_URL` (optional analytics)
+- Key vars: `BASE_PATH` (for subdirectory deployments), `PLAUSIBLE_SCRIPT_URL` (optional analytics)
 
 ## Git Commits
 Use [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): description`
 Common types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 
+## Branching Strategy
+This project uses **trunk-based development**:
+- `master` is the trunk — always kept releasable
+- Work in short-lived feature branches, merge to `master` via PR as soon as possible
+- Branches should be small and focused; avoid long-running branches
+- Feature flags preferred over long-lived feature branches
+
 ## CI/CD
-- GitHub Actions runs lint → tests → static build check on PRs to `dev` and `master`
+- GitHub Actions runs lint → tests → static build check on PRs to `master`
 - Deployment to GitHub Pages is manual (`workflow_dispatch` only)
 - Workflows in `.github/workflows/ci.yml` and `deploy-pages.yml`

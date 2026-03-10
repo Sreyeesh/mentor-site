@@ -169,7 +169,6 @@ def build_site_links(base_path_override: str | None = None) -> dict:
         'home': prefix('/'),
         'about': prefix('/about/'),
         'blog': prefix('/blog/'),
-        'contact': prefix('/contact/'),
     }
 
 
@@ -256,14 +255,6 @@ def about():
     )
 
 
-@app.route('/contact/')
-def contact():
-    return render_template(
-        'contact.html',
-        **build_page_context(page_slug='contact'),
-    )
-
-
 @app.route('/blog/')
 def blog_index():
     posts = load_posts()
@@ -334,7 +325,6 @@ def sitemap():
         links['home'],
         links['about'],
         links['blog'],
-        links['contact'],
     ]
 
     for page in static_pages:

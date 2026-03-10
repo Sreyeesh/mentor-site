@@ -50,7 +50,7 @@
     {% endif %}
     {% block head_extra %}{% endblock %}
 </head>
-<body class="{{ body_class | default('') }}" data-contact-link="{{ site_links.contact }}">
+<body class="{{ body_class | default('') }}">
     <nav class="notion-topbar">
         <div class="wrap">
             <a href="{{ site_links.home }}" class="notion-topbar__brand">{{ config.name }}</a>

@@ -65,6 +65,12 @@ section h2 {
 }
 .notion-topbar__brand:hover { opacity: 1; }
 
+.notion-topbar__right {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
 .notion-topbar__nav {
     display: flex;
     align-items: center;
@@ -83,6 +89,36 @@ section h2 {
 .notion-topbar__nav a:hover {
     background: var(--notion-hover);
     color: var(--text-primary);
+}
+
+/* Hamburger button — hidden on desktop */
+.notion-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    margin-left: 2px;
+}
+.notion-hamburger span {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: var(--text-primary);
+    border-radius: 1px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.notion-hamburger.active span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+}
+.notion-hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+.notion-hamburger.active span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
 }
 
 /* Dark mode toggle inside topbar */
@@ -622,10 +658,35 @@ footer:not(.notion-footer) { display: none; }
 
 /* === Responsive === */
 @media (max-width: 640px) {
-    .notion-page-title  { font-size: 2rem; }
-    .notion-page-icon   { font-size: 3rem; }
+    .notion-page-title   { font-size: 2rem; }
+    .notion-page-icon    { font-size: 3rem; }
     .notion-contact-grid { grid-template-columns: 1fr; }
-    .notion-topbar__nav a { font-size: 0.75rem; padding: 0.25rem 0.375rem; }
+
+    /* Show hamburger, hide inline nav links */
+    .notion-hamburger { display: flex; }
+    .notion-topbar__nav {
+        display: none;
+        position: fixed;
+        top: 44px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--notion-border);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        padding: 0.5rem;
+        z-index: 99;
+    }
+    .notion-topbar__nav.active {
+        display: flex;
+    }
+    .notion-topbar__nav a {
+        padding: 0.65rem 1rem;
+        font-size: 0.9375rem;
+        border-radius: 4px;
+        color: var(--text-primary);
+        white-space: normal;
+    }
 }
 @media (max-width: 480px) {
     .notion-post-row__meta { display: none; }

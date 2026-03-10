@@ -54,10 +54,12 @@
     <nav class="notion-topbar">
         <div class="wrap">
             <a href="{{ site_links.home }}" class="notion-topbar__brand">{{ config.name }}</a>
-            <div class="notion-topbar__nav">
-                {% for item in nav_links %}
-                    <a href="{{ item.href }}">{{ item.label }}</a>
-                {% endfor %}
+            <div class="notion-topbar__right">
+                <div class="notion-topbar__nav" id="nav-links">
+                    {% for item in nav_links %}
+                        <a href="{{ item.href }}">{{ item.label }}</a>
+                    {% endfor %}
+                </div>
                 <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
                     <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -73,6 +75,11 @@
                     <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
+                </button>
+                <button class="notion-hamburger" id="hamburger" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
             </div>
         </div>

@@ -4,89 +4,72 @@
 {% block meta_description %}Meet {{ config.name }} — full-stack developer and technical artist with production experience across Disney, Blizzard, DNEG, and indie game studios.{% endblock %}
 
 {% block content %}
-<section class="section about-hero" data-reveal="up">
-    <div class="wrap o-container about-hero__grid">
-        <div class="about-hero__copy">
-            <p class="section-eyebrow">About</p>
-            <h1>I'm a full-stack developer and technical artist.</h1>
-            <p class="lead">With a background spanning animation, VFX, and game development at studios like Disney, Blizzard Entertainment, and DNEG, I now build software and write about the craft of making things work.</p>
-            <div class="about-hero__chips">
-                <span>Full-Stack Development</span>
-                <span>Technical Art</span>
-                <span>Game Development</span>
-                <span>Pipeline &amp; Tooling</span>
-            </div>
-        </div>
-        <div class="about-hero__media" data-reveal="up" data-reveal-delay="120">
-            <img src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}" alt="Portrait of {{ config.name }}" loading="lazy">
-        </div>
-    </div>
-</section>
+<h1 class="notion-page-title">About</h1>
 
-<section class="section about-story" data-reveal="up">
-    <div class="wrap o-container">
-        <div class="section-headline">
-            <p class="section-eyebrow">Journey</p>
-            <h2>From production floors to software development</h2>
-        </div>
-        <div class="about-story__grid">
-            <article class="about-story__card" data-reveal="up" data-reveal-delay="60">
-                <p class="about-story__year">2012</p>
-                <h3>Started in production</h3>
-                <p>Finished an art and animation degree and moved directly into real-world production across animation, VFX, and game development.</p>
-            </article>
-            <article class="about-story__card" data-reveal="up" data-reveal-delay="120">
-                <p class="about-story__year">Studio Years</p>
-                <h3>Built cross-disciplinary depth</h3>
-                <p>Worked across shots, rigs, tools, and pipelines at Disney, Blizzard, DNEG, and indie teams — learning how creative quality and technical systems must align.</p>
-            </article>
-            <article class="about-story__card" data-reveal="up" data-reveal-delay="180">
-                <p class="about-story__year">Today</p>
-                <h3>Building software and writing</h3>
-                <p>Focused on full-stack development and developer tooling, writing about what I learn along the way.</p>
-            </article>
-        </div>
-    </div>
-</section>
+<img class="notion-profile-img"
+     src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}"
+     alt="Portrait of {{ config.name }}"
+     loading="lazy">
 
-<section class="section about-approach" data-reveal="up">
-    <div class="wrap o-container about-approach__grid">
-        <div>
-            <p class="section-eyebrow">Approach</p>
-            <h2>How I work</h2>
-            <p>I care about clear code, practical architecture, and shipping things that actually work. My production background means I think about systems end-to-end — from the user-facing layer down to the pipeline.</p>
-        </div>
-        <ul class="about-list">
-            <li><strong>Production mindset:</strong> Shaped by real-world delivery constraints across film and game studios.</li>
-            <li><strong>Cross-disciplinary thinking:</strong> Bridge creative intent with technical implementation.</li>
-            <li><strong>Clarity over cleverness:</strong> Code and tools that are easy to reason about and maintain.</li>
-        </ul>
-    </div>
-</section>
+<div class="notion-chips">
+    <span class="notion-chip">Full-Stack Development</span>
+    <span class="notion-chip">Technical Art</span>
+    <span class="notion-chip">Game Development</span>
+    <span class="notion-chip">Pipeline &amp; Tooling</span>
+</div>
 
-<section class="section about-company" data-reveal="up">
-    <div class="wrap o-container about-company__grid">
-        <div>
-            <p class="section-eyebrow">Toucan Studios OÜ</p>
-            <h2>Based in Estonia</h2>
-            <p>I operate through Toucan Studios OÜ and have worked with partners including GameCity Kajaani. Remote-first, collaborating with teams across Europe and beyond.</p>
-        </div>
-        <div class="about-company__panel">
-            <h3>Current focus</h3>
-            <ul class="about-list">
-                <li>Full-stack web development and APIs.</li>
-                <li>Developer tooling and pipeline automation.</li>
-                <li>Technical art and game development tools.</li>
-            </ul>
-        </div>
-    </div>
-</section>
+<p class="notion-p">I'm a full-stack developer and technical artist. With a background spanning animation, VFX, and game development at studios like Disney, Blizzard Entertainment, and DNEG, I now build software and write about the craft of making things work.</p>
 
-<section class="section final-cta" id="contact" data-reveal="up">
-    <div class="wrap o-container final-cta-card">
-        <p class="section-eyebrow">Get in touch</p>
-        <h2>Want to work together or just say hello?</h2>
-        <p>Email <a href="mailto:{{ config.email }}">{{ config.email }}</a> or visit the <a href="{{ site_links.contact }}">contact page</a>.</p>
+<hr class="notion-divider">
+
+<h2 class="notion-h2">Journey</h2>
+
+<div class="notion-callout">
+    <div>
+        <strong>2012 — Started in production</strong>
+        <p>Finished an art and animation degree and moved directly into real-world production across animation, VFX, and game development.</p>
     </div>
-</section>
+</div>
+
+<div class="notion-callout">
+    <div>
+        <strong>Studio Years — Built cross-disciplinary depth</strong>
+        <p>Worked across shots, rigs, tools, and pipelines at Disney, Blizzard, DNEG, and indie teams — learning how creative quality and technical systems must align.</p>
+    </div>
+</div>
+
+<div class="notion-callout">
+    <div>
+        <strong>Today — Building software and writing</strong>
+        <p>Focused on full-stack development and developer tooling, writing about what I learn along the way.</p>
+    </div>
+</div>
+
+<hr class="notion-divider">
+
+<h2 class="notion-h2">How I work</h2>
+
+<ul class="notion-ul">
+    <li><strong>Production mindset:</strong> Shaped by real-world delivery constraints across film and game studios.</li>
+    <li><strong>Cross-disciplinary thinking:</strong> Bridge creative intent with technical implementation.</li>
+    <li><strong>Clarity over cleverness:</strong> Code and tools that are easy to reason about and maintain.</li>
+</ul>
+
+<hr class="notion-divider">
+
+<h2 class="notion-h2">Toucan Studios OÜ</h2>
+
+<p class="notion-p">I operate through Toucan Studios OÜ, based in Estonia. Remote-first, collaborating with teams across Europe and beyond. Previous partners include GameCity Kajaani.</p>
+
+<h2 class="notion-h2">Current focus</h2>
+
+<ul class="notion-ul">
+    <li>Full-stack web development and APIs</li>
+    <li>Developer tooling and pipeline automation</li>
+    <li>Technical art and game development tools</li>
+</ul>
+
+<hr class="notion-divider">
+
+<p class="notion-p">Want to work together? <a href="mailto:{{ config.email }}">{{ config.email }}</a> · <a href="{{ site_links.contact }}">Contact page</a></p>
 {% endblock %}

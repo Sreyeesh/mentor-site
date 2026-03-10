@@ -4,17 +4,14 @@ from blog import load_posts
 def test_home_page(client):
     """Test that the home page loads successfully."""
     response = client.get('/')
-    body = response.get_data(as_text=True)
     assert response.status_code == 200
-    assert 'Full-Stack Developer' in body
 
 
 def test_home_page_content(client):
     """Test that the page contains expected content."""
     response = client.get('/')
     body = response.get_data(as_text=True)
-    assert 'Read the blog' in body
-    assert 'Previously worked with' in body
+    assert 'Sreyeesh Garimella' in body
 
 
 def test_pages_load(client):

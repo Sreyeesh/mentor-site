@@ -1,66 +1,26 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}Blog | {{ config.name }}{% endblock %}
+{% block title %}Writing | {{ config.name }}{% endblock %}
 
 {% block content %}
-{% set featured = posts[0] if posts else None %}
-{% set more_posts = posts[1:] if posts|length > 1 else [] %}
+<span class="notion-page-icon">✍️</span>
+<h1 class="notion-page-title">Writing</h1>
+<p class="notion-page-desc">Notes on software, tools, and building things — process logs, breakdowns, and lessons learned.</p>
 
-<section class="blog-hero gradient">
-    <div class="blog-hero-copy">
-        <p class="blog-hero-eyebrow">Writing</p>
-        <h1>Notes on software, tools, and building things.</h1>
-        <p class="blog-subtitle">Process logs, breakdowns, and lessons learned — from full-stack development to game tooling and beyond.</p>
-    </div>
-</section>
-
-{% if featured %}
-<section class="blog-featured">
-    <p class="blog-featured-label">Latest post</p>
-    <article class="blog-featured-card{% if featured.hero_image %} blog-featured-card--with-media{% else %} blog-featured-card--simple{% endif %}">
-        {% if featured.hero_image %}
-            <div class="blog-featured-media">
-                <img src="{{ url_for('static', filename=featured.hero_image) }}" alt="" loading="lazy">
-            </div>
-        {% endif %}
-        <div class="blog-featured-body">
-            <p class="blog-meta">{{ featured.date_display }} • {{ featured.reading_time }} min read</p>
-            <h2><a href="{{ blog_index_href }}{{ featured.slug }}/">{{ featured.title }}</a></h2>
-            <p class="blog-featured-excerpt">{{ featured.excerpt }}</p>
-            <a class="blog-featured-link" href="{{ blog_index_href }}{{ featured.slug }}/">Read more →</a>
-        </div>
-    </article>
-</section>
-{% endif %}
-
-{% if more_posts %}
-<section class="blog-post-list">
-    <header class="blog-section-heading">
-        <h2>More posts</h2>
-    </header>
-    <ul class="blog-card-grid">
-        {% for post in more_posts %}
-            <li class="blog-card">
-                <article>
-                    {% if post.hero_image %}
-                        <div class="blog-card-image">
-                            <img src="{{ url_for('static', filename=post.hero_image) }}" alt="" loading="lazy">
-                        </div>
-                    {% endif %}
-                    <div class="blog-card-body">
-                        <p class="blog-card-date">{{ post.date_display }} • {{ post.reading_time }} min read</p>
-                        <h3><a href="{{ blog_index_href }}{{ post.slug }}/">{{ post.title }}</a></h3>
-                        <p class="blog-card-excerpt">{{ post.excerpt }}</p>
-                        <a class="blog-card-read-more" href="{{ blog_index_href }}{{ post.slug }}/">Read more →</a>
-                    </div>
-                </article>
-            </li>
-        {% endfor %}
-    </ul>
-</section>
-{% endif %}
-
-{% if not posts %}
-    <p class="blog-empty">No posts yet — check back soon!</p>
+{% if posts %}
+<hr class="notion-divider">
+<ul class="notion-posts">
+    {% for post in posts %}
+    <li class="notion-post-row">
+        <a href="{{ blog_index_href }}{{ post.slug }}/">
+            <span class="notion-post-row__icon">📝</span>
+            <span class="notion-post-row__title">{{ post.title }}</span>
+            <span class="notion-post-row__meta">{{ post.date_display }}</span>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="notion-page-desc" style="margin-top: 2rem;">No posts yet — check back soon.</p>
 {% endif %}
 {% endblock %}

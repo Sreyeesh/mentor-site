@@ -4,40 +4,33 @@
 {% block meta_description %}Get in touch with {{ config.name }} — full-stack developer and technical artist. Available for collaboration, questions, or just a conversation.{% endblock %}
 
 {% block content %}
-<section class="page-hero">
-    <p class="section-eyebrow">Contact</p>
-    <h1>Get in touch.</h1>
-    <p class="lead">Have a project in mind, a question, or just want to say hello? I'd love to hear from you.</p>
-</section>
+<span class="notion-page-icon">📬</span>
+<h1 class="notion-page-title">Contact</h1>
+<p class="notion-page-desc">Have a project in mind, a question, or just want to say hello?</p>
 
-<section class="section contact-section">
-    <div class="contact-grid">
-        <div class="contact-card">
-            <h2>How to reach me</h2>
-            <ul class="contact-list">
-                <li><strong>Email:</strong> <a href="mailto:{{ config.email }}">{{ config.email }}</a></li>
-                <li><strong>Location:</strong> Remote — Estonia &amp; Finland time zones</li>
-            </ul>
-            <p>I typically respond within 24 hours.</p>
-        </div>
-        <div class="contact-card">
-            <h2>What I'm open to</h2>
-            <ul class="contact-list">
-                <li>Full-stack development collaborations</li>
-                <li>Developer tooling and pipeline projects</li>
-                <li>Technical art and game development work</li>
-                <li>Questions about my writing</li>
-            </ul>
-        </div>
-    </div>
-</section>
+<hr class="notion-divider">
 
-<section class="section final-cta">
-    <div class="final-cta-card">
-        <p class="section-eyebrow">Let's talk</p>
-        <h2>Drop me a line.</h2>
-        <p>The best way to reach me is email.</p>
-        <a href="mailto:{{ config.email }}" class="btn btn-primary">Email {{ config.email }}</a>
+<div class="notion-contact-grid">
+    <div class="notion-contact-block">
+        <h3>How to reach me</h3>
+        <ul>
+            <li>📧 <a href="mailto:{{ config.email }}">{{ config.email }}</a></li>
+            <li>🕒 Responds within 24 hours</li>
+            <li>📍 Remote — Estonia &amp; Finland time zones</li>
+        </ul>
     </div>
-</section>
+    <div class="notion-contact-block">
+        <h3>What I'm open to</h3>
+        <ul>
+            <li>Full-stack development collaborations</li>
+            <li>Developer tooling and pipeline projects</li>
+            <li>Technical art and game development work</li>
+            <li>Questions about my writing</li>
+        </ul>
+    </div>
+</div>
+
+<hr class="notion-divider">
+
+<a href="mailto:{{ config.email }}" class="notion-btn">✉️ Send me an email</a>
 {% endblock %}

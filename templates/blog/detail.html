@@ -44,39 +44,50 @@
 {% endblock %}
 
 {% block content %}
-<article class="blog-post">
-    <header class="blog-post-header">
-        <p class="blog-post-date">{{ post.date_display }} • {{ post.reading_time }} min read</p>
-        <h1>{{ post.title }}</h1>
-    </header>
+<span class="notion-page-icon">📄</span>
+<h1 class="notion-page-title">{{ post.title }}</h1>
 
-    {% if post.hero_image %}
-        <figure class="blog-post-hero">
-            <img src="{{ url_for('static', filename=post.hero_image) }}" alt="" loading="lazy">
-        </figure>
-    {% endif %}
-
-    <div class="blog-post-body">
-        {{ post.content | safe }}
+<div class="notion-properties">
+    <div class="notion-property">
+        <span class="notion-property__key">Created</span>
+        <span class="notion-property__value">{{ post.date_display }}</span>
     </div>
-</article>
+    <div class="notion-property">
+        <span class="notion-property__key">Reading time</span>
+        <span class="notion-property__value">{{ post.reading_time }} min</span>
+    </div>
+</div>
 
-<aside class="blog-related">
-    <h2>More to explore</h2>
-    <ul>
-        {% set related = (posts | selectattr('slug', 'ne', post.slug) | list)[:3] %}
-        {% if related %}
-            {% for other in related %}
-                <li>
-                    <a href="{{ blog_index_href }}{{ other.slug }}/">
-                        <span class="related-title">{{ other.title }}</span>
-                        <span class="related-meta">{{ other.date_display }} • {{ other.reading_time }} min read</span>
-                    </a>
-                </li>
-            {% endfor %}
-        {% else %}
-            <li>No other posts yet.</li>
-        {% endif %}
+{% if post.hero_image %}
+<figure style="margin: 0 0 1.5rem;">
+    <img src="{{ url_for('static', filename=post.hero_image) }}"
+         alt=""
+         loading="lazy"
+         style="width:100%; border-radius:4px; border:1px solid var(--notion-border);">
+</figure>
+{% endif %}
+
+<div class="notion-body">
+    {{ post.content | safe }}
+</div>
+
+<aside class="notion-related">
+    <p class="notion-related__heading">More to explore</p>
+    {% set related = (posts | selectattr('slug', 'ne', post.slug) | list)[:3] %}
+    {% if related %}
+    <ul class="notion-posts">
+        {% for other in related %}
+        <li class="notion-post-row">
+            <a href="{{ blog_index_href }}{{ other.slug }}/">
+                <span class="notion-post-row__icon">📝</span>
+                <span class="notion-post-row__title">{{ other.title }}</span>
+                <span class="notion-post-row__meta">{{ other.date_display }}</span>
+            </a>
+        </li>
+        {% endfor %}
     </ul>
+    {% else %}
+    <p class="notion-page-desc">No other posts yet.</p>
+    {% endif %}
 </aside>
 {% endblock %}

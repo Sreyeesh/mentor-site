@@ -4,23 +4,23 @@
 {% block meta_description %}{{ config.meta_description }}{% endblock %}
 
 {% block content %}
-<section class="blog-intro" data-reveal="up">
-    <h1>{{ config.name }}</h1>
-    <p>I write about software, tools, and the craft of building things.</p>
-</section>
+<span class="notion-page-icon">🏠</span>
+<h1 class="notion-page-title">{{ config.name }}</h1>
+<p class="notion-page-desc">I write about software, tools, and the craft of building things.</p>
 
 {% if posts %}
-<section class="post-list" data-reveal="up">
+<hr class="notion-divider">
+<ul class="notion-posts">
     {% for post in posts %}
-    <article class="post-list__item">
-        <p class="post-list__meta">{{ post.date_display }} · {{ post.reading_time }} min read</p>
-        <h2><a href="{{ site_links.blog }}{{ post.slug }}/">{{ post.title }}</a></h2>
-        <p>{{ post.excerpt }}</p>
-    </article>
+    <li class="notion-post-row">
+        <a href="{{ site_links.blog }}{{ post.slug }}/">
+            <span class="notion-post-row__icon">📝</span>
+            <span class="notion-post-row__title">{{ post.title }}</span>
+            <span class="notion-post-row__meta">{{ post.date_display }}</span>
+        </a>
+    </li>
     {% endfor %}
-    <div class="post-list__more">
-        <a href="{{ site_links.blog }}">All posts →</a>
-    </div>
-</section>
+</ul>
+<a class="notion-all-posts" href="{{ site_links.blog }}">All posts →</a>
 {% endif %}
 {% endblock %}

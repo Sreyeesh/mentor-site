@@ -3,7 +3,6 @@
 {% block title %}Writing | {{ config.name }}{% endblock %}
 
 {% block content %}
-<span class="notion-page-icon">✍️</span>
 <h1 class="notion-page-title">Writing</h1>
 <p class="notion-page-desc">Notes on software, tools, and building things — process logs, breakdowns, and lessons learned.</p>
 
@@ -13,8 +12,7 @@
     {% for post in posts %}
     <li class="notion-post-row">
         <a href="{{ blog_index_href }}{{ post.slug }}/">
-            <span class="notion-post-row__icon">📝</span>
-            <span class="notion-post-row__title">{{ post.title }}</span>
+<span class="notion-post-row__title">{{ post.title }}</span>
             <span class="notion-post-row__meta">{{ post.date_display }}</span>
         </a>
     </li>

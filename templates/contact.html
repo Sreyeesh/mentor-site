@@ -4,7 +4,6 @@
 {% block meta_description %}Get in touch with {{ config.name }} — full-stack developer and technical artist. Available for collaboration, questions, or just a conversation.{% endblock %}
 
 {% block content %}
-<span class="notion-page-icon">📬</span>
 <h1 class="notion-page-title">Contact</h1>
 <p class="notion-page-desc">Have a project in mind, a question, or just want to say hello?</p>
 
@@ -14,9 +13,9 @@
     <div class="notion-contact-block">
         <h3>How to reach me</h3>
         <ul>
-            <li>📧 <a href="mailto:{{ config.email }}">{{ config.email }}</a></li>
-            <li>🕒 Responds within 24 hours</li>
-            <li>📍 Remote — Estonia &amp; Finland time zones</li>
+            <li><a href="mailto:{{ config.email }}">{{ config.email }}</a></li>
+            <li>Responds within 24 hours</li>
+            <li>Remote — Estonia &amp; Finland time zones</li>
         </ul>
     </div>
     <div class="notion-contact-block">
@@ -32,5 +31,5 @@
 
 <hr class="notion-divider">
 
-<a href="mailto:{{ config.email }}" class="notion-btn">✉️ Send me an email</a>
+<a href="mailto:{{ config.email }}" class="notion-btn">Send me an email</a>
 {% endblock %}

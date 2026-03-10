@@ -44,7 +44,6 @@
 {% endblock %}
 
 {% block content %}
-<span class="notion-page-icon">📄</span>
 <h1 class="notion-page-title">{{ post.title }}</h1>
 
 <div class="notion-properties">
@@ -79,8 +78,7 @@
         {% for other in related %}
         <li class="notion-post-row">
             <a href="{{ blog_index_href }}{{ other.slug }}/">
-                <span class="notion-post-row__icon">📝</span>
-                <span class="notion-post-row__title">{{ other.title }}</span>
+<span class="notion-post-row__title">{{ other.title }}</span>
                 <span class="notion-post-row__meta">{{ other.date_display }}</span>
             </a>
         </li>

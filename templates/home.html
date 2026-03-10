@@ -4,7 +4,6 @@
 {% block meta_description %}{{ config.meta_description }}{% endblock %}
 
 {% block content %}
-<span class="notion-page-icon">🏠</span>
 <h1 class="notion-page-title">{{ config.name }}</h1>
 <p class="notion-page-desc">I write about software, tools, and the craft of building things.</p>
 
@@ -14,8 +13,7 @@
     {% for post in posts %}
     <li class="notion-post-row">
         <a href="{{ site_links.blog }}{{ post.slug }}/">
-            <span class="notion-post-row__icon">📝</span>
-            <span class="notion-post-row__title">{{ post.title }}</span>
+<span class="notion-post-row__title">{{ post.title }}</span>
             <span class="notion-post-row__meta">{{ post.date_display }}</span>
         </a>
     </li>

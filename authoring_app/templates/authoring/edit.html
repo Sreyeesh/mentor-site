@@ -27,16 +27,16 @@
         </form>
     </section>
 
-    <form method="post">
+    <form method="post" id="post-form">
         <input type="hidden" name="original_slug" value="{{ post_data.original_slug }}">
         <input type="hidden" name="post_id" value="{{ post_data.post_id }}">
         <label>
             Title
-            <input name="title" type="text" value="{{ post_data.title }}" required>
+            <input name="title" id="title-input" type="text" value="{{ post_data.title }}" required>
         </label>
         <label>
             Slug
-            <input name="slug" type="text" value="{{ post_data.slug }}" placeholder="auto-from-title">
+            <input name="slug" id="slug-input" type="text" value="{{ post_data.slug }}" placeholder="auto-from-title">
         </label>
         <label>
             Date
@@ -63,11 +63,15 @@
             <input name="featured" type="checkbox" {% if post_data.featured %}checked{% endif %}> Featured post
         </label>
         <label>
+            <input name="published" id="published-checkbox" type="checkbox" {% if post_data.published %}checked{% endif %}>
+            Published <small>(uncheck to save as draft — drafts won't appear on the public site)</small>
+        </label>
+        <label>
             Content (Markdown)
-            <textarea name="content" required>{{ post_data.content }}</textarea>
+            <textarea name="content" id="content-editor">{{ post_data.content }}</textarea>
         </label>
         <footer class="actions">
-            <button type="submit">Save post</button>
+            <button type="submit" id="save-btn">Save post</button>
             <a class="secondary" role="button" href="{{ url_for('authoring.dashboard') }}">Cancel</a>
             {% if not is_new %}
                 <a class="secondary" role="button" href="{{ url_for('authoring.preview_post', slug=post_data.slug or post_data.original_slug) }}" target="_blank">Preview</a>
@@ -75,4 +79,57 @@
         </footer>
     </form>
 </section>
+
+<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+<script>
+    // Live Markdown editor
+    const easyMDE = new EasyMDE({
+        element: document.getElementById('content-editor'),
+        spellChecker: false,
+        autosave: { enabled: false },
+        toolbar: [
+            'bold', 'italic', 'heading', '|',
+            'quote', 'unordered-list', 'ordered-list', '|',
+            'link', 'image', 'code', 'table', '|',
+            'preview', 'side-by-side', 'fullscreen', '|',
+            'guide'
+        ],
+        minHeight: '320px',
+    });
+
+    // Auto-slug from title (only when slug hasn't been manually edited)
+    const titleInput = document.getElementById('title-input');
+    const slugInput = document.getElementById('slug-input');
+    let slugManuallyEdited = slugInput.value.length > 0 && {{ 'true' if not is_new else 'false' }};
+
+    slugInput.addEventListener('input', () => { slugManuallyEdited = true; });
+
+    function slugify(value) {
+        return value.trim().toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, ' ')
+            .trim()
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-');
+    }
+
+    titleInput.addEventListener('input', () => {
+        if (!slugManuallyEdited) {
+            slugInput.value = slugify(titleInput.value);
+        }
+    });
+
+    // Unsaved changes warning
+    let formDirty = false;
+    document.getElementById('post-form').addEventListener('input', () => { formDirty = true; });
+    easyMDE.codemirror.on('change', () => { formDirty = true; });
+    document.getElementById('post-form').addEventListener('submit', () => { formDirty = false; });
+
+    window.addEventListener('beforeunload', (e) => {
+        if (formDirty) {
+            e.preventDefault();
+            e.returnValue = '';
+        }
+    });
+</script>
 {% endblock %}

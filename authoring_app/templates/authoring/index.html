@@ -12,6 +12,7 @@
                     <th>Title</th>
                     <th>Slug</th>
                     <th>Tags</th>
+                    <th>Status</th>
                     <th>Date</th>
                     <th>Updated</th>
                     <th></th>
@@ -23,6 +24,7 @@
                         <td>{{ post.title }}</td>
                         <td><code>{{ post.slug }}</code></td>
                         <td>{{ post.tags | join(', ') if post.tags else '—' }}</td>
+                        <td>{% if post.get('published', True) %}Published{% else %}<em>Draft</em>{% endif %}</td>
                         <td>{{ post.date or '—' }}</td>
                         <td>{{ post.updated_at.strftime('%Y-%m-%d %H:%M') if post.updated_at else '—' }}</td>
                         <td class="actions">

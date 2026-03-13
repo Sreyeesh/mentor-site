@@ -124,6 +124,7 @@ def parse_post(path: Path) -> Dict[str, Any]:
         'word_count': word_count,
         'reading_time': reading_time,
         'featured': metadata.get('featured', False),
+        'published': metadata.get('published', True),
         'source_path': path,
     }
 
@@ -140,7 +141,9 @@ def load_posts(
 
     for path in sorted(directory.glob('*.md')):
         try:
-            posts.append(parse_post(path))
+            post = parse_post(path)
+            if post.get('published', True):
+                posts.append(post)
         except Exception as exc:  # noqa: BLE001 - surface file errors
             print(f"❌ Failed to parse {path}: {exc}")
 

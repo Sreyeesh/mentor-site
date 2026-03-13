@@ -150,6 +150,7 @@ def edit_post(slug: Optional[str] = None) -> str:
         hero_image, _ = normalize_media_path(hero_image_input)
         content = form.get('content', '').strip()
         featured = form.get('featured') == 'on'
+        published = form.get('published') == 'on'
         raw_date = form.get('date', '').strip()
         date_value = raw_date or datetime.now().date().isoformat()
         raw_tags = form.get('tags', '')
@@ -188,6 +189,7 @@ def edit_post(slug: Optional[str] = None) -> str:
                     'excerpt': form.get('excerpt', '').strip(),
                     'hero_image': hero_image_input,
                     'featured': featured,
+                    'published': published,
                     'tags': form.get('tags', ''),
                     'content': form.get('content', ''),
                     'original_slug': original_slug,
@@ -205,6 +207,7 @@ def edit_post(slug: Optional[str] = None) -> str:
             'excerpt': excerpt,
             'hero_image': hero_image or None,
             'featured': featured,
+            'published': published,
             'tags': tags,
         }
 
@@ -229,6 +232,7 @@ def edit_post(slug: Optional[str] = None) -> str:
             'excerpt': metadata.get('excerpt', ''),
             'hero_image': metadata.get('hero_image') or '',
             'featured': metadata.get('featured', False),
+            'published': metadata.get('published', True),
             'date': metadata.get('date', ''),
             'tags': tags_display,
             'content': post.content,
@@ -243,6 +247,7 @@ def edit_post(slug: Optional[str] = None) -> str:
             'excerpt': '',
             'hero_image': '',
             'featured': False,
+            'published': False,
             'date': datetime.now().date().isoformat(),
             'tags': '',
             'content': '',

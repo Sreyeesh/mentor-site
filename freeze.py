@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 
 from app import app
-from blog import load_posts
+from blog import load_posts  # noqa: F401 — imported for freeze context
 
 
 BUILD_DIR = Path('build')
@@ -28,11 +28,11 @@ def build_static_site() -> None:
     if Path('static').exists():
         shutil.copytree('static', BUILD_DIR / 'static')
 
-    posts = load_posts()
     original_base_path = app.config.get('SITE_BASE_PATH', '')
     app.config['SITE_BASE_PATH'] = normalized_base_path
 
     with app.app_context():
+        posts = load_posts()
         with app.test_client() as client:
             static_routes = [
                 ('/', BUILD_DIR / 'index.html'),

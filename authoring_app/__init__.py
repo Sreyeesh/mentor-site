@@ -3,7 +3,7 @@ from pathlib import Path
 
 from flask import Flask, redirect, url_for
 
-from blog.utils import get_content_dir
+from models import db
 
 from .views import bp as authoring_bp
 
@@ -22,9 +22,8 @@ def create_app() -> Flask:
 
     app.config.from_mapping(
         SECRET_KEY=os.getenv('AUTHORING_SECRET_KEY', 'dev-authoring-secret'),
-        CONTENT_DIR=get_content_dir(
-            os.getenv('AUTHORING_CONTENT_DIR')
-        ).resolve(),
+        SQLALCHEMY_DATABASE_URI=os.getenv('DATABASE_URL', 'sqlite:///blog.db'),
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
         STATIC_ROOT=static_root.resolve(),
         MEDIA_UPLOAD_DIR=Path(
             os.getenv('AUTHORING_MEDIA_DIR', default_media_dir)
@@ -50,19 +49,17 @@ def create_app() -> Flask:
         SITE_NAME=os.getenv('SITE_NAME', 'Toucan.ee Preview'),
     )
 
-    # Ensure content directory exists so authors can start immediately
-    content_dir: Path = app.config['CONTENT_DIR']
-    content_dir.mkdir(parents=True, exist_ok=True)
-
     media_dir: Path = app.config['MEDIA_UPLOAD_DIR']
     media_dir.mkdir(parents=True, exist_ok=True)
+
+    db.init_app(app)
+    with app.app_context():
+        db.create_all()
 
     app.register_blueprint(authoring_bp)
 
     @app.route('/')
     def root_redirect() -> str:
-        """Provide a friendly landing page for health checks."""
-
         return redirect(url_for('authoring.dashboard'))
 
     return app

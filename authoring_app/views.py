@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, date
 from pathlib import Path
 from typing import Dict, List, Optional
-from uuid import uuid4
+from urllib.parse import urljoin, urlparse
 
-import frontmatter
 from flask import (
     Blueprint,
     current_app,
@@ -15,10 +14,10 @@ from flask import (
     request,
     url_for,
 )
-from urllib.parse import urljoin, urlparse
 from werkzeug.utils import secure_filename
 
-from blog.utils import normalize_media_path, parse_post
+from blog.utils import normalize_media_path, render_post
+from models import db, Post, Tag
 
 bp = Blueprint(
     'authoring',
@@ -26,10 +25,6 @@ bp = Blueprint(
     url_prefix='/authoring',
     template_folder='templates',
 )
-
-
-def get_content_dir() -> Path:
-    return Path(current_app.config['CONTENT_DIR'])
 
 
 def get_media_dir() -> Path:
@@ -54,40 +49,6 @@ def is_safe_url(target: str) -> bool:
     )
 
 
-def load_all_posts() -> List[Dict[str, object]]:
-    posts: List[Dict[str, str]] = []
-    for path in sorted(get_content_dir().glob('*.md')):
-        try:
-            data = frontmatter.load(path)
-            metadata = data.metadata.copy()
-            metadata['slug'] = metadata.get('slug') or path.stem
-            metadata['title'] = metadata.get('title', path.stem)
-            date_value = metadata.get('date')
-            if isinstance(date_value, datetime):
-                metadata['date'] = date_value.date().isoformat()
-            elif date_value is None:
-                metadata['date'] = ''
-            else:
-                metadata['date'] = str(date_value)
-            metadata['path'] = path
-            metadata['updated_at'] = datetime.fromtimestamp(
-                path.stat().st_mtime
-            )
-            raw_tags = metadata.get('tags', [])
-            if isinstance(raw_tags, str):
-                metadata['tags'] = [t.strip() for t in raw_tags.split(',') if t.strip()]
-            else:
-                metadata['tags'] = [str(t).strip() for t in raw_tags if str(t).strip()]
-            posts.append(metadata)
-        except Exception as exc:  # noqa: BLE001
-            flash(f'Failed to read {path.name}: {exc}', 'error')
-    posts.sort(
-        key=lambda item: item.get('date') or datetime.min.isoformat(),
-        reverse=True,
-    )
-    return posts
-
-
 def slugify(value: str) -> str:
     slug = value.strip().lower()
     slug = ''.join(
@@ -99,43 +60,60 @@ def slugify(value: str) -> str:
     return slug
 
 
-def load_post(slug: str) -> Optional[frontmatter.Post]:
-    path = get_content_dir() / f'{slug}.md'
-    if not path.exists():
-        return None
-    return frontmatter.load(path)
+def _post_to_dashboard_dict(post: Post) -> Dict:
+    return {
+        'id': post.id,
+        'title': post.title,
+        'slug': post.slug,
+        'date': post.date.isoformat() if post.date else '',
+        'updated_at': post.updated_at,
+        'tags': [tag.name for tag in post.tags],
+        'published': post.published,
+        'featured': post.featured,
+    }
 
 
-def save_post(
-    *,
-    slug: str,
-    metadata: Dict[str, object],
-    content: str,
-    original_slug: Optional[str] = None,
-) -> str:
-    content_dir = get_content_dir()
-    target_path = content_dir / f'{slug}.md'
+def _post_to_form_dict(post: Post) -> Dict:
+    return {
+        'post_id': post.id,
+        'title': post.title,
+        'slug': post.slug,
+        'date': post.date.isoformat() if post.date else '',
+        'description': post.description or '',
+        'excerpt': post.excerpt or '',
+        'hero_image': post.hero_image or '',
+        'featured': post.featured,
+        'published': post.published,
+        'tags': ', '.join(tag.name for tag in post.tags),
+        'content': post.content or '',
+        'original_slug': post.slug,
+    }
 
-    if original_slug and original_slug != slug:
-        old_path = content_dir / f'{original_slug}.md'
-        if old_path.exists():
-            old_path.unlink()
 
-    post = frontmatter.Post(content, **metadata)
-    target_path.write_text(frontmatter.dumps(post), encoding='utf-8')
-    return target_path.name
+def _resolve_or_create_tags(tag_names: List[str]) -> List[Tag]:
+    result = []
+    for name in tag_names:
+        tag = Tag.query.filter_by(name=name).first()
+        if not tag:
+            tag = Tag(name=name)
+            db.session.add(tag)
+        result.append(tag)
+    return result
 
 
 @bp.route('/')
 def dashboard() -> str:
-    posts = load_all_posts()
-    return render_template('authoring/index.html', posts=posts)
+    posts = Post.query.order_by(Post.date.desc()).all()
+    return render_template(
+        'authoring/index.html',
+        posts=[_post_to_dashboard_dict(p) for p in posts],
+    )
 
 
 @bp.route('/posts/new', methods=['GET', 'POST'])
 @bp.route('/posts/<slug>/edit', methods=['GET', 'POST'])
 def edit_post(slug: Optional[str] = None) -> str:
-    post = load_post(slug) if slug else None
+    post: Optional[Post] = Post.query.filter_by(slug=slug).first() if slug else None
 
     if request.method == 'POST':
         form = request.form
@@ -152,10 +130,14 @@ def edit_post(slug: Optional[str] = None) -> str:
         featured = form.get('featured') == 'on'
         published = form.get('published') == 'on'
         raw_date = form.get('date', '').strip()
-        date_value = raw_date or datetime.now().date().isoformat()
+        try:
+            date_value = date.fromisoformat(raw_date) if raw_date else date.today()
+        except ValueError:
+            date_value = date.today()
         raw_tags = form.get('tags', '')
-        tags = [t.strip() for t in raw_tags.split(',') if t.strip()]
-        post_id = form.get('post_id', '').strip() or str(uuid4())
+        tag_names = [t.strip() for t in raw_tags.split(',') if t.strip()]
+        post_id = form.get('post_id', '').strip()
+        original_slug = form.get('original_slug') or slug
 
         errors: List[str] = []
         if not title:
@@ -165,13 +147,8 @@ def edit_post(slug: Optional[str] = None) -> str:
         if not content:
             errors.append('Content is required.')
 
-        original_slug = form.get('original_slug') or slug
-        content_dir = get_content_dir()
-        target_path = content_dir / f'{slug_value}.md'
-        if (
-            not post
-            or (original_slug and slug_value != original_slug)
-        ) and target_path.exists():
+        existing = Post.query.filter_by(slug=slug_value).first()
+        if existing and existing.id != (post.id if post else None):
             errors.append(f'A post with slug "{slug_value}" already exists.')
 
         if errors:
@@ -184,60 +161,42 @@ def edit_post(slug: Optional[str] = None) -> str:
                     'post_id': post_id,
                     'title': title,
                     'slug': slug_value,
-                    'date': date_value,
-                    'description': form.get('description', '').strip(),
-                    'excerpt': form.get('excerpt', '').strip(),
+                    'date': raw_date,
+                    'description': description,
+                    'excerpt': excerpt,
                     'hero_image': hero_image_input,
                     'featured': featured,
                     'published': published,
                     'tags': form.get('tags', ''),
-                    'content': form.get('content', ''),
+                    'content': content,
                     'original_slug': original_slug,
                 },
-                post=post,
                 media_url_prefix=current_app.config['MEDIA_URL_PREFIX'],
             )
 
-        metadata = {
-            'id': post_id,
-            'title': title,
-            'slug': slug_value,
-            'date': date_value,
-            'description': description,
-            'excerpt': excerpt,
-            'hero_image': hero_image or None,
-            'featured': featured,
-            'published': published,
-            'tags': tags,
-        }
+        if post is None:
+            from uuid import uuid4
+            post = Post(id=post_id or str(uuid4()))
+            db.session.add(post)
 
-        save_post(
-            slug=slug_value,
-            metadata=metadata,
-            content=content,
-            original_slug=original_slug,
-        )
+        post.title = title
+        post.slug = slug_value
+        post.date = date_value
+        post.description = description
+        post.excerpt = excerpt
+        post.hero_image = hero_image or None
+        post.content = content
+        post.featured = featured
+        post.published = published
+        post.updated_at = datetime.utcnow()
+        post.tags = _resolve_or_create_tags(tag_names)
+
+        db.session.commit()
         flash(f'Post "{title}" saved successfully.', 'success')
         return redirect(url_for('authoring.dashboard'))
 
     if post:
-        metadata = post.metadata
-        raw_tags = metadata.get('tags', [])
-        tags_display = ', '.join(raw_tags) if isinstance(raw_tags, list) else str(raw_tags)
-        post_data = {
-            'post_id': metadata.get('id', ''),
-            'title': metadata.get('title', ''),
-            'slug': metadata.get('slug', slug),
-            'description': metadata.get('description', ''),
-            'excerpt': metadata.get('excerpt', ''),
-            'hero_image': metadata.get('hero_image') or '',
-            'featured': metadata.get('featured', False),
-            'published': metadata.get('published', True),
-            'date': metadata.get('date', ''),
-            'tags': tags_display,
-            'content': post.content,
-            'original_slug': slug,
-        }
+        post_data = _post_to_form_dict(post)
     else:
         post_data = {
             'post_id': '',
@@ -248,7 +207,7 @@ def edit_post(slug: Optional[str] = None) -> str:
             'hero_image': '',
             'featured': False,
             'published': False,
-            'date': datetime.now().date().isoformat(),
+            'date': date.today().isoformat(),
             'tags': '',
             'content': '',
             'original_slug': '',
@@ -257,7 +216,6 @@ def edit_post(slug: Optional[str] = None) -> str:
     return render_template(
         'authoring/edit.html',
         is_new=post is None,
-        post=post,
         post_data=post_data,
         media_url_prefix=current_app.config['MEDIA_URL_PREFIX'],
     )
@@ -283,10 +241,7 @@ def upload_media() -> str:
     if extension not in allowed_media_extensions():
         allowed_list = ', '.join(sorted(allowed_media_extensions()))
         flash(
-            (
-                f'Unsupported file type "{extension}". Allowed extensions: '
-                f'{allowed_list}.'
-            ),
+            f'Unsupported file type "{extension}". Allowed: {allowed_list}.',
             'error',
         )
         return redirect(next_url)
@@ -302,15 +257,12 @@ def upload_media() -> str:
         candidate = f'{stem}-{counter}{suffix}'
         counter += 1
 
-    target_path = media_dir / candidate
-    upload.save(target_path)
+    (media_dir / candidate).parent.mkdir(parents=True, exist_ok=True)
+    upload.save(media_dir / candidate)
 
     media_url = build_media_url(candidate)
     flash(
-        (
-            'Uploaded successfully! Use '
-            f'"{media_url}" in your post for images, video, or audio embeds.'
-        ),
+        f'Uploaded successfully! Use "{media_url}" in your post.',
         'success',
     )
     return redirect(next_url)
@@ -318,18 +270,13 @@ def upload_media() -> str:
 
 @bp.route('/posts/<slug>/preview')
 def preview_post(slug: str) -> str:
-    path = get_content_dir() / f'{slug}.md'
-    if not path.exists():
+    post_obj = Post.query.filter_by(slug=slug).first()
+    if not post_obj:
         flash(f'Unable to find post "{slug}".', 'error')
         return redirect(url_for('authoring.dashboard'))
 
-    try:
-        post_data = parse_post(path)
-    except Exception as exc:  # noqa: BLE001
-        flash(f'Unable to render preview: {exc}', 'error')
-        return redirect(url_for('authoring.dashboard'))
-
-    hero_image_url = _resolve_hero_image_url(post_data.get('hero_image'))
+    post_data = render_post(post_obj)
+    hero_image_url = _resolve_hero_image_url(post_obj.hero_image)
 
     return render_template(
         'authoring/preview.html',
@@ -341,9 +288,10 @@ def preview_post(slug: str) -> str:
 
 @bp.route('/posts/<slug>/delete', methods=['POST'])
 def delete_post(slug: str) -> str:
-    path = get_content_dir() / f'{slug}.md'
-    if path.exists():
-        path.unlink()
+    post_obj = Post.query.filter_by(slug=slug).first()
+    if post_obj:
+        db.session.delete(post_obj)
+        db.session.commit()
         flash(f'Post "{slug}" deleted.', 'success')
     else:
         flash(f'Post "{slug}" not found.', 'error')

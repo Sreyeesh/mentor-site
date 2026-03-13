@@ -1,171 +1,10 @@
 """Utilities for loading and formatting blog content."""
 from __future__ import annotations
 
-import os
 import re
-from datetime import datetime
-from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
-import frontmatter
 import markdown
-
-
-_DEFAULT_CONTENT_DIR = Path('content/posts')
-
-
-def _env_content_dir() -> Optional[str]:
-    """Return an environment-provided content directory if available."""
-    for env_var in (
-        'BLOG_CONTENT_DIR',
-        'AUTHORING_CONTENT_DIR',
-        'CONTENT_DIR',
-    ):
-        value = os.getenv(env_var)
-        if value:
-            return value
-    return None
-
-
-def get_content_dir(override: Optional[Path | str] = None) -> Path:
-    """Resolve the content directory with optional overrides.
-
-    ``override`` takes priority, followed by environment variables that keep
-    the blog in sync with the authoring tool. The final fallback is the
-    default ``content/posts`` path that ships with the project.
-    """
-
-    if override:
-        return Path(override).expanduser()
-
-    env_value = _env_content_dir()
-    if env_value:
-        return Path(env_value).expanduser()
-
-    return _DEFAULT_CONTENT_DIR
-
-
-# Backwards compatibility for modules that import ``CONTENT_DIR`` directly.
-CONTENT_DIR = get_content_dir()
-
-
-def slug_from_filename(path: Path) -> str:
-    """Fallback slug generator based on the filename."""
-    return path.stem.lower().replace(' ', '-').replace('_', '-')
-
-
-METADATA_LINE_RE = re.compile(r'^[A-Za-z0-9_]+:\s*.+$')
-
-
-def strip_leading_metadata_lines(content: str) -> str:
-    """Remove accidental metadata-style lines from the top of the body."""
-    lines = content.splitlines()
-    cleaned: List[str] = []
-    skipping = True
-
-    for line in lines:
-        if skipping and not line.strip():
-            continue
-        if skipping and METADATA_LINE_RE.match(line.strip()):
-            continue
-        skipping = False
-        cleaned.append(line)
-
-    return '\n'.join(cleaned).lstrip()
-
-
-def parse_post(path: Path) -> Dict[str, Any]:
-    """Parse a Markdown file with front matter into a dictionary."""
-    post_data = frontmatter.load(path)
-    metadata = post_data.metadata
-
-    slug = metadata.get('slug') or slug_from_filename(path)
-    raw_date = metadata.get('date')
-    try:
-        published_at = (
-            datetime.fromisoformat(str(raw_date)) if raw_date else None
-        )
-    except ValueError:
-        published_at = None
-
-    body = strip_leading_metadata_lines(post_data.content)
-
-    html = markdown.markdown(
-        body,
-        extensions=['fenced_code', 'tables', 'sane_lists'],
-    )
-
-    words = body.split()
-    word_count = len(words)
-    reading_time = max(1, round(word_count / 200))
-    excerpt = metadata.get('excerpt') or ' '.join(words[:50])
-    if metadata.get('excerpt') is None and word_count > 50:
-        excerpt += '…'
-
-    raw_tags = metadata.get('tags', [])
-    if isinstance(raw_tags, str):
-        tags = [t.strip() for t in raw_tags.split(',') if t.strip()]
-    else:
-        tags = [str(t).strip() for t in raw_tags if str(t).strip()]
-
-    return {
-        'id': metadata.get('id', ''),
-        'title': metadata.get('title', 'Untitled Post'),
-        'slug': slug,
-        'date': published_at,
-        'date_display': (
-            published_at.strftime('%B %d, %Y') if published_at else ''
-        ),
-        'description': metadata.get('description', ''),
-        'excerpt': excerpt,
-        'hero_image': metadata.get('hero_image'),
-        'tags': tags,
-        'content': html,
-        'word_count': word_count,
-        'reading_time': reading_time,
-        'featured': metadata.get('featured', False),
-        'published': metadata.get('published', True),
-        'source_path': path,
-    }
-
-
-def load_posts(
-    content_dir: Optional[Path | str] = None,
-) -> List[Dict[str, Any]]:
-    """Load and sort all markdown posts."""
-    directory = get_content_dir(content_dir)
-
-    posts: List[Dict[str, Any]] = []
-    if not directory.exists():
-        return posts
-
-    for path in sorted(directory.glob('*.md')):
-        try:
-            post = parse_post(path)
-            if post.get('published', True):
-                posts.append(post)
-        except Exception as exc:  # noqa: BLE001 - surface file errors
-            print(f"❌ Failed to parse {path}: {exc}")
-
-    # Sort by date (newest first), regardless of featured status
-    posts.sort(
-        key=lambda item: item.get('date') or datetime.min,
-        reverse=True,
-    )
-    return posts
-
-
-def find_post(
-    slug: str,
-    *,
-    posts: Optional[Iterable[Dict[str, Any]]] = None,
-) -> Optional[Dict[str, Any]]:
-    """Return a post matching ``slug`` from ``posts`` or from disk."""
-    candidates = list(posts) if posts is not None else load_posts()
-    for post in candidates:
-        if post.get('slug') == slug:
-            return post
-    return None
 
 
 def normalize_media_path(value: Optional[str]) -> tuple[Optional[str], bool]:
@@ -183,13 +22,84 @@ def normalize_media_path(value: Optional[str]) -> tuple[Optional[str], bool]:
     return normalized or None, False
 
 
+def _render_markdown(content: str) -> str:
+    """Render Markdown string to HTML."""
+    return markdown.markdown(
+        content,
+        extensions=['fenced_code', 'tables', 'sane_lists'],
+    )
+
+
+def render_post(post_obj: Any) -> Dict[str, Any]:
+    """Convert a Post model instance to the dict format templates expect."""
+    body = post_obj.content or ''
+    html = _render_markdown(body)
+
+    words = body.split()
+    word_count = len(words)
+    reading_time = max(1, round(word_count / 200))
+
+    stored_excerpt = post_obj.excerpt
+    if stored_excerpt:
+        excerpt = stored_excerpt
+    else:
+        excerpt = ' '.join(words[:50])
+        if word_count > 50:
+            excerpt += '…'
+
+    date_obj = post_obj.date
+    date_display = date_obj.strftime('%B %d, %Y') if date_obj else ''
+
+    return {
+        'id': post_obj.id,
+        'title': post_obj.title,
+        'slug': post_obj.slug,
+        'date': date_obj,
+        'date_display': date_display,
+        'description': post_obj.description or '',
+        'excerpt': excerpt,
+        'hero_image': post_obj.hero_image,
+        'tags': [tag.name for tag in post_obj.tags],
+        'content': html,
+        'word_count': word_count,
+        'reading_time': reading_time,
+        'featured': post_obj.featured,
+        'published': post_obj.published,
+    }
+
+
+def load_posts(
+    content_dir: Optional[Any] = None,
+) -> List[Dict[str, Any]]:
+    """Load all published posts from DB, sorted newest first."""
+    from models import Post
+    posts = (
+        Post.query
+        .filter_by(published=True)
+        .order_by(Post.date.desc())
+        .all()
+    )
+    return [render_post(p) for p in posts]
+
+
+def find_post(
+    slug: str,
+    *,
+    posts: Optional[Iterable[Dict[str, Any]]] = None,
+) -> Optional[Dict[str, Any]]:
+    """Return a post matching ``slug`` from ``posts`` or from DB."""
+    if posts is not None:
+        for post in posts:
+            if post.get('slug') == slug:
+                return post
+    from models import Post
+    post_obj = Post.query.filter_by(slug=slug).first()
+    return render_post(post_obj) if post_obj else None
+
+
 __all__ = [
-    'CONTENT_DIR',
     'find_post',
-    'get_content_dir',
     'load_posts',
     'normalize_media_path',
-    'parse_post',
-    'slug_from_filename',
-    'strip_leading_metadata_lines',
+    'render_post',
 ]

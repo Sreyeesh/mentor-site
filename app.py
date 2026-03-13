@@ -59,7 +59,15 @@ LEGACY_BASE_PATH = '/toucan-ee'
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+app.config['SQLALCHEMY_DATABASE_URI'] = _env('DATABASE_URL', 'sqlite:///blog.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+from models import db  # noqa: E402
 from blog import find_post, load_posts, normalize_media_path  # noqa: E402
+
+db.init_app(app)
+with app.app_context():
+    db.create_all()
 
 
 class BasePathMiddleware:

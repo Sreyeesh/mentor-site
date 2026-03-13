@@ -43,3 +43,7 @@ leads.json
 static/uploads/
 instance/newsletter.db
 instance/tutoring.sqlite
+
+# Database
+data/*.db
+blog.db

@@ -29,11 +29,11 @@ services:
     ports:
       - "5001:5000"
     volumes:
-      - ./content:/app/content
       - ./static:/app/static
+      - ./data:/app/data
     environment:
-      - AUTHORING_CONTENT_DIR=/app/content/posts
       - AUTHORING_SECRET_KEY=authoring-dev-secret
+      - DATABASE_URL=sqlite:////app/data/blog.db
       - BASE_PATH=${BASE_PATH:-/}
     restart: unless-stopped
     profiles:
@@ -54,6 +54,7 @@ services:
       - FLASK_ENV=development
       - FLASK_DEBUG=1
       - BASE_PATH=${BASE_PATH:-/}
+      - DATABASE_URL=sqlite:////app/data/blog.db
     volumes:
       - ./:/app
     env_file:

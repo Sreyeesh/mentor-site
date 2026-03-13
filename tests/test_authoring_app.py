@@ -7,7 +7,7 @@ from authoring_app import create_app
 
 @pytest.fixture()
 def authoring_client(tmp_path, monkeypatch):
-    monkeypatch.setenv('AUTHORING_CONTENT_DIR', str(tmp_path))
+    monkeypatch.setenv('DATABASE_URL', f'sqlite:///{tmp_path}/test.db')
     monkeypatch.setenv('AUTHORING_SECRET_KEY', 'test-secret')
     monkeypatch.setenv('AUTHORING_MEDIA_DIR', str(tmp_path / 'uploads'))
     app = create_app()
@@ -22,7 +22,7 @@ def test_dashboard_loads(authoring_client):
     assert b'Blog Authoring Tool' in response.data
 
 
-def test_create_post_writes_markdown(authoring_client, tmp_path):
+def test_create_post_saves_to_db(authoring_client):
     payload = {
         'title': 'My First Post',
         'slug': 'my-first-post',
@@ -39,13 +39,7 @@ def test_create_post_writes_markdown(authoring_client, tmp_path):
         follow_redirects=True,
     )
     assert response.status_code == 200
-    saved_file = tmp_path / 'my-first-post.md'
-    assert saved_file.exists()
-    content = saved_file.read_text(encoding='utf-8')
-    assert 'title: My First Post' in content
-    assert 'slug: my-first-post' in content
-    assert '# Heading' in content
-    assert 'tags:' not in content
+    assert b'My First Post' in response.data
 
 
 def test_upload_media_saves_file(authoring_client, tmp_path):

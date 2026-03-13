@@ -283,6 +283,8 @@ def blog_index():
 def blog_tag(tag: str):
     all_posts = load_posts()
     posts = [p for p in all_posts if tag in p.get('tags', [])]
+    if not posts:
+        abort(404)
     links = build_site_links()
     return render_template(
         'blog/list.html',

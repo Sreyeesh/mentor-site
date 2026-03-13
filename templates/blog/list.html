@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}Blog | {{ config.name }}{% endblock %}
+{% block title %}{% if active_tag %}Posts tagged "{{ active_tag }}" | {{ config.name }}{% else %}Blog | {{ config.name }}{% endif %}{% endblock %}
 
 {% block content %}
 {% set featured = posts[0] if posts else None %}
@@ -45,7 +45,7 @@
 {% if more_posts %}
 <section class="blog-post-list">
     <header class="blog-section-heading">
-        <h2>More posts</h2>
+        <h2>{% if active_tag %}Also tagged "{{ active_tag }}"{% else %}More posts{% endif %}</h2>
     </header>
     <ul class="blog-card-grid">
         {% for post in more_posts %}

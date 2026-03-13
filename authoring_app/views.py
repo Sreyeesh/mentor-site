@@ -179,7 +179,19 @@ def edit_post(slug: Optional[str] = None) -> str:
             return render_template(
                 'authoring/edit.html',
                 is_new=post is None,
-                post_data=form,
+                post_data={
+                    'post_id': post_id,
+                    'title': title,
+                    'slug': slug_value,
+                    'date': date_value,
+                    'description': form.get('description', '').strip(),
+                    'excerpt': form.get('excerpt', '').strip(),
+                    'hero_image': hero_image_input,
+                    'featured': featured,
+                    'tags': form.get('tags', ''),
+                    'content': form.get('content', ''),
+                    'original_slug': original_slug,
+                },
                 post=post,
                 media_url_prefix=current_app.config['MEDIA_URL_PREFIX'],
             )

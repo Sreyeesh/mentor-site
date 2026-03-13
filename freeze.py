@@ -56,6 +56,16 @@ def build_static_site() -> None:
                 write_file(output_path, response.data.decode('utf-8'))
                 print(f"✅ Generated blog/{post['slug']}/index.html")
 
+            all_tags = {tag for post in posts for tag in post.get('tags', [])}
+            for tag in sorted(all_tags):
+                tag_route = f"/blog/tag/{tag}/"
+                response = client.get(tag_route)
+                if response.status_code != 200:
+                    raise RuntimeError(f'Failed to render {tag_route}.')
+                output_path = BUILD_DIR / 'blog' / 'tag' / tag / 'index.html'
+                write_file(output_path, response.data.decode('utf-8'))
+                print(f"✅ Generated blog/tag/{tag}/index.html")
+
     write_file(BUILD_DIR / '.nojekyll', '')
     app.config['SITE_BASE_PATH'] = original_base_path
 

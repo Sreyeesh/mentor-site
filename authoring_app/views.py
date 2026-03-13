@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
+from uuid import uuid4
 
 import frontmatter
 from flask import (
@@ -72,6 +73,11 @@ def load_all_posts() -> List[Dict[str, object]]:
             metadata['updated_at'] = datetime.fromtimestamp(
                 path.stat().st_mtime
             )
+            raw_tags = metadata.get('tags', [])
+            if isinstance(raw_tags, str):
+                metadata['tags'] = [t.strip() for t in raw_tags.split(',') if t.strip()]
+            else:
+                metadata['tags'] = [str(t).strip() for t in raw_tags if str(t).strip()]
             posts.append(metadata)
         except Exception as exc:  # noqa: BLE001
             flash(f'Failed to read {path.name}: {exc}', 'error')
@@ -146,6 +152,9 @@ def edit_post(slug: Optional[str] = None) -> str:
         featured = form.get('featured') == 'on'
         raw_date = form.get('date', '').strip()
         date_value = raw_date or datetime.now().date().isoformat()
+        raw_tags = form.get('tags', '')
+        tags = [t.strip() for t in raw_tags.split(',') if t.strip()]
+        post_id = form.get('post_id', '').strip() or str(uuid4())
 
         errors: List[str] = []
         if not title:
@@ -176,6 +185,7 @@ def edit_post(slug: Optional[str] = None) -> str:
             )
 
         metadata = {
+            'id': post_id,
             'title': title,
             'slug': slug_value,
             'date': date_value,
@@ -183,6 +193,7 @@ def edit_post(slug: Optional[str] = None) -> str:
             'excerpt': excerpt,
             'hero_image': hero_image or None,
             'featured': featured,
+            'tags': tags,
         }
 
         save_post(
@@ -196,7 +207,10 @@ def edit_post(slug: Optional[str] = None) -> str:
 
     if post:
         metadata = post.metadata
+        raw_tags = metadata.get('tags', [])
+        tags_display = ', '.join(raw_tags) if isinstance(raw_tags, list) else str(raw_tags)
         post_data = {
+            'post_id': metadata.get('id', ''),
             'title': metadata.get('title', ''),
             'slug': metadata.get('slug', slug),
             'description': metadata.get('description', ''),
@@ -204,11 +218,13 @@ def edit_post(slug: Optional[str] = None) -> str:
             'hero_image': metadata.get('hero_image') or '',
             'featured': metadata.get('featured', False),
             'date': metadata.get('date', ''),
+            'tags': tags_display,
             'content': post.content,
             'original_slug': slug,
         }
     else:
         post_data = {
+            'post_id': '',
             'title': '',
             'slug': '',
             'description': '',
@@ -216,6 +232,7 @@ def edit_post(slug: Optional[str] = None) -> str:
             'hero_image': '',
             'featured': False,
             'date': datetime.now().date().isoformat(),
+            'tags': '',
             'content': '',
             'original_slug': '',
         }

@@ -59,6 +59,13 @@
     <div class="blog-post-body">
         {{ post.content | safe }}
     </div>
+    {% if post.tags %}
+    <footer class="blog-post-tags">
+        {% for tag in post.tags %}
+            <a class="blog-tag" href="{{ blog_index_href }}tag/{{ tag }}/">{{ tag }}</a>
+        {% endfor %}
+    </footer>
+    {% endif %}
 </article>
 
 <aside class="blog-related">

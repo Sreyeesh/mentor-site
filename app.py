@@ -279,6 +279,23 @@ def blog_index():
     )
 
 
+@app.route('/blog/tag/<tag>/')
+def blog_tag(tag: str):
+    all_posts = load_posts()
+    posts = [p for p in all_posts if tag in p.get('tags', [])]
+    links = build_site_links()
+    return render_template(
+        'blog/list.html',
+        **build_page_context(
+            page_slug='blog',
+            posts=posts,
+            home_href=links['home'],
+            blog_index_href=links['blog'],
+            active_tag=tag,
+        ),
+    )
+
+
 @app.route('/blog/<slug>/')
 def blog_detail(slug: str):
     posts = load_posts()
@@ -354,6 +371,17 @@ def sitemap():
                 'loc': build_absolute_url(post_path),
                 'lastmod': last_modified,
                 'changefreq': 'monthly',
+            }
+        )
+
+    all_tags = {tag for post in posts for tag in post.get('tags', [])}
+    for tag in sorted(all_tags):
+        tag_path = f"{links['blog']}tag/{tag}/"
+        urls.append(
+            {
+                'loc': build_absolute_url(tag_path),
+                'lastmod': datetime.utcnow().date().isoformat(),
+                'changefreq': 'weekly',
             }
         )
 

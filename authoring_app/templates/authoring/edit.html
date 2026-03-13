@@ -29,6 +29,7 @@
 
     <form method="post">
         <input type="hidden" name="original_slug" value="{{ post_data.original_slug }}">
+        <input type="hidden" name="post_id" value="{{ post_data.post_id }}">
         <label>
             Title
             <input name="title" type="text" value="{{ post_data.title }}" required>
@@ -52,6 +53,11 @@
         <label>
             Hero image URL
             <input name="hero_image" type="text" value="{{ post_data.hero_image }}" placeholder="/static/uploads/hero.jpg">
+        </label>
+        <label>
+            Tags
+            <input name="tags" type="text" value="{{ post_data.tags }}" placeholder="python, flask, web (comma-separated)">
+            <small>Separate tags with commas.</small>
         </label>
         <label>
             <input name="featured" type="checkbox" {% if post_data.featured %}checked{% endif %}> Featured post

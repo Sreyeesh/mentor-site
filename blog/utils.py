@@ -102,7 +102,14 @@ def parse_post(path: Path) -> Dict[str, Any]:
     if metadata.get('excerpt') is None and word_count > 50:
         excerpt += '…'
 
+    raw_tags = metadata.get('tags', [])
+    if isinstance(raw_tags, str):
+        tags = [t.strip() for t in raw_tags.split(',') if t.strip()]
+    else:
+        tags = [str(t).strip() for t in raw_tags if str(t).strip()]
+
     return {
+        'id': metadata.get('id', ''),
         'title': metadata.get('title', 'Untitled Post'),
         'slug': slug,
         'date': published_at,
@@ -112,7 +119,7 @@ def parse_post(path: Path) -> Dict[str, Any]:
         'description': metadata.get('description', ''),
         'excerpt': excerpt,
         'hero_image': metadata.get('hero_image'),
-        'tags': metadata.get('tags', []),
+        'tags': tags,
         'content': html,
         'word_count': word_count,
         'reading_time': reading_time,

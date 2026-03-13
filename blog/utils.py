@@ -1,7 +1,6 @@
 """Utilities for loading and formatting blog content."""
 from __future__ import annotations
 
-import re
 from typing import Any, Dict, Iterable, List, Optional
 
 import markdown

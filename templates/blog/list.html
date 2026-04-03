@@ -12,12 +12,29 @@
     {% for post in posts %}
     <li class="notion-post-row">
         <a href="{{ blog_index_href }}{{ post.slug }}/">
-<span class="notion-post-row__title">{{ post.title }}</span>
+            <span class="notion-post-row__title">{{ post.title }}</span>
             <span class="notion-post-row__meta">{{ post.date_display }}</span>
         </a>
     </li>
     {% endfor %}
 </ul>
+
+{% if pagination and pagination.pages > 1 %}
+<nav class="notion-pagination" aria-label="Post pages">
+    {% if pagination.has_prev %}
+        {% if pagination.prev_num == 1 %}
+            <a href="{{ blog_index_href }}" class="notion-pagination__link">&larr; Newer</a>
+        {% else %}
+            <a href="{{ blog_index_href }}page/{{ pagination.prev_num }}/" class="notion-pagination__link">&larr; Newer</a>
+        {% endif %}
+    {% endif %}
+    <span class="notion-pagination__info">Page {{ pagination.page }} of {{ pagination.pages }}</span>
+    {% if pagination.has_next %}
+        <a href="{{ blog_index_href }}page/{{ pagination.next_num }}/" class="notion-pagination__link">Older &rarr;</a>
+    {% endif %}
+</nav>
+{% endif %}
+
 {% else %}
 <p class="notion-page-desc" style="margin-top: 2rem;">No posts yet — check back soon.</p>
 {% endif %}

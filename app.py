@@ -11,6 +11,7 @@ from flask import (
     request,
     url_for,
 )
+from flask_migrate import Migrate
 
 
 def _load_environment() -> None:
@@ -56,10 +57,22 @@ if BASE_PATH and not BASE_PATH.startswith('/'):
     BASE_PATH = f"/{BASE_PATH}"
 LEGACY_BASE_PATH = '/toucan-ee'
 
+POSTS_PER_PAGE = 10
+
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-from blog import find_post, load_posts, normalize_media_path  # noqa: E402
+app.config['SECRET_KEY'] = _env('SECRET_KEY', 'dev-secret-change-me')
+app.config['SQLALCHEMY_DATABASE_URI'] = _env('DATABASE_URL', 'sqlite:///blog.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+from models import Post, db  # noqa: E402
+from admin import init_admin  # noqa: E402
+from blog import normalize_media_path  # noqa: E402
+
+db.init_app(app)
+migrate = Migrate(app, db)
+init_admin(app)
 
 
 class BasePathMiddleware:
@@ -83,13 +96,13 @@ class BasePathMiddleware:
 
 SITE_CONFIG = {
     'name': os.getenv('SITE_NAME', 'Sreyeesh Garimella'),
-    'tagline': os.getenv('SITE_TAGLINE', 'Full-Stack Developer · Toucan.ee'),
+    'tagline': os.getenv('SITE_TAGLINE', 'Senior Full-Stack Developer & Mentor'),
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),
     'meta_description': os.getenv(
         'SITE_META_DESCRIPTION',
         (
-            'Full-stack developer and technical artist — writing about software, '
+            'Senior full-stack developer and mentor — writing about software, '
             'tools, and the craft of building things.'
         ),
     ),
@@ -167,7 +180,6 @@ def build_site_links(base_path_override: str | None = None) -> dict:
 
     return {
         'home': prefix('/'),
-        'about': prefix('/about/'),
         'blog': prefix('/blog/'),
     }
 
@@ -175,7 +187,6 @@ def build_site_links(base_path_override: str | None = None) -> dict:
 def build_primary_nav(base_path_override: str | None = None) -> list:
     links = build_site_links(base_path_override)
     return [
-        {'label': 'About', 'href': links['about']},
         {'label': 'Blog', 'href': links['blog']},
     ]
 
@@ -237,33 +248,60 @@ def build_absolute_url(path: str) -> str:
     return f"{base}{normalized_path}"
 
 
+# ---------------------------------------------------------------------------
+# Routes
+# ---------------------------------------------------------------------------
+
 @app.route('/')
 def home():
-    posts = load_posts()
-    return render_template(
-        'home.html',
-        **build_page_context(page_slug='home', posts=posts),
-    )
-
-
-@app.route('/about/')
-def about():
-    return render_template(
-        'about.html',
-        **build_page_context(page_slug='about'),
-    )
+    return redirect(url_for('blog_index'), code=301)
 
 
 @app.route('/blog/')
 def blog_index():
-    posts = load_posts()
+    page = request.args.get('page', 1, type=int)
+    if page < 1:
+        abort(404)
+    pagination = (
+        Post.query
+        .filter_by(draft=False)
+        .order_by(Post.date.desc())
+        .paginate(page=page, per_page=POSTS_PER_PAGE, error_out=False)
+    )
+    if page > 1 and not pagination.items:
+        abort(404)
     links = build_site_links()
     return render_template(
         'blog/list.html',
         **build_page_context(
             page_slug='blog',
-            posts=posts,
-            home_href=links['home'],
+            posts=pagination.items,
+            pagination=pagination,
+            blog_index_href=links['blog'],
+        ),
+    )
+
+
+@app.route('/blog/page/<int:page>/')
+def blog_page(page: int):
+    """Canonical paginated blog route for static-site freezing."""
+    if page < 2:
+        return redirect(url_for('blog_index'), code=301)
+    pagination = (
+        Post.query
+        .filter_by(draft=False)
+        .order_by(Post.date.desc())
+        .paginate(page=page, per_page=POSTS_PER_PAGE, error_out=False)
+    )
+    if not pagination.items:
+        abort(404)
+    links = build_site_links()
+    return render_template(
+        'blog/list.html',
+        **build_page_context(
+            page_slug='blog',
+            posts=pagination.items,
+            pagination=pagination,
             blog_index_href=links['blog'],
         ),
     )
@@ -271,13 +309,10 @@ def blog_index():
 
 @app.route('/blog/<slug>/')
 def blog_detail(slug: str):
-    posts = load_posts()
-    post = find_post(slug, posts=posts)
-    if post is None:
-        abort(404)
+    post = Post.query.filter_by(slug=slug, draft=False).first_or_404()
 
     links = build_site_links()
-    detail_path = f"{links['blog']}{post['slug']}/"
+    detail_path = f"{links['blog']}{post.slug}/"
 
     site_url = SITE_CONFIG.get('site_url', '').rstrip('/')
     if site_url:
@@ -285,7 +320,7 @@ def blog_detail(slug: str):
     else:
         canonical_url = request.base_url
 
-    hero_value, is_external = normalize_media_path(post.get('hero_image'))
+    hero_value, is_external = normalize_media_path(post.hero_image)
     hero_asset_path = None
     hero_image_url = None
     if hero_value:
@@ -299,56 +334,121 @@ def blog_detail(slug: str):
                 else url_for('static', filename=hero_value, _external=True)
             )
 
+    related_posts = (
+        Post.query
+        .filter(Post.draft.is_(False), Post.slug != slug)
+        .order_by(Post.date.desc())
+        .limit(3)
+        .all()
+    )
+
     return render_template(
         'blog/detail.html',
         **build_page_context(
             page_slug='blog',
             post=post,
-            posts=posts,
-            home_href=links['home'],
+            related_posts=related_posts,
             blog_index_href=links['blog'],
             canonical_url=canonical_url,
             hero_image_url=hero_image_url,
+            hero_asset_path=hero_asset_path,
             social_image_url=hero_image_url or _build_social_image_url(),
         ),
     )
 
 
+@app.route('/blog/tag/<tag>/')
+def blog_tag(tag: str):
+    tag = tag.strip().lower()
+    all_posts = (
+        Post.query
+        .filter_by(draft=False)
+        .order_by(Post.date.desc())
+        .all()
+    )
+    posts = [p for p in all_posts if tag in [t.lower() for t in p.tag_list()]]
+    links = build_site_links()
+    return render_template(
+        'blog/tag.html',
+        **build_page_context(
+            page_slug='blog',
+            posts=posts,
+            tag=tag,
+            blog_index_href=links['blog'],
+        ),
+    )
+
+
+@app.route('/feed.xml')
+def feed():
+    posts = (
+        Post.query
+        .filter_by(draft=False)
+        .order_by(Post.date.desc())
+        .limit(20)
+        .all()
+    )
+    links = build_site_links()
+    response = make_response(
+        render_template(
+            'feed.xml',
+            posts=posts,
+            blog_href=build_absolute_url(links['blog']),
+            site_url=SITE_CONFIG.get('site_url', '').rstrip('/'),
+            config=SITE_CONFIG,
+            now=datetime.utcnow(),
+        )
+    )
+    response.headers['Content-Type'] = 'application/rss+xml; charset=utf-8'
+    return response
+
+
 @app.route('/sitemap.xml')
 def sitemap():
-    posts = load_posts()
+    posts = Post.query.filter_by(draft=False).order_by(Post.date.desc()).all()
     links = build_site_links()
     urls = []
 
-    static_pages = [
-        links['home'],
-        links['about'],
-        links['blog'],
-    ]
-
+    static_pages = [links['blog']]
     for page in static_pages:
         urls.append(
             {
                 'loc': build_absolute_url(page),
                 'lastmod': datetime.utcnow().date().isoformat(),
-                'changefreq': 'weekly',
+                'changefreq': 'daily',
+                'priority': '1.0',
             }
         )
 
     for post in posts:
-        post_path = f"{links['blog']}{post['slug']}/"
-        last_modified = post.get('updated_at') or post.get('date')
+        post_path = f"{links['blog']}{post.slug}/"
+        last_modified = post.updated_at or post.date
+        if hasattr(last_modified, 'date'):
+            last_modified = last_modified.date()
         urls.append(
             {
                 'loc': build_absolute_url(post_path),
                 'lastmod': last_modified,
                 'changefreq': 'monthly',
+                'priority': '0.8',
             }
         )
 
-    response = make_response(
-        render_template('sitemap.xml', urls=urls),
-    )
+    # Tag pages
+    all_tags: set[str] = set()
+    for post in posts:
+        all_tags.update(post.tag_list())
+    for tag in sorted(all_tags):
+        urls.append(
+            {
+                'loc': build_absolute_url(f"{links['blog']}tag/{tag}/"),
+                'lastmod': datetime.utcnow().date().isoformat(),
+                'changefreq': 'weekly',
+                'priority': '0.5',
+            }
+        )
+
+    response = make_response(render_template('sitemap.xml', urls=urls))
     response.headers['Content-Type'] = 'application/xml'
     return response
 
@@ -366,6 +466,9 @@ def robots_txt():
 
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+
     host = os.getenv('HOST', '0.0.0.0')
     port = int(os.getenv('PORT', 5000))
     debug = os.getenv('FLASK_DEBUG', 'True').lower() == 'true'

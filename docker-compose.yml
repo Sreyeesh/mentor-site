@@ -6,7 +6,6 @@ services:
         BASE_PATH: ${BASE_PATH:-/}
     container_name: toucan-ee-prod
     ports:
-      # Map configurable host port to container port 80 (nginx)
       - "${TOUCAN_PORT:-3000}:80"
     environment:
       - NODE_ENV=production
@@ -18,28 +17,6 @@ services:
       retries: 3
       start_period: 40s
 
-  authoring-tool:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-      args:
-        BASE_PATH: ${BASE_PATH:-/}
-    container_name: toucan-ee-authoring
-    command: python author_app.py
-    ports:
-      - "5001:5000"
-    volumes:
-      - ./content:/app/content
-      - ./static:/app/static
-    environment:
-      - AUTHORING_CONTENT_DIR=/app/content/posts
-      - AUTHORING_SECRET_KEY=authoring-dev-secret
-      - BASE_PATH=${BASE_PATH:-/}
-    restart: unless-stopped
-    profiles:
-      - authoring
-
-  # Alternative service for development
   toucan-ee-dev:
     build:
       context: .
@@ -48,7 +25,7 @@ services:
         BASE_PATH: ${BASE_PATH:-/}
     container_name: toucan-ee-dev
     ports:
-      - "5000:5000"  # Map host 5000 to Flask dev server
+      - "5000:5000"
     command: python app.py
     environment:
       - FLASK_ENV=development
@@ -59,7 +36,7 @@ services:
     env_file:
       - .env.dev
     profiles:
-      - dev  # Only start with --profile dev
+      - dev
     restart: "no"
     develop:
       watch:

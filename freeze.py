@@ -1,10 +1,10 @@
 import os
 import shutil
+from math import ceil
 from pathlib import Path
 
-from app import app
-from blog import load_posts
-
+from app import app, POSTS_PER_PAGE
+from models import Post
 
 BUILD_DIR = Path('build')
 
@@ -28,33 +28,82 @@ def build_static_site() -> None:
     if Path('static').exists():
         shutil.copytree('static', BUILD_DIR / 'static')
 
-    posts = load_posts()
     original_base_path = app.config.get('SITE_BASE_PATH', '')
     app.config['SITE_BASE_PATH'] = normalized_base_path
 
     with app.app_context():
+        posts = Post.query.filter_by(draft=False).order_by(Post.date.desc()).all()
+        total_pages = ceil(len(posts) / POSTS_PER_PAGE) if posts else 1
+        all_tags = set()
+        for post in posts:
+            all_tags.update(post.tag_list())
+
         with app.test_client() as client:
-            static_routes = [
-                ('/', BUILD_DIR / 'index.html'),
-                ('/about/', BUILD_DIR / 'about' / 'index.html'),
-                ('/contact/', BUILD_DIR / 'contact' / 'index.html'),
-                ('/blog/', BUILD_DIR / 'blog' / 'index.html'),
-            ]
-            for route, destination in static_routes:
+            # Home redirect
+            response = client.get('/', follow_redirects=False)
+            write_file(BUILD_DIR / 'index.html', response.data.decode('utf-8'))
+            print("✅ Generated index.html (redirect)")
+
+            # Blog index (page 1)
+            response = client.get('/blog/')
+            if response.status_code != 200:
+                raise RuntimeError('Failed to render /blog/.')
+            write_file(BUILD_DIR / 'blog' / 'index.html', response.data.decode('utf-8'))
+            print("✅ Generated blog/index.html")
+
+            # Paginated blog pages
+            for page_num in range(2, total_pages + 1):
+                route = f"/blog/page/{page_num}/"
                 response = client.get(route)
                 if response.status_code != 200:
                     raise RuntimeError(f'Failed to render {route}.')
-                write_file(destination, response.data.decode('utf-8'))
-                print(f"✅ Generated {destination.relative_to(BUILD_DIR)}")
+                write_file(
+                    BUILD_DIR / 'blog' / 'page' / str(page_num) / 'index.html',
+                    response.data.decode('utf-8'),
+                )
+                print(f"✅ Generated blog/page/{page_num}/index.html")
 
+            # Individual post pages
             for post in posts:
-                slug_route = f"/blog/{post['slug']}/"
-                response = client.get(slug_route)
+                route = f"/blog/{post.slug}/"
+                response = client.get(route)
                 if response.status_code != 200:
-                    raise RuntimeError(f'Failed to render {slug_route}.')
-                output_path = BUILD_DIR / 'blog' / post['slug'] / 'index.html'
-                write_file(output_path, response.data.decode('utf-8'))
-                print(f"✅ Generated blog/{post['slug']}/index.html")
+                    raise RuntimeError(f'Failed to render {route}.')
+                write_file(
+                    BUILD_DIR / 'blog' / post.slug / 'index.html',
+                    response.data.decode('utf-8'),
+                )
+                print(f"✅ Generated blog/{post.slug}/index.html")
+
+            # Tag pages
+            for tag in sorted(all_tags):
+                route = f"/blog/tag/{tag}/"
+                response = client.get(route)
+                if response.status_code != 200:
+                    raise RuntimeError(f'Failed to render {route}.')
+                write_file(
+                    BUILD_DIR / 'blog' / 'tag' / tag / 'index.html',
+                    response.data.decode('utf-8'),
+                )
+                print(f"✅ Generated blog/tag/{tag}/index.html")
+
+            # RSS feed
+            response = client.get('/feed.xml')
+            if response.status_code != 200:
+                raise RuntimeError('Failed to render /feed.xml.')
+            write_file(BUILD_DIR / 'feed.xml', response.data.decode('utf-8'))
+            print("✅ Generated feed.xml")
+
+            # Sitemap and robots
+            for route, dest in [
+                ('/sitemap.xml', BUILD_DIR / 'sitemap.xml'),
+                ('/robots.txt', BUILD_DIR / 'robots.txt'),
+            ]:
+                response = client.get(route)
+                if response.status_code != 200:
+                    raise RuntimeError(f'Failed to render {route}.')
+                write_file(dest, response.data.decode('utf-8'))
+                print(f"✅ Generated {dest.name}")
 
     write_file(BUILD_DIR / '.nojekyll', '')
     app.config['SITE_BASE_PATH'] = original_base_path

@@ -1,25 +1,26 @@
-.PHONY: help install run freeze test docker-build docker-up docker-dev authoring quick-rebuild clean down dev-down deploy
+.PHONY: help install run freeze test docker-build docker-up docker-dev db-init db-migrate db-upgrade clean down dev-down deploy
 
 DOCKER ?= docker
 COMPOSE ?= docker compose
 
 help:
-	@echo "Toucan.ee workflow targets:"
-	@echo "  make install        # Build all Docker images (no local pip install)"
-	@echo "  make run            # Run live dev container (visit http://127.0.0.1:5000/)"
-	@echo "  make freeze         # Run python freeze.py inside the dev container"
-	@echo "  make test           # Run pytest suite inside the tests container"
-	@echo "  make docker-build   # Build production Docker image (runs freeze first)"
-	@echo "  make docker-up      # Run production-style container on port 3000"
-	@echo "  make docker-dev     # Run live-editing dev container on port 5000"
-	@echo "  make authoring      # Start authoring tool container on port 5001"
-	@echo "  make down           # Run 'docker compose down' for all services"
-	@echo "  make dev-down       # Stop only the toucan-ee-dev container"
-	@echo "  make quick-rebuild  # Rebuild+restart static container helper script"
-	@echo "  make deploy         # Freeze and deploy static site via deploy-gh-pages.sh"
+	@echo "Blog workflow targets:"
+	@echo "  make install        # Build all Docker images"
+	@echo "  make run            # Run live dev container (http://127.0.0.1:5000/)"
+	@echo "  make freeze         # Generate static site into build/"
+	@echo "  make test           # Run pytest suite"
+	@echo "  make docker-build   # Build production Docker image"
+	@echo "  make docker-up      # Run production container on port 3000"
+	@echo "  make docker-dev     # Run dev container on port 5000"
+	@echo "  make db-init        # Initialise Flask-Migrate (first time only)"
+	@echo "  make db-migrate     # Generate a new migration"
+	@echo "  make db-upgrade     # Apply pending migrations"
+	@echo "  make down           # Stop all services"
+	@echo "  make dev-down       # Stop only the dev container"
+	@echo "  make deploy         # Freeze and deploy to GitHub Pages"
 
 install:
-	$(COMPOSE) build toucan-ee toucan-ee-dev tests authoring-tool
+	$(COMPOSE) build toucan-ee toucan-ee-dev tests
 
 run:
 	$(COMPOSE) --profile dev up toucan-ee-dev
@@ -41,17 +42,20 @@ docker-up:
 docker-dev:
 	$(COMPOSE) --profile dev up toucan-ee-dev
 
-authoring:
-	$(COMPOSE) --profile authoring up authoring-tool
+db-init:
+	$(COMPOSE) --profile dev run --rm toucan-ee-dev flask db init
+
+db-migrate:
+	$(COMPOSE) --profile dev run --rm toucan-ee-dev flask db migrate -m "$(msg)"
+
+db-upgrade:
+	$(COMPOSE) --profile dev run --rm toucan-ee-dev flask db upgrade
 
 down:
 	$(COMPOSE) down
 
 dev-down:
 	$(COMPOSE) --profile dev down toucan-ee-dev
-
-quick-rebuild:
-	./quick-rebuild.sh
 
 deploy: freeze
 	ENV_FILE=.env ./deploy-gh-pages.sh

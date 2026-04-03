@@ -1,45 +1,27 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}{{ post.title }} — {{ config.name }} Blog{% endblock %}
-{% block meta_description %}{{ post.description or post.excerpt }}{% endblock %}
+{% block title %}{{ post.title }} — {{ config.name }}{% endblock %}
+{% block meta_description %}{{ post.description or post.computed_excerpt }}{% endblock %}
 
 {% block social_meta %}
-    {% set social_description = (post.description or post.excerpt) %}
-    {% set hero_path = post.hero_image and url_for('static', filename=post.hero_image) %}
-    {% if hero_path %}
-        {% if config.site_url %}
-            {% set social_image = config.site_url ~ hero_path %}
-        {% else %}
-            {% set social_image = hero_path %}
-        {% endif %}
-    {% else %}
-        {% set default_image_path = url_for('static', filename='images/SreyeeshProfilePic.jpg') %}
-        {% if config.site_url %}
-            {% set social_image = config.site_url ~ default_image_path %}
-        {% else %}
-            {% set social_image = default_image_path %}
-        {% endif %}
-    {% endif %}
-
     <link rel="canonical" href="{{ canonical_url }}">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="{{ config.name }}">
     <meta property="og:title" content="{{ post.title }}">
-    {% if social_description %}
-        <meta property="og:description" content="{{ social_description }}">
+    {% if post.description or post.computed_excerpt %}
+        <meta property="og:description" content="{{ post.description or post.computed_excerpt }}">
     {% endif %}
     <meta property="og:url" content="{{ canonical_url }}">
-    {% if social_image %}
-        <meta property="og:image" content="{{ social_image }}">
+    {% if social_image_url %}
+        <meta property="og:image" content="{{ social_image_url }}">
     {% endif %}
-
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ post.title }}">
-    {% if social_description %}
-        <meta name="twitter:description" content="{{ social_description }}">
+    {% if post.description or post.computed_excerpt %}
+        <meta name="twitter:description" content="{{ post.description or post.computed_excerpt }}">
     {% endif %}
-    {% if social_image %}
-        <meta name="twitter:image" content="{{ social_image }}">
+    {% if social_image_url %}
+        <meta name="twitter:image" content="{{ social_image_url }}">
     {% endif %}
 {% endblock %}
 
@@ -48,18 +30,35 @@
 
 <div class="notion-properties">
     <div class="notion-property">
-        <span class="notion-property__key">Created</span>
+        <span class="notion-property__key">Published</span>
         <span class="notion-property__value">{{ post.date_display }}</span>
     </div>
     <div class="notion-property">
         <span class="notion-property__key">Reading time</span>
         <span class="notion-property__value">{{ post.reading_time }} min</span>
     </div>
+    {% if post.tag_list() %}
+    <div class="notion-property">
+        <span class="notion-property__key">Tags</span>
+        <span class="notion-property__value notion-tags">
+            {% for tag in post.tag_list() %}
+            <a href="{{ blog_index_href }}tag/{{ tag }}/" class="notion-tag">{{ tag }}</a>
+            {% endfor %}
+        </span>
+    </div>
+    {% endif %}
 </div>
 
-{% if post.hero_image %}
+{% if hero_asset_path %}
 <figure style="margin: 0 0 1.5rem;">
-    <img src="{{ url_for('static', filename=post.hero_image) }}"
+    <img src="{{ url_for('static', filename=hero_asset_path) }}"
+         alt=""
+         loading="lazy"
+         style="width:100%; border-radius:4px; border:1px solid var(--notion-border);">
+</figure>
+{% elif hero_image_url %}
+<figure style="margin: 0 0 1.5rem;">
+    <img src="{{ hero_image_url }}"
          alt=""
          loading="lazy"
          style="width:100%; border-radius:4px; border:1px solid var(--notion-border);">
@@ -67,18 +66,17 @@
 {% endif %}
 
 <div class="notion-body">
-    {{ post.content | safe }}
+    {{ post.rendered_body | safe }}
 </div>
 
 <aside class="notion-related">
     <p class="notion-related__heading">More to explore</p>
-    {% set related = (posts | selectattr('slug', 'ne', post.slug) | list)[:3] %}
-    {% if related %}
+    {% if related_posts %}
     <ul class="notion-posts">
-        {% for other in related %}
+        {% for other in related_posts %}
         <li class="notion-post-row">
             <a href="{{ blog_index_href }}{{ other.slug }}/">
-<span class="notion-post-row__title">{{ other.title }}</span>
+                <span class="notion-post-row__title">{{ other.title }}</span>
                 <span class="notion-post-row__meta">{{ other.date_display }}</span>
             </a>
         </li>

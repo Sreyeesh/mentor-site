@@ -1,55 +1,75 @@
+"""Tests for blog utility functions."""
 from __future__ import annotations
 
-from pathlib import Path
-
-import pytest
-
-from blog import get_content_dir, load_posts
-
-
-@pytest.fixture(autouse=True)
-def clear_content_env(monkeypatch):
-    """Clear content-dir environment variables so tests stay isolated."""
-
-    for key in (
-        'BLOG_CONTENT_DIR',
-        'AUTHORING_CONTENT_DIR',
-        'CONTENT_DIR',
-    ):
-        monkeypatch.delenv(key, raising=False)
+from blog.utils import (
+    auto_excerpt,
+    normalize_media_path,
+    reading_time,
+    render_body,
+    strip_leading_metadata_lines,
+)
 
 
-def test_get_content_dir_prefers_override(tmp_path: Path):
-    override = tmp_path / 'custom'
-    result = get_content_dir(override)
-    assert result == override
+def test_render_body_converts_markdown():
+    html = render_body('# Hello\n\nWorld')
+    assert '<h1>' in html
+    assert 'Hello' in html
 
 
-def test_get_content_dir_reads_authoring_env(monkeypatch, tmp_path: Path):
-    monkeypatch.setenv('AUTHORING_CONTENT_DIR', str(tmp_path / 'posts'))
-    result = get_content_dir()
-    assert result == Path(str(tmp_path / 'posts'))
+def test_render_body_empty():
+    assert render_body('') == ''
+    assert render_body(None) == ''
 
 
-def test_load_posts_uses_environment_directory(monkeypatch, tmp_path: Path):
-    posts_dir = tmp_path / 'env-posts'
-    posts_dir.mkdir()
-    post_path = posts_dir / 'sample.md'
-    post_path.write_text(
-        (
-            '---\n'
-            'title: Sample\n'
-            'slug: sample\n'
-            'date: 2024-05-01\n'
-            '---\n\n'
-            'Hello world'
-        ),
-        encoding='utf-8',
-    )
+def test_reading_time_minimum_one():
+    assert reading_time('') == 1
+    assert reading_time('word ' * 100) == 1
 
-    monkeypatch.setenv('AUTHORING_CONTENT_DIR', str(posts_dir))
 
-    posts = load_posts()
+def test_reading_time_calculation():
+    # 400 words → 2 minutes
+    text = 'word ' * 400
+    assert reading_time(text) == 2
 
-    assert len(posts) == 1
-    assert posts[0]['slug'] == 'sample'
+
+def test_auto_excerpt_short_text():
+    text = 'Short text.'
+    assert auto_excerpt(text) == text
+
+
+def test_auto_excerpt_truncates():
+    text = ' '.join([f'word{i}' for i in range(100)])
+    result = auto_excerpt(text, words=50)
+    assert result.endswith('\u2026')
+    assert len(result.split()) == 50  # ellipsis is appended directly to last word
+
+
+def test_normalize_media_path_external():
+    path, is_external = normalize_media_path('https://example.com/img.jpg')
+    assert is_external is True
+    assert path == 'https://example.com/img.jpg'
+
+
+def test_normalize_media_path_static():
+    path, is_external = normalize_media_path('static/images/hero.jpg')
+    assert is_external is False
+    assert path == 'images/hero.jpg'
+
+
+def test_normalize_media_path_none():
+    path, is_external = normalize_media_path(None)
+    assert path is None
+    assert is_external is False
+
+
+def test_strip_leading_metadata_removes_metadata_block():
+    content = 'title: My Post\ndate: 2024-01-01\n\nBody text here.'
+    result = strip_leading_metadata_lines(content)
+    assert 'title:' not in result
+    assert 'Body text here.' in result
+
+
+def test_strip_leading_metadata_leaves_normal_text():
+    content = 'Just a normal paragraph.\n\nAnother one.'
+    result = strip_leading_metadata_lines(content)
+    assert result == content

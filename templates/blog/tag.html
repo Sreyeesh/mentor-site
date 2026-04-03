@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}#{{ tag }} | {{ config.name }}{% endblock %}
+
+{% block content %}
+<h1 class="notion-page-title">#{{ tag }}</h1>
+<p class="notion-page-desc">
+    {{ posts | length }} post{{ 's' if posts | length != 1 else '' }} tagged with <strong>{{ tag }}</strong>.
+    <a href="{{ blog_index_href }}" style="margin-left: 0.5rem;">← All posts</a>
+</p>
+
+{% if posts %}
+<hr class="notion-divider">
+<ul class="notion-posts">
+    {% for post in posts %}
+    <li class="notion-post-row">
+        <a href="{{ blog_index_href }}{{ post.slug }}/">
+            <span class="notion-post-row__title">{{ post.title }}</span>
+            <span class="notion-post-row__meta">{{ post.date_display }}</span>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="notion-page-desc" style="margin-top: 2rem;">No posts with this tag yet.</p>
+{% endif %}
+{% endblock %}

@@ -36,6 +36,7 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ config.name }}" href="/feed.xml">
     {% if config.plausible_script_url %}
         <script
             defer

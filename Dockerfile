@@ -14,24 +14,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     FLASK_ENV=production \
     PYTHONPATH=/app \
     BASE_PATH=${BASE_PATH} \
-    GITHUB_PAGES_BASE_PATH=${BASE_PATH} \
-    SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link
-
-ARG STRIPE_SECRET_KEY=
-ARG STRIPE_PUBLISHABLE_KEY=
-ARG STRIPE_PRICE_ID=
-ARG STRIPE_PAYMENT_LINK=https://book.stripe.com/00w28kbMX8C15Q43qj4F203
-ARG STRIPE_SUCCESS_URL=
-ARG STRIPE_CANCEL_URL=
-ARG STRIPE_ENDPOINT_SECRET=
-
-ENV STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY} \
-    STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY} \
-    STRIPE_PRICE_ID=${STRIPE_PRICE_ID} \
-    STRIPE_PAYMENT_LINK=${STRIPE_PAYMENT_LINK} \
-    STRIPE_SUCCESS_URL=${STRIPE_SUCCESS_URL} \
-    STRIPE_CANCEL_URL=${STRIPE_CANCEL_URL} \
-    STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET}
+    GITHUB_PAGES_BASE_PATH=${BASE_PATH}
 
 # Install system dependencies
 RUN apt-get update \
@@ -50,8 +33,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
-# Generate static site for production and verify it worked
-RUN python freeze.py && ls -la build/
+# Create DB tables and generate static site
+RUN python -c "from app import app, db; \
+    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///blog.db'; \
+    app.app_context().push(); \
+    db.create_all()" \
+    && python freeze.py && ls -la build/
 
 # Create directories for nginx
 RUN mkdir -p /var/cache/nginx /var/log/nginx /var/lib/nginx /run/nginx
@@ -113,5 +100,5 @@ EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
     CMD curl -f http://localhost/health || exit 1
 
-# Run nginx as root (simpler and more reliable)
+# Run nginx
 CMD ["nginx", "-g", "daemon off;"]

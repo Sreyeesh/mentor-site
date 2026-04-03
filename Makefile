@@ -20,7 +20,7 @@ help:
 	@echo "  make deploy         # Freeze and deploy to GitHub Pages"
 
 install:
-	$(COMPOSE) build toucan-ee toucan-ee-dev tests
+	$(COMPOSE) build toucan-ee-dev tests
 
 run:
 	$(COMPOSE) --profile dev up toucan-ee-dev

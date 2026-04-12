@@ -1,13 +1,28 @@
 name: Deploy to GitHub Pages
 
+# WHEN does this run?
+# - Automatically on every push to master (your "ship it" trigger)
+# - Manually from the GitHub Actions tab at any time
+#
+# The mental model:
+#   master branch = source of truth for your content
+#   Every merge to master = new version of your site goes live
 on:
+  push:
+    branches: [master]
   workflow_dispatch:
 
+# GitHub Pages needs these three permissions to deploy via Actions.
+# id-token: write — allows OIDC authentication (no long-lived tokens needed)
+# pages: write    — allows writing to GitHub Pages
+# contents: read  — allows reading your repository
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# If two deploys are triggered at the same time, cancel the older one.
+# This prevents a stale build from overwriting a newer one.
 concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
@@ -17,17 +32,16 @@ jobs:
     name: Build Static Site
     runs-on: ubuntu-latest
     env:
-      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-      STRIPE_PUBLISHABLE_KEY: ${{ vars.STRIPE_PUBLISHABLE_KEY }}
-      STRIPE_PRICE_ID: ${{ vars.STRIPE_PRICE_ID }}
-      STRIPE_PAYMENT_LINK: ${{ vars.STRIPE_PAYMENT_LINK }}
-      STRIPE_SUCCESS_URL: ${{ vars.STRIPE_SUCCESS_URL }}
-      STRIPE_CANCEL_URL: ${{ vars.STRIPE_CANCEL_URL }}
-      STRIPE_ENDPOINT_SECRET: ${{ secrets.STRIPE_ENDPOINT_SECRET }}
-      SITE_CALENDLY_LINK: ${{ vars.SITE_CALENDLY_LINK }}
+      # Site configuration — set these as GitHub Actions Variables
+      # (Repository → Settings → Secrets and variables → Actions → Variables)
       SITE_URL: ${{ vars.SITE_URL }}
       BASE_PATH: ${{ vars.BASE_PATH }}
       GITHUB_PAGES_BASE_PATH: ${{ vars.BASE_PATH }}
+      SITE_NAME: ${{ vars.SITE_NAME }}
+      SITE_TAGLINE: ${{ vars.SITE_TAGLINE }}
+      SITE_EMAIL: ${{ vars.SITE_EMAIL }}
+      # SECRET_KEY is a secret (not a variable) because it's sensitive
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -43,11 +57,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # freeze.py creates the DB tables, queries posts, and renders
+      # every route to a static HTML file in build/.
+      # The DB starts empty in CI — that's fine, it just builds an empty blog.
+      # Your real posts come from committing blog.db (covered in README).
       - name: Generate static site
         run: |
           set -euo pipefail
           python freeze.py
 
+      # Package the build/ directory as a GitHub Pages artifact.
+      # This is the modern way — no gh-pages branch needed.
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -55,12 +75,11 @@ jobs:
 
   deploy:
     name: Deploy to GitHub Pages
-    needs: build
+    needs: build           # Only runs if build succeeded
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}  # Shows live URL in Actions tab
     steps:
       - name: Deploy
         id: deployment

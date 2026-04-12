@@ -4,7 +4,12 @@ from math import ceil
 from pathlib import Path
 
 from app import app, POSTS_PER_PAGE
-from models import Post
+from models import Post, db
+
+# Ensure tables exist whether running locally for the first time or in CI.
+# db.create_all() is a no-op if the tables are already there.
+with app.app_context():
+    db.create_all()
 
 BUILD_DIR = Path('build')
 

@@ -1,14 +1,10 @@
 services:
-  toucan-ee:
+  mentor-site:
     build:
       context: .
-      args:
-        BASE_PATH: ${BASE_PATH:-/}
-    container_name: toucan-ee-prod
+    container_name: mentor-site-prod
     ports:
-      - "${TOUCAN_PORT:-3000}:80"
-    environment:
-      - NODE_ENV=production
+      - "${PORT:-3000}:80"
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]
@@ -17,20 +13,18 @@ services:
       retries: 3
       start_period: 40s
 
-  toucan-ee-dev:
+  mentor-site-dev:
     build:
       context: .
       dockerfile: Dockerfile.dev
-      args:
-        BASE_PATH: ${BASE_PATH:-/}
-    container_name: toucan-ee-dev
+    container_name: mentor-site-dev
     ports:
       - "5000:5000"
     command: python app.py
     environment:
       - FLASK_ENV=development
       - FLASK_DEBUG=1
-      - BASE_PATH=${BASE_PATH:-/}
+      - APP_ENV=development
     volumes:
       - ./:/app
     env_file:
@@ -54,8 +48,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-      args:
-        BASE_PATH: ${BASE_PATH:-/}
     command: pytest
     volumes:
       - ./:/app
@@ -68,4 +60,4 @@ services:
 
 networks:
   default:
-    name: toucan-ee-network
+    name: mentor-site-network

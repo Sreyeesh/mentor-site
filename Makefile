@@ -17,48 +17,46 @@ help:
 	@echo "  make db-upgrade     # Apply pending migrations"
 	@echo "  make down           # Stop all services"
 	@echo "  make dev-down       # Stop only the dev container"
-	@echo "  make deploy         # Freeze and deploy to GitHub Pages"
+	@echo "  make deploy         # Deploy to GitHub Pages"
 
 install:
-	$(COMPOSE) build toucan-ee-dev tests
+	$(COMPOSE) build mentor-site-dev tests
 
 run:
-	$(COMPOSE) --profile dev up toucan-ee-dev
+	$(COMPOSE) --profile dev up mentor-site-dev
 
 freeze:
-	ENV_FILE=.env $(COMPOSE) --profile dev run --rm toucan-ee-dev python freeze.py
+	ENV_FILE=.env $(COMPOSE) --profile dev run --rm mentor-site-dev python freeze.py
 
 test:
 	$(COMPOSE) run --rm tests
 
-docker-build: freeze
-	$(DOCKER) build \
-		--build-arg BASE_PATH=$$(grep -m1 BASE_PATH .env | cut -d'=' -f2-) \
-		-t toucan-ee .
+docker-build:
+	$(DOCKER) build -t mentor-site .
 
 docker-up:
-	$(COMPOSE) up --build toucan-ee
+	$(COMPOSE) up --build mentor-site
 
 docker-dev:
-	$(COMPOSE) --profile dev up toucan-ee-dev
+	$(COMPOSE) --profile dev up mentor-site-dev
 
 db-init:
-	$(COMPOSE) --profile dev run --rm toucan-ee-dev flask db init
+	$(COMPOSE) --profile dev run --rm mentor-site-dev flask db init
 
 db-migrate:
-	$(COMPOSE) --profile dev run --rm toucan-ee-dev flask db migrate -m "$(msg)"
+	$(COMPOSE) --profile dev run --rm mentor-site-dev flask db migrate -m "$(msg)"
 
 db-upgrade:
-	$(COMPOSE) --profile dev run --rm toucan-ee-dev flask db upgrade
+	$(COMPOSE) --profile dev run --rm mentor-site-dev flask db upgrade
 
 down:
 	$(COMPOSE) down
 
 dev-down:
-	$(COMPOSE) --profile dev down toucan-ee-dev
+	$(COMPOSE) --profile dev down mentor-site-dev
 
-deploy: freeze
-	ENV_FILE=.env ./deploy-gh-pages.sh
+deploy:
+	gh workflow run deploy-pages.yml
 
 clean:
 	rm -rf build .pytest_cache

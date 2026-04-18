@@ -1,189 +1,81 @@
-// Simple, working JavaScript for dark mode and mobile menu
-
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 DOM loaded!');
-
+document.addEventListener('DOMContentLoaded', function () {
     const initScrollReveal = () => {
         const revealElements = Array.from(document.querySelectorAll('[data-reveal]'));
-        if (!revealElements.length) {
-            return;
-        }
+        if (!revealElements.length) return;
 
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (reduceMotion || !('IntersectionObserver' in window)) {
-            revealElements.forEach((element) => element.classList.add('is-visible'));
+            revealElements.forEach((el) => el.classList.add('is-visible'));
             return;
         }
 
-        revealElements.forEach((element) => {
-            const delay = element.dataset.revealDelay;
-            if (delay) {
-                element.style.setProperty('--reveal-delay', `${delay}ms`);
-            }
+        revealElements.forEach((el) => {
+            const delay = el.dataset.revealDelay;
+            if (delay) el.style.setProperty('--reveal-delay', `${delay}ms`);
         });
 
         const observer = new IntersectionObserver(
             (entries, obs) => {
                 entries.forEach((entry) => {
-                    if (!entry.isIntersecting) {
-                        return;
-                    }
+                    if (!entry.isIntersecting) return;
                     entry.target.classList.add('is-visible');
                     obs.unobserve(entry.target);
                 });
             },
-            {
-                threshold: 0.18,
-                rootMargin: '0px 0px -8% 0px'
-            }
+            { threshold: 0.18, rootMargin: '0px 0px -8% 0px' }
         );
-
-        revealElements.forEach((element) => observer.observe(element));
+        revealElements.forEach((el) => observer.observe(el));
     };
-    
-    // ===== DARK MODE TOGGLE =====
+
     const darkModeToggle = document.getElementById('dark-mode-toggle');
-    console.log('🌙 Dark mode toggle found:', darkModeToggle);
-    
     if (darkModeToggle) {
-        // Set initial theme
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        console.log('🎨 Initial theme set to:', savedTheme);
 
         const emitThemeChange = (theme) => {
             document.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
         };
-
         emitThemeChange(savedTheme);
 
-        // Add click event
-        darkModeToggle.addEventListener('click', function(e) {
+        darkModeToggle.addEventListener('click', function (e) {
             e.preventDefault();
-            console.log('🌙 Dark mode toggle clicked!');
-            
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            console.log('🔄 Switching from', currentTheme, 'to', newTheme);
-
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-
             emitThemeChange(newTheme);
-
-            // Force repaint
             document.body.offsetHeight;
         });
-
-        console.log('✅ Dark mode toggle event listener added');
-    } else {
-        console.error('❌ Dark mode toggle not found!');
     }
-    
-    // ===== MOBILE MENU =====
+
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('nav-links');
-    
-    console.log('🍔 Hamburger found:', hamburger);
-    console.log('📱 Nav links found:', navLinks);
-    
     if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function(e) {
+        hamburger.addEventListener('click', function (e) {
             e.preventDefault();
-            console.log('🍔 Hamburger clicked!');
-            
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
-            
-            console.log('🍔 Menu toggled. Active:', navLinks.classList.contains('active'));
         });
-        
-        // Close menu when clicking links
-        const menuLinks = navLinks.querySelectorAll('a');
-        menuLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                console.log('🔗 Menu link clicked, closing menu');
+        navLinks.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', function () {
                 hamburger.classList.remove('active');
                 navLinks.classList.remove('active');
             });
         });
-        
-        console.log('✅ Mobile menu event listeners added');
-    } else {
-        console.error('❌ Hamburger or nav links not found!');
     }
-    
-    // ===== SMOOTH SCROLLING =====
-    const anchorLinks = document.querySelectorAll('a[href^="#"]');
-    anchorLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                const navbarHeight = 100;
-                let targetPosition = targetElement.offsetTop - navbarHeight;
-                
-                if (targetId === '#top') {
-                    targetPosition = 0;
-                }
-                
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
                 window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
+                    top: this.getAttribute('href') === '#top' ? 0 : target.offsetTop - 100,
+                    behavior: 'smooth',
                 });
             }
         });
     });
 
     initScrollReveal();
-
-    // ===== CONTACT FORM HANDLER =====
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        const submitButton = contactForm.querySelector('.submit-button');
-        const successMessage = document.getElementById('contact-success');
-        const errorMessage = document.getElementById('contact-error');
-        const defaultButtonText = submitButton ? submitButton.textContent : '';
-
-        contactForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            if (successMessage) successMessage.hidden = true;
-            if (errorMessage) errorMessage.hidden = true;
-
-            if (submitButton) {
-                submitButton.disabled = true;
-                submitButton.textContent = 'Sending...';
-            }
-
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: 'POST',
-                    body: new FormData(contactForm),
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    contactForm.reset();
-                    if (successMessage) successMessage.hidden = false;
-                } else {
-                    throw new Error(`Form submission failed with status ${response.status}`);
-                }
-            } catch (error) {
-                console.error('❌ Contact form submission error:', error);
-                if (errorMessage) errorMessage.hidden = false;
-            } finally {
-                if (submitButton) {
-                    submitButton.disabled = false;
-                    submitButton.textContent = defaultButtonText;
-                }
-            }
-        });
-    }
-
-    console.log('🎉 All functionality initialized!');
 });

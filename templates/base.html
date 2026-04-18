@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% set page_title = (self.title() | striptags) %}
     {% set page_description = (self.meta_description() | striptags) %}
-    <title>{% block title %}{{ config.name }} | Toucan.ee{% endblock %}</title>
+    <title>{% block title %}{{ config.name }}{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ config.meta_description }}{% endblock %}">
     {% block social_meta %}
         <link rel="canonical" href="{{ canonical_url }}">
@@ -110,7 +110,6 @@
             </div>
             <div class="notion-footer__bottom">
                 <p>&copy; {{ current_year }} {{ config.name }}</p>
-                <p>Toucan Studios OÜ · Estonia</p>
             </div>
         </div>
     </footer>

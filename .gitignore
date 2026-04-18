@@ -50,3 +50,4 @@ leads.json
 static/uploads/
 instance/newsletter.db
 instance/tutoring.sqlite
+instance/blog.db

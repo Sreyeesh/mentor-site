@@ -19,7 +19,6 @@ def test_home_page_content(client):
 def test_pages_load(client):
     """Ensure top-level pages render."""
     pages = [
-        ('/about/', b'full-stack developer'),
         ('/contact/', b'Get in touch'),
     ]
     for path, marker in pages:

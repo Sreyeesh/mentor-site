@@ -64,12 +64,15 @@ h1, h2, h3, h4 {
     font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.02em;
+    overflow-wrap: break-word;
 }
 
 code, pre {
     font-family: var(--font-mono);
     font-size: 0.875em;
 }
+
+* { overflow-wrap: break-word; }
 
 /* Layout */
 .wrap {
@@ -227,6 +230,14 @@ footer a:hover { color: var(--text); opacity: 1; }
 
 /* Mobile */
 @media (max-width: 768px) {
+    body { font-size: 1rem; }
+
+    main { padding: 2rem 0 4rem; }
+
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; }
+    h3 { font-size: 1.05rem; }
+
     .hamburger { display: flex; }
 
     .nav-links {
@@ -253,9 +264,14 @@ footer a:hover { color: var(--text); opacity: 1; }
     }
 
     .post-list time {
-        min-width: 5.5rem;
+        min-width: 5rem;
         font-size: 0.75rem;
     }
 
-    main { padding: 2rem 0 4rem; }
+    .post-list a { font-size: 0.9rem; }
+
+    .blog-post-body { font-size: 1rem; }
+
+    .blog-post-body h2 { font-size: 1.15rem; }
+    .blog-post-body h3 { font-size: 1rem; }
 }

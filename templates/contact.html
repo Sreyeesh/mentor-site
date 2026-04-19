@@ -1,43 +1,23 @@
 {% extends 'base.html' %}
 
 {% block title %}Contact | {{ config.name }}{% endblock %}
-{% block meta_description %}Get in touch with {{ config.name }} — full-stack developer and technical artist. Available for collaboration, questions, or just a conversation.{% endblock %}
+{% block meta_description %}Get in touch with {{ config.name }}.{% endblock %}
 
 {% block content %}
-<section class="page-hero">
-    <p class="section-eyebrow">Contact</p>
-    <h1>Get in touch.</h1>
-    <p class="lead">Have a project in mind, a question, or just want to say hello? I'd love to hear from you.</p>
-</section>
+<article style="max-width: 68ch;">
+    <h1 style="font-size: clamp(1.4rem, 4vw, 2rem); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 2rem;">
+        Get in touch.
+    </h1>
 
-<section class="section contact-section">
-    <div class="contact-grid">
-        <div class="contact-card">
-            <h2>How to reach me</h2>
-            <ul class="contact-list">
-                <li><strong>Email:</strong> <a href="mailto:{{ config.email }}">{{ config.email }}</a></li>
-                <li><strong>Location:</strong> Remote — Estonia &amp; Finland time zones</li>
-            </ul>
-            <p>I typically respond within 24 hours.</p>
-        </div>
-        <div class="contact-card">
-            <h2>What I'm open to</h2>
-            <ul class="contact-list">
-                <li>Full-stack development collaborations</li>
-                <li>Developer tooling and pipeline projects</li>
-                <li>Technical art and game development work</li>
-                <li>Questions about my writing</li>
-            </ul>
-        </div>
-    </div>
-</section>
+    <p>The best way to reach me is email — <a href="mailto:{{ config.email }}">{{ config.email }}</a>. I typically respond within a day.</p>
 
-<section class="section final-cta">
-    <div class="final-cta-card">
-        <p class="section-eyebrow">Let's talk</p>
-        <h2>Drop me a line.</h2>
-        <p>The best way to reach me is email.</p>
-        <a href="mailto:{{ config.email }}" class="btn btn-primary">Email {{ config.email }}</a>
-    </div>
-</section>
+    <p style="margin-top: 1.25rem;">I'm open to:</p>
+
+    <ul style="margin-top: 0.75rem; padding-left: 1.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
+        <li>Full-stack development projects</li>
+        <li>Developer tooling and pipeline work</li>
+        <li>Technical collaborations</li>
+        <li>Questions about anything I've written</li>
+    </ul>
+</article>
 {% endblock %}

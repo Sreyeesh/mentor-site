@@ -6,27 +6,21 @@ def test_home_page(client):
     response = client.get('/')
     body = response.get_data(as_text=True)
     assert response.status_code == 200
-    assert 'Full-Stack Developer' in body
+    assert 'Sreyeesh Garimella' in body
 
 
 def test_home_page_content(client):
     """Test that the page contains expected content."""
     response = client.get('/')
     body = response.get_data(as_text=True)
-    assert 'Read the blog' in body
-    assert 'Previously worked with' in body
+    assert 'Full-stack developer' in body
 
 
 def test_pages_load(client):
     """Ensure top-level pages render."""
-    pages = [
-        ('/about/', b'full-stack developer'),
-        ('/contact/', b'Get in touch'),
-    ]
-    for path, marker in pages:
-        response = client.get(path)
-        assert response.status_code == 200
-        assert marker in response.data
+    response = client.get('/blog/')
+    assert response.status_code == 200
+    assert b'Writing' in response.data
 
 
 def test_sitemap_endpoint(client):

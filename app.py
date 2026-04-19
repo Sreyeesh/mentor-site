@@ -28,15 +28,12 @@ SITE_CONFIG = {
 
 NAV_LINKS = [
     {'label': 'Home', 'href': '/'},
-    {'label': 'About', 'href': '/about/'},
     {'label': 'Blog', 'href': '/blog/'},
 ]
 
 SITE_LINKS = {
     'home': '/',
-    'about': '/about/',
     'blog': '/blog/',
-    'contact': '/contact/',
 }
 
 
@@ -68,14 +65,6 @@ def home():
     return render_template('home.html', **build_page_context(page_slug='home', posts=get_posts()))
 
 
-@app.route('/about/')
-def about():
-    return render_template('about.html', **build_page_context(page_slug='about'))
-
-
-@app.route('/contact/')
-def contact():
-    return render_template('contact.html', **build_page_context(page_slug='contact'))
 
 
 @app.route('/blog/')
@@ -101,7 +90,7 @@ def sitemap():
     posts = get_posts()
     urls = [
         {'loc': build_absolute_url(p), 'lastmod': datetime.utcnow().date().isoformat(), 'changefreq': 'weekly'}
-        for p in ['/', '/about/', '/blog/', '/contact/']
+        for p in ['/', '/blog/']
     ] + [
         {'loc': build_absolute_url(f'/blog/{post["slug"]}/'), 'lastmod': post.get('date'), 'changefreq': 'monthly'}
         for post in posts

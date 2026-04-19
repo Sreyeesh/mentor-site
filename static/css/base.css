@@ -31,6 +31,7 @@ body {
     color: var(--text);
     background: var(--bg);
     padding-top: var(--nav-height);
+    overflow-x: hidden;
     transition: background-color 0.2s, color 0.2s;
 }
 
@@ -208,7 +209,7 @@ footer a {
 footer a:hover { color: var(--text); opacity: 1; }
 
 /* Mobile */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .hamburger { display: flex; }
 
     .nav-links {
@@ -233,4 +234,11 @@ footer a:hover { color: var(--text); opacity: 1; }
         font-size: 1.1rem;
         color: var(--text);
     }
+
+    .post-list time {
+        min-width: 5.5rem;
+        font-size: 0.75rem;
+    }
+
+    main { padding: 2rem 0 4rem; }
 }

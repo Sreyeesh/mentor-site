@@ -34,7 +34,6 @@ NAV_LINKS = [
 SITE_LINKS = {
     'home': '/',
     'blog': '/blog/',
-    'contact': '/contact/',
 }
 
 
@@ -67,10 +66,6 @@ def home():
 
 
 
-@app.route('/contact/')
-def contact():
-    return render_template('contact.html', **build_page_context(page_slug='contact'))
-
 
 @app.route('/blog/')
 def blog_index():
@@ -95,7 +90,7 @@ def sitemap():
     posts = get_posts()
     urls = [
         {'loc': build_absolute_url(p), 'lastmod': datetime.utcnow().date().isoformat(), 'changefreq': 'weekly'}
-        for p in ['/', '/blog/', '/contact/']
+        for p in ['/', '/blog/']
     ] + [
         {'loc': build_absolute_url(f'/blog/{post["slug"]}/'), 'lastmod': post.get('date'), 'changefreq': 'monthly'}
         for post in posts

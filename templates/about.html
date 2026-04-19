@@ -1,92 +1,52 @@
 {% extends 'base.html' %}
 
-{% block title %}About {{ config.name }} | Toucan.ee{% endblock %}
-{% block meta_description %}Meet {{ config.name }} — full-stack developer and technical artist with production experience across Disney, Blizzard, DNEG, and indie game studios.{% endblock %}
+{% block title %}About | {{ config.name }}{% endblock %}
+{% block meta_description %}{{ config.name }} — full-stack developer building software with AI.{% endblock %}
 
 {% block content %}
-<section class="section about-hero" data-reveal="up">
-    <div class="wrap o-container about-hero__grid">
-        <div class="about-hero__copy">
-            <p class="section-eyebrow">About</p>
-            <h1>I'm a full-stack developer and technical artist.</h1>
-            <p class="lead">With a background spanning animation, VFX, and game development at studios like Disney, Blizzard Entertainment, and DNEG, I now build software and write about the craft of making things work.</p>
-            <div class="about-hero__chips">
-                <span>Full-Stack Development</span>
-                <span>Technical Art</span>
-                <span>Game Development</span>
-                <span>Pipeline &amp; Tooling</span>
-            </div>
-        </div>
-        <div class="about-hero__media" data-reveal="up" data-reveal-delay="120">
-            <img src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}" alt="Portrait of {{ config.name }}" loading="lazy">
-        </div>
-    </div>
-</section>
+<article style="max-width: 68ch;">
 
-<section class="section about-story" data-reveal="up">
-    <div class="wrap o-container">
-        <div class="section-headline">
-            <p class="section-eyebrow">Journey</p>
-            <h2>From production floors to software development</h2>
-        </div>
-        <div class="about-story__grid">
-            <article class="about-story__card" data-reveal="up" data-reveal-delay="60">
-                <p class="about-story__year">2012</p>
-                <h3>Started in production</h3>
-                <p>Finished an art and animation degree and moved directly into real-world production across animation, VFX, and game development.</p>
-            </article>
-            <article class="about-story__card" data-reveal="up" data-reveal-delay="120">
-                <p class="about-story__year">Studio Years</p>
-                <h3>Built cross-disciplinary depth</h3>
-                <p>Worked across shots, rigs, tools, and pipelines at Disney, Blizzard, DNEG, and indie teams — learning how creative quality and technical systems must align.</p>
-            </article>
-            <article class="about-story__card" data-reveal="up" data-reveal-delay="180">
-                <p class="about-story__year">Today</p>
-                <h3>Building software and writing</h3>
-                <p>Focused on full-stack development and developer tooling, writing about what I learn along the way.</p>
-            </article>
-        </div>
-    </div>
-</section>
+    <h1 style="font-size: clamp(1.4rem, 4vw, 2rem); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 2rem;">
+        Full-stack developer building with AI.
+    </h1>
 
-<section class="section about-approach" data-reveal="up">
-    <div class="wrap o-container about-approach__grid">
-        <div>
-            <p class="section-eyebrow">Approach</p>
-            <h2>How I work</h2>
-            <p>I care about clear code, practical architecture, and shipping things that actually work. My production background means I think about systems end-to-end — from the user-facing layer down to the pipeline.</p>
-        </div>
-        <ul class="about-list">
-            <li><strong>Production mindset:</strong> Shaped by real-world delivery constraints across film and game studios.</li>
-            <li><strong>Cross-disciplinary thinking:</strong> Bridge creative intent with technical implementation.</li>
-            <li><strong>Clarity over cleverness:</strong> Code and tools that are easy to reason about and maintain.</li>
-        </ul>
-    </div>
-</section>
+    <p>
+        I'm Sreyeesh Garimella. I build web applications, developer tools, and pipelines — and I use AI as a core part of how I work, not an afterthought.
+    </p>
 
-<section class="section about-company" data-reveal="up">
-    <div class="wrap o-container about-company__grid">
-        <div>
-            <p class="section-eyebrow">Toucan Studios OÜ</p>
-            <h2>Based in Estonia</h2>
-            <p>I operate through Toucan Studios OÜ and have worked with partners including GameCity Kajaani. Remote-first, collaborating with teams across Europe and beyond.</p>
-        </div>
-        <div class="about-company__panel">
-            <h3>Current focus</h3>
-            <ul class="about-list">
-                <li>Full-stack web development and APIs.</li>
-                <li>Developer tooling and pipeline automation.</li>
-                <li>Technical art and game development tools.</li>
-            </ul>
-        </div>
-    </div>
-</section>
+    <p style="margin-top: 1.25rem;">
+        My background is in production: animation, VFX, and game development at studios like Disney, Blizzard, and DNEG. That shaped how I think about software — systems need to be reliable, pipelines need to be maintainable, and tools need to get out of the way of the work.
+    </p>
 
-<section class="section final-cta" id="contact" data-reveal="up">
-    <div class="wrap o-container final-cta-card">
-        <p class="section-eyebrow">Get in touch</p>
-        <h2>Want to work together or just say hello?</h2>
-        <p>Email <a href="mailto:{{ config.email }}">{{ config.email }}</a> or visit the <a href="{{ site_links.contact }}">contact page</a>.</p>
-    </div>
-</section>
+    <h2 style="font-size: 1.15rem; margin-top: 2.5rem; margin-bottom: 0.75rem;">How I use AI in development</h2>
+
+    <p>
+        AI has changed how I write and ship code. I use large language models throughout the development process — for drafting, reviewing, and refining — but the judgment about architecture, tradeoffs, and what to actually ship stays with me.
+    </p>
+
+    <p style="margin-top: 1.25rem;">
+        I treat AI as a pair programmer that never gets tired. It speeds up the boring parts — boilerplate, documentation, test scaffolding — so I can spend more time on the parts that require real thinking: system design, edge cases, and making things maintainable long-term.
+    </p>
+
+    <h2 style="font-size: 1.15rem; margin-top: 2.5rem; margin-bottom: 0.75rem;">What I build</h2>
+
+    <p>
+        Mostly web applications and internal tools: Flask and Python on the backend, straightforward HTML/CSS/JS on the front, deployed to wherever it needs to run. I care about keeping things simple enough that they can actually be maintained — not architectured into oblivion.
+    </p>
+
+    <p style="margin-top: 1.25rem;">
+        I also work on developer tooling: pipeline automation, scripting, build systems. Anything that makes the development loop faster and more predictable.
+    </p>
+
+    <h2 style="font-size: 1.15rem; margin-top: 2.5rem; margin-bottom: 0.75rem;">This site</h2>
+
+    <p>
+        This is where I write about what I'm learning and building. Mostly notes to my future self, occasionally useful to others. If something here is useful to you, I'm glad.
+    </p>
+
+    <p style="margin-top: 1.25rem;">
+        You can reach me at <a href="mailto:{{ config.email }}">{{ config.email }}</a>.
+    </p>
+
+</article>
 {% endblock %}

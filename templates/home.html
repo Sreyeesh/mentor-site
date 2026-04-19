@@ -4,71 +4,29 @@
 {% block meta_description %}{{ config.meta_description }}{% endblock %}
 
 {% block content %}
-<section class="section lp-hero" id="top" data-reveal="up">
-    <div class="wrap o-container lp-hero__grid">
-        <div class="lp-hero__copy">
-            <p class="pill">Toucan.ee</p>
-            <h1>Hi, I'm {{ config.name }}.</h1>
-            <p class="lp-hero__lede">I build software and write about it. From web applications to game tools, I care about craft, clarity, and shipping things that work.</p>
-            <div class="hero-cta-row">
-                <a class="btn btn-primary" href="{{ site_links.blog }}">Read the blog</a>
-                <a class="btn btn-outline" href="{{ site_links.about }}">About me</a>
-            </div>
-        </div>
-        <aside class="lp-hero__panel" data-reveal="up" data-reveal-delay="120">
-            <p class="lp-hero__panel-eyebrow">What I work with</p>
-            <ol class="lp-hero__steps">
-                <li>Full-stack web development</li>
-                <li>Game tooling &amp; technical art</li>
-                <li>Pipeline automation &amp; developer tools</li>
-            </ol>
-        </aside>
-    </div>
-</section>
-
-<section class="section trust-pulse lp-trust" id="background" data-reveal="up">
-    <div class="wrap narrow o-container">
-        <p class="lp-trust__kicker">Background</p>
-        <h2 class="lp-trust__title">Previously worked with</h2>
-        <p class="lp-trust__lede">Production experience across animation, VFX, and game development studios.</p>
-        <div class="logos-grid logos-grid--text">
-            <span>Disney</span>
-            <span>Blizzard Entertainment</span>
-            <span>DNEG</span>
-            <span>GameCity Kajaani</span>
-        </div>
-    </div>
+<section style="margin-bottom: 3rem;">
+    <h1 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem;">{{ config.name }}</h1>
+    <p style="color: var(--text-muted); font-size: 0.975rem;">
+        Full-stack developer. I write about software, tooling, and the craft of building things.
+    </p>
 </section>
 
 {% if posts %}
-<section class="section lp-process" id="writing" data-reveal="up">
-    <div class="wrap o-container">
-        <div class="section-headline">
-            <p class="section-eyebrow">Latest Writing</p>
-            <h2>From the blog</h2>
-            <p>Notes on software, tools, and building things.</p>
-        </div>
-        <div class="lp-process__grid">
-            {% for post in posts[:3] %}
-            <article class="lp-process__card" data-reveal="up" data-reveal-delay="{{ loop.index * 60 }}">
-                <p class="blog-meta">{{ post.date_display }} · {{ post.reading_time }} min read</p>
-                <h3><a href="{{ site_links.blog }}{{ post.slug }}/">{{ post.title }}</a></h3>
-                <p>{{ post.excerpt }}</p>
-            </article>
-            {% endfor %}
-        </div>
-        <div style="text-align:center;margin-top:2rem">
-            <a class="btn btn-outline" href="{{ site_links.blog }}">All posts →</a>
-        </div>
-    </div>
+<section>
+    <h2 style="font-family: system-ui, sans-serif; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.5rem;">Writing</h2>
+    <ul class="post-list">
+        {% for post in posts[:5] %}
+        <li>
+            <time>{{ post.date_display }}</time>
+            <a href="{{ site_links.blog }}{{ post.slug }}/">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% if posts|length > 5 %}
+    <p style="margin-top: 1rem; font-size: 0.875rem;">
+        <a href="{{ site_links.blog }}">All posts →</a>
+    </p>
+    {% endif %}
 </section>
 {% endif %}
-
-<section class="section final-cta lp-final" id="contact" data-reveal="up">
-    <div class="wrap o-container final-cta-card">
-        <p class="section-eyebrow">Get in touch</p>
-        <h2>Let's talk.</h2>
-        <p>Reach me at <a href="mailto:{{ config.email }}">{{ config.email }}</a> or find me on <a href="{{ site_links.contact }}">the contact page</a>.</p>
-    </div>
-</section>
 {% endblock %}

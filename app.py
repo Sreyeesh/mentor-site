@@ -18,7 +18,8 @@ SITE_CONFIG = {
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),
     'meta_description': os.getenv(
         'SITE_META_DESCRIPTION',
-        'Full-stack developer and technical artist — writing about software, tools, and the craft of building things.',
+        'Full-stack developer and technical artist — writing about software, '
+        'tools, and the craft of building things.',
     ),
     'asset_version': os.getenv('ASSET_VERSION', '1'),
     'plausible_script_url': os.getenv('PLAUSIBLE_SCRIPT_URL', ''),
@@ -28,15 +29,12 @@ SITE_CONFIG = {
 
 NAV_LINKS = [
     {'label': 'Home', 'href': '/'},
-    {'label': 'About', 'href': '/about/'},
     {'label': 'Blog', 'href': '/blog/'},
 ]
 
 SITE_LINKS = {
     'home': '/',
-    'about': '/about/',
     'blog': '/blog/',
-    'contact': '/contact/',
 }
 
 
@@ -49,7 +47,9 @@ def get_posts():
 def build_absolute_url(path: str) -> str:
     site_url = SITE_CONFIG['site_url']
     normalized = path if path.startswith('/') else f'/{path}'
-    return f'{site_url}{normalized}' if site_url else f'{request.url_root.rstrip("/")}{normalized}'
+    if site_url:
+        return f'{site_url}{normalized}'
+    return f'{request.url_root.rstrip("/")}{normalized}'
 
 
 def build_page_context(**extra) -> dict:
@@ -65,22 +65,16 @@ def build_page_context(**extra) -> dict:
 
 @app.route('/')
 def home():
-    return render_template('home.html', **build_page_context(page_slug='home', posts=get_posts()))
-
-
-@app.route('/about/')
-def about():
-    return render_template('about.html', **build_page_context(page_slug='about'))
-
-
-@app.route('/contact/')
-def contact():
-    return render_template('contact.html', **build_page_context(page_slug='contact'))
+    return render_template(
+        'home.html', **build_page_context(page_slug='home', posts=get_posts())
+    )
 
 
 @app.route('/blog/')
 def blog_index():
-    return render_template('blog/list.html', **build_page_context(page_slug='blog', posts=get_posts()))
+    return render_template(
+        'blog/list.html', **build_page_context(page_slug='blog', posts=get_posts())
+    )
 
 
 @app.route('/blog/<slug>/')
@@ -89,7 +83,12 @@ def blog_detail(slug: str):
     if post is None:
         abort(404)
     hero_value, is_external = normalize_media_path(post.get('hero_image'))
-    hero_url = hero_value if is_external else (url_for('static', filename=hero_value) if hero_value else None)
+    if is_external:
+        hero_url = hero_value
+    elif hero_value:
+        hero_url = url_for('static', filename=hero_value)
+    else:
+        hero_url = None
     return render_template(
         'blog/detail.html',
         **build_page_context(page_slug='blog', post=post, hero_image_url=hero_url),
@@ -99,14 +98,22 @@ def blog_detail(slug: str):
 @app.route('/sitemap.xml')
 def sitemap():
     posts = get_posts()
+    today = datetime.utcnow().date().isoformat()
     urls = [
-        {'loc': build_absolute_url(p), 'lastmod': datetime.utcnow().date().isoformat(), 'changefreq': 'weekly'}
-        for p in ['/', '/about/', '/blog/', '/contact/']
+        {'loc': build_absolute_url(p), 'lastmod': today, 'changefreq': 'weekly'}
+        for p in ['/', '/blog/']
     ] + [
-        {'loc': build_absolute_url(f'/blog/{post["slug"]}/'), 'lastmod': post.get('date'), 'changefreq': 'monthly'}
+        {
+            'loc': build_absolute_url(f'/blog/{post["slug"]}/'),
+            'lastmod': post.get('date'),
+            'changefreq': 'monthly',
+        }
         for post in posts
     ]
-    return render_template('sitemap.xml', urls=urls), {'Content-Type': 'application/xml'}
+    return (
+        render_template('sitemap.xml', urls=urls),
+        {'Content-Type': 'application/xml'},
+    )
 
 
 @app.route('/robots.txt')

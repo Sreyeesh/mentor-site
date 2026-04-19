@@ -29,12 +29,10 @@
                 if (savedTheme) {
                     document.documentElement.setAttribute('data-theme', savedTheme);
                 }
-            } catch (err) {
-                console.warn('Theme preference unavailable', err);
-            }
+            } catch (err) {}
         })();
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
     {% if config.plausible_script_url %}
         <script
@@ -42,50 +40,40 @@
             src="{{ config.plausible_script_url }}"
             {% if config.plausible_domain %}data-domain="{{ config.plausible_domain }}"{% endif %}
         ></script>
-        <script>
-            window.plausible = window.plausible || function () { (plausible.q = plausible.q || []).push(arguments) };
-            plausible.init = plausible.init || function (options) { plausible.o = options || {} };
-            plausible.init();
-        </script>
     {% endif %}
     {% block head_extra %}{% endblock %}
 </head>
-<body class="{{ body_class | default('') }}" data-contact-link="{{ site_links.contact }}">
+<body class="{{ body_class | default('') }}">
     <nav class="navbar">
-        <div class="wrap">
-            <div class="nav-content">
-                <div class="nav-brand">
-                    <a href="{{ site_links.home }}" class="nav-name-link">{{ config.name }}</a>
-                    {% if config.tagline %}
-                        <span class="nav-tagline">{{ config.tagline }}</span>
-                    {% endif %}
-                </div>
-                <div class="nav-links" id="nav-links">
-                    {% for item in nav_links %}
-                        <a href="{{ item.href }}"
-                            class="{% if item.is_cta %}nav-link--cta{% endif %}">
-                            {{ item.label }}
-                        </a>
-                    {% endfor %}
-                </div>
-                <div class="nav-controls">
-                    <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
-                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                        </svg>
-                    </button>
-                </div>
+        <div class="nav-content">
+            <div class="nav-brand">
+                <a href="{{ site_links.home }}" class="nav-name-link">{{ config.name }}</a>
+            </div>
+            <div class="nav-links" id="nav-links">
+                {% for item in nav_links %}
+                    <a href="{{ item.href }}"
+                        class="{% if item.is_cta %}nav-link--cta{% endif %}">
+                        {{ item.label }}
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="nav-controls">
+                <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
                 <div class="hamburger" id="hamburger" aria-label="Toggle navigation" role="button">
                     <span></span>
                     <span></span>
@@ -105,42 +93,8 @@
 
     <footer>
         <div class="wrap">
-            <div class="footer-grid">
-                <div class="footer-column footer-column--brand">
-                    <a href="{{ site_links.home }}" class="footer-logo">{{ config.name }}</a>
-                    {% if config.tagline %}
-                        <p class="footer-tagline">{{ config.tagline }}</p>
-                    {% endif %}
-                    <p class="footer-description">
-                        Full-stack developer writing about software, tooling, and the craft of building things.
-                    </p>
-                    <div class="footer-contact">
-                        <a href="mailto:{{ config.email }}" class="footer-contact-link">{{ config.email }}</a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <p class="footer-heading">Explore</p>
-                    <ul class="footer-list">
-                        {% for item in nav_links %}
-                            <li><a href="{{ item.href }}">{{ item.label }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <p class="footer-heading">Contact</p>
-                    <ul class="footer-list">
-                        <li><a href="mailto:{{ config.email }}">Email</a></li>
-                        <li><a href="{{ site_links.contact }}">Contact page</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; {{ current_year }} {{ config.name }}. All rights reserved.</p>
-                <div class="footer-bottom-links">
-                    <a href="{{ site_links.about }}">About</a>
-                    <a href="{{ site_links.blog }}">Blog</a>
-                </div>
-            </div>
+            <p>&copy; {{ current_year }} {{ config.name }}</p>
+            <a href="mailto:{{ config.email }}">{{ config.email }}</a>
         </div>
     </footer>
 

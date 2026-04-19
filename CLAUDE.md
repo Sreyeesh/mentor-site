@@ -45,11 +45,11 @@ Use [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): 
 Common types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 
 ## Branching Strategy
-This project uses **trunk-based development**:
-- `master` is the trunk — always kept releasable
-- Work in short-lived feature branches, merge to `master` via PR as soon as possible
-- Branches should be small and focused; avoid long-running branches
-- Feature flags preferred over long-lived feature branches
+This project uses **Git Flow**:
+- `master` is production — only updated via PR from `dev`
+- `dev` is the integration branch — all feature branches merge here via PR
+- Branch off `dev` for all work: `git checkout dev && git checkout -b feat/my-feature`
+- Keep branches small and focused; merge back to `dev` quickly
 
 ## CI/CD
 - GitHub Actions runs lint → tests → static build check on PRs to `master`

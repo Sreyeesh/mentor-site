@@ -21,8 +21,8 @@
 .post-list li:first-child { border-top: 1px solid var(--border); }
 
 .post-list time {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 0.825rem;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
     color: var(--text-muted);
     white-space: nowrap;
     flex-shrink: 0;
@@ -30,9 +30,10 @@
 }
 
 .post-list a {
+    font-family: var(--font-sans);
     color: var(--text);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 0.9375rem;
     line-height: 1.4;
 }
 
@@ -47,13 +48,16 @@
 }
 
 .blog-list-header h1 {
+    font-family: var(--font-serif);
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 0.35rem;
+    letter-spacing: -0.02em;
 }
 
 .blog-list-header p {
-    font-size: 0.95rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
     color: var(--text-muted);
 }
 
@@ -69,10 +73,11 @@
 .blog-post-header { margin-bottom: 2rem; }
 
 .blog-post-date {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 0.825rem;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
     color: var(--text-muted);
     margin-bottom: 0.75rem;
+    letter-spacing: 0.01em;
 }
 
 .blog-post-header h1 {
@@ -128,8 +133,8 @@
 }
 
 .blog-post-body code {
-    font-family: 'SFMono-Regular', Menlo, Consolas, monospace;
-    font-size: 0.875em;
+    font-family: var(--font-mono);
+    font-size: 0.85em;
     background: color-mix(in srgb, var(--text) 8%, transparent);
     padding: 0.15em 0.35em;
     border-radius: 3px;
@@ -187,13 +192,13 @@
 }
 
 .blog-related h2 {
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
     margin-bottom: 1rem;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-family: system-ui, -apple-system, sans-serif;
+    letter-spacing: 0.08em;
 }
 
 .blog-related ul {
@@ -217,7 +222,7 @@
 .related-title { font-size: 0.95rem; }
 
 .related-meta {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 0.8rem;
+    font-family: var(--font-sans);
+    font-size: 0.775rem;
     color: var(--text-muted);
 }

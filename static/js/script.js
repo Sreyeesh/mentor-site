@@ -1,32 +1,4 @@
-// Simple, working JavaScript for dark mode and mobile menu
-const SUPPORTED_TRANSLATION_LANGUAGES = ['et', 'en', 'fi', 'ru'];
-const DEFAULT_LANGUAGE = 'et';
-const LANGUAGE_STORAGE_KEY = 'preferredLanguage';
-let resolveTranslateElementReady;
-const translateElementReady = new Promise((resolve) => {
-    resolveTranslateElementReady = resolve;
-});
-
-window.googleTranslateElementInit = function() {
-    if (!(window.google && window.google.translate)) {
-        resolveTranslateElementReady();
-        return;
-    }
-
-    new window.google.translate.TranslateElement(
-        {
-            pageLanguage: 'en',
-            includedLanguages: SUPPORTED_TRANSLATION_LANGUAGES.join(','),
-            autoDisplay: false
-        },
-        'google_translate_element'
-    );
-
-    resolveTranslateElementReady();
-};
-
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 DOM loaded!');
 
     const initScrollReveal = () => {
         const revealElements = Array.from(document.querySelectorAll('[data-reveal]'));
@@ -68,13 +40,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ===== DARK MODE TOGGLE =====
     const darkModeToggle = document.getElementById('dark-mode-toggle');
-    console.log('🌙 Dark mode toggle found:', darkModeToggle);
     
     if (darkModeToggle) {
         // Set initial theme
         const savedTheme = localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        console.log('🎨 Initial theme set to:', savedTheme);
 
         const emitThemeChange = (theme) => {
             document.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
@@ -85,12 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add click event
         darkModeToggle.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('🌙 Dark mode toggle clicked!');
             
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-            console.log('🔄 Switching from', currentTheme, 'to', newTheme);
 
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
@@ -101,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.offsetHeight;
         });
 
-        console.log('✅ Dark mode toggle event listener added');
     } else {
         console.error('❌ Dark mode toggle not found!');
     }
@@ -110,31 +77,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('nav-links');
     
-    console.log('🍔 Hamburger found:', hamburger);
-    console.log('📱 Nav links found:', navLinks);
     
     if (hamburger && navLinks) {
         hamburger.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('🍔 Hamburger clicked!');
             
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
             
-            console.log('🍔 Menu toggled. Active:', navLinks.classList.contains('active'));
         });
         
         // Close menu when clicking links
         const menuLinks = navLinks.querySelectorAll('a');
         menuLinks.forEach(link => {
             link.addEventListener('click', function() {
-                console.log('🔗 Menu link clicked, closing menu');
                 hamburger.classList.remove('active');
                 navLinks.classList.remove('active');
             });
         });
         
-        console.log('✅ Mobile menu event listeners added');
     } else {
         console.error('❌ Hamburger or nav links not found!');
     }
@@ -165,113 +126,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     initScrollReveal();
-
-    // ===== LANGUAGE SWITCHER =====
-    const languageSwitcher = document.querySelector('[data-language-dropdown]');
-    if (languageSwitcher) {
-        const toggleButton = languageSwitcher.querySelector('.language-switcher__toggle');
-        const toggleLabel = toggleButton ? toggleButton.querySelector('.language-switcher__label') : null;
-        const menu = languageSwitcher.querySelector('.language-switcher__menu');
-        const languageButtons = menu ? Array.from(menu.querySelectorAll('[data-translate-lang]')) : [];
-
-        const setDropdownState = (isOpen) => {
-            languageSwitcher.dataset.open = isOpen ? 'true' : 'false';
-            if (toggleButton) {
-                toggleButton.setAttribute('aria-expanded', String(isOpen));
-            }
-        };
-
-        const markActiveLanguageButton = (langCode) => {
-            languageButtons.forEach((btn) => {
-                if (btn.dataset.translateLang === langCode) {
-                    btn.classList.add('is-active');
-                } else {
-                    btn.classList.remove('is-active');
-                }
-            });
-        };
-
-        const updateToggleLabel = (langCode) => {
-            if (toggleLabel) {
-                toggleLabel.textContent = (langCode || DEFAULT_LANGUAGE).toUpperCase();
-            }
-        };
-
-        const triggerLanguageChange = (langCode) => {
-            const combo = document.querySelector('.goog-te-combo');
-            if (!combo) {
-                return;
-            }
-            const targetValue = langCode || DEFAULT_LANGUAGE;
-            combo.value = targetValue;
-            combo.dispatchEvent(new Event('change'));
-        };
-
-        const resetTranslateArtifacts = () => {
-            const bannerFrame = document.querySelector('.goog-te-banner-frame');
-            if (bannerFrame && bannerFrame.parentElement) {
-                bannerFrame.parentElement.removeChild(bannerFrame);
-            }
-            document.body.style.top = '0';
-        };
-
-        const applyLanguagePreference = (langCode) => {
-            const targetLang = SUPPORTED_TRANSLATION_LANGUAGES.includes(langCode)
-                ? langCode
-                : DEFAULT_LANGUAGE;
-            translateElementReady.then(() => {
-                triggerLanguageChange(targetLang);
-                if (targetLang === 'en') {
-                    resetTranslateArtifacts();
-                }
-            });
-        };
-
-        const setLanguage = (langCode) => {
-            const selected = SUPPORTED_TRANSLATION_LANGUAGES.includes(langCode)
-                ? langCode
-                : DEFAULT_LANGUAGE;
-            localStorage.setItem(LANGUAGE_STORAGE_KEY, selected);
-            markActiveLanguageButton(selected);
-            updateToggleLabel(selected);
-            applyLanguagePreference(selected);
-            setDropdownState(false);
-        };
-
-        languageButtons.forEach((button) => {
-            button.addEventListener('click', (event) => {
-                event.preventDefault();
-                setLanguage(button.dataset.translateLang || DEFAULT_LANGUAGE);
-            });
-        });
-
-        if (toggleButton) {
-            toggleButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                const isOpen = languageSwitcher.dataset.open === 'true';
-                setDropdownState(!isOpen);
-            });
-        }
-
-        document.addEventListener('click', (event) => {
-            if (!languageSwitcher.contains(event.target)) {
-                setDropdownState(false);
-            }
-        });
-
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                setDropdownState(false);
-            }
-        });
-
-        setDropdownState(false);
-        const savedLanguage =
-            localStorage.getItem(LANGUAGE_STORAGE_KEY) || DEFAULT_LANGUAGE;
-        markActiveLanguageButton(savedLanguage);
-        updateToggleLabel(savedLanguage);
-        applyLanguagePreference(savedLanguage);
-    }
 
     // ===== CONTACT FORM HANDLER =====
     const contactForm = document.getElementById('contact-form');
@@ -390,12 +244,10 @@ document.addEventListener('DOMContentLoaded', function() {
         ensureCalendlyScript()
             .then(() => {
                 attachCalendlyTriggers();
-                console.log('✅ Calendly popup ready');
             })
             .catch((error) => {
                 console.error('❌ Calendly widget failed to load', error);
             });
     }
 
-    console.log('🎉 All functionality initialized!');
 });

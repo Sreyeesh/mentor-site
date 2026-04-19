@@ -18,13 +18,9 @@ def test_home_page_content(client):
 
 def test_pages_load(client):
     """Ensure top-level pages render."""
-    pages = [
-        ('/contact/', b'Get in touch'),
-    ]
-    for path, marker in pages:
-        response = client.get(path)
-        assert response.status_code == 200
-        assert marker in response.data
+    response = client.get('/blog/')
+    assert response.status_code == 200
+    assert b'Writing' in response.data
 
 
 def test_sitemap_endpoint(client):

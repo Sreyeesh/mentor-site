@@ -12,8 +12,10 @@
 <ul class="post-list">
     {% for post in posts %}
     <li>
-        <time>{{ post.date_display }}</time>
-        <a href="{{ blog_index_href }}{{ post.slug }}/">{{ post.title }}</a>
+        <a class="post-link" href="{{ blog_index_href }}{{ post.slug }}/">
+            <time>{{ post.date_display }}</time>
+            <span class="post-title">{{ post.title }}</span>
+        </a>
     </li>
     {% endfor %}
 </ul>

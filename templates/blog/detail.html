@@ -45,7 +45,7 @@
 
 {% block content %}
 <nav class="blog-post-nav">
-    <a href="{{ blog_index_href }}" class="back-link">← Writing</a>
+    <a href="{{ site_links.blog }}" class="back-link">← Writing</a>
 </nav>
 
 <article class="blog-post">
@@ -76,7 +76,7 @@
         {% if related %}
             {% for other in related %}
                 <li>
-                    <a href="{{ blog_index_href }}{{ other.slug }}/">
+                    <a href="{{ site_links.blog }}{{ other.slug }}/">
                         <span class="related-title">{{ other.title }}</span>
                         <span class="related-meta">{{ other.date_display }} • {{ other.reading_time }} min read</span>
                     </a>

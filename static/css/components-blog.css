@@ -99,6 +99,17 @@
     font-family: var(--font-sans);
 }
 
+/* ── Coming soon signup ──────────────────────────────────────────────────────── */
+.coming-soon-signup {
+    margin-top: 2.5rem;
+}
+.notion-form-embed {
+    width: 100%;
+    min-height: 500px;
+    border: none;
+    border-radius: 8px;
+}
+
 /* ── Post back-link ──────────────────────────────────────────────────────────── */
 .blog-post-nav {
     margin-bottom: 2.5rem;

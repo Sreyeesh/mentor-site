@@ -2,25 +2,24 @@ from blog import load_posts
 
 
 def test_home_page(client):
-    """Test that the home page loads successfully."""
+    """Home page loads the coming soon landing page."""
     response = client.get('/')
-    body = response.get_data(as_text=True)
     assert response.status_code == 200
-    assert 'Sreyeesh Garimella' in body
+    assert b'Sreyeesh Garimella' in response.data
 
 
 def test_home_page_content(client):
-    """Test that the page contains expected content."""
+    """Coming soon page has signup link and no-account note."""
     response = client.get('/')
-    body = response.get_data(as_text=True)
-    assert 'Full-stack developer' in body
+    assert b'notion.site' in response.data
+    assert b'Notion account' in response.data
 
 
 def test_pages_load(client):
-    """Ensure top-level pages render."""
+    """Blog index redirects to home."""
     response = client.get('/blog/')
-    assert response.status_code == 200
-    assert b'Writing' in response.data
+    assert response.status_code == 302
+    assert response.location == '/'
 
 
 def test_sitemap_endpoint(client):
@@ -57,8 +56,8 @@ def test_markdown_posts_available():
 
 def test_blog_index(client):
     response = client.get('/blog/')
-    assert response.status_code == 200
-    assert b'Writing' in response.data
+    assert response.status_code == 302
+    assert response.location == '/'
 
 
 def test_blog_detail(client, tmp_path, monkeypatch):

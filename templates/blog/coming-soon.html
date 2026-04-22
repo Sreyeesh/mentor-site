@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Writing — Coming Soon | {{ config.name }}{% endblock %}
+{% block meta_description %}The blog is coming soon. Sign up to be notified when it launches.{% endblock %}
+
+{% block content %}
+<div class="blog-list-header">
+    <h1>Writing</h1>
+    <p>Something is on the way. Leave your email and I'll let you know when it's live.</p>
+</div>
+
+<div class="coming-soon-signup">
+    <iframe
+        src="https://www.notion.so/64939681cd2c4a1f899c6ac8d2fe4e74"
+        class="notion-form-embed"
+        frameborder="0"
+        allowfullscreen
+        title="Blog launch notification signup">
+    </iframe>
+</div>
+{% endblock %}

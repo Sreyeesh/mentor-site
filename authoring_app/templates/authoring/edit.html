@@ -57,10 +57,19 @@
         <label>
             <input name="featured" type="checkbox" {% if post_data.featured %}checked{% endif %}> Featured post
         </label>
-        <label>
-            Content (Markdown)
-            <textarea name="content" required>{{ post_data.content }}</textarea>
-        </label>
+        <label>Content (Markdown)</label>
+        <div class="md-toolbar" id="md-toolbar">
+            <button type="button" data-wrap="**" title="Bold">B</button>
+            <button type="button" data-wrap="_" title="Italic">I</button>
+            <button type="button" data-prefix="## " title="Heading">H2</button>
+            <button type="button" data-prefix="### " title="Heading 3">H3</button>
+            <button type="button" data-wrap="`" title="Inline code">Code</button>
+            <button type="button" data-prefix="```\n" data-suffix="\n```" title="Code block">```</button>
+            <button type="button" data-prefix="> " title="Blockquote">Quote</button>
+            <button type="button" data-snippet="[link text](url)" title="Link">Link</button>
+            <button type="button" data-snippet="![alt text](url)" title="Image">Img</button>
+        </div>
+        <textarea id="content-input" name="content" required>{{ post_data.content }}</textarea>
         <footer class="actions">
             <button type="submit">Save post</button>
             <a class="secondary" role="button" href="{{ url_for('authoring.dashboard') }}">Cancel</a>
@@ -107,6 +116,35 @@
     });
 
     refreshPreview();
+}());
+
+// Markdown toolbar
+(function () {
+    const textarea = document.getElementById('content-input');
+    document.getElementById('md-toolbar').addEventListener('click', function (e) {
+        const btn = e.target.closest('button[data-wrap], button[data-prefix], button[data-snippet]');
+        if (!btn) return;
+        e.preventDefault();
+
+        const start = textarea.selectionStart;
+        const end   = textarea.selectionEnd;
+        const sel   = textarea.value.slice(start, end);
+        let replacement = '';
+
+        if (btn.dataset.snippet) {
+            replacement = btn.dataset.snippet;
+        } else if (btn.dataset.wrap) {
+            const w = btn.dataset.wrap;
+            replacement = sel ? w + sel + w : w + w;
+        } else if (btn.dataset.prefix) {
+            const prefix = btn.dataset.prefix;
+            const suffix = btn.dataset.suffix || '';
+            replacement = sel ? prefix + sel + suffix : prefix + suffix;
+        }
+
+        textarea.setRangeText(replacement, start, end, 'end');
+        textarea.focus();
+    });
 }());
 </script>
 {% endblock %}

@@ -9,6 +9,7 @@ from flask import (
     Blueprint,
     current_app,
     flash,
+    jsonify,
     redirect,
     render_template,
     request,
@@ -307,6 +308,23 @@ def preview_post(slug: str) -> str:
         hero_image_url=hero_image_url,
         site_name=current_app.config.get('SITE_NAME', 'Toucan.ee'),
     )
+
+
+@bp.route('/uploads/list')
+def list_uploads():
+    image_exts = {'png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'}
+    media_dir = get_media_dir()
+    files = []
+    if media_dir.exists():
+        for path in sorted(media_dir.iterdir()):
+            ext = path.suffix.lower().lstrip('.')
+            if ext in allowed_media_extensions():
+                files.append({
+                    'filename': path.name,
+                    'url': build_media_url(path.name),
+                    'is_image': ext in image_exts,
+                })
+    return jsonify(files)
 
 
 @bp.route('/posts/<slug>/delete', methods=['POST'])

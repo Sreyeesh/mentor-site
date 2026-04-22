@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 
 from dotenv import load_dotenv
-from flask import Flask, abort, g, render_template, request, url_for
+from flask import Flask, abort, g, redirect, render_template, request, url_for
 
 load_dotenv()
 
@@ -29,12 +29,14 @@ SITE_CONFIG = {
 
 NAV_LINKS = [
     {'label': 'Home', 'href': '/'},
-    {'label': 'Blog', 'href': '/blog/'},
+    {'label': 'Writing', 'href': '/blog/'},
+    {'label': 'About', 'href': '/about/'},
 ]
 
 SITE_LINKS = {
     'home': '/',
     'blog': '/blog/',
+    'about': '/about/',
 }
 
 
@@ -63,18 +65,17 @@ def build_page_context(**extra) -> dict:
     }
 
 
+NOTION_SIGNUP_URL = 'https://observant-toothpaste-fa5.notion.site/64939681cd2c4a1f899c6ac8d2fe4e74?pvs=105'
+
+
 @app.route('/')
 def home():
-    return render_template(
-        'home.html', **build_page_context(page_slug='home', posts=get_posts())
-    )
+    return render_template('coming-soon-full.html', signup_url=NOTION_SIGNUP_URL)
 
 
 @app.route('/blog/')
 def blog_index():
-    return render_template(
-        'blog/list.html', **build_page_context(page_slug='blog', posts=get_posts())
-    )
+    return redirect('/')
 
 
 @app.route('/blog/<slug>/')
@@ -95,13 +96,18 @@ def blog_detail(slug: str):
     )
 
 
+@app.route('/about/')
+def about():
+    return redirect('/')
+
+
 @app.route('/sitemap.xml')
 def sitemap():
     posts = get_posts()
     today = datetime.utcnow().date().isoformat()
     urls = [
         {'loc': build_absolute_url(p), 'lastmod': today, 'changefreq': 'weekly'}
-        for p in ['/', '/blog/']
+        for p in ['/', '/blog/', '/about/']
     ] + [
         {
             'loc': build_absolute_url(f'/blog/{post["slug"]}/'),

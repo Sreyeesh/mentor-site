@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}{{ post.title }} — {{ config.name }} Blog{% endblock %}
+{% block title %}{{ post.title }} — {{ config.name }} Blog{% endblock %}
 {% block meta_description %}{{ post.description or post.excerpt }}{% endblock %}
 
 {% block social_meta %}
@@ -44,10 +44,18 @@
 {% endblock %}
 
 {% block content %}
+<nav class="blog-post-nav">
+    <a href="{{ site_links.blog }}" class="back-link">← Writing</a>
+</nav>
+
 <article class="blog-post">
     <header class="blog-post-header">
-        <p class="blog-post-date">{{ post.date_display }} • {{ post.reading_time }} min read</p>
         <h1>{{ post.title }}</h1>
+        <p class="blog-post-date">
+            <time>{{ post.date_display }}</time>
+            <span class="blog-post-divider">·</span>
+            <span>{{ post.reading_time }} min read</span>
+        </p>
     </header>
 
     {% if post.hero_image %}
@@ -68,7 +76,7 @@
         {% if related %}
             {% for other in related %}
                 <li>
-                    <a href="{{ blog_index_href }}{{ other.slug }}/">
+                    <a href="{{ site_links.blog }}{{ other.slug }}/">
                         <span class="related-title">{{ other.title }}</span>
                         <span class="related-meta">{{ other.date_display }} • {{ other.reading_time }} min read</span>
                     </a>
@@ -79,4 +87,4 @@
         {% endif %}
     </ul>
 </aside>
-{% endblock %}
+    {% endblock %}

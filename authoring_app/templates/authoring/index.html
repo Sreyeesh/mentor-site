@@ -1,16 +1,17 @@
 {% extends 'authoring/base.html' %}
 {% block content %}
 <section class="post-list">
-    <header class="actions">
+    <header class="actions" style="margin-bottom: 1rem;">
         <a role="button" class="contrast" href="{{ url_for('authoring.edit_post') }}">Create new post</a>
+        <input id="post-search" type="search" placeholder="Filter posts…" style="max-width: 280px; margin: 0;">
     </header>
 
     {% if posts %}
-        <table>
+        <table id="post-table">
             <thead>
                 <tr>
                     <th>Title</th>
-                    <th>Slug</th>
+                    <th>Status</th>
                     <th>Date</th>
                     <th>Updated</th>
                     <th></th>
@@ -20,7 +21,10 @@
                 {% for post in posts %}
                     <tr>
                         <td>{{ post.title }}</td>
-                        <td>{{ post.slug }}</td>
+                        <td>
+                            {% set s = post.get('status', 'draft') %}
+                            <span class="status-badge status-{{ s }}">{{ s }}</span>
+                        </td>
                         <td>{{ post.date or '—' }}</td>
                         <td>{{ post.updated_at.strftime('%Y-%m-%d %H:%M') if post.updated_at else '—' }}</td>
                         <td class="actions">
@@ -34,8 +38,32 @@
                 {% endfor %}
             </tbody>
         </table>
+        <p id="no-results" style="display:none;">No posts match your filter.</p>
     {% else %}
         <p>No posts found yet. Create your first article.</p>
     {% endif %}
 </section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+(function () {
+    const search = document.getElementById('post-search');
+    if (!search) return;
+    const rows = document.querySelectorAll('#post-table tbody tr');
+    const noResults = document.getElementById('no-results');
+
+    search.addEventListener('input', function () {
+        const term = this.value.toLowerCase();
+        let visible = 0;
+        rows.forEach(function (row) {
+            const text = row.textContent.toLowerCase();
+            const show = text.includes(term);
+            row.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+        noResults.style.display = visible === 0 ? '' : 'none';
+    });
+}());
+</script>
 {% endblock %}

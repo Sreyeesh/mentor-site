@@ -55,6 +55,13 @@
             <input name="hero_image" type="text" value="{{ post_data.hero_image }}" placeholder="/static/uploads/hero.jpg">
         </label>
         <label>
+            Status
+            <select name="status">
+                <option value="draft" {% if post_data.status == 'draft' %}selected{% endif %}>Draft</option>
+                <option value="published" {% if post_data.status == 'published' %}selected{% endif %}>Published</option>
+            </select>
+        </label>
+        <label>
             <input name="featured" type="checkbox" {% if post_data.featured %}checked{% endif %}> Featured post
         </label>
         <label>Content (Markdown)</label>

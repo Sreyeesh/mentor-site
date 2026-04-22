@@ -62,19 +62,27 @@
         <label>
             <input name="featured" type="checkbox" {% if post_data.featured %}checked{% endif %}> Featured post
         </label>
-        <label>Content (Markdown)</label>
-        <div class="md-toolbar" id="md-toolbar">
-            <button type="button" data-wrap="**" title="Bold">B</button>
-            <button type="button" data-wrap="_" title="Italic">I</button>
-            <button type="button" data-prefix="## " title="Heading">H2</button>
-            <button type="button" data-prefix="### " title="Heading 3">H3</button>
-            <button type="button" data-wrap="`" title="Inline code">Code</button>
-            <button type="button" data-prefix="```\n" data-suffix="\n```" title="Code block">```</button>
-            <button type="button" data-prefix="> " title="Blockquote">Quote</button>
-            <button type="button" data-snippet="[link text](url)" title="Link">Link</button>
-            <button type="button" data-snippet="![alt text](url)" title="Image">Img</button>
+        <div class="editor-split">
+            <div class="editor-write">
+                <label>Content (Markdown)</label>
+                <div class="md-toolbar" id="md-toolbar">
+                    <button type="button" data-wrap="**" title="Bold">B</button>
+                    <button type="button" data-wrap="_" title="Italic">I</button>
+                    <button type="button" data-prefix="## " title="Heading">H2</button>
+                    <button type="button" data-prefix="### " title="Heading 3">H3</button>
+                    <button type="button" data-wrap="`" title="Inline code">Code</button>
+                    <button type="button" data-prefix="```\n" data-suffix="\n```" title="Code block">```</button>
+                    <button type="button" data-prefix="> " title="Blockquote">Quote</button>
+                    <button type="button" data-snippet="[link text](url)" title="Link">Link</button>
+                    <button type="button" data-snippet="![alt text](url)" title="Image">Img</button>
+                </div>
+                <textarea id="content-input" name="content" required>{{ post_data.content }}</textarea>
+            </div>
+            <div class="editor-preview">
+                <p class="preview-label">Live preview</p>
+                <div id="live-preview-output"></div>
+            </div>
         </div>
-        <textarea id="content-input" name="content" required>{{ post_data.content }}</textarea>
         <footer class="actions">
             <button type="submit">Save post</button>
             <a class="secondary" role="button" href="{{ url_for('authoring.dashboard') }}">Cancel</a>
@@ -86,7 +94,37 @@
 </section>
 {% endblock %}
 
+{% block extra_head %}
+<style>
+    body { max-width: 1400px !important; }
+    .editor-split {
+        display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .editor-write {
+        flex: 1; display: flex; flex-direction: column; min-width: 0;
+    }
+    .editor-write #content-input {
+        flex: 1; min-height: 480px; resize: vertical; font-family: monospace; font-size: 0.9rem;
+    }
+    .editor-preview {
+        flex: 1; min-width: 0; border: 1px solid #e5e7eb; border-radius: 6px;
+        padding: 1rem 1.25rem; overflow-y: auto; max-height: 560px;
+        background: #fafafa;
+    }
+    .preview-label {
+        font-size: 0.7rem; font-weight: 700; color: #9ca3af;
+        text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;
+    }
+    #live-preview-output { font-size: 0.95rem; line-height: 1.7; }
+    #live-preview-output h1, #live-preview-output h2, #live-preview-output h3 { margin-top: 1rem; }
+    #live-preview-output code { background: #f3f4f6; padding: 0.1em 0.3em; border-radius: 3px; font-size: 0.85em; }
+    #live-preview-output pre { background: #f3f4f6; padding: 0.75rem 1rem; border-radius: 4px; overflow-x: auto; }
+    #live-preview-output blockquote { border-left: 3px solid #d1d5db; margin-left: 0; padding-left: 1rem; color: #6b7280; }
+</style>
+{% endblock %}
+
 {% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
 (function () {
     const titleInput = document.getElementById('title-input');
@@ -121,6 +159,20 @@
     });
 
     refreshPreview();
+}());
+
+// Live markdown preview
+(function () {
+    const textarea = document.getElementById('content-input');
+    const output   = document.getElementById('live-preview-output');
+    if (!textarea || !output || typeof marked === 'undefined') return;
+
+    function renderPreview() {
+        output.innerHTML = marked.parse(textarea.value || '');
+    }
+
+    textarea.addEventListener('input', renderPreview);
+    renderPreview();
 }());
 
 // Media gallery — loads uploaded files via JSON, click to insert URL into textarea

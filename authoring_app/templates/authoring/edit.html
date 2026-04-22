@@ -5,27 +5,25 @@
         <h2>{{ 'Create Post' if is_new else 'Edit Post' }}</h2>
     </header>
 
-    <section class="media-upload">
-        <h3>Upload images, video, or audio</h3>
-        <p>
-            Use this uploader to add media files to
-            <code>{{ media_url_prefix }}</code>. After the upload completes, copy
-            the flashed URL into the Hero image field or embed it in your Markdown
-            using standard Markdown image syntax or HTML media tags.
-        </p>
+    <details class="media-upload">
+        <summary>Media uploads</summary>
         <form
             method="post"
             action="{{ url_for('authoring.upload_media') }}"
             enctype="multipart/form-data"
+            style="display:flex; gap:0.5rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:0.75rem;"
         >
             <input type="hidden" name="next" value="{{ request.full_path }}">
-            <label>
+            <label style="margin:0; flex:1; min-width:200px;">
                 Choose file
                 <input name="media_file" type="file" required>
             </label>
-            <button type="submit">Upload media</button>
+            <button type="submit" style="margin:0;">Upload</button>
         </form>
-    </section>
+        <div id="media-gallery" class="media-gallery">
+            <p style="color:#6b7280; font-size:0.85rem;">Loading uploads…</p>
+        </div>
+    </details>
 
     <form method="post">
         <input type="hidden" name="original_slug" value="{{ post_data.original_slug }}">
@@ -123,6 +121,49 @@
     });
 
     refreshPreview();
+}());
+
+// Media gallery — loads uploaded files via JSON, click to insert URL into textarea
+(function () {
+    const gallery = document.getElementById('media-gallery');
+    const textarea = document.getElementById('content-input');
+    if (!gallery) return;
+
+    fetch('{{ url_for("authoring.list_uploads") }}')
+        .then(function (r) { return r.json(); })
+        .then(function (files) {
+            if (files.length === 0) {
+                gallery.innerHTML = '<p style="color:#6b7280;font-size:0.85rem;">No uploads yet.</p>';
+                return;
+            }
+            gallery.innerHTML = '';
+            files.forEach(function (f) {
+                const item = document.createElement('div');
+                item.className = 'media-item';
+                item.title = 'Click to insert: ' + f.url;
+                if (f.is_image) {
+                    const img = document.createElement('img');
+                    img.src = f.url;
+                    img.alt = f.filename;
+                    item.appendChild(img);
+                } else {
+                    item.textContent = f.filename;
+                }
+                item.addEventListener('click', function () {
+                    const insertion = f.is_image
+                        ? '![](' + f.url + ')'
+                        : f.url;
+                    const start = textarea.selectionStart;
+                    const end   = textarea.selectionEnd;
+                    textarea.setRangeText(insertion, start, end, 'end');
+                    textarea.focus();
+                });
+                gallery.appendChild(item);
+            });
+        })
+        .catch(function () {
+            gallery.innerHTML = '<p style="color:#b91c1c;font-size:0.85rem;">Could not load uploads.</p>';
+        });
 }());
 
 // Markdown toolbar

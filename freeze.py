@@ -40,7 +40,7 @@ def build_static_site() -> None:
                 ('/about/', BUILD_DIR / 'about' / 'index.html'),
             ]
             for route, destination in static_routes:
-                response = client.get(route)
+                response = client.get(route, follow_redirects=True)
                 if response.status_code != 200:
                     raise RuntimeError(f'Failed to render {route}.')
                 write_file(destination, response.data.decode('utf-8'))

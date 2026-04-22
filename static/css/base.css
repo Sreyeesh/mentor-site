@@ -11,8 +11,9 @@
     --nav-bg: rgba(250, 250, 248, 0.95);
     --wrap-width: 700px;
     --nav-height: 56px;
-    --font-serif: 'Lora', Georgia, serif;
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Fraunces', Georgia, serif;
+    --font-body: 'Newsreader', Georgia, serif;
+    --font-sans: system-ui, -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
 }
 
@@ -28,7 +29,7 @@ html[data-theme="dark"] {
 html { scroll-behavior: smooth; }
 
 body {
-    font-family: var(--font-serif);
+    font-family: var(--font-body);
     font-size: 1.125rem;
     line-height: 1.8;
     color: var(--text);
@@ -262,13 +263,6 @@ footer a:hover { color: var(--text); opacity: 1; }
         font-size: 1.1rem;
         color: var(--text);
     }
-
-    .post-list time {
-        min-width: 5rem;
-        font-size: 0.75rem;
-    }
-
-    .post-list a { font-size: 0.9rem; }
 
     .blog-post-body { font-size: 1rem; }
 

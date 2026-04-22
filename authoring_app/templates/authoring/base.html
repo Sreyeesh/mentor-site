@@ -7,37 +7,116 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     {% block extra_head %}{% endblock %}
     <style>
+        /* ── Design tokens — light defaults ── */
+        :root {
+            --surface:       #ffffff;
+            --surface-2:     #f9fafb;
+            --surface-3:     #f3f4f6;
+            --border:        #e5e7eb;
+            --border-strong: #d1d5db;
+            --text:          #111827;
+            --text-2:        #374151;
+            --text-muted:    #6b7280;
+            --text-faint:    #9ca3af;
+            --accent:        #6366f1;
+            --btn-bg:        #ffffff;
+            --btn-text:      #374151;
+            --btn-border:    #d1d5db;
+            --btn-hover:     #e5e7eb;
+            --badge-draft-bg:   #fef9c3; --badge-draft-text:   #854d0e;
+            --badge-pub-bg:     #dcfce7; --badge-pub-text:     #166534;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --surface:       #111827;
+                --surface-2:     #1f2937;
+                --surface-3:     #374151;
+                --border:        #374151;
+                --border-strong: #4b5563;
+                --text:          #f9fafb;
+                --text-2:        #e5e7eb;
+                --text-muted:    #9ca3af;
+                --text-faint:    #6b7280;
+                --accent:        #818cf8;
+                --btn-bg:        #1f2937;
+                --btn-text:      #e5e7eb;
+                --btn-border:    #4b5563;
+                --btn-hover:     #374151;
+                --badge-draft-bg:   #422006; --badge-draft-text:   #fef08a;
+                --badge-pub-bg:     #052e16; --badge-pub-text:     #86efac;
+            }
+        }
+
         body { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
         header { margin-bottom: 2rem; }
+
         .flash { padding: 0.75rem 1rem; margin-bottom: 1rem; border-radius: 6px; }
         .flash-success { background: #e6f4ea; color: #1f7a1f; }
-        .flash-error { background: #fde8e8; color: #b91c1c; }
+        .flash-error   { background: #fde8e8; color: #b91c1c; }
+
+        @media (prefers-color-scheme: dark) {
+            .flash-success { background: #052e16; color: #86efac; }
+            .flash-error   { background: #450a0a; color: #fca5a5; }
+        }
+
         textarea { min-height: 260px; }
         .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+        /* ── Dashboard table ── */
         .post-list table { width: 100%; }
-        .md-toolbar { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-bottom: 0.25rem; }
+
+        /* ── Toolbar (base — edit.html overrides with !important) ── */
+        .md-toolbar {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.2rem;
+        }
         .md-toolbar button {
-            padding: 0.25rem 0.6rem; font-size: 0.8rem; font-weight: 600;
-            background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 4px;
-            cursor: pointer; color: #374151;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--btn-text);
         }
-        .md-toolbar button:hover { background: #e5e7eb; }
+        .md-toolbar button:hover { background: var(--btn-hover); }
+
+        /* ── Status badges ── */
         .status-badge {
-            display: inline-block; padding: 0.15rem 0.5rem; border-radius: 12px;
-            font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
-        .status-draft     { background: #fef9c3; color: #854d0e; }
-        .status-published { background: #dcfce7; color: #166534; }
-        .media-upload { border: 1px solid #e5e7eb; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; }
-        .media-upload summary { cursor: pointer; font-weight: 600; color: #374151; }
+        .status-draft     { background: var(--badge-draft-bg); color: var(--badge-draft-text); }
+        .status-published { background: var(--badge-pub-bg);   color: var(--badge-pub-text); }
+
+        /* ── Media gallery ── */
         .media-gallery { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
         .media-gallery .media-item {
-            width: 80px; height: 80px; border: 2px solid #e5e7eb; border-radius: 4px;
-            overflow: hidden; cursor: pointer; display: flex; align-items: center;
-            justify-content: center; background: #f9fafb; font-size: 0.65rem; text-align: center;
+            width: 80px; height: 80px;
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface-2);
+            font-size: 0.65rem;
+            text-align: center;
             padding: 0.2rem;
+            color: var(--text-muted);
         }
-        .media-gallery .media-item:hover { border-color: #6366f1; }
+        .media-gallery .media-item:hover { border-color: var(--accent); }
         .media-gallery .media-item img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>

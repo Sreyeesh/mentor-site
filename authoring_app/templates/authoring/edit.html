@@ -1,144 +1,415 @@
 {% extends 'authoring/base.html' %}
-{% block content %}
-<section>
-    <header>
-        <h2>{{ 'Create Post' if is_new else 'Edit Post' }}</h2>
-    </header>
-
-    <details class="media-upload">
-        <summary>Media uploads</summary>
-        <form
-            method="post"
-            action="{{ url_for('authoring.upload_media') }}"
-            enctype="multipart/form-data"
-            style="display:flex; gap:0.5rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:0.75rem;"
-        >
-            <input type="hidden" name="next" value="{{ request.full_path }}">
-            <label style="margin:0; flex:1; min-width:200px;">
-                Choose file
-                <input name="media_file" type="file" required>
-            </label>
-            <button type="submit" style="margin:0;">Upload</button>
-        </form>
-        <div id="media-gallery" class="media-gallery">
-            <p style="color:#6b7280; font-size:0.85rem;">Loading uploads…</p>
-        </div>
-    </details>
-
-    <form method="post">
-        <input type="hidden" name="original_slug" value="{{ post_data.original_slug }}">
-        <label>
-            Title
-            <input id="title-input" name="title" type="text" value="{{ post_data.title }}" required>
-        </label>
-        <label>
-            Slug
-            <input id="slug-input" name="slug" type="text" value="{{ post_data.slug }}" placeholder="auto-from-title">
-            <small id="slug-preview" style="color: #6b7280; font-family: monospace;"></small>
-        </label>
-        <label>
-            Date
-            <input name="date" type="date" value="{{ post_data.date }}">
-        </label>
-        <label>
-            Description
-            <textarea name="description" rows="2">{{ post_data.description }}</textarea>
-        </label>
-        <label>
-            Excerpt
-            <textarea name="excerpt" rows="3">{{ post_data.excerpt }}</textarea>
-        </label>
-        <label>
-            Hero image URL
-            <input name="hero_image" type="text" value="{{ post_data.hero_image }}" placeholder="/static/uploads/hero.jpg">
-        </label>
-        <label>
-            Status
-            <select name="status">
-                <option value="draft" {% if post_data.status == 'draft' %}selected{% endif %}>Draft</option>
-                <option value="published" {% if post_data.status == 'published' %}selected{% endif %}>Published</option>
-            </select>
-        </label>
-        <label>
-            <input name="featured" type="checkbox" {% if post_data.featured %}checked{% endif %}> Featured post
-        </label>
-        <div class="editor-split">
-            <div class="editor-write">
-                <label>Content (Markdown)</label>
-                <div class="md-toolbar" id="md-toolbar">
-                    <button type="button" data-wrap="**" title="Bold">B</button>
-                    <button type="button" data-wrap="_" title="Italic">I</button>
-                    <button type="button" data-prefix="## " title="Heading">H2</button>
-                    <button type="button" data-prefix="### " title="Heading 3">H3</button>
-                    <button type="button" data-wrap="`" title="Inline code">Code</button>
-                    <button type="button" data-prefix="```\n" data-suffix="\n```" title="Code block">```</button>
-                    <button type="button" data-prefix="> " title="Blockquote">Quote</button>
-                    <button type="button" data-snippet="[link text](url)" title="Link">Link</button>
-                    <button type="button" data-snippet="![alt text](url)" title="Image">Img</button>
-                </div>
-                <textarea id="content-input" name="content" required>{{ post_data.content }}</textarea>
-            </div>
-            <div class="editor-preview">
-                <p class="preview-label">Live preview</p>
-                <div id="live-preview-output"></div>
-            </div>
-        </div>
-        <footer class="actions">
-            <button type="submit">Save post</button>
-            <a class="secondary" role="button" href="{{ url_for('authoring.dashboard') }}">Cancel</a>
-            {% if not is_new %}
-                <a class="secondary" role="button" href="{{ url_for('authoring.preview_post', slug=post_data.slug or post_data.original_slug) }}" target="_blank">Preview</a>
-            {% endif %}
-        </footer>
-    </form>
-</section>
-{% endblock %}
 
 {% block extra_head %}
 <style>
     body { max-width: 1400px !important; }
+
+    /* ── Editor-specific token overrides ── */
+    :root {
+        --editor-bg:   #1e1e2e;
+        --editor-text: #cdd6f4;
+    }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --editor-bg:   #0d1117;
+            --editor-text: #c9d1d9;
+        }
+    }
+
+    /* ── Top bar ── */
+    .editor-topbar {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+    }
+    .editor-topbar h2 { margin: 0; flex: 1; font-size: 1rem; color: var(--text-muted); font-weight: 600; }
+    .editor-topbar a  { margin: 0; font-size: 0.85rem; }
+
+    /* ── Title ── */
+    .title-field { margin-bottom: 0.75rem; }
+    .title-field input[type=text] {
+        width: 100%;
+        font-size: 1.75rem !important;
+        font-weight: 700 !important;
+        border: none !important;
+        border-bottom: 2px solid var(--border) !important;
+        border-radius: 0 !important;
+        padding: 0.25rem 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        outline: none;
+        color: var(--text) !important;
+    }
+    .title-field input[type=text]::placeholder { color: var(--border-strong); }
+    .title-field input[type=text]:focus { border-bottom-color: var(--accent) !important; }
+
+    /* ── Metadata row ── */
+    .meta-row {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        gap: 0.75rem 1.25rem;
+        align-items: flex-end;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.65rem 1rem;
+        margin-bottom: 0.65rem;
+    }
+    .meta-field { display: flex; flex-direction: column; gap: 0.15rem; }
+    .meta-field.grow { flex: 1; min-width: 180px; }
+    .meta-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--text-faint);
+    }
+    .meta-row input, .meta-row select { margin: 0 !important; padding: 0.3rem 0.5rem !important; font-size: 0.85rem !important; }
+    .meta-row small { font-family: monospace; font-size: 0.72rem; color: var(--text-muted); }
+    .meta-check { justify-content: flex-end; padding-bottom: 0.25rem; }
+    .meta-check label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; margin: 0; white-space: nowrap; cursor: pointer; }
+    .meta-check input[type=checkbox] { margin: 0 !important; }
+
+    /* ── Extra metadata (collapsible) ── */
+    .extra-meta {
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        margin-bottom: 0.75rem;
+        background: var(--surface-2);
+    }
+    .extra-meta summary { font-size: 0.82rem; color: var(--text-muted); cursor: pointer; padding: 0.2rem 0; }
+    .extra-meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem 1rem;
+        margin-top: 0.75rem;
+    }
+    .extra-meta-grid .full { grid-column: 1 / -1; }
+    .extra-meta label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-2); margin-bottom: 0.2rem; }
+    .extra-meta textarea, .extra-meta input { margin: 0 !important; font-size: 0.85rem !important; }
+    .extra-meta textarea { min-height: 64px; }
+
+    /* ── Toolbar ── */
+    .md-toolbar {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 0.2rem;
+        padding: 0.45rem 0.6rem;
+        background: var(--surface-3);
+        border: 1px solid var(--border-strong);
+        border-bottom: none;
+        border-radius: 6px 6px 0 0;
+    }
+    .toolbar-group {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 0.15rem;
+    }
+    .toolbar-sep { width: 1px; height: 1.2rem; background: var(--border-strong); margin: 0 0.3rem; flex-shrink: 0; }
+    .md-toolbar button {
+        display: inline-flex !important;
+        flex-direction: row !important;
+        align-items: center;
+        justify-content: center;
+        padding: 0.2rem 0.55rem !important;
+        min-width: 2rem;
+        height: 1.75rem;
+        font-size: 0.8rem !important;
+        font-weight: 600;
+        background: var(--btn-bg) !important;
+        border: 1px solid var(--btn-border) !important;
+        border-radius: 4px !important;
+        color: var(--btn-text) !important;
+        cursor: pointer;
+        white-space: nowrap;
+        line-height: 1;
+        box-shadow: none !important;
+        margin: 0 !important;
+    }
+    .md-toolbar button:hover { background: var(--btn-hover) !important; border-color: var(--text-faint) !important; }
+    .md-toolbar button:active { background: var(--surface-3) !important; }
+
+    /* ── Split editor ── */
     .editor-split {
-        display: flex; gap: 1rem; align-items: flex-start;
+        display: flex !important;
+        flex-direction: row !important;
+        border: 1px solid var(--border-strong);
+        border-radius: 0 0 6px 6px;
+        overflow: hidden;
+        min-height: 500px;
     }
-    .editor-write {
-        flex: 1; display: flex; flex-direction: column; min-width: 0;
+    .editor-textarea {
+        flex: 1 !important;
+        min-height: 500px;
+        padding: 1rem !important;
+        font-family: 'Menlo', 'Consolas', 'Monaco', monospace !important;
+        font-size: 0.9rem !important;
+        line-height: 1.65 !important;
+        border: none !important;
+        border-right: 1px solid var(--border-strong) !important;
+        border-radius: 0 !important;
+        resize: none !important;
+        outline: none !important;
+        background: var(--editor-bg) !important;
+        color: var(--editor-text) !important;
+        box-shadow: none !important;
     }
-    .editor-write #content-input {
-        flex: 1; min-height: 480px; resize: vertical; font-family: monospace; font-size: 0.9rem;
-    }
+    /* Preview pane — always light (simulates how the post looks on the public site) */
     .editor-preview {
-        flex: 1; min-width: 0; border: 1px solid #e5e7eb; border-radius: 6px;
-        padding: 1rem 1.25rem; overflow-y: auto; max-height: 560px;
-        background: #fafafa;
+        flex: 1 !important;
+        min-height: 500px;
+        padding: 1.75rem 2rem !important;
+        overflow-y: auto;
+        background: #ffffff !important;
+        color: #1a1a1a !important;
+        border-left: 1px solid var(--border-strong);
     }
     .preview-label {
-        font-size: 0.7rem; font-weight: 700; color: #9ca3af;
-        text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: #9ca3af !important;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
     }
-    #live-preview-output { font-size: 0.95rem; line-height: 1.7; }
-    #live-preview-output h1, #live-preview-output h2, #live-preview-output h3 { margin-top: 1rem; }
-    #live-preview-output code { background: #f3f4f6; padding: 0.1em 0.3em; border-radius: 3px; font-size: 0.85em; }
-    #live-preview-output pre { background: #f3f4f6; padding: 0.75rem 1rem; border-radius: 4px; overflow-x: auto; }
-    #live-preview-output blockquote { border-left: 3px solid #d1d5db; margin-left: 0; padding-left: 1rem; color: #6b7280; }
+    #live-preview-output {
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 1rem;
+        line-height: 1.8;
+        color: #1a1a1a !important;
+        max-width: 62ch;
+    }
+    /* Force all preview text back to serif — prevents pre/code font bleeding */
+    #live-preview-output * { font-family: Georgia, 'Times New Roman', serif; box-sizing: border-box; }
+    #live-preview-output h1 {
+        font-size: 1.9rem !important; font-weight: 700; color: #111827 !important;
+        margin: 0 0 1rem !important; padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e5e7eb;
+        font-family: system-ui, sans-serif !important;
+        line-height: 1.2;
+    }
+    #live-preview-output h2 {
+        font-size: 1.35rem !important; font-weight: 700; color: #1f2937 !important;
+        margin: 1.75rem 0 0.5rem !important;
+        font-family: system-ui, sans-serif !important;
+        line-height: 1.3;
+    }
+    #live-preview-output h3 {
+        font-size: 1.1rem !important; font-weight: 600; color: #374151 !important;
+        margin: 1.5rem 0 0.4rem !important;
+        font-family: system-ui, sans-serif !important;
+    }
+    #live-preview-output p  { margin: 0.75rem 0; color: #374151 !important; }
+    #live-preview-output a  { color: #6366f1 !important; text-decoration: underline; }
+    #live-preview-output strong { color: #111827 !important; font-weight: 700; }
+    #live-preview-output em { font-style: italic; }
+    #live-preview-output ul, #live-preview-output ol { padding-left: 1.5rem !important; margin: 0.75rem 0 !important; color: #374151 !important; }
+    #live-preview-output li { margin: 0.3rem 0 !important; }
+    /* Inline code */
+    #live-preview-output code {
+        background: #f3f4f6 !important;
+        color: #1f2937 !important;
+        padding: 0.15em 0.4em !important;
+        border-radius: 3px !important;
+        font-size: 0.85em !important;
+        font-family: 'Menlo', 'Consolas', monospace !important;
+        border: 1px solid #e5e7eb !important;
+    }
+    /* Code blocks — GitHub-style light */
+    #live-preview-output pre {
+        background: #f6f8fa !important;
+        border: 1px solid #d0d7de !important;
+        border-radius: 6px !important;
+        padding: 1rem 1.25rem !important;
+        overflow-x: auto;
+        margin: 1rem 0 !important;
+    }
+    #live-preview-output pre code {
+        background: none !important;
+        color: #24292e !important;
+        border: none !important;
+        padding: 0 !important;
+        font-size: 0.875rem !important;
+        font-family: 'Menlo', 'Consolas', monospace !important;
+    }
+    /* Blockquote */
+    #live-preview-output blockquote {
+        background: #f5f3ff !important;
+        border-left: 4px solid #6366f1 !important;
+        margin: 1rem 0 !important;
+        padding: 0.75rem 1rem !important;
+        border-radius: 0 4px 4px 0 !important;
+        color: #4b5563 !important;
+        font-style: italic;
+    }
+    #live-preview-output blockquote p { margin: 0 !important; color: inherit !important; }
+    #live-preview-output img { max-width: 100%; border-radius: 6px; margin: 0.5rem 0; }
+    #live-preview-output hr { border: none !important; border-top: 1px solid #e5e7eb !important; margin: 1.5rem 0; }
+
+    /* ── Save bar ── */
+    .save-bar {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    .save-bar button[type=submit] { margin: 0; }
+    .save-hint { font-size: 0.75rem; color: var(--text-faint); }
+
+    /* ── Media uploads ── */
+    .media-upload {
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 0.65rem 1rem;
+        margin-top: 1.25rem;
+        background: var(--surface-2);
+    }
+    .media-upload summary { font-size: 0.85rem; font-weight: 600; color: var(--text-2); cursor: pointer; }
+    .upload-form { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin: 0.75rem 0 0.5rem; }
+    .upload-form input[type=file] { flex: 1; min-width: 200px; margin: 0 !important; }
+    .upload-form button { margin: 0; white-space: nowrap; }
 </style>
+{% endblock %}
+
+{% block content %}
+<section>
+    <form method="post">
+        <input type="hidden" name="original_slug" value="{{ post_data.original_slug }}">
+
+        <!-- Top bar -->
+        <div class="editor-topbar">
+            <h2>{{ 'New Post' if is_new else 'Edit Post' }}</h2>
+            <a href="{{ url_for('authoring.dashboard') }}" role="button" class="secondary">← Dashboard</a>
+            {% if not is_new %}
+                <a href="{{ url_for('authoring.preview_post', slug=post_data.slug or post_data.original_slug) }}" role="button" class="secondary" target="_blank">Preview ↗</a>
+            {% endif %}
+        </div>
+
+        <!-- Title -->
+        <div class="title-field">
+            <input id="title-input" name="title" type="text" value="{{ post_data.title }}" placeholder="Post title…" required>
+        </div>
+
+        <!-- Metadata row -->
+        <div class="meta-row">
+            <div class="meta-field grow">
+                <span class="meta-label">Slug</span>
+                <input id="slug-input" name="slug" type="text" value="{{ post_data.slug }}" placeholder="auto-from-title">
+                <small id="slug-preview"></small>
+            </div>
+            <div class="meta-field">
+                <span class="meta-label">Date</span>
+                <input name="date" type="date" value="{{ post_data.date }}">
+            </div>
+            <div class="meta-field">
+                <span class="meta-label">Status</span>
+                <select name="status">
+                    <option value="draft" {% if post_data.status == 'draft' %}selected{% endif %}>Draft</option>
+                    <option value="published" {% if post_data.status == 'published' %}selected{% endif %}>Published</option>
+                </select>
+            </div>
+            <div class="meta-field meta-check">
+                <label><input name="featured" type="checkbox" {% if post_data.featured %}checked{% endif %}> Featured</label>
+            </div>
+        </div>
+
+        <!-- Extra metadata (collapsible) -->
+        <details class="extra-meta">
+            <summary>Description, excerpt &amp; hero image…</summary>
+            <div class="extra-meta-grid">
+                <div class="full">
+                    <label>Description</label>
+                    <textarea name="description" rows="2">{{ post_data.description }}</textarea>
+                </div>
+                <div class="full">
+                    <label>Excerpt</label>
+                    <textarea name="excerpt" rows="2">{{ post_data.excerpt }}</textarea>
+                </div>
+                <div class="full">
+                    <label>Hero image URL</label>
+                    <input name="hero_image" type="text" value="{{ post_data.hero_image }}" placeholder="/static/uploads/hero.jpg">
+                </div>
+            </div>
+        </details>
+
+        <!-- Markdown toolbar -->
+        <div class="md-toolbar" id="md-toolbar" role="toolbar" aria-label="Markdown formatting">
+            <div class="toolbar-group">
+                <button type="button" data-wrap="**" title="Bold (Ctrl+B)"><strong>B</strong></button>
+                <button type="button" data-wrap="_" title="Italic (Ctrl+I)"><em>I</em></button>
+            </div>
+            <div class="toolbar-sep"></div>
+            <div class="toolbar-group">
+                <button type="button" data-prefix="## " title="Heading 2">H2</button>
+                <button type="button" data-prefix="### " title="Heading 3">H3</button>
+            </div>
+            <div class="toolbar-sep"></div>
+            <div class="toolbar-group">
+                <button type="button" data-wrap="`" title="Inline code">code</button>
+                <button type="button" data-prefix="```&#10;" data-suffix="&#10;```" title="Code block">{ }</button>
+                <button type="button" data-prefix="> " title="Blockquote">quote</button>
+                <button type="button" data-prefix="- " title="Bullet list">list</button>
+            </div>
+            <div class="toolbar-sep"></div>
+            <div class="toolbar-group">
+                <button type="button" data-snippet="[link text](url)" title="Insert link">link</button>
+                <button type="button" data-snippet="![alt text](url)" title="Insert image">img</button>
+            </div>
+        </div>
+
+        <!-- Split editor -->
+        <div class="editor-split">
+            <textarea id="content-input" name="content" class="editor-textarea" required spellcheck="false">{{ post_data.content }}</textarea>
+            <div class="editor-preview">
+                <div class="preview-label">Live preview</div>
+                <div id="live-preview-output"></div>
+            </div>
+        </div>
+
+        <!-- Save -->
+        <div class="save-bar">
+            <button type="submit">Save post</button>
+            <span class="save-hint">Ctrl+S</span>
+        </div>
+    </form>
+
+    <!-- Media upload (separate form — needs multipart enctype) -->
+    <details class="media-upload">
+        <summary>Media uploads</summary>
+        <form method="post" action="{{ url_for('authoring.upload_media') }}" enctype="multipart/form-data" class="upload-form">
+            <input type="hidden" name="next" value="{{ request.full_path }}">
+            <input name="media_file" type="file" required>
+            <button type="submit">Upload</button>
+        </form>
+        <div id="media-gallery" class="media-gallery">
+            <p style="color:var(--text-muted); font-size:0.85rem;">Loading…</p>
+        </div>
+    </details>
+</section>
 {% endblock %}
 
 {% block extra_scripts %}
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
 (function () {
-    const titleInput = document.getElementById('title-input');
-    const slugInput  = document.getElementById('slug-input');
+    // Slug auto-generation
+    const titleInput  = document.getElementById('title-input');
+    const slugInput   = document.getElementById('slug-input');
     const slugPreview = document.getElementById('slug-preview');
 
-    // Mirrors the Python slugify() in views.py exactly (ASCII scope).
     function slugify(value) {
         let s = value.trim().toLowerCase();
         s = s.replace(/[^a-z0-9\- ]/g, ' ');
         return s.split(/\s+/).filter(Boolean).join('-');
     }
 
-    // Don't auto-fill if the slug is already set (edit mode).
     let manualSlug = slugInput.value !== '';
 
     function refreshPreview() {
@@ -147,45 +418,70 @@
     }
 
     titleInput.addEventListener('input', function () {
-        if (!manualSlug) {
-            slugInput.value = slugify(this.value);
-        }
+        if (!manualSlug) slugInput.value = slugify(this.value);
         refreshPreview();
     });
-
     slugInput.addEventListener('input', function () {
         manualSlug = this.value !== '';
         refreshPreview();
     });
-
     refreshPreview();
 }());
 
-// Live markdown preview
 (function () {
+    // Live preview
     const textarea = document.getElementById('content-input');
     const output   = document.getElementById('live-preview-output');
     if (!textarea || !output || typeof marked === 'undefined') return;
-
-    function renderPreview() {
-        output.innerHTML = marked.parse(textarea.value || '');
-    }
-
-    textarea.addEventListener('input', renderPreview);
-    renderPreview();
+    function render() { output.innerHTML = marked.parse(textarea.value || ''); }
+    textarea.addEventListener('input', render);
+    render();
 }());
 
-// Media gallery — loads uploaded files via JSON, click to insert URL into textarea
 (function () {
-    const gallery = document.getElementById('media-gallery');
+    // Toolbar
+    const textarea = document.getElementById('content-input');
+    document.getElementById('md-toolbar').addEventListener('click', function (e) {
+        const btn = e.target.closest('button[data-wrap], button[data-prefix], button[data-snippet]');
+        if (!btn) return;
+        e.preventDefault();
+        const start = textarea.selectionStart;
+        const end   = textarea.selectionEnd;
+        const sel   = textarea.value.slice(start, end);
+        let replacement = '';
+        if (btn.dataset.snippet) {
+            replacement = btn.dataset.snippet;
+        } else if (btn.dataset.wrap) {
+            const w = btn.dataset.wrap;
+            replacement = sel ? w + sel + w : w + w;
+        } else if (btn.dataset.prefix) {
+            const prefix = btn.dataset.prefix;
+            const suffix = btn.dataset.suffix || '';
+            replacement = sel ? prefix + sel + suffix : prefix + suffix;
+        }
+        textarea.setRangeText(replacement, start, end, 'end');
+        textarea.focus();
+    });
+
+    // Ctrl+S — submit form
+    document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            document.querySelector('form button[type=submit]').click();
+        }
+    });
+}());
+
+(function () {
+    // Media gallery
+    const gallery  = document.getElementById('media-gallery');
     const textarea = document.getElementById('content-input');
     if (!gallery) return;
-
     fetch('{{ url_for("authoring.list_uploads") }}')
         .then(function (r) { return r.json(); })
         .then(function (files) {
             if (files.length === 0) {
-                gallery.innerHTML = '<p style="color:#6b7280;font-size:0.85rem;">No uploads yet.</p>';
+                gallery.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;">No uploads yet.</p>';
                 return;
             }
             gallery.innerHTML = '';
@@ -202,12 +498,10 @@
                     item.textContent = f.filename;
                 }
                 item.addEventListener('click', function () {
-                    const insertion = f.is_image
-                        ? '![](' + f.url + ')'
-                        : f.url;
+                    const ins   = f.is_image ? '![](' + f.url + ')' : f.url;
                     const start = textarea.selectionStart;
                     const end   = textarea.selectionEnd;
-                    textarea.setRangeText(insertion, start, end, 'end');
+                    textarea.setRangeText(ins, start, end, 'end');
                     textarea.focus();
                 });
                 gallery.appendChild(item);
@@ -216,35 +510,6 @@
         .catch(function () {
             gallery.innerHTML = '<p style="color:#b91c1c;font-size:0.85rem;">Could not load uploads.</p>';
         });
-}());
-
-// Markdown toolbar
-(function () {
-    const textarea = document.getElementById('content-input');
-    document.getElementById('md-toolbar').addEventListener('click', function (e) {
-        const btn = e.target.closest('button[data-wrap], button[data-prefix], button[data-snippet]');
-        if (!btn) return;
-        e.preventDefault();
-
-        const start = textarea.selectionStart;
-        const end   = textarea.selectionEnd;
-        const sel   = textarea.value.slice(start, end);
-        let replacement = '';
-
-        if (btn.dataset.snippet) {
-            replacement = btn.dataset.snippet;
-        } else if (btn.dataset.wrap) {
-            const w = btn.dataset.wrap;
-            replacement = sel ? w + sel + w : w + w;
-        } else if (btn.dataset.prefix) {
-            const prefix = btn.dataset.prefix;
-            const suffix = btn.dataset.suffix || '';
-            replacement = sel ? prefix + sel + suffix : prefix + suffix;
-        }
-
-        textarea.setRangeText(replacement, start, end, 'end');
-        textarea.focus();
-    });
 }());
 </script>
 {% endblock %}

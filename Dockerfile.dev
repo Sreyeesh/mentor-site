@@ -22,7 +22,6 @@ COPY . .
 ENV FLASK_ENV=development
 ENV FLASK_DEBUG=1
 ENV BASE_PATH=${BASE_PATH}
-ENV SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link
 
 # Expose port 5000
 EXPOSE 5000

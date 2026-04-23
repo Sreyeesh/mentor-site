@@ -15,7 +15,6 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONPATH=/app \
     BASE_PATH=${BASE_PATH} \
     GITHUB_PAGES_BASE_PATH=${BASE_PATH} \
-    SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link
 
 # Install system dependencies
 RUN apt-get update \

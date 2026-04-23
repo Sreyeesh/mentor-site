@@ -17,21 +17,13 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     GITHUB_PAGES_BASE_PATH=${BASE_PATH} \
     SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link
 
-ARG STRIPE_SECRET_KEY=
-ARG STRIPE_PUBLISHABLE_KEY=
-ARG STRIPE_PRICE_ID=
-ARG STRIPE_PAYMENT_LINK=https://book.stripe.com/00w28kbMX8C15Q43qj4F203
-ARG STRIPE_SUCCESS_URL=
-ARG STRIPE_CANCEL_URL=
-ARG STRIPE_ENDPOINT_SECRET=
-
-ENV STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY} \
-    STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY} \
-    STRIPE_PRICE_ID=${STRIPE_PRICE_ID} \
-    STRIPE_PAYMENT_LINK=${STRIPE_PAYMENT_LINK} \
-    STRIPE_SUCCESS_URL=${STRIPE_SUCCESS_URL} \
-    STRIPE_CANCEL_URL=${STRIPE_CANCEL_URL} \
-    STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET}
+ENV STRIPE_SECRET_KEY="" \
+    STRIPE_PUBLISHABLE_KEY="" \
+    STRIPE_PRICE_ID="" \
+    STRIPE_PAYMENT_LINK="https://book.stripe.com/00w28kbMX8C15Q43qj4F203" \
+    STRIPE_SUCCESS_URL="" \
+    STRIPE_CANCEL_URL="" \
+    STRIPE_ENDPOINT_SECRET=""
 
 # Install system dependencies
 RUN apt-get update \
@@ -56,55 +48,7 @@ RUN python freeze.py && ls -la build/
 # Create directories for nginx
 RUN mkdir -p /var/cache/nginx /var/log/nginx /var/lib/nginx /run/nginx
 
-# Create nginx configuration for serving static files
-RUN echo 'events { \
-    worker_connections 1024; \
-} \
-\
-http { \
-    include /etc/nginx/mime.types; \
-    default_type application/octet-stream; \
-    \
-    access_log /var/log/nginx/access.log; \
-    error_log /var/log/nginx/error.log warn; \
-    \
-    sendfile on; \
-    tcp_nopush on; \
-    tcp_nodelay on; \
-    keepalive_timeout 65; \
-    \
-    gzip on; \
-    gzip_vary on; \
-    gzip_min_length 10240; \
-    gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json; \
-    \
-    server { \
-        listen 80; \
-        server_name localhost; \
-        root /app/build; \
-        index index.html; \
-        \
-        # Serve static files directly \
-        location /static/ { \
-            expires 1y; \
-            add_header Cache-Control "public, immutable"; \
-            add_header Access-Control-Allow-Origin "*"; \
-        } \
-        \
-        # Serve all other files \
-        location / { \
-            try_files $uri $uri/ /index.html; \
-            autoindex off; \
-        } \
-        \
-        # Health check endpoint \
-        location /health { \
-            access_log off; \
-            return 200 "healthy"; \
-            add_header Content-Type text/plain; \
-        } \
-    } \
-}' > /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 80 (nginx listens on this port inside container)
 EXPOSE 80

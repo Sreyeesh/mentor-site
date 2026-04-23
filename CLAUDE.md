@@ -56,6 +56,11 @@ This project uses **Git Flow**:
 - Branch off `dev` for all work: `git checkout dev && git checkout -b feat/my-feature`
 - Keep branches small and focused; merge back to `dev` quickly
 
+**Branch naming convention:** `type/issue-number-short-description`
+- Type matches Conventional Commits: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`
+- Issue number ties the branch to a GitHub issue
+- Examples: `feat/137-email-signup`, `fix/142-freeze-redirect`, `chore/150-cleanup-deps`
+
 ## CI/CD
 - GitHub Actions runs lint → tests → static build check on PRs to `master`
 - Deployment to GitHub Pages is manual (`workflow_dispatch` only)

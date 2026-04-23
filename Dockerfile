@@ -17,14 +17,6 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     GITHUB_PAGES_BASE_PATH=${BASE_PATH} \
     SITE_CALENDLY_LINK=https://calendly.com/toucan-sg/consulting-link
 
-ENV STRIPE_SECRET_KEY="" \
-    STRIPE_PUBLISHABLE_KEY="" \
-    STRIPE_PRICE_ID="" \
-    STRIPE_PAYMENT_LINK="https://book.stripe.com/00w28kbMX8C15Q43qj4F203" \
-    STRIPE_SUCCESS_URL="" \
-    STRIPE_CANCEL_URL="" \
-    STRIPE_ENDPOINT_SECRET=""
-
 # Install system dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

@@ -1,93 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sreyeesh Garimella — Coming Soon</title>
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #0f0f0f;
-            color: #e5e5e5;
-            font-family: Georgia, 'Times New Roman', serif;
-            padding: 2rem 1.25rem;
-        }
-
-        .card {
-            max-width: 520px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .eyebrow {
-            font-family: system-ui, sans-serif;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: #6b7280;
-            margin-bottom: 1.5rem;
-        }
-
-        h1 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            line-height: 1.2;
-            color: #f9fafb;
-            margin-bottom: 1.25rem;
-        }
-
-        .description {
-            font-size: 1.05rem;
-            line-height: 1.75;
-            color: #9ca3af;
-            margin-bottom: 2rem;
-        }
-
-        .description strong {
-            color: #e5e7eb;
-        }
-
-        .cta {
-            display: inline-block;
-            padding: 0.85rem 2rem;
-            background: #f9fafb;
-            color: #111;
-            font-family: system-ui, sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background 0.15s ease;
-            margin-bottom: 1rem;
-        }
-
-        .cta:hover { background: #e5e7eb; }
-
-        .note {
-            font-family: system-ui, sans-serif;
-            font-size: 0.8rem;
-            color: #4b5563;
-        }
-    </style>
+    <title>{{ config.name }}: Coming Soon</title>
+    <meta name="description" content="{{ config.meta_description }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,400&family=Newsreader:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/coming-soon.css') }}">
 </head>
 <body>
-    <div class="card">
-        <p class="eyebrow">Sreyeesh Garimella</p>
-        <h1>Something is on the way.</h1>
-        <p class="description">
-            I'm building a blog about <strong>software development, tools, and the craft of building things</strong>.
-            Leave your email and I'll send you a note the moment it goes live — no spam, just one email when it's ready.
-        </p>
-        <a class="cta" href="{{ signup_url }}" target="_blank" rel="noopener noreferrer">
-            Notify me when it launches →
-        </a>
-        <p class="note">No Notion account needed — just enter your email and hit submit.</p>
+    <div class="topbar">
+        <span class="topbar-name">{{ config.name }}</span>
+        <button class="theme-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
+            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </button>
     </div>
+
+    <div class="page">
+
+        <h1>Something is on the way.</h1>
+
+        <p class="body-text">
+            A blog about <strong>software development, DevOps, and the craft of building things</strong>.
+            Leave your email and I'll send you a note the moment it goes live. No spam, just one email when it's ready.
+        </p>
+
+        <a class="cta" href="{{ signup_url }}" target="_blank" rel="noopener noreferrer">
+            Notify me when it launches
+        </a>
+        <span class="note">No Notion account needed. Just enter your email and hit submit.</span>
+
+        <hr>
+
+        <h2>What's coming</h2>
+        <ul class="topic-list">
+            {% for topic in topics %}
+            <li>
+                <span class="idx">{{ '%02d' % loop.index }}</span>
+                {{ topic }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+
+        <div class="credits">
+            <h2>Background</h2>
+            <p>
+                Technical director and full-stack developer based in {{ config.location }}.
+                Past work includes productions at Disney Animation, Blizzard Entertainment, and DNEG.
+                Currently running SG Production OÜ and mentoring through Toucan Studios OÜ.
+            </p>
+        </div>
+
+        <div class="footer">
+            <div class="footer-links">
+                {% if config.github_url %}
+                <a href="{{ config.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+                {% endif %}
+                {% if config.linkedin_url %}
+                <a href="{{ config.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                {% endif %}
+                <a href="mailto:{{ config.email }}">{{ config.email }}</a>
+            </div>
+            <span class="footer-copy">&copy; {{ current_year }} {{ config.name }}</span>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

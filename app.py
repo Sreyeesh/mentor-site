@@ -109,17 +109,17 @@ COMING_SOON_TOPICS = [
 @app.route('/')
 def home():
     return render_template(
-        'home.html', **build_page_context(page_slug='home', posts=get_posts())
-    )
-
-
-@app.route('/coming-soon/')
-def coming_soon():
-    return render_template(
         'coming-soon-full.html',
         **build_page_context(),
         signup_url=NOTION_SIGNUP_URL,
         topics=COMING_SOON_TOPICS,
+    )
+
+
+@app.route('/home/')
+def home_full():
+    return render_template(
+        'home.html', **build_page_context(page_slug='home', posts=get_posts())
     )
 
 

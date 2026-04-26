@@ -9,10 +9,10 @@ def test_home_page(client):
 
 
 def test_home_page_content(client):
-    """Home page has key content."""
+    """Home page shows coming soon content."""
     response = client.get('/')
     assert b'Sreyeesh Garimella' in response.data
-    assert b'Writing' in response.data
+    assert b'Something is on the way' in response.data
 
 
 def test_pages_load(client):

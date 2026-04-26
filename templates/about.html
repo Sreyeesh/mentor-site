@@ -1,24 +1,29 @@
 {% extends 'base.html' %}
 
 {% block title %}About | {{ config.name }}{% endblock %}
-{% block meta_description %}About {{ config.name }}, full-stack developer writing about software, tools, and building things.{% endblock %}
+{% block meta_description %}About {{ config.name }}, full-stack developer and technical director writing about software, tools, and building things.{% endblock %}
 
 {% block content %}
 <article class="about-page">
+
     <header class="about-header">
-        <img src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}" alt="Sreyeesh Garimella" class="about-avatar">
+        <img
+            src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}"
+            alt="{{ config.name }}"
+            class="about-avatar"
+        >
         <h1>About</h1>
     </header>
 
     <div class="about-body">
         <p>
-            I'm Sreyeesh Garimella, a full-stack developer and technical artist based in Estonia.
-            I've worked across games, animation, and software, building pipelines and tools at studios
-            including DNEG, Blizzard, and Walt Disney Animation.
+            I'm {{ config.name }}, a full-stack developer and technical director based in {{ config.location }}.
+            I've spent the last decade building pipelines and tools at animation and games studios,
+            shipping work at Disney Animation, Blizzard, and DNEG.
         </p>
         <p>
-            These days I'm focused on software and tooling, the kind of work that makes other
-            work easier. I write here about things I'm building, thinking through, or learning.
+            These days I'm focused on software and tooling — the kind of work that makes
+            other work easier. I write here about things I'm building, thinking through, or learning.
             No particular cadence. Just when something is worth saying.
         </p>
         <p>
@@ -26,5 +31,49 @@
             <a href="mailto:{{ config.email }}">{{ config.email }}</a>
         </p>
     </div>
+
+    <hr class="about-divider">
+
+    <section class="about-credits">
+        <h2>Past work</h2>
+        <ul class="credits-list">
+            {% for item in experience %}
+            <li class="credits-item">
+                <img
+                    src="{{ url_for('static', filename=item.logo) }}"
+                    alt="{{ item.company }}"
+                    class="credits-logo"
+                >
+                <div class="credits-meta">
+                    <span class="credits-company">{{ item.company }}</span>
+                    <span class="credits-role">{{ item.role }}</span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    {% if config.github_url or config.linkedin_url %}
+    <hr class="about-divider">
+
+    <section class="about-links">
+        <h2>Elsewhere</h2>
+        <ul class="elsewhere-list">
+            {% if config.github_url %}
+            <li>
+                <a href="{{ config.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <span>code and open source</span>
+            </li>
+            {% endif %}
+            {% if config.linkedin_url %}
+            <li>
+                <a href="{{ config.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <span>work history</span>
+            </li>
+            {% endif %}
+        </ul>
+    </section>
+    {% endif %}
+
 </article>
 {% endblock %}

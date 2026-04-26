@@ -70,6 +70,29 @@ def build_page_context(**extra) -> dict:
 
 NOTION_SIGNUP_URL = 'https://observant-toothpaste-fa5.notion.site/64939681cd2c4a1f899c6ac8d2fe4e74?pvs=105'
 
+ABOUT_EXPERIENCE = [
+    {
+        'company': 'Walt Disney Animation Studios',
+        'role': 'Pipeline Technical Director',
+        'logo': 'images/Walt_Disney_Animation_Studios_logo.svg.png',
+    },
+    {
+        'company': 'Blizzard Entertainment',
+        'role': 'Technical Artist',
+        'logo': 'images/Blizzard_Entertainment_Logo_2015.svg.png',
+    },
+    {
+        'company': 'DNEG',
+        'role': 'Pipeline Technical Director',
+        'logo': 'images/DNEG_Animation_2025.svg.png',
+    },
+    {
+        'company': 'Boulder Media',
+        'role': 'Pipeline Developer',
+        'logo': 'images/Boulder_Media.png',
+    },
+]
+
 COMING_SOON_TOPICS = [
     'DevOps workflows and terminal setups that actually work in production',
     'Building tools and automation for creative studios',
@@ -120,7 +143,11 @@ def blog_detail(slug: str):
 
 @app.route('/about/')
 def about():
-    return redirect('/')
+    return render_template(
+        'about.html',
+        **build_page_context(page_slug='about'),
+        experience=ABOUT_EXPERIENCE,
+    )
 
 
 @app.route('/sitemap.xml')

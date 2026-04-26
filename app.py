@@ -26,7 +26,9 @@ SITE_CONFIG = {
     'plausible_domain': os.getenv('PLAUSIBLE_DOMAIN', ''),
     'social_image': os.getenv('SITE_SOCIAL_IMAGE', 'images/SreyeeshProfilePic.jpg'),
     'github_url': os.getenv('SITE_GITHUB_URL', 'https://github.com/Sreyeesh'),
-    'linkedin_url': os.getenv('SITE_LINKEDIN_URL', 'https://www.linkedin.com/in/sreyeeshgarimella'),
+    'linkedin_url': os.getenv(
+        'SITE_LINKEDIN_URL', 'https://www.linkedin.com/in/sreyeeshgarimella'
+    ),
     'location': os.getenv('SITE_LOCATION', 'Estonia'),
 }
 
@@ -68,7 +70,10 @@ def build_page_context(**extra) -> dict:
     }
 
 
-NOTION_SIGNUP_URL = 'https://observant-toothpaste-fa5.notion.site/64939681cd2c4a1f899c6ac8d2fe4e74?pvs=105'
+NOTION_SIGNUP_URL = (
+    'https://observant-toothpaste-fa5.notion.site/'
+    '64939681cd2c4a1f899c6ac8d2fe4e74?pvs=105'
+)
 
 ABOUT_EXPERIENCE = [
     {

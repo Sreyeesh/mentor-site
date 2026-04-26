@@ -1,0 +1,199 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --bg:         #fafaf8;
+    --text:       #1a1a1a;
+    --text-muted: #6b6b6b;
+    --accent:     #0f62fe;
+    --border:     #e0e0de;
+    --font-serif: 'Fraunces', Georgia, serif;
+    --font-body:  'Newsreader', Georgia, serif;
+    --font-mono:  'JetBrains Mono', monospace;
+}
+
+[data-theme="dark"] {
+    --bg:         #111111;
+    --text:       #d4d4d4;
+    --text-muted: #888;
+    --accent:     #6aafff;
+    --border:     rgba(255,255,255,0.1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.topbar-name {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    transition: color 0.15s;
+}
+
+.theme-toggle:hover { color: var(--text); }
+
+.theme-toggle .sun-icon { display: none; }
+.theme-toggle .moon-icon { display: block; }
+
+[data-theme="dark"] .theme-toggle .sun-icon { display: block; }
+[data-theme="dark"] .theme-toggle .moon-icon { display: none; }
+
+.page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 5rem;
+}
+
+h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+}
+
+.body-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    max-width: 60ch;
+    margin-bottom: 2rem;
+}
+
+.body-text strong {
+    color: var(--text);
+    font-weight: 400;
+}
+
+.cta {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.cta:hover { opacity: 0.75; }
+
+.note {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+}
+
+h2 {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.topic-list {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.topic-list li {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+}
+
+.topic-list li:first-child { border-top: 1px solid var(--border); }
+
+.topic-list .idx {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--border);
+    flex-shrink: 0;
+}
+
+.credits p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    max-width: 60ch;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+}
+
+.footer-links a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+.footer-links a:hover { color: var(--accent); }
+
+.footer-copy {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--border);
+}
+
+@media (max-width: 480px) {
+    .page { padding: 1.5rem 1.25rem 4rem; }
+    .topbar { padding: 1rem 1.25rem; }
+    .footer { flex-direction: column; align-items: flex-start; }
+}

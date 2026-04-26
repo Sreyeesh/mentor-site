@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}{{ post.title }} — {{ config.name }} Blog{% endblock %}
+{% block title %}{{ post.title }} | {{ config.name }} Blog{% endblock %}
 {% block meta_description %}{{ post.description or post.excerpt }}{% endblock %}
 
 {% block social_meta %}

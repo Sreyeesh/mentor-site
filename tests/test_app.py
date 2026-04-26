@@ -9,10 +9,10 @@ def test_home_page(client):
 
 
 def test_home_page_content(client):
-    """Coming soon page has signup link and no-account note."""
+    """Home page has key content."""
     response = client.get('/')
-    assert b'notion.site' in response.data
-    assert b'Notion account' in response.data
+    assert b'Sreyeesh Garimella' in response.data
+    assert b'Writing' in response.data
 
 
 def test_pages_load(client):

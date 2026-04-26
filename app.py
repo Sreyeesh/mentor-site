@@ -25,6 +25,11 @@ SITE_CONFIG = {
     'plausible_script_url': os.getenv('PLAUSIBLE_SCRIPT_URL', ''),
     'plausible_domain': os.getenv('PLAUSIBLE_DOMAIN', ''),
     'social_image': os.getenv('SITE_SOCIAL_IMAGE', 'images/SreyeeshProfilePic.jpg'),
+    'github_url': os.getenv('SITE_GITHUB_URL', 'https://github.com/Sreyeesh'),
+    'linkedin_url': os.getenv(
+        'SITE_LINKEDIN_URL', 'https://www.linkedin.com/in/sreyeeshgarimella'
+    ),
+    'location': os.getenv('SITE_LOCATION', 'Estonia'),
 }
 
 NAV_LINKS = [
@@ -65,12 +70,57 @@ def build_page_context(**extra) -> dict:
     }
 
 
-NOTION_SIGNUP_URL = 'https://observant-toothpaste-fa5.notion.site/64939681cd2c4a1f899c6ac8d2fe4e74?pvs=105'
+NOTION_SIGNUP_URL = (
+    'https://observant-toothpaste-fa5.notion.site/'
+    '64939681cd2c4a1f899c6ac8d2fe4e74?pvs=105'
+)
+
+ABOUT_EXPERIENCE = [
+    {
+        'company': 'Walt Disney Animation Studios',
+        'role': 'Pipeline Technical Director',
+        'logo': 'images/Walt_Disney_Animation_Studios_logo.svg.png',
+    },
+    {
+        'company': 'Blizzard Entertainment',
+        'role': 'Technical Artist',
+        'logo': 'images/Blizzard_Entertainment_Logo_2015.svg.png',
+    },
+    {
+        'company': 'DNEG',
+        'role': 'Pipeline Technical Director',
+        'logo': 'images/DNEG_Animation_2025.svg.png',
+    },
+    {
+        'company': 'Boulder Media',
+        'role': 'Pipeline Developer',
+        'logo': 'images/Boulder_Media.png',
+    },
+]
+
+COMING_SOON_TOPICS = [
+    'DevOps workflows and terminal setups that actually work in production',
+    'Building tools and automation for creative studios',
+    "Full-stack development from a technical director's perspective",
+    'Lessons from shipping at Disney, Blizzard, and DNEG',
+]
 
 
 @app.route('/')
 def home():
-    return render_template('coming-soon-full.html', signup_url=NOTION_SIGNUP_URL)
+    return render_template(
+        'home.html', **build_page_context(page_slug='home', posts=get_posts())
+    )
+
+
+@app.route('/coming-soon/')
+def coming_soon():
+    return render_template(
+        'coming-soon-full.html',
+        **build_page_context(),
+        signup_url=NOTION_SIGNUP_URL,
+        topics=COMING_SOON_TOPICS,
+    )
 
 
 @app.route('/blog/')
@@ -98,7 +148,11 @@ def blog_detail(slug: str):
 
 @app.route('/about/')
 def about():
-    return redirect('/')
+    return render_template(
+        'about.html',
+        **build_page_context(page_slug='about'),
+        experience=ABOUT_EXPERIENCE,
+    )
 
 
 @app.route('/sitemap.xml')

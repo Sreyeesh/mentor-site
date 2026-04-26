@@ -33,6 +33,13 @@ dist/
 *.swp
 *.swo
 
+# AI tooling
+.agents/
+.claude/
+.junie/
+.impeccable.md
+skills-lock.json
+
 # OS
 .DS_Store
 Thumbs.db

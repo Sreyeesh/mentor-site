@@ -1,35 +1,4 @@
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-    --bg:         #fafaf8;
-    --text:       #1a1a1a;
-    --text-muted: #6b6b6b;
-    --accent:     #0f62fe;
-    --border:     #e0e0de;
-    --font-serif: 'Fraunces', Georgia, serif;
-    --font-body:  'Newsreader', Georgia, serif;
-    --font-mono:  'JetBrains Mono', monospace;
-}
-
-[data-theme="dark"] {
-    --bg:         #111111;
-    --text:       #d4d4d4;
-    --text-muted: #888;
-    --accent:     #6aafff;
-    --border:     rgba(255,255,255,0.1);
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    font-size: 1.125rem;
-    line-height: 1.8;
-    -webkit-font-smoothing: antialiased;
-    transition: background-color 0.2s, color 0.2s;
-}
+@import url('base.css');
 
 .topbar {
     display: flex;
@@ -72,18 +41,12 @@ body {
 }
 
 h1 {
-    font-family: var(--font-serif);
     font-size: clamp(1.75rem, 5vw, 2.25rem);
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    color: var(--text);
     margin-bottom: 1.25rem;
 }
 
 .body-text {
     font-size: 1.05rem;
-    line-height: 1.8;
     color: var(--text-muted);
     max-width: 60ch;
     margin-bottom: 2rem;
@@ -122,11 +85,8 @@ hr {
 }
 
 h2 {
-    font-family: var(--font-serif);
     font-size: 1rem;
-    font-weight: 600;
     letter-spacing: -0.01em;
-    color: var(--text);
     margin-bottom: 1rem;
 }
 
@@ -157,7 +117,6 @@ h2 {
 
 .credits p {
     font-size: 0.95rem;
-    line-height: 1.8;
     color: var(--text-muted);
     max-width: 60ch;
 }

@@ -71,6 +71,7 @@ Common types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 - `master` is production — only updated via PR from `dev`
 - `dev` is the integration branch — all feature branches merge here
 - Branch naming: `type/issue-number-short-description` e.g. `feat/137-email-signup`
+- **Never** use auto-generated branch names like `claude/identify-project-bRvHV`
 
 ## CI/CD
 

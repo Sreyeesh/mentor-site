@@ -16,7 +16,7 @@
         <p class="lede">{{ landing.lede }}</p>
         <div class="cta-row">
             <a class="btn-primary" href="{{ booking_url }}" target="_blank" rel="noopener noreferrer">
-                {{ landing.cta_label }}
+                {{ landing.cta_label }}<span class="sr-only"> (opens in new tab)</span>
             </a>
             <span class="cta-meta">{{ landing.cta_meta }}</span>
         </div>
@@ -40,7 +40,7 @@
         <ul class="topic-list">
             {% for topic in landing.topics %}
             <li>
-                <span class="idx">{{ '%02d' % loop.index }}</span>
+                <span class="idx" aria-hidden="true">{{ '%02d' % loop.index }}</span>
                 {{ topic }}
             </li>
             {% endfor %}
@@ -52,7 +52,7 @@
         <ol class="steps-list">
             {% for step in landing.steps %}
             <li>
-                <span class="idx">{{ loop.index }}</span>
+                <span class="idx" aria-hidden="true">{{ loop.index }}</span>
                 {{ step }}
             </li>
             {% endfor %}
@@ -79,7 +79,7 @@
         <p>{{ landing.closing_body }}</p>
         <div class="cta-row">
             <a class="btn-primary" href="{{ booking_url }}" target="_blank" rel="noopener noreferrer">
-                {{ landing.cta_label }}
+                {{ landing.cta_label }}<span class="sr-only"> (opens in new tab)</span>
             </a>
             <span class="cta-meta">{{ landing.cta_meta_short }}</span>
         </div>

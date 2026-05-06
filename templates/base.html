@@ -44,7 +44,8 @@
     {% block head_extra %}{% endblock %}
 </head>
 <body class="{{ body_class | default('') }}">
-    <nav class="navbar">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <nav class="navbar" aria-label="Primary">
         <div class="nav-content">
             <div class="nav-brand">
                 <a href="{{ site_links.home }}" class="nav-name-link">{{ config.name }}</a>
@@ -83,7 +84,7 @@
         </div>
     </nav>
 
-    <main class="{{ main_class | default('site-main') }}" id="top">
+    <main class="{{ main_class | default('site-main') }}" id="main-content" tabindex="-1">
         {% block main_inner %}
         <div class="wrap">
             {% block content %}{% endblock %}

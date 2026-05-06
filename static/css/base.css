@@ -11,9 +11,9 @@
     --nav-bg: rgba(250, 250, 248, 0.95);
     --wrap-width: 700px;
     --nav-height: 56px;
-    --font-serif: 'Fraunces', Georgia, serif;
-    --font-body: 'Newsreader', Georgia, serif;
-    --font-sans: system-ui, -apple-system, sans-serif;
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-serif: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
 }
 

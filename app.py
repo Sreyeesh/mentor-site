@@ -18,17 +18,15 @@ SITE_CONFIG = {
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),
     'meta_description': os.getenv(
         'SITE_META_DESCRIPTION',
-        'Full-stack developer and technical artist — writing about software, '
-        'tools, and the craft of building things.',
+        '1:1 game development mentoring for beginners, hobbyists, and indie '
+        'teams. Engine-agnostic. Godot, Unity, Unreal, or your own.',
     ),
     'asset_version': os.getenv('ASSET_VERSION', '1'),
     'plausible_script_url': os.getenv('PLAUSIBLE_SCRIPT_URL', ''),
     'plausible_domain': os.getenv('PLAUSIBLE_DOMAIN', ''),
     'social_image': os.getenv('SITE_SOCIAL_IMAGE', 'images/SreyeeshProfilePic.jpg'),
-    'github_url': os.getenv('SITE_GITHUB_URL', 'https://github.com/Sreyeesh'),
-    'linkedin_url': os.getenv(
-        'SITE_LINKEDIN_URL', 'https://www.linkedin.com/in/sreyeeshgarimella'
-    ),
+    'github_url': os.getenv('SITE_GITHUB_URL', ''),
+    'linkedin_url': os.getenv('SITE_LINKEDIN_URL', ''),
     'location': os.getenv('SITE_LOCATION', 'Estonia'),
 }
 
@@ -70,9 +68,9 @@ def build_page_context(**extra) -> dict:
     }
 
 
-NOTION_SIGNUP_URL = (
-    'https://observant-toothpaste-fa5.notion.site/'
-    '64939681cd2c4a1f899c6ac8d2fe4e74?pvs=105'
+MENTORING_BOOKING_URL = os.getenv(
+    'MENTORING_BOOKING_URL',
+    'https://cal.com/sreyeesh-dhb2sk/60min',
 )
 
 ABOUT_EXPERIENCE = [
@@ -98,21 +96,85 @@ ABOUT_EXPERIENCE = [
     },
 ]
 
-COMING_SOON_TOPICS = [
-    'DevOps workflows and terminal setups that actually work in production',
-    'Building tools and automation for creative studios',
-    "Full-stack development from a technical director's perspective",
-    'Lessons from shipping at Disney, Blizzard, and DNEG',
-]
+LANDING_PAGE = {
+    'page_title': 'Game Dev Mentoring',
+    'eyebrow': '1:1 Game Dev Mentoring',
+    'headline': 'Senior guidance for the engineering side of making games.',
+    'lede': (
+        'For beginners, hobbyists, and small indie teams. Engine-agnostic. '
+        'Godot, Unity, Unreal, or your own. Bring what you are stuck on; '
+        'leave with a concrete next step.'
+    ),
+    'cta_label': 'Book a session',
+    'cta_meta': '€75 · 60 min · 1:1 video call',
+    'cta_meta_short': '€75 · 60 min',
+    'trust': 'A decade in production pipelines · replies within 24h',
+    'audience_label': "Who it's for",
+    'audience_heading': 'This is for you if…',
+    'audience': [
+        "You're picking your first engine and want to start a real project.",
+        "You're building something on the side and stuck on a specific problem.",
+        "You're on a small indie team (2–5) and want senior input "
+        "without hiring senior.",
+        "You can write some code, but the engineering side of "
+        "game-making feels overwhelming.",
+    ],
+    'topics_label': 'What I cover',
+    'topics': [
+        'Architecture and code structure that scales with your project',
+        'Tooling, pipelines, and version control for game projects',
+        'Debugging, performance, and keeping scope under control',
+    ],
+    'steps_label': 'How it works',
+    'steps': [
+        'Book a 60-minute session and tell me what you are working on.',
+        'I meet with you 1:1 over video.',
+        'You leave with a concrete next step.',
+    ],
+    'about_label': 'About',
+    'about_body': (
+        "I've spent the last decade building production tools and pipelines "
+        "for studios. I mentor the engineering side of game-making, the "
+        "parts that transfer no matter which engine you pick."
+    ),
+    'faq_label': 'FAQ',
+    'faq': [
+        {
+            'q': "I'm a complete beginner. Is this for me?",
+            'a': 'Yes. A lot of what I do is help people choose an engine, '
+                 'scope a first project, and avoid the traps that stall beginners.',
+        },
+        {
+            'q': 'Which engine do you teach?',
+            'a': "I'm engine-agnostic. The concepts I focus on (architecture, "
+                 'tooling, debugging, scoping) carry across Godot, Unity, Unreal, '
+                 "or a custom stack. Bring whatever you're using.",
+        },
+        {
+            'q': 'How long is a session?',
+            'a': '60 minutes, 1:1, over video. €75 per session.',
+        },
+        {
+            'q': 'Can I book more than one?',
+            'a': "Yes. Most people book a single session first, see if it's "
+                 'useful, and come back when they hit the next wall.',
+        },
+    ],
+    'closing_heading': 'Ready when you are.',
+    'closing_body': (
+        'Book a 60-minute session and come prepared with what you are '
+        'working on.'
+    ),
+}
 
 
 @app.route('/')
 def home():
     return render_template(
-        'coming-soon-full.html',
-        **build_page_context(),
-        signup_url=NOTION_SIGNUP_URL,
-        topics=COMING_SOON_TOPICS,
+        'landing.html',
+        **build_page_context(page_slug='home'),
+        booking_url=MENTORING_BOOKING_URL,
+        landing=LANDING_PAGE,
     )
 
 

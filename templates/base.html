@@ -32,7 +32,7 @@
             } catch (err) {}
         })();
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Newsreader:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
     {% if config.plausible_script_url %}
         <script
@@ -44,7 +44,8 @@
     {% block head_extra %}{% endblock %}
 </head>
 <body class="{{ body_class | default('') }}">
-    <nav class="navbar">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <nav class="navbar" aria-label="Primary">
         <div class="nav-content">
             <div class="nav-brand">
                 <a href="{{ site_links.home }}" class="nav-name-link">{{ config.name }}</a>
@@ -83,7 +84,7 @@
         </div>
     </nav>
 
-    <main class="{{ main_class | default('site-main') }}" id="top">
+    <main class="{{ main_class | default('site-main') }}" id="main-content" tabindex="-1">
         {% block main_inner %}
         <div class="wrap">
             {% block content %}{% endblock %}

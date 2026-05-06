@@ -9,17 +9,16 @@ def test_home_page(client):
 
 
 def test_home_page_content(client):
-    """Home page shows coming soon content."""
+    """Home page shows the mentoring landing content."""
     response = client.get('/')
     assert b'Sreyeesh Garimella' in response.data
-    assert b'Something is on the way' in response.data
+    assert b'Book a session' in response.data
 
 
 def test_pages_load(client):
-    """Blog index redirects to home."""
+    """Blog index renders the post list."""
     response = client.get('/blog/')
-    assert response.status_code == 302
-    assert response.location == '/'
+    assert response.status_code == 200
 
 
 def test_sitemap_endpoint(client):
@@ -56,8 +55,8 @@ def test_markdown_posts_available():
 
 def test_blog_index(client):
     response = client.get('/blog/')
-    assert response.status_code == 302
-    assert response.location == '/'
+    assert response.status_code == 200
+    assert b'Writing' in response.data
 
 
 def test_blog_detail(client, tmp_path, monkeypatch):

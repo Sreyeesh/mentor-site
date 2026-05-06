@@ -1,0 +1,378 @@
+@import url('base.css');
+
+/* ---------- Topbar ---------- */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.topbar-name {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    transition: color 0.15s;
+}
+
+.theme-toggle:hover { color: var(--text); }
+.theme-toggle .sun-icon { display: none; }
+.theme-toggle .moon-icon { display: block; }
+[data-theme="dark"] .theme-toggle .sun-icon { display: block; }
+[data-theme="dark"] .theme-toggle .moon-icon { display: none; }
+
+/* ---------- Page shell ---------- */
+
+.page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+/* ---------- Shared section label ---------- */
+
+.section-label,
+.eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.eyebrow {
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+    padding: 3rem 0 4rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3.5rem;
+}
+
+.hero h1 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(2.25rem, 6vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    max-width: 22ch;
+    color: var(--text);
+}
+
+.lede {
+    font-size: 1.15rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+    max-width: 60ch;
+    margin-bottom: 2rem;
+}
+
+/* ---------- CTA button ---------- */
+
+.cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    background: var(--text);
+    color: var(--bg);
+    padding: 0.85rem 1.5rem;
+    border-radius: 6px;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.cta-meta {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.cta-meta a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.cta-meta a:hover { color: var(--accent); }
+
+.trust {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 1.5rem;
+}
+
+/* ---------- Generic section block ---------- */
+
+.block {
+    margin-bottom: 3.5rem;
+}
+
+.block > p {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    max-width: 62ch;
+}
+
+/* ---------- Block heading ---------- */
+
+.block-heading {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    max-width: 28ch;
+}
+
+/* ---------- Check list ("This is for you if...") ---------- */
+
+.check-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.check-list li {
+    position: relative;
+    padding-left: 2rem;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--text);
+    max-width: 60ch;
+}
+
+.check-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='3 8.5 6.5 12 13 4.5'/></svg>");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+[data-theme="dark"] .check-list li::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23d4d4d4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='3 8.5 6.5 12 13 4.5'/></svg>");
+}
+
+/* ---------- Topic list ("What I cover") ---------- */
+
+.topic-list {
+    list-style: none;
+    border-top: 1px solid var(--border);
+}
+
+.topic-list li {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 1.25rem;
+    align-items: baseline;
+}
+
+.topic-list .idx {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    flex-shrink: 0;
+    letter-spacing: 0.05em;
+}
+
+/* ---------- Steps ---------- */
+
+.steps-list {
+    list-style: none;
+}
+
+.steps-list li {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+    padding: 0.5rem 0;
+    display: flex;
+    gap: 1.25rem;
+    align-items: baseline;
+}
+
+.steps-list .idx {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- About ---------- */
+
+.about-block p {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--text);
+    max-width: 62ch;
+}
+
+/* ---------- FAQ ---------- */
+
+.faq {
+    border-top: 1px solid var(--border);
+}
+
+.faq dt {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    padding: 1.25rem 0 0.5rem;
+}
+
+.faq dd {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0 0 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+}
+
+/* ---------- Bottom CTA block ---------- */
+
+.cta-block {
+    background: var(--text);
+    color: var(--bg);
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    margin-top: 4rem;
+}
+
+.cta-block h2 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1.75rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    color: var(--bg);
+}
+
+.cta-block p {
+    color: var(--bg);
+    opacity: 0.7;
+    margin-bottom: 1.5rem;
+    max-width: 50ch;
+}
+
+.cta-block .btn-primary {
+    background: var(--bg);
+    color: var(--text);
+}
+
+.cta-block .cta-meta {
+    color: var(--bg);
+    opacity: 0.7;
+}
+
+.cta-block .cta-meta a {
+    color: var(--bg);
+}
+
+.cta-block .cta-meta a:hover {
+    opacity: 1;
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+    max-width: 760px;
+    margin: 3rem auto 0;
+    padding: 2rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+}
+
+.footer-links a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+.footer-links a:hover { color: var(--accent); }
+
+.footer-copy {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 600px) {
+    .page { padding: 1.5rem 1.25rem 3rem; }
+    .topbar { padding: 1rem 1.25rem; }
+    .hero { padding: 1.5rem 0 2.5rem; margin-bottom: 2.5rem; }
+    .cta-block { padding: 2rem 1.5rem; }
+    .footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.25rem; }
+    .btn-primary { width: 100%; text-align: center; }
+}

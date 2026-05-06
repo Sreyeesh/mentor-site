@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 
 from dotenv import load_dotenv
-from flask import Flask, abort, g, redirect, render_template, request, url_for
+from flask import Flask, abort, g, render_template, request, url_for
 
 load_dotenv()
 
@@ -116,16 +116,13 @@ def home():
     )
 
 
-@app.route('/home/')
-def home_full():
-    return render_template(
-        'home.html', **build_page_context(page_slug='home', posts=get_posts())
-    )
-
-
 @app.route('/blog/')
 def blog_index():
-    return redirect('/')
+    return render_template(
+        'blog/list.html',
+        **build_page_context(page_slug='blog', posts=get_posts()),
+        blog_index_href='/blog/',
+    )
 
 
 @app.route('/blog/<slug>/')

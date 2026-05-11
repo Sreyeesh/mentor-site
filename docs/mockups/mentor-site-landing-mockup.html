@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentor Site Landing Mockup</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f7f8fa;
+    --surface-2: #eef0f4;
+    --border: #e2e5ec;
+    --text: #0d1220;
+    --text-muted: #4d5670;
+    --accent: #1f6feb;
+    --accent-ink: #ffffff;
+    --radius: 10px;
+    --container: 1120px;
+    --gap: 24px;
+    --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  h1, h2, h3 { line-height: 1.2; margin: 0 0 0.5em; letter-spacing: -0.01em; }
+  h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; }
+  h2 { font-size: clamp(1.4rem, 2.4vw, 1.875rem); font-weight: 600; }
+  h3 { font-size: 1.1rem; font-weight: 600; }
+  p { margin: 0 0 1em; color: var(--text-muted); }
+  .wrap { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 0 0 1rem;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 120ms ease, border-color 120ms ease;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { background: #1858c4; text-decoration: none; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .btn-secondary:hover { background: var(--surface); text-decoration: none; }
+
+  /* Nav */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: saturate(140%) blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+  }
+  .brand { font-weight: 700; color: var(--text); }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-links a { color: var(--text-muted); font-weight: 500; }
+  .nav-links a.active, .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+  /* Hero */
+  .hero { padding: 80px 0 56px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .hero-copy p.lede { font-size: 1.125rem; max-width: 56ch; }
+  .hero-ctas { display: flex; gap: 12px; margin: 28px 0 24px; flex-wrap: wrap; }
+  .hero-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+  }
+  .hero-meta span::before {
+    content: "•";
+    color: var(--border);
+    margin-right: 0.6em;
+  }
+  .hero-meta span:first-child::before { content: none; margin: 0; }
+
+  /* Booking panel */
+  .booking-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .booking-card h3 { margin-bottom: 4px; }
+  .booking-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    margin: 16px 0 20px;
+    font-size: 0.92rem;
+  }
+  .booking-meta dt { color: var(--text-muted); font-weight: 500; }
+  .booking-meta dd { margin: 0; color: var(--text); font-weight: 600; }
+  .booking-list { list-style: none; padding: 0; margin: 0 0 20px; }
+  .booking-list li {
+    position: relative;
+    padding: 6px 0 6px 22px;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+  .booking-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 12px;
+    width: 12px; height: 8px;
+    border-left: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    transform: rotate(-45deg);
+  }
+  .booking-card .btn { width: 100%; }
+
+  /* Generic section */
+  section { padding: 64px 0; border-top: 1px solid var(--border); }
+  .section-head { max-width: 56ch; margin-bottom: 32px; }
+  .cards {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .card h3 { margin-bottom: 6px; }
+  .card p { margin: 0; }
+
+  /* Steps */
+  .steps { counter-reset: step; }
+  .steps .card { position: relative; padding-top: 56px; }
+  .steps .card::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    top: 20px; left: 24px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .stat-row {
+    display: flex;
+    gap: 32px;
+    padding: 16px 0 0;
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+  }
+  .stat .num { display: block; font-weight: 700; font-size: 1.5rem; color: var(--text); }
+  .stat .lbl { display: block; color: var(--text-muted); font-size: 0.85rem; }
+
+  /* FAQ */
+  details {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    background: var(--bg);
+  }
+  details + details { margin-top: 0; }
+  details summary {
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+    color: var(--text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after {
+    content: "+";
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+  details[open] summary::after { content: "–"; }
+  details p { margin: 12px 0 0; }
+
+  /* Final CTA */
+  .final-cta {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 48px 32px;
+    text-align: center;
+  }
+  .final-cta h2 { margin-bottom: 8px; }
+  .final-cta p { max-width: 52ch; margin: 0 auto 24px; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  @media (max-width: 880px) {
+    .hero { padding: 56px 0 40px; }
+    .hero-grid, .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .cards { grid-template-columns: 1fr; }
+    section { padding: 48px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#">Sreyeesh Garimella</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#" class="active">Home</a>
+      <a href="#">Writing</a>
+      <a href="#">About</a>
+      <a href="#book" class="btn btn-primary" style="padding: 8px 14px;">Book a session</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- 1. Hero + 2. Booking panel -->
+  <section class="hero" style="border-top: none;">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">1:1 game dev mentoring</p>
+        <h1>Learn the engineering side of game development.</h1>
+        <p class="lede">
+          1:1 mentoring for beginners, hobbyists, and indie developers who want
+          practical help with architecture, debugging, tools, scope, and engine
+          decisions.
+        </p>
+        <div class="hero-ctas">
+          <a href="#book" class="btn btn-primary">Book a session</a>
+          <a href="#cover" class="btn btn-secondary">See what I cover</a>
+        </div>
+        <div class="hero-meta">
+          <span>EUR 75</span>
+          <span>60 minutes</span>
+          <span>1:1 video call</span>
+        </div>
+      </div>
+
+      <aside class="booking-card" id="book" aria-label="Booking summary">
+        <h3>60 minute mentoring session</h3>
+        <p style="margin: 0; font-size: 0.92rem;">
+          1:1 video call. Bring what you are working on.
+        </p>
+        <dl class="booking-meta">
+          <dt>Price</dt><dd>EUR 75</dd>
+          <dt>Duration</dt><dd>60 minutes</dd>
+          <dt>Format</dt><dd>1:1 video call</dd>
+          <dt>Reply window</dt><dd>Within 24 hours</dd>
+        </dl>
+        <ul class="booking-list">
+          <li>Pick an engine or unstick a decision</li>
+          <li>Debug a specific problem you are stuck on</li>
+          <li>Review architecture, scope, and next steps</li>
+        </ul>
+        <a href="#" class="btn btn-primary">Book a session</a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 4. Who it's for -->
+  <section id="audience">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Who it is for</p>
+        <h2>Game devs who want senior input on the engineering side.</h2>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <h3>Beginners choosing direction</h3>
+          <p>You are picking your first engine and want help starting a real project instead of more tutorials.</p>
+        </article>
+        <article class="card">
+          <h3>Builders stuck mid-project</h3>
+          <p>You have something running, you are stuck on a specific problem, and you want a fresh pair of eyes.</p>
+        </article>
+        <article class="card">
+          <h3>Small teams needing review</h3>
+          <p>You are a 2 to 5 person indie team that wants senior input without hiring a senior full time.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. What I cover -->
+  <section id="cover">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What I cover</p>
+        <h2>The engineering parts that transfer across engines.</h2>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <h3>Architecture</h3>
+          <p>Code structure, separation of concerns, and patterns that hold up as your project grows.</p>
+        </article>
+        <article class="card">
+          <h3>Debugging</h3>
+          <p>Reading the problem, isolating the cause, and building habits that make future bugs cheaper to find.</p>
+        </article>
+        <article class="card">
+          <h3>Production habits</h3>
+          <p>Version control, tooling, scope control, and the day to day routines that keep a project moving.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. How it works -->
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>One booking, three steps, a concrete next step in your hand.</h2>
+      </div>
+      <div class="cards steps">
+        <article class="card">
+          <h3>Send context</h3>
+          <p>Book a session and tell me what you are working on and what you are stuck on.</p>
+        </article>
+        <article class="card">
+          <h3>Work the problem</h3>
+          <p>We meet 1:1 over video and work the specific thing you brought, in your code, in your engine.</p>
+        </article>
+        <article class="card">
+          <h3>Leave with direction</h3>
+          <p>You leave with a concrete next step, not a generic plan, and a clear answer to your question.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. About -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div>
+        <p class="eyebrow">About</p>
+        <h2>I have spent the last decade in production engineering.</h2>
+      </div>
+      <div>
+        <p>
+          I build production tools and pipelines for a living. I have shipped
+          internal tools, debugged hard problems on tight deadlines, and watched
+          good projects stall on bad engineering decisions. Mentoring is how I
+          help people skip the parts I had to learn the slow way.
+        </p>
+        <p>
+          I do not push a single engine or a single methodology. I help you
+          make the call that fits your project, your skill level, and the time
+          you actually have.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">FAQ</p>
+        <h2>Common questions before booking.</h2>
+      </div>
+      <details>
+        <summary>I am a complete beginner. Is this for me?</summary>
+        <p>Yes. A lot of what I do is help people pick an engine, scope a first project, and avoid the traps that stall beginners.</p>
+      </details>
+      <details>
+        <summary>Which engines do you cover?</summary>
+        <p>I am engine agnostic. The concepts I focus on (architecture, debugging, tooling, scoping) carry across Godot, Unity, Unreal, or a custom stack. Bring whatever you are using.</p>
+      </details>
+      <details>
+        <summary>Can I bring a project I am already working on?</summary>
+        <p>Please do. The sessions work best when there is something concrete on the screen to look at and debug together.</p>
+      </details>
+      <details>
+        <summary>Do you do code review between sessions?</summary>
+        <p>Not as a default. Each session is a focused 60 minutes. If you want deeper async review, mention it when you book and we can talk scope.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 9. Final CTA -->
+  <section>
+    <div class="wrap">
+      <div class="final-cta">
+        <h2>Ready when you are.</h2>
+        <p>Book a 60 minute session and come prepared with what you are working on.</p>
+        <a href="#book" class="btn btn-primary">Book a session</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; Sreyeesh Garimella</span>
+    <span>Mentor site landing mockup, reference only.</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -30,10 +30,21 @@ SITE_CONFIG = {
     'location': os.getenv('SITE_LOCATION', 'Estonia'),
 }
 
+MENTORING_BOOKING_URL = os.getenv(
+    'MENTORING_BOOKING_URL',
+    'https://cal.com/sreyeesh-dhb2sk/60min',
+)
+
 NAV_LINKS = [
     {'label': 'Home', 'href': '/'},
     {'label': 'Writing', 'href': '/blog/'},
     {'label': 'About', 'href': '/about/'},
+    {
+        'label': 'Book a session',
+        'href': MENTORING_BOOKING_URL,
+        'is_cta': True,
+        'external': True,
+    },
 ]
 
 SITE_LINKS = {
@@ -78,11 +89,6 @@ def build_page_context(**extra) -> dict:
     return context
 
 
-MENTORING_BOOKING_URL = os.getenv(
-    'MENTORING_BOOKING_URL',
-    'https://cal.com/sreyeesh-dhb2sk/60min',
-)
-
 ABOUT_EXPERIENCE = [
     {
         'company': 'Walt Disney Animation Studios',
@@ -108,71 +114,170 @@ ABOUT_EXPERIENCE = [
 
 LANDING_PAGE = {
     'page_title': 'Game Dev Mentoring',
-    'eyebrow': '1:1 Game Dev Mentoring',
-    'headline': 'Senior guidance for the engineering side of making games.',
+    'eyebrow': '1:1 game dev mentoring',
+    'headline': 'Learn the engineering side of game development.',
     'lede': (
-        'For beginners, hobbyists, and small indie teams. Engine-agnostic. '
-        'Godot, Unity, Unreal, or your own. Bring what you are stuck on; '
-        'leave with a concrete next step.'
+        '1:1 mentoring for beginners, hobbyists, and indie developers who '
+        'want practical help with architecture, debugging, tools, scope, '
+        'and engine decisions.'
     ),
-    'cta_label': 'Book a session',
-    'cta_meta': '€75 · 60 min · 1:1 video call',
-    'cta_meta_short': '€75 · 60 min',
-    'trust': 'A decade in production pipelines · replies within 24h',
-    'audience_label': "Who it's for",
-    'audience_heading': 'This is for you if…',
+    'cta_primary': 'Book a session',
+    'cta_secondary': 'See what I cover',
+    'cta_meta': ['EUR 75', '60 minutes', '1:1 video call'],
+    'booking': {
+        'title': '60 minute mentoring session',
+        'subtitle': '1:1 video call. Bring what you are working on.',
+        'meta': [
+            ('Price', 'EUR 75'),
+            ('Duration', '60 minutes'),
+            ('Format', '1:1 video call'),
+            ('Reply window', 'Within 24 hours'),
+        ],
+        'bullets': [
+            'Pick an engine or unstick a decision',
+            'Debug a specific problem you are stuck on',
+            'Review architecture, scope, and next steps',
+        ],
+    },
+    'audience_label': 'Who it is for',
+    'audience_heading': (
+        'Game devs who want senior input on the engineering side.'
+    ),
     'audience': [
-        "You're picking your first engine and want to start a real project.",
-        "You're building something on the side and stuck on a specific problem.",
-        "You're on a small indie team (2–5) and want senior input "
-        "without hiring senior.",
-        "You can write some code, but the engineering side of "
-        "game-making feels overwhelming.",
+        {
+            'title': 'Beginners choosing direction',
+            'body': (
+                'You are picking your first engine and want help starting '
+                'a real project instead of more tutorials.'
+            ),
+        },
+        {
+            'title': 'Builders stuck mid-project',
+            'body': (
+                'You have something running, you are stuck on a specific '
+                'problem, and you want a fresh pair of eyes.'
+            ),
+        },
+        {
+            'title': 'Small teams needing review',
+            'body': (
+                'You are a 2 to 5 person indie team that wants senior '
+                'input without hiring a senior full time.'
+            ),
+        },
     ],
     'topics_label': 'What I cover',
+    'topics_heading': (
+        'The engineering parts that transfer across engines.'
+    ),
     'topics': [
-        'Architecture and code structure that scales with your project',
-        'Tooling, pipelines, and version control for game projects',
-        'Debugging, performance, and keeping scope under control',
+        {
+            'title': 'Architecture',
+            'body': (
+                'Code structure, separation of concerns, and patterns that '
+                'hold up as your project grows.'
+            ),
+        },
+        {
+            'title': 'Debugging',
+            'body': (
+                'Reading the problem, isolating the cause, and building '
+                'habits that make future bugs cheaper to find.'
+            ),
+        },
+        {
+            'title': 'Production habits',
+            'body': (
+                'Version control, tooling, scope control, and the day to '
+                'day routines that keep a project moving.'
+            ),
+        },
     ],
     'steps_label': 'How it works',
+    'steps_heading': (
+        'One booking, three steps, a concrete next step in your hand.'
+    ),
     'steps': [
-        'Book a 60-minute session and tell me what you are working on.',
-        'I meet with you 1:1 over video.',
-        'You leave with a concrete next step.',
+        {
+            'title': 'Send context',
+            'body': (
+                'Book a session and tell me what you are working on and '
+                'what you are stuck on.'
+            ),
+        },
+        {
+            'title': 'Work the problem',
+            'body': (
+                'We meet 1:1 over video and work the specific thing you '
+                'brought, in your code, in your engine.'
+            ),
+        },
+        {
+            'title': 'Leave with direction',
+            'body': (
+                'You leave with a concrete next step, not a generic plan, '
+                'and a clear answer to your question.'
+            ),
+        },
     ],
     'about_label': 'About',
-    'about_body': (
-        "I've spent the last decade building production tools and pipelines "
-        "for studios. I mentor the engineering side of game-making, the "
-        "parts that transfer no matter which engine you pick."
+    'about_heading': (
+        'I have spent the last decade in production engineering.'
     ),
+    'about_body': [
+        (
+            'I build production tools and pipelines for a living. I have '
+            'shipped internal tools, debugged hard problems on tight '
+            'deadlines, and watched good projects stall on bad '
+            'engineering decisions. Mentoring is how I help people skip '
+            'the parts I had to learn the slow way.'
+        ),
+        (
+            'I do not push a single engine or a single methodology. I '
+            'help you make the call that fits your project, your skill '
+            'level, and the time you actually have.'
+        ),
+    ],
     'faq_label': 'FAQ',
+    'faq_heading': 'Common questions before booking.',
     'faq': [
         {
-            'q': "I'm a complete beginner. Is this for me?",
-            'a': 'Yes. A lot of what I do is help people choose an engine, '
-                 'scope a first project, and avoid the traps that stall beginners.',
+            'q': 'I am a complete beginner. Is this for me?',
+            'a': (
+                'Yes. A lot of what I do is help people pick an engine, '
+                'scope a first project, and avoid the traps that stall '
+                'beginners.'
+            ),
         },
         {
-            'q': 'Which engine do you teach?',
-            'a': "I'm engine-agnostic. The concepts I focus on (architecture, "
-                 'tooling, debugging, scoping) carry across Godot, Unity, Unreal, '
-                 "or a custom stack. Bring whatever you're using.",
+            'q': 'Which engines do you cover?',
+            'a': (
+                'I am engine agnostic. The concepts I focus on '
+                '(architecture, debugging, tooling, scoping) carry across '
+                'Godot, Unity, Unreal, or a custom stack. Bring whatever '
+                'you are using.'
+            ),
         },
         {
-            'q': 'How long is a session?',
-            'a': '60 minutes, 1:1, over video. €75 per session.',
+            'q': 'Can I bring a project I am already working on?',
+            'a': (
+                'Please do. The sessions work best when there is '
+                'something concrete on the screen to look at and debug '
+                'together.'
+            ),
         },
         {
-            'q': 'Can I book more than one?',
-            'a': "Yes. Most people book a single session first, see if it's "
-                 'useful, and come back when they hit the next wall.',
+            'q': 'Do you do code review between sessions?',
+            'a': (
+                'Not as a default. Each session is a focused 60 minutes. '
+                'If you want deeper async review, mention it when you '
+                'book and we can talk scope.'
+            ),
         },
     ],
     'closing_heading': 'Ready when you are.',
     'closing_body': (
-        'Book a 60-minute session and come prepared with what you are '
+        'Book a 60 minute session and come prepared with what you are '
         'working on.'
     ),
 }

@@ -7,81 +7,148 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css', v=config.asset_version) }}">
 {% endblock %}
 
-{% block main_inner %}
-<div class="page landing-page">
+{% block content %}
+<div class="landing">
 
-    <section class="hero">
-        <span class="eyebrow">{{ landing.eyebrow }}</span>
-        <h1>{{ landing.headline }}</h1>
-        <p class="lede">{{ landing.lede }}</p>
-        <div class="cta-row">
-            <a class="btn-primary" href="{{ booking_url }}" target="_blank" rel="noopener noreferrer">
-                {{ landing.cta_label }}<span class="sr-only"> (opens in new tab)</span>
-            </a>
-            <span class="cta-meta">{{ landing.cta_meta }}</span>
+    <section class="landing-hero">
+        <div class="wrap landing-hero__grid">
+            <div class="landing-hero__copy">
+                <p class="eyebrow">{{ landing.eyebrow }}</p>
+                <h1>{{ landing.headline }}</h1>
+                <p class="lede">{{ landing.lede }}</p>
+                <div class="cta-row">
+                    <a class="btn btn--primary"
+                       href="{{ booking_url }}"
+                       target="_blank" rel="noopener noreferrer">
+                        {{ landing.cta_primary }}
+                    </a>
+                    <a class="btn btn--ghost" href="#cover">
+                        {{ landing.cta_secondary }}
+                    </a>
+                </div>
+                <ul class="hero-meta">
+                    {% for item in landing.cta_meta %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <aside class="booking-card" id="book" aria-label="Booking summary">
+                <h3>{{ landing.booking.title }}</h3>
+                <p class="booking-card__subtitle">{{ landing.booking.subtitle }}</p>
+                <dl class="booking-card__meta">
+                    {% for label, value in landing.booking.meta %}
+                        <dt>{{ label }}</dt>
+                        <dd>{{ value }}</dd>
+                    {% endfor %}
+                </dl>
+                <ul class="booking-card__bullets">
+                    {% for bullet in landing.booking.bullets %}
+                        <li>{{ bullet }}</li>
+                    {% endfor %}
+                </ul>
+                <a class="btn btn--primary btn--block"
+                   href="{{ booking_url }}"
+                   target="_blank" rel="noopener noreferrer">
+                    {{ landing.cta_primary }}
+                </a>
+            </aside>
         </div>
-        <p class="trust">
-            {{ landing.trust }} · based in {{ config.location }}
-        </p>
     </section>
 
-    <section class="block">
-        <span class="section-label">{{ landing.audience_label }}</span>
-        <h2 class="block-heading">{{ landing.audience_heading }}</h2>
-        <ul class="check-list">
-            {% for item in landing.audience %}
-            <li>{{ item }}</li>
-            {% endfor %}
-        </ul>
+    <section class="landing-section" id="audience">
+        <div class="wrap">
+            <header class="section-head">
+                <p class="eyebrow">{{ landing.audience_label }}</p>
+                <h2>{{ landing.audience_heading }}</h2>
+            </header>
+            <div class="cards">
+                {% for item in landing.audience %}
+                    <article class="card">
+                        <h3>{{ item.title }}</h3>
+                        <p>{{ item.body }}</p>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
     </section>
 
-    <section class="block">
-        <span class="section-label">{{ landing.topics_label }}</span>
-        <ul class="topic-list">
-            {% for topic in landing.topics %}
-            <li>
-                <span class="idx" aria-hidden="true">{{ '%02d' % loop.index }}</span>
-                {{ topic }}
-            </li>
-            {% endfor %}
-        </ul>
+    <section class="landing-section" id="cover">
+        <div class="wrap">
+            <header class="section-head">
+                <p class="eyebrow">{{ landing.topics_label }}</p>
+                <h2>{{ landing.topics_heading }}</h2>
+            </header>
+            <div class="cards">
+                {% for item in landing.topics %}
+                    <article class="card">
+                        <h3>{{ item.title }}</h3>
+                        <p>{{ item.body }}</p>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
     </section>
 
-    <section class="block">
-        <span class="section-label">{{ landing.steps_label }}</span>
-        <ol class="steps-list">
-            {% for step in landing.steps %}
-            <li>
-                <span class="idx" aria-hidden="true">{{ loop.index }}</span>
-                {{ step }}
-            </li>
-            {% endfor %}
-        </ol>
+    <section class="landing-section" id="how">
+        <div class="wrap">
+            <header class="section-head">
+                <p class="eyebrow">{{ landing.steps_label }}</p>
+                <h2>{{ landing.steps_heading }}</h2>
+            </header>
+            <ol class="cards cards--steps">
+                {% for step in landing.steps %}
+                    <li class="card">
+                        <h3>{{ step.title }}</h3>
+                        <p>{{ step.body }}</p>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
     </section>
 
-    <section class="block about-block">
-        <span class="section-label">{{ landing.about_label }}</span>
-        <p>I'm {{ config.name }}, based in {{ config.location }}. {{ landing.about_body }}</p>
+    <section class="landing-section" id="about">
+        <div class="wrap landing-about">
+            <header class="section-head">
+                <p class="eyebrow">{{ landing.about_label }}</p>
+                <h2>{{ landing.about_heading }}</h2>
+            </header>
+            <div class="landing-about__body">
+                {% for para in landing.about_body %}
+                    <p>{{ para }}</p>
+                {% endfor %}
+            </div>
+        </div>
     </section>
 
-    <section class="block">
-        <span class="section-label">{{ landing.faq_label }}</span>
-        <dl class="faq">
-            {% for item in landing.faq %}
-            <dt>{{ item.q }}</dt>
-            <dd>{{ item.a }}</dd>
-            {% endfor %}
-        </dl>
+    <section class="landing-section" id="faq">
+        <div class="wrap">
+            <header class="section-head">
+                <p class="eyebrow">{{ landing.faq_label }}</p>
+                <h2>{{ landing.faq_heading }}</h2>
+            </header>
+            <div class="faq">
+                {% for item in landing.faq %}
+                    <details>
+                        <summary>{{ item.q }}</summary>
+                        <p>{{ item.a }}</p>
+                    </details>
+                {% endfor %}
+            </div>
+        </div>
     </section>
 
-    <section class="block cta-block">
-        <h2>{{ landing.closing_heading }}</h2>
-        <p>{{ landing.closing_body }}</p>
-        <div class="cta-row">
-            <a class="btn-primary" href="{{ booking_url }}" target="_blank" rel="noopener noreferrer">
-                {{ landing.cta_label }}<span class="sr-only"> (opens in new tab)</span>
-            </a>
-            <span class="cta-meta">{{ landing.cta_meta_short }}</span>
+    <section class="landing-section landing-section--final">
+        <div class="wrap">
+            <div class="final-cta">
+                <h2>{{ landing.closing_heading }}</h2>
+                <p>{{ landing.closing_body }}</p>
+                <a class="btn btn--primary"
+                   href="{{ booking_url }}"
+                   target="_blank" rel="noopener noreferrer">
+                    {{ landing.cta_primary }}
+                </a>
+            </div>
         </div>
     </section>
 

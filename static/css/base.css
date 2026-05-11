@@ -183,8 +183,18 @@ code, pre {
 }
 
 .nav-links a:hover { color: var(--text); opacity: 1; }
-.nav-links .nav-link--cta { all: unset; font-family: system-ui, -apple-system, sans-serif; font-size: 0.875rem; color: var(--text-muted); cursor: pointer; }
-.nav-links .nav-link--cta:hover { color: var(--text); }
+.nav-links .nav-link--cta {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    opacity: 1;
+    transition: opacity 120ms ease;
+}
+.nav-links .nav-link--cta:hover { color: #fff; opacity: 0.9; }
 
 /* Dark mode toggle */
 .nav-controls { display: flex; align-items: center; }

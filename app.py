@@ -57,15 +57,25 @@ def build_absolute_url(path: str) -> str:
     return f'{request.url_root.rstrip("/")}{normalized}'
 
 
+def build_social_image_url() -> str:
+    social_image = SITE_CONFIG['social_image']
+    if social_image.startswith(('http://', 'https://')):
+        return social_image
+    static_path = url_for('static', filename=social_image)
+    return build_absolute_url(static_path)
+
+
 def build_page_context(**extra) -> dict:
-    return {
+    context = {
         'config': SITE_CONFIG,
         'current_year': datetime.now().year,
         'nav_links': NAV_LINKS,
         'site_links': SITE_LINKS,
         'canonical_url': build_absolute_url(request.path),
-        **extra,
+        'social_image_url': build_social_image_url(),
     }
+    context.update(extra)
+    return context
 
 
 MENTORING_BOOKING_URL = os.getenv(

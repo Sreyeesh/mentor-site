@@ -478,3 +478,41 @@
 
     .session-facts { gap: 1.75rem; }
 }
+
+@media (max-width: 480px) {
+    .landing { --landing-section-pad: 3rem; }
+
+    .landing .wrap { padding: 0 1.1rem; }
+
+    .landing h1 { font-size: clamp(1.9rem, 9vw, 2.5rem); }
+    .landing-hero__copy .lede { font-size: 1.05rem; }
+
+    .landing-hero { padding: 2.5rem 0 3rem; }
+
+    .landing-hero__photo,
+    .landing-about__photo {
+        max-width: 100%;
+    }
+    .landing-hero__photo::before { display: none; }
+
+    .landing .btn { padding: 0.8rem 1.2rem; font-size: 0.95rem; }
+    .landing .cta-row { gap: 0.6rem; }
+    .landing .cta-row .btn { flex: 1 1 auto; }
+
+    .session-facts {
+        gap: 1.25rem 2rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+    }
+
+    .card { padding: 1.35rem; }
+    .cards--steps .card { padding-top: 3.25rem; }
+    .cards--steps .card::before { left: 1.35rem; }
+
+    .booking-card { padding: 1.5rem; }
+    .booking-card__meta { font-size: 0.88rem; }
+
+    .final-cta { padding: 2.5rem 1.25rem; }
+
+    .faq summary { font-size: 1rem; }
+}

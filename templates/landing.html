@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ config.name }} | {{ landing.page_title }}{% endblock %}
-{% block meta_description %}{{ config.meta_description }}{% endblock %}
+{% block meta_description %}{{ landing.meta_description if landing.meta_description else config.meta_description }}{% endblock %}
 
 {% block head_extra %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css', v=config.asset_version) }}">
@@ -11,7 +11,7 @@
 <div class="landing">
 
     <section class="landing-hero">
-        <div class="wrap landing-hero__grid">
+        <div class="wrap">
             <div class="landing-hero__copy">
                 <p class="eyebrow">{{ landing.eyebrow }}</p>
                 <h1>{{ landing.headline }}</h1>
@@ -26,33 +26,15 @@
                         {{ landing.cta_secondary }}
                     </a>
                 </div>
-                <ul class="hero-meta">
-                    {% for item in landing.cta_meta %}
-                        <li>{{ item }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-
-            <aside class="booking-card" id="book" aria-label="Booking summary">
-                <h2>{{ landing.booking.title }}</h2>
-                <p class="booking-card__subtitle">{{ landing.booking.subtitle }}</p>
-                <dl class="booking-card__meta">
+                <div class="session-facts">
                     {% for label, value in landing.booking.meta %}
-                        <dt>{{ label }}</dt>
-                        <dd>{{ value }}</dd>
+                        <div class="session-facts__item">
+                            <span class="session-facts__label">{{ label }}</span>
+                            <span class="session-facts__value">{{ value }}</span>
+                        </div>
                     {% endfor %}
-                </dl>
-                <ul class="booking-card__bullets">
-                    {% for bullet in landing.booking.bullets %}
-                        <li>{{ bullet }}</li>
-                    {% endfor %}
-                </ul>
-                <a class="btn btn--primary btn--block"
-                   href="{{ booking_url }}"
-                   target="_blank" rel="noopener noreferrer">
-                    {{ landing.cta_primary }}
-                </a>
-            </aside>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -117,6 +99,36 @@
                 {% for para in landing.about_body %}
                     <p>{{ para }}</p>
                 {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="landing-section" id="book">
+        <div class="wrap">
+            <div class="landing-book">
+                <div class="landing-book__copy">
+                    <p class="eyebrow">{{ landing.booking.eyebrow if landing.booking.eyebrow else "Book a session" }}</p>
+                    <h2>{{ landing.booking.title }}</h2>
+                    <p>{{ landing.booking.subtitle }}</p>
+                </div>
+                <aside class="booking-card" aria-label="Booking summary">
+                    <dl class="booking-card__meta">
+                        {% for label, value in landing.booking.meta %}
+                            <dt>{{ label }}</dt>
+                            <dd>{{ value }}</dd>
+                        {% endfor %}
+                    </dl>
+                    <ul class="booking-card__bullets">
+                        {% for bullet in landing.booking.bullets %}
+                            <li>{{ bullet }}</li>
+                        {% endfor %}
+                    </ul>
+                    <a class="btn btn--primary btn--block"
+                       href="{{ booking_url }}"
+                       target="_blank" rel="noopener noreferrer">
+                        {{ landing.cta_primary }}
+                    </a>
+                </aside>
             </div>
         </div>
     </section>

@@ -14,7 +14,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     FLASK_ENV=production \
     PYTHONPATH=/app \
     BASE_PATH=${BASE_PATH} \
-    GITHUB_PAGES_BASE_PATH=${BASE_PATH} \
+    GITHUB_PAGES_BASE_PATH=${BASE_PATH}
 
 # Install system dependencies
 RUN apt-get update \

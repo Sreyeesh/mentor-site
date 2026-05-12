@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css', v=config.asset_version) }}">
 {% endblock %}
 
-{% block content %}
+{% block main_inner %}
 <div class="landing">
 
     <section class="landing-hero">
@@ -60,7 +60,7 @@
         </div>
     </section>
 
-    <section class="landing-section" id="cover">
+    <section class="landing-section landing-section--alt" id="cover">
         <div class="wrap">
             <header class="section-head">
                 <p class="eyebrow">{{ landing.topics_label }}</p>
@@ -94,13 +94,15 @@
         </div>
     </section>
 
-    <section class="landing-section" id="about">
+    <section class="landing-section landing-section--alt" id="about">
         <div class="wrap landing-about">
-            <header class="section-head">
+            <div class="landing-about__photo">
+                <img src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}"
+                     alt="{{ config.name }}">
+            </div>
+            <div class="landing-about__body">
                 <p class="eyebrow">{{ landing.about_label }}</p>
                 <h2>{{ landing.about_heading }}</h2>
-            </header>
-            <div class="landing-about__body">
                 {% for para in landing.about_body %}
                     <p>{{ para }}</p>
                 {% endfor %}
@@ -138,7 +140,7 @@
         </div>
     </section>
 
-    <section class="landing-section" id="faq">
+    <section class="landing-section landing-section--alt" id="faq">
         <div class="wrap">
             <header class="section-head">
                 <p class="eyebrow">{{ landing.faq_label }}</p>

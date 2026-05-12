@@ -11,7 +11,7 @@
 <div class="landing">
 
     <section class="landing-hero">
-        <div class="wrap">
+        <div class="wrap landing-hero__grid">
             <div class="landing-hero__copy">
                 <p class="eyebrow">{{ landing.eyebrow }}</p>
                 <h1>{{ landing.headline }}</h1>
@@ -34,6 +34,11 @@
                         </div>
                     {% endfor %}
                 </div>
+            </div>
+            <div class="landing-hero__photo">
+                <img src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}"
+                     alt="{{ config.name }}"
+                     class="hero-photo">
             </div>
         </div>
     </section>

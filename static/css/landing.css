@@ -92,35 +92,49 @@
 /* ── Hero ── */
 
 .landing-hero {
-    padding: 6rem 0 4rem;
-    text-align: center;
+    padding: 5rem 0 4rem;
 }
 
-.landing-hero__copy {
-    max-width: 720px;
-    margin: 0 auto;
+.landing-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 4rem;
+    align-items: center;
 }
 
 .landing-hero__copy .lede {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    max-width: 54ch;
-    margin: 0 auto 0;
+    font-size: 1.15rem;
+    line-height: 1.65;
+    max-width: 52ch;
 }
 
 .landing .cta-row {
     display: flex;
     gap: 0.75rem;
     margin: 2rem 0 0;
-    justify-content: center;
     flex-wrap: wrap;
+}
+
+.landing-hero__photo {
+    display: flex;
+    justify-content: center;
+}
+
+.hero-photo {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 16px;
+    display: block;
 }
 
 /* ── Session facts bar ── */
 
 .session-facts {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 2.5rem;
     flex-wrap: wrap;
     margin-top: 2.5rem;
@@ -354,12 +368,18 @@
 /* ── Responsive ── */
 
 @media (max-width: 880px) {
-    .landing-hero { padding: 3.5rem 0 2.5rem; }
+    .landing-hero { padding: 3rem 0 2.5rem; }
+    .landing-hero__grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+    .landing-hero__photo { order: -1; }
+    .hero-photo { max-width: 280px; aspect-ratio: 1 / 1; border-radius: 50%; }
     .cards { grid-template-columns: 1fr; }
     .landing-about,
     .landing-book { grid-template-columns: 1fr; gap: 2rem; }
     .booking-card { max-width: 100%; }
     .landing-section { padding: 3.5rem 0; }
     .final-cta { padding: 2.5rem 1.5rem; }
-    .session-facts { gap: 1.5rem; }
+    .session-facts { gap: 1.5rem; justify-content: flex-start; }
 }

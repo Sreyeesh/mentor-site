@@ -36,7 +36,8 @@
     font-weight: 600;
 }
 
-.landing h3 {
+.landing h3,
+.booking-card h2 {
     font-size: 1.05rem;
     font-weight: 600;
 }
@@ -146,7 +147,7 @@
     padding: 1.75rem;
 }
 
-.booking-card h3 { margin-bottom: 0.25rem; }
+.booking-card h2 { margin-bottom: 0.25rem; }
 
 .booking-card__subtitle {
     font-size: 0.92rem;

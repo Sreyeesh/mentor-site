@@ -15,6 +15,14 @@ def write_file(destination: Path, content: str) -> None:
 
 
 def build_static_site() -> None:
+    site_url = os.getenv('SITE_URL', '').rstrip('/')
+    if not site_url:
+        raise SystemExit(
+            "ERROR: SITE_URL is not set. "
+            "Canonical URLs in the built site would point to http://localhost/. "
+            "Set SITE_URL to the deployed origin (e.g. https://sreyeesh.github.io) before building."
+        )
+
     base_path = os.getenv('GITHUB_PAGES_BASE_PATH', '')
     normalized_base_path = base_path.strip()
     if normalized_base_path and not normalized_base_path.startswith('/'):

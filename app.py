@@ -73,6 +73,8 @@ MENTORING_BOOKING_URL = os.getenv(
     'https://cal.com/sreyeesh-dhb2sk/60min',
 )
 
+GAMECITY_STUDENT_BOOKING_URL = os.getenv('GAMECITY_STUDENT_BOOKING_URL', '')
+
 ABOUT_EXPERIENCE = [
     {
         'company': 'Walt Disney Animation Studios',
@@ -174,6 +176,7 @@ def home():
         'landing.html',
         **build_page_context(page_slug='home'),
         booking_url=MENTORING_BOOKING_URL,
+        gamecity_booking_url=GAMECITY_STUDENT_BOOKING_URL,
         landing=LANDING_PAGE,
     )
 

@@ -368,6 +368,75 @@
 
 /* ---------- Responsive ---------- */
 
+/* ---------- Booking split ---------- */
+
+.booking-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.booking-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.booking-card--student {
+    background: var(--surface, #f9f9f9);
+}
+
+.booking-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.booking-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.booking-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+    flex-grow: 1;
+}
+
+.btn-secondary {
+    display: inline-block;
+    border: 1px solid var(--text);
+    color: var(--text);
+    padding: 0.75rem 1.25rem;
+    border-radius: 6px;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+    align-self: flex-start;
+}
+
+.btn-secondary:hover {
+    background: var(--text);
+    color: var(--bg);
+}
+
+.booking-coming-soon {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
 @media (max-width: 600px) {
     .page { padding: 1.5rem 1.25rem 3rem; }
     .topbar { padding: 1rem 1.25rem; }
@@ -375,4 +444,6 @@
     .cta-block { padding: 2rem 1.5rem; }
     .footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.25rem; }
     .btn-primary { width: 100%; text-align: center; }
+    .booking-split { grid-template-columns: 1fr; }
+    .btn-secondary { width: 100%; text-align: center; }
 }

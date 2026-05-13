@@ -59,6 +59,33 @@
         </ol>
     </section>
 
+    <section class="block booking-paths" id="booking">
+        <span class="section-label">Book a session</span>
+        <h2 class="block-heading">Who are you?</h2>
+        <div class="booking-split">
+            <div class="booking-card">
+                <span class="booking-tag">Public visitor</span>
+                <h3>Paid 1:1 mentoring</h3>
+                <p>Personalised sessions for developers, artists, and indie teams who want direct access to production experience.</p>
+                <a class="btn-primary" href="{{ booking_url }}" target="_blank" rel="noopener noreferrer">
+                    Book a session<span class="sr-only"> (opens in new tab)</span>
+                </a>
+            </div>
+            <div class="booking-card booking-card--student">
+                <span class="booking-tag">GameCity Kajaani student</span>
+                <h3>Programme mentoring</h3>
+                <p>Already enrolled in the GameCity Kajaani programme? Use your programme-specific booking path — do not use the paid link above.</p>
+                {% if gamecity_booking_url %}
+                <a class="btn-secondary" href="{{ gamecity_booking_url }}" target="_blank" rel="noopener noreferrer">
+                    Book via GameCity<span class="sr-only"> (opens in new tab)</span>
+                </a>
+                {% else %}
+                <p class="booking-coming-soon">Student booking link coming soon — check with your programme coordinator.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
     <section class="block about-block">
         <span class="section-label">{{ landing.about_label }}</span>
         <p>I'm {{ config.name }}, based in {{ config.location }}. {{ landing.about_body }}</p>

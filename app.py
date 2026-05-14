@@ -72,6 +72,16 @@ def build_page_context(**extra) -> dict:
     }
 
 
+def is_coming_soon() -> bool:
+    """Return whether the site should show the coming-soon page.
+
+    Read from the environment each request so freeze (which imports the app)
+    respects the current SITE_COMING_SOON value even if it was changed after
+    module import.
+    """
+    return os.getenv('SITE_COMING_SOON', str(SITE_CONFIG.get('coming_soon', 'false'))).lower() == 'true'
+
+
 MENTORING_BOOKING_URL = os.getenv(
     'MENTORING_BOOKING_URL',
     'https://cal.com/sreyeesh-dhb2sk/60min',
@@ -192,7 +202,7 @@ def coming_soon_view():
 
 @app.route('/')
 def home():
-    if SITE_CONFIG['coming_soon']:
+    if is_coming_soon():
         return coming_soon_view()
     return render_template(
         'landing.html',
@@ -204,7 +214,7 @@ def home():
 
 @app.route('/blog/')
 def blog_index():
-    if SITE_CONFIG['coming_soon']:
+    if is_coming_soon():
         return coming_soon_view()
     return render_template(
         'blog/list.html',
@@ -215,7 +225,7 @@ def blog_index():
 
 @app.route('/blog/<slug>/')
 def blog_detail(slug: str):
-    if SITE_CONFIG['coming_soon']:
+    if is_coming_soon():
         return coming_soon_view()
     post = find_post(slug, posts=get_posts())
     if post is None:
@@ -235,7 +245,7 @@ def blog_detail(slug: str):
 
 @app.route('/about/')
 def about():
-    if SITE_CONFIG['coming_soon']:
+    if is_coming_soon():
         return coming_soon_view()
     return render_template(
         'about.html',

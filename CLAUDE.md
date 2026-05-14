@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 All commands run inside Docker via the Makefile — never use local Python or venv directly.
 
 - `make install` — Build all Docker images
-- `make run` — Start dev container with hot reload (http://localhost:5002)
+- `make run` — Start dev container with hot reload (http://localhost:5000)
 - `make test` — Run pytest suite in Docker
 - `make freeze` — Generate static build into `build/`
 - `make docker-build` / `make docker-up` — Build/run production container (:3000)
@@ -58,7 +58,6 @@ Three distinct Flask applications share templates and content:
 ### Environment
 
 - Copy `.env.example` to `.env.dev` for local dev
-- Dev server port is mapped `5002→5001` in `docker-compose.yml` (macOS blocks 5000)
 - Key vars: `SITE_NAME`, `SITE_EMAIL`, `SITE_LOCATION`, `SITE_GITHUB_URL`, `SITE_LINKEDIN_URL`, `BASE_PATH`, `GITHUB_PAGES_BASE_PATH`, `PLAUSIBLE_SCRIPT_URL`
 
 ## Git Commits

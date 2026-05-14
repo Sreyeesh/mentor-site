@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}About | Game Dev Mentor — {{ config.name }}{% endblock %}
-{% block meta_description %}{{ config.name }} offers 1:1 game development mentoring for beginners, hobbyists, and indie teams. Industry experience at Blizzard Entertainment, currently mentoring at GameCityKajaani.{% endblock %}
+{% block meta_description %}1:1 game development mentoring for beginners, hobbyists, and indie teams. Blizzard Entertainment alumni, currently mentoring at GameCityKajaani.{% endblock %}
 
 {% block content %}
 <article class="about-page">
@@ -26,9 +26,9 @@
         <p>
             I've spent over a decade working in the games and animation industries,
             most notably as a technical artist at Blizzard Entertainment. I currently
-            mentor aspiring game developers at GameCityKajaani, working with students
-            at every stage, from people who have never opened a game engine to teams
-            shipping their first commercial project.
+            mentor aspiring game developers remotely with GameCityKajaani in Finland,
+            working with students at every stage, from people who have never opened a
+            game engine to teams shipping their first commercial project.
         </p>
 
         <h2>How I can help</h2>
@@ -37,7 +37,7 @@
             first playable prototype, or pushing through the messy middle of a side
             project, I offer focused 60-minute video sessions tailored to where you
             actually are. Sessions are €75 each, with no long-term commitment.
-            <a href="/">Book a session</a>, or email
+            <a href="{{ site_links.home }}">Book a session</a>, or email
             <a href="mailto:{{ config.email }}">{{ config.email }}</a> if you have
             questions first.
         </p>

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
-{% block title %}About | {{ config.name }}{% endblock %}
-{% block meta_description %}About {{ config.name }}, full-stack developer and technical director writing about software, tools, and building things.{% endblock %}
+{% block title %}About | Game Dev Mentor — {{ config.name }}{% endblock %}
+{% block meta_description %}{{ config.name }} offers 1:1 game development mentoring for beginners, hobbyists, and indie teams. Industry experience at Blizzard Entertainment, currently mentoring at GameCityKajaani.{% endblock %}
 
 {% block content %}
 <article class="about-page">
@@ -9,7 +9,7 @@
     <header class="about-header">
         <img
             src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}"
-            alt="{{ config.name }}"
+            alt="{{ config.name }}, game development mentor"
             class="about-avatar"
         >
         <h1>About</h1>
@@ -17,41 +17,31 @@
 
     <div class="about-body">
         <p>
-            I'm {{ config.name }}, a full-stack developer and technical director based in {{ config.location }}.
-            I've spent the last decade building pipelines and tools at animation and games studios,
-            shipping work at Disney Animation, Blizzard, and DNEG.
+            I'm {{ config.name }}, a 1:1 game development mentor based in {{ config.location }}.
+            I help complete beginners, hobbyists, and small indie teams get started in game dev,
+            pick the right engine, and finish the projects they start.
         </p>
+
+        <h2>Background</h2>
         <p>
-            These days I'm focused on software and tooling, the kind of work that makes
-            other work easier. I write here about things I'm building, thinking through, or learning.
-            No particular cadence. Just when something is worth saying.
+            I've spent over a decade working in the games and animation industries,
+            most notably as a technical artist at Blizzard Entertainment. I currently
+            mentor aspiring game developers at GameCityKajaani, working with students
+            at every stage, from people who have never opened a game engine to teams
+            shipping their first commercial project.
         </p>
+
+        <h2>How I can help</h2>
         <p>
-            If you want to get in touch, email is the best way:
-            <a href="mailto:{{ config.email }}">{{ config.email }}</a>
+            Whether you are choosing between Godot, Unity, or Unreal, scoping your
+            first playable prototype, or pushing through the messy middle of a side
+            project, I offer focused 60-minute video sessions tailored to where you
+            actually are. Sessions are €75 each, with no long-term commitment.
+            <a href="/">Book a session</a>, or email
+            <a href="mailto:{{ config.email }}">{{ config.email }}</a> if you have
+            questions first.
         </p>
     </div>
-
-    <hr class="about-divider">
-
-    <section class="about-credits">
-        <h2>Past work</h2>
-        <ul class="credits-list">
-            {% for item in experience %}
-            <li class="credits-item">
-                <img
-                    src="{{ url_for('static', filename=item.logo) }}"
-                    alt="{{ item.company }}"
-                    class="credits-logo"
-                >
-                <div class="credits-meta">
-                    <span class="credits-company">{{ item.company }}</span>
-                    <span class="credits-role">{{ item.role }}</span>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </section>
 
     {% if config.github_url or config.linkedin_url %}
     <hr class="about-divider">

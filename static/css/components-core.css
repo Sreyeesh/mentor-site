@@ -1405,62 +1405,23 @@ section h2 {
     margin: 2.5rem 0;
 }
 
-.about-credits h2,
+.about-body h2,
 .about-links h2 {
     font-family: var(--font-serif);
-    font-size: 1rem;
+    font-size: 1.15rem;
     font-weight: 600;
     letter-spacing: -0.01em;
-    margin-bottom: 1.25rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
-.credits-list {
-    list-style: none;
-}
-
-.credits-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border);
-}
-
-.credits-item:first-child { border-top: 1px solid var(--border); }
-
-.credits-logo {
-    width: 48px;
-    height: 32px;
-    object-fit: contain;
-    filter: grayscale(1) opacity(0.6);
-    flex-shrink: 0;
-    transition: filter 0.2s;
-}
-
-[data-theme="dark"] .credits-logo {
-    filter: grayscale(1) opacity(0.5) brightness(1.4);
-}
-
-.credits-item:hover .credits-logo {
-    filter: grayscale(0) opacity(1);
-}
-
-.credits-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-}
-
-.credits-company {
-    font-size: 0.9rem;
+.about-body a {
     color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
-.credits-role {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--text-muted);
-}
+.about-body a:hover { opacity: 0.75; }
 
 .elsewhere-list {
     list-style: none;

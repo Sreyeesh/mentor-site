@@ -86,31 +86,35 @@ MENTORING_BOOKING_URL = os.getenv(
 LANDING_PAGE = {
     'page_title': 'Game Dev Mentoring',
     'eyebrow': '1:1 Game Dev Mentoring',
-    'headline': 'Senior guidance for the engineering side of making games.',
+    'headline': 'Personal guidance for making your first (or next) game.',
     'lede': (
-        'For beginners, hobbyists, and small indie teams. Engine-agnostic. '
-        'Godot, Unity, Unreal, or your own. Bring what you are stuck on; '
-        'leave with a concrete next step.'
+        'For complete beginners, hobbyists, and small indie teams. '
+        'No experience required. Bring a question, an idea, or a project '
+        'you are stuck on, and leave with a concrete next step.'
     ),
     'cta_label': 'Book a session',
     'cta_meta': '€75 · 60 min · 1:1 video call',
     'cta_meta_short': '€75 · 60 min',
-    'trust': 'A decade in production pipelines · replies within 24h',
+    'trust': (
+        'Currently mentoring at GameCityKajaani · '
+        'Blizzard Entertainment alumni'
+    ),
     'audience_label': "Who it's for",
     'audience_heading': 'This is for you if…',
     'audience': [
-        "You're picking your first engine and want to start a real project.",
-        "You're building something on the side and stuck on a specific problem.",
-        "You're on a small indie team (2–5) and want senior input "
-        "without hiring senior.",
-        "You can write some code, but the engineering side of "
-        "game-making feels overwhelming.",
+        "You've never made a game and want to start.",
+        "You're picking your first engine and feel overwhelmed "
+        "by the options.",
+        "You're working on a personal project and want someone "
+        "to think it through with.",
+        "You're on a small indie team and want a senior perspective.",
     ],
     'topics_label': 'What I cover',
     'topics': [
-        'Architecture and code structure that scales with your project',
-        'Tooling, pipelines, and version control for game projects',
-        'Debugging, performance, and keeping scope under control',
+        'Getting started: picking an engine and scoping a first project',
+        'Game design fundamentals and turning an idea into '
+        'something playable',
+        'Working through the hard parts: motivation, scope, and finishing',
     ],
     'steps_label': 'How it works',
     'steps': [
@@ -120,22 +124,23 @@ LANDING_PAGE = {
     ],
     'about_label': 'About',
     'about_body': (
-        "I've spent the last decade building production tools and pipelines "
-        "for studios. I mentor the engineering side of game-making, the "
-        "parts that transfer no matter which engine you pick."
+        "I'm a Blizzard Entertainment alumni and currently mentor aspiring "
+        "game developers at GameCityKajaani. I help people find their footing "
+        "in game dev, whatever stage they are starting from."
     ),
     'faq_label': 'FAQ',
     'faq': [
         {
             'q': "I'm a complete beginner. Is this for me?",
-            'a': 'Yes. A lot of what I do is help people choose an engine, '
-                 'scope a first project, and avoid the traps that stall beginners.',
+            'a': 'Yes. Most of the people I work with are just starting out. '
+                 'I help with choosing an engine, scoping a first project, '
+                 'and getting unstuck.',
         },
         {
             'q': 'Which engine do you teach?',
-            'a': "I'm engine-agnostic. The concepts I focus on (architecture, "
-                 'tooling, debugging, scoping) carry across Godot, Unity, Unreal, '
-                 "or a custom stack. Bring whatever you're using.",
+            'a': "I'm engine-agnostic. Whether you're using Godot, Unity, "
+                 "Unreal, or something else, bring it along and we'll work "
+                 "with what you have.",
         },
         {
             'q': 'How long is a session?',
@@ -149,8 +154,8 @@ LANDING_PAGE = {
     ],
     'closing_heading': 'Ready when you are.',
     'closing_body': (
-        'Book a 60-minute session and come prepared with what you are '
-        'working on.'
+        'Book a 60-minute session and come with whatever you are '
+        'working on or thinking about.'
     ),
 }
 

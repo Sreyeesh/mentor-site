@@ -13,6 +13,8 @@ from blog import find_post, load_posts, normalize_media_path  # noqa: E402
 
 SITE_CONFIG = {
     'name': os.getenv('SITE_NAME', 'Sreyeesh Garimella'),
+    'brand_name': os.getenv('SITE_BRAND_NAME', 'Toucan Studios'),
+    'brand_legal_name': os.getenv('SITE_BRAND_LEGAL_NAME', 'Toucan Studios OÜ'),
     'tagline': os.getenv('SITE_TAGLINE', 'Full-Stack Developer · Toucan.ee'),
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),
@@ -28,6 +30,8 @@ SITE_CONFIG = {
     'github_url': os.getenv('SITE_GITHUB_URL', ''),
     'linkedin_url': os.getenv('SITE_LINKEDIN_URL', ''),
     'location': os.getenv('SITE_LOCATION', 'Estonia'),
+    'coming_soon': os.getenv('SITE_COMING_SOON', 'false').lower() == 'true',
+    'launch_date': os.getenv('SITE_LAUNCH_DATE', '2026-05-31'),
 }
 
 NAV_LINKS = [
@@ -168,8 +172,28 @@ LANDING_PAGE = {
 }
 
 
+def coming_soon_view():
+    launch_iso = SITE_CONFIG['launch_date']
+    try:
+        launch_dt = datetime.strptime(launch_iso, '%Y-%m-%d')
+        launch_display = launch_dt.strftime('%B %-d, %Y')
+    except ValueError:
+        launch_dt = None
+        launch_display = launch_iso
+    return render_template(
+        'coming-soon-launch.html',
+        config=SITE_CONFIG,
+        launch_iso=launch_iso,
+        launch_display=launch_display,
+        current_year=datetime.now().year,
+        canonical_url=build_absolute_url('/'),
+    )
+
+
 @app.route('/')
 def home():
+    if SITE_CONFIG['coming_soon']:
+        return coming_soon_view()
     return render_template(
         'landing.html',
         **build_page_context(page_slug='home'),
@@ -180,6 +204,8 @@ def home():
 
 @app.route('/blog/')
 def blog_index():
+    if SITE_CONFIG['coming_soon']:
+        return coming_soon_view()
     return render_template(
         'blog/list.html',
         **build_page_context(page_slug='blog', posts=get_posts()),
@@ -189,6 +215,8 @@ def blog_index():
 
 @app.route('/blog/<slug>/')
 def blog_detail(slug: str):
+    if SITE_CONFIG['coming_soon']:
+        return coming_soon_view()
     post = find_post(slug, posts=get_posts())
     if post is None:
         abort(404)
@@ -207,6 +235,8 @@ def blog_detail(slug: str):
 
 @app.route('/about/')
 def about():
+    if SITE_CONFIG['coming_soon']:
+        return coming_soon_view()
     return render_template(
         'about.html',
         **build_page_context(page_slug='about'),

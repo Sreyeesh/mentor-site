@@ -25,7 +25,7 @@ run:
 	$(COMPOSE) --profile dev up toucan-ee-dev
 
 freeze:
-	ENV_FILE=.env $(COMPOSE) --profile dev run --rm toucan-ee-dev python freeze.py
+	$(COMPOSE) --env-file .env --profile dev run --rm toucan-ee-dev python freeze.py
 
 test:
 	$(COMPOSE) run --rm tests

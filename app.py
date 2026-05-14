@@ -83,29 +83,6 @@ MENTORING_BOOKING_URL = os.getenv(
     'https://cal.com/sreyeesh-dhb2sk/60min',
 )
 
-ABOUT_EXPERIENCE = [
-    {
-        'company': 'Walt Disney Animation Studios',
-        'role': 'Pipeline Technical Director',
-        'logo': 'images/Walt_Disney_Animation_Studios_logo.svg.png',
-    },
-    {
-        'company': 'Blizzard Entertainment',
-        'role': 'Technical Artist',
-        'logo': 'images/Blizzard_Entertainment_Logo_2015.svg.png',
-    },
-    {
-        'company': 'DNEG',
-        'role': 'Pipeline Technical Director',
-        'logo': 'images/DNEG_Animation_2025.svg.png',
-    },
-    {
-        'company': 'Boulder Media',
-        'role': 'Pipeline Developer',
-        'logo': 'images/Boulder_Media.png',
-    },
-]
-
 LANDING_PAGE = {
     'page_title': 'Game Dev Mentoring',
     'eyebrow': '1:1 Game Dev Mentoring',
@@ -220,7 +197,6 @@ def about():
     return render_template(
         'about.html',
         **build_page_context(page_slug='about'),
-        experience=ABOUT_EXPERIENCE,
     )
 
 

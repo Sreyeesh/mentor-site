@@ -147,10 +147,9 @@ LANDING_PAGE = {
     ],
     'about_label': 'About',
     'about_body': (
-        "I've worked in the games industry at Blizzard Entertainment, and I "
-        "currently mentor aspiring game developers at GameCityKajaani. "
-        "I help people find their footing in game dev, whatever stage they "
-        "are starting from."
+        "I'm a Blizzard Entertainment alumni and currently mentor aspiring "
+        "game developers at GameCityKajaani. I help people find their footing "
+        "in game dev, whatever stage they are starting from."
     ),
     'faq_label': 'FAQ',
     'faq': [

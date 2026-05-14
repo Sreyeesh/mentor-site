@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% set page_title = (self.title() | striptags) %}
     {% set page_description = (self.meta_description() | striptags) %}
-    <title>{% block title %}{{ config.name }} | Toucan.ee{% endblock %}</title>
+    <title>{% block title %}{{ config.brand_name }}{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ config.meta_description }}{% endblock %}">
     {% block social_meta %}
         <link rel="canonical" href="{{ canonical_url }}">
         <meta property="og:type" content="website">
-        <meta property="og:site_name" content="{{ config.name }}">
+        <meta property="og:site_name" content="{{ config.brand_name }}">
         <meta property="og:title" content="{{ page_title }}">
         <meta property="og:description" content="{{ page_description }}">
         <meta property="og:url" content="{{ canonical_url }}">
@@ -48,7 +48,7 @@
     <nav class="navbar" aria-label="Primary">
         <div class="nav-content">
             <div class="nav-brand">
-                <a href="{{ site_links.home }}" class="nav-name-link">{{ config.name }}</a>
+                <a href="{{ site_links.home }}" class="nav-name-link">{{ config.brand_legal_name }}</a>
             </div>
             <div class="nav-links" id="nav-links">
                 {% for item in nav_links %}
@@ -94,7 +94,7 @@
 
     <footer>
         <div class="wrap">
-            <p>&copy; {{ current_year }} {{ config.name }}</p>
+            <p>&copy; {{ current_year }} {{ config.brand_legal_name }}</p>
             <a href="mailto:{{ config.email }}">{{ config.email }}</a>
         </div>
     </footer>

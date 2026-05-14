@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}{{ post.title }} | {{ config.name }} Blog{% endblock %}
+{% block title %}{{ post.title }} | {{ config.brand_name }}{% endblock %}
 {% block meta_description %}{{ post.description or post.excerpt }}{% endblock %}
 
 {% block social_meta %}
@@ -23,7 +23,7 @@
 
     <link rel="canonical" href="{{ canonical_url }}">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="{{ config.name }}">
+    <meta property="og:site_name" content="{{ config.brand_name }}">
     <meta property="og:title" content="{{ post.title }}">
     {% if social_description %}
         <meta property="og:description" content="{{ social_description }}">

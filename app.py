@@ -13,6 +13,8 @@ from blog import find_post, load_posts, normalize_media_path  # noqa: E402
 
 SITE_CONFIG = {
     'name': os.getenv('SITE_NAME', 'Sreyeesh Garimella'),
+    'brand_name': os.getenv('SITE_BRAND_NAME', 'Toucan Studios'),
+    'brand_legal_name': os.getenv('SITE_BRAND_LEGAL_NAME', 'Toucan Studios OÜ'),
     'tagline': os.getenv('SITE_TAGLINE', 'Toucan Studios · 1:1 Game Dev Mentoring'),
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),

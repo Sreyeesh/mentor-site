@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}About | Game Dev Mentor — {{ config.name }}{% endblock %}
+{% block title %}About | {{ config.brand_name }}{% endblock %}
 {% block meta_description %}1:1 game development mentoring for beginners, hobbyists, and indie teams. Blizzard Entertainment alumni, currently mentoring at GameCityKajaani.{% endblock %}
 
 {% block content %}
@@ -17,9 +17,10 @@
 
     <div class="about-body">
         <p>
-            I'm {{ config.name }}, a 1:1 game development mentor based in {{ config.location }}.
-            I help complete beginners, hobbyists, and small indie teams get started in game dev,
-            pick the right engine, and finish the projects they start.
+            I'm {{ config.name }}, the mentor at {{ config.brand_name }}, based in {{ config.location }}.
+            I offer 1:1 game development mentoring for complete beginners, hobbyists, and small
+            indie teams: get started in game dev, pick the right engine, and finish the projects
+            you start.
         </p>
 
         <h2>Background</h2>

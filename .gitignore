@@ -35,7 +35,9 @@ dist/
 
 # AI tooling
 .agents/
-.claude/
+.claude/*
+!.claude/settings.json
+!.claude/hooks/
 .junie/
 .impeccable.md
 skills-lock.json

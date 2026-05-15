@@ -50,6 +50,14 @@ def get_posts():
     return g.posts
 
 
+def is_coming_soon() -> bool:
+    return os.getenv('SITE_COMING_SOON', 'false').lower() == 'true'
+
+
+def coming_soon_response():
+    return render_template('coming-soon-launch.html', config=SITE_CONFIG)
+
+
 def build_absolute_url(path: str) -> str:
     site_url = SITE_CONFIG['site_url']
     normalized = path if path.startswith('/') else f'/{path}'
@@ -163,6 +171,8 @@ LANDING_PAGE = {
 
 @app.route('/')
 def home():
+    if is_coming_soon():
+        return coming_soon_response()
     return render_template(
         'landing.html',
         **build_page_context(page_slug='home'),
@@ -173,6 +183,8 @@ def home():
 
 @app.route('/blog/')
 def blog_index():
+    if is_coming_soon():
+        return coming_soon_response()
     return render_template(
         'blog/list.html',
         **build_page_context(page_slug='blog', posts=get_posts()),
@@ -200,6 +212,8 @@ def blog_detail(slug: str):
 
 @app.route('/about/')
 def about():
+    if is_coming_soon():
+        return coming_soon_response()
     return render_template(
         'about.html',
         **build_page_context(page_slug='about'),

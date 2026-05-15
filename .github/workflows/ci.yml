@@ -34,6 +34,8 @@ jobs:
         run: pytest
 
       - name: Build static site
+        env:
+          SITE_COMING_SOON: ${{ vars.SITE_COMING_SOON }}
         run: |
           set -euo pipefail
           python freeze.py

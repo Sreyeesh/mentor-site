@@ -79,7 +79,8 @@ def is_coming_soon() -> bool:
     respects the current SITE_COMING_SOON value even if it was changed after
     module import.
     """
-    return os.getenv('SITE_COMING_SOON', str(SITE_CONFIG.get('coming_soon', 'false'))).lower() == 'true'
+    default = str(SITE_CONFIG.get('coming_soon', 'false'))
+    return os.getenv('SITE_COMING_SOON', default).lower() == 'true'
 
 
 MENTORING_BOOKING_URL = os.getenv(

@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 All commands run inside Docker via the Makefile — never use local Python or venv directly.
 
+**Exception — Claude Code on the web:** Docker is not available in remote cloud sessions. Use `pytest` and `flake8` directly instead (dependencies are pre-installed by the SessionStart hook in `.claude/hooks/session-start.sh`).
+
 - `make install` — Build all Docker images
 - `make run` — Start dev container with hot reload (http://localhost:5000)
 - `make test` — Run pytest suite in Docker

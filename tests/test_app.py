@@ -15,6 +15,22 @@ def test_home_page_content(client):
     assert b'Book a session' in response.data
 
 
+def test_home_page_has_og_image(client):
+    """og:image meta tag must resolve to a non-empty absolute URL."""
+    response = client.get('/')
+    html = response.data.decode()
+    import re
+    match = re.search(
+        r'<meta property="og:image" content="([^"]*)"', html
+    )
+    assert match is not None, 'og:image meta tag missing'
+    url = match.group(1)
+    assert url, 'og:image content is empty'
+    assert url.startswith(('http://', 'https://')), (
+        f'og:image must be absolute, got: {url}'
+    )
+
+
 def test_pages_load(client):
     """Blog index renders the post list."""
     response = client.get('/blog/')

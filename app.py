@@ -13,6 +13,8 @@ from blog import find_post, load_posts, normalize_media_path  # noqa: E402
 
 SITE_CONFIG = {
     'name': os.getenv('SITE_NAME', 'Sreyeesh Garimella'),
+    'brand_name': os.getenv('SITE_BRAND_NAME', 'Toucan Studios'),
+    'brand_legal_name': os.getenv('SITE_BRAND_LEGAL_NAME', 'Toucan Studios OÜ'),
     'tagline': os.getenv('SITE_TAGLINE', 'Toucan Studios · 1:1 Game Dev Mentoring'),
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),
@@ -29,6 +31,7 @@ SITE_CONFIG = {
     'github_url': os.getenv('SITE_GITHUB_URL', ''),
     'linkedin_url': os.getenv('SITE_LINKEDIN_URL', ''),
     'location': os.getenv('SITE_LOCATION', 'Estonia'),
+    'launch_date': os.getenv('SITE_LAUNCH_DATE', '2026-05-31'),
 }
 
 NAV_LINKS = [
@@ -55,7 +58,16 @@ def is_coming_soon() -> bool:
 
 
 def coming_soon_response():
-    return render_template('coming-soon-launch.html', config=SITE_CONFIG)
+    from datetime import date
+    launch = datetime.strptime(SITE_CONFIG['launch_date'], '%Y-%m-%d')
+    return render_template(
+        'coming-soon-launch.html',
+        config=SITE_CONFIG,
+        canonical_url=build_absolute_url(request.path),
+        current_year=date.today().year,
+        launch_display=launch.strftime('%B %-d, %Y'),
+        launch_iso=SITE_CONFIG['launch_date'],
+    )
 
 
 def build_absolute_url(path: str) -> str:

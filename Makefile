@@ -16,7 +16,7 @@ help:
 	@echo "  make down           # Run 'docker compose down' for all services"
 	@echo "  make dev-down       # Stop only the toucan-ee-dev container"
 	@echo "  make quick-rebuild  # Rebuild+restart static container helper script"
-	@echo "  make deploy         # Freeze and deploy static site via deploy-gh-pages.sh"
+	@echo "  make deploy         # Trigger GitHub Pages deployment workflow via gh CLI"
 
 install:
 	$(COMPOSE) build toucan-ee toucan-ee-dev tests authoring-tool
@@ -25,7 +25,7 @@ run:
 	$(COMPOSE) --profile dev up toucan-ee-dev
 
 freeze:
-	ENV_FILE=.env $(COMPOSE) --profile dev run --rm toucan-ee-dev python freeze.py
+	$(COMPOSE) --env-file .env --profile dev run --rm toucan-ee-dev python freeze.py
 
 test:
 	$(COMPOSE) run --rm tests
@@ -53,8 +53,8 @@ dev-down:
 quick-rebuild:
 	./quick-rebuild.sh
 
-deploy: freeze
-	ENV_FILE=.env ./deploy-gh-pages.sh
+deploy:
+	gh workflow run "Deploy to GitHub Pages" --ref master
 
 clean:
 	rm -rf build .pytest_cache

@@ -48,7 +48,7 @@ services:
         BASE_PATH: ${BASE_PATH:-/}
     container_name: toucan-ee-dev
     ports:
-      - "5002:5001"  # Map host 5002 to Flask dev server
+      - "5000:5000"
     command: python app.py
     environment:
       - FLASK_ENV=development

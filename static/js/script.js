@@ -20,13 +20,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         const observer = new IntersectionObserver(
-            (entries, obs) => {
+            (entries) => {
                 entries.forEach((entry) => {
-                    if (!entry.isIntersecting) {
-                        return;
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    } else {
+                        entry.target.classList.remove('is-visible');
                     }
-                    entry.target.classList.add('is-visible');
-                    obs.unobserve(entry.target);
                 });
             },
             {

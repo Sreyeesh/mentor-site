@@ -3,43 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config.brand_name }} | 1:1 Game Dev Mentoring (Launching {{ launch_display }})</title>
-    <meta name="description" content="1:1 game development mentoring at {{ config.brand_name }}, launching {{ launch_display }}. For complete beginners, hobbyists, and indie teams. 60-minute video sessions, €75.">
+    <title>{{ config.name }} — CV &amp; Portfolio (Launching {{ launch_display }})</title>
+    <meta name="description" content="{{ config.name }} — Production Technology Specialist, Pipeline TD, and VFX professional. CV and portfolio site launching {{ launch_display }}.">
 
     <link rel="canonical" href="{{ canonical_url }}">
 
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="{{ config.brand_name }}">
-    <meta property="og:title" content="{{ config.brand_name }} | 1:1 Game Dev Mentoring">
-    <meta property="og:description" content="Launching {{ launch_display }}. 1:1 game dev mentoring for beginners, hobbyists, and indie teams.">
+    <meta property="og:site_name" content="{{ config.name }}">
+    <meta property="og:title" content="{{ config.name }} — CV &amp; Portfolio">
+    <meta property="og:description" content="Production Technology Specialist · Pipeline TD · VFX. Launching {{ launch_display }}.">
     <meta property="og:url" content="{{ canonical_url }}">
     <meta property="og:image" content="{{ canonical_url }}static/images/SreyeeshProfilePic.jpg">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ config.brand_name }} | 1:1 Game Dev Mentoring">
-    <meta name="twitter:description" content="Launching {{ launch_display }}. 1:1 game dev mentoring for beginners, hobbyists, and indie teams.">
+    <meta name="twitter:title" content="{{ config.name }} — CV &amp; Portfolio">
+    <meta name="twitter:description" content="Production Technology Specialist · Pipeline TD · VFX. Launching {{ launch_display }}.">
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@graph": [
             {
-                "@type": "Organization",
-                "name": "{{ config.brand_legal_name }}",
-                "alternateName": "{{ config.brand_name }}",
-                "url": "{{ canonical_url }}",
-                "email": "{{ config.email }}",
-                "foundingDate": "{{ launch_iso }}",
-                "description": "1:1 game development mentoring for complete beginners, hobbyists, and indie teams."
-            },
-            {
                 "@type": "Person",
                 "name": "{{ config.name }}",
-                "jobTitle": "Game Development Mentor",
-                "worksFor": {
-                    "@type": "Organization",
-                    "name": "{{ config.brand_legal_name }}"
-                },
+                "jobTitle": "Production Technology Specialist",
+                "url": "{{ canonical_url }}",
+                "email": "{{ config.email }}",
+                "sameAs": [
+                    "{{ config.github_url }}",
+                    "{{ config.linkedin_url }}"
+                ],
                 "alumniOf": "Blizzard Entertainment",
                 "address": {
                     "@type": "PostalAddress",
@@ -52,148 +45,65 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg: #fafaf8;
-            --text: #1a1a1a;
-            --text-muted: #6b6b6b;
-            --accent: #0f62fe;
-            --border: #e0e0de;
-            --wrap-width: 700px;
-            --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #111111;
-                --text: #d4d4d4;
-                --text-muted: #888;
-                --accent: #6aafff;
-                --border: rgba(255, 255, 255, 0.1);
-            }
-        }
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: var(--font-sans);
-            font-size: 1.125rem;
-            line-height: 1.8;
-            background: var(--bg);
-            color: var(--text);
-            -webkit-font-smoothing: antialiased;
-            font-feature-settings: 'kern' 1, 'liga' 1;
-        }
-        ::selection { background: var(--accent); color: #fff; }
-        main {
-            max-width: var(--wrap-width);
-            margin: 0 auto;
-            padding: 5rem 1.25rem 4rem;
-        }
-        .brand {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            line-height: 1.2;
-        }
-        h1 {
-            font-family: var(--font-sans);
-            font-size: clamp(1.85rem, 4.5vw, 2.5rem);
-            font-weight: 600;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.25rem;
-            max-width: 22ch;
-        }
-        .lede {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            max-width: 60ch;
-        }
-        .launch-badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            margin-bottom: 3rem;
-        }
-        .launch-badge strong {
-            color: var(--accent);
-            font-weight: 600;
-        }
-        section { margin-top: 2.5rem; }
-        h2 {
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            line-height: 1.4;
-        }
-        p { margin-bottom: 1rem; max-width: 68ch; }
-        ul {
-            list-style: none;
-            margin-top: 0.75rem;
-        }
-        ul li {
-            padding-left: 1.5rem;
-            position: relative;
-            margin-bottom: 0.4rem;
-            color: var(--text);
-        }
-        ul li::before {
-            content: "·";
-            position: absolute;
-            left: 0.5rem;
-            color: var(--text-muted);
-        }
-        .trust {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-top: 1rem;
-        }
-        footer {
-            margin-top: 3rem;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 0.75rem;
-        }
-        a {
-            color: var(--accent);
-            text-decoration: underline;
-            text-underline-offset: 3px;
-            text-decoration-thickness: 1px;
-        }
-        a:hover { opacity: 0.75; }
-        a:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 3px;
-            border-radius: 2px;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/coming-soon.css') }}">
 </head>
 <body>
-    <main>
-        <p class="brand">{{ config.brand_legal_name }}</p>
-        <h1>1:1 Game Development Mentoring</h1>
-        <p class="lede">A new home for personal, 1:1 mentoring in game development. For beginners, hobbyists, and small indie teams.</p>
+    <div class="cs-wrap">
 
-        <div class="launch-badge">Launching <strong>{{ launch_display }}</strong></div>
+        <header class="cs-header">
+            <span class="cs-brand">
+                <img class="cs-logo" src="{{ url_for('static', filename='images/toucan-logo.png') }}" alt="Toucan Studios OÜ logo" width="32" height="25">
+                {{ config.brand_legal_name }}
+            </span>
+            <div class="cs-header-rule" aria-hidden="true"></div>
+        </header>
 
-        <footer>
+        <main class="cs-grid">
+            <section class="cs-identity">
+                <h1 data-reveal data-reveal-delay="100">Production Technology<br>Specialist</h1>
+                <ul class="cs-tags" aria-label="Specialisms" data-reveal data-reveal-delay="200">
+                    <li>Pipeline TD</li>
+                    <li>Render Operations</li>
+                    <li>VFX</li>
+                    <li>Games</li>
+                </ul>
+                <p class="cs-bio" data-reveal data-reveal-delay="300">I support creative production teams with pipeline tools, render workflows, automation, and technical problem-solving across animation, VFX, and game development.</p>
+
+                <div class="cs-contacts" data-reveal data-reveal-delay="400">
+                    <a href="mailto:{{ config.email }}" class="cs-contact-item">
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <rect x="2" y="4" width="16" height="12" rx="2"/>
+                            <path d="M2 7l8 5 8-5"/>
+                        </svg>
+                        {{ config.email }}
+                    </a>
+                    <span class="cs-contact-item">
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <path d="M10 2C7.2 2 5 4.2 5 7c0 4 5 11 5 11s5-7 5-11c0-2.8-2.2-5-5-5z"/>
+                            <circle cx="10" cy="7" r="1.8"/>
+                        </svg>
+                        Based in {{ config.location }}
+                    </span>
+                </div>
+            </section>
+
+            <aside class="cs-launch" data-reveal data-reveal-delay="250">
+                <div class="cs-launch-labels">
+                    <span class="cs-label">CV &amp; Portfolio</span>
+                    <span class="cs-label">Coming Soon</span>
+                </div>
+                <div class="cs-accent-rule" aria-hidden="true"></div>
+                <p class="cs-launching-eyebrow">Launching</p>
+                <p class="cs-date">{{ launch_display }}</p>
+            </aside>
+        </main>
+
+        <footer class="cs-footer" data-reveal data-reveal-delay="500">
             <span>&copy; {{ current_year }} {{ config.brand_legal_name }}</span>
-            <a href="mailto:{{ config.email }}">{{ config.email }}</a>
         </footer>
-    </main>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

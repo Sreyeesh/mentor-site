@@ -8,11 +8,12 @@ def test_home_page(client):
     assert b'Sreyeesh Garimella' in response.data
 
 
-def test_home_page_content(client):
-    """Home page shows the mentoring landing content."""
+def test_home_page_content(client, monkeypatch):
+    """Coming-soon page shows CV/portfolio content when gate is enabled."""
+    monkeypatch.setenv('SITE_COMING_SOON', 'true')
     response = client.get('/')
     assert b'Sreyeesh Garimella' in response.data
-    assert b'Book a session' in response.data
+    assert b'Production Technology Specialist' in response.data
 
 
 def test_home_page_has_og_image(client):
@@ -72,7 +73,7 @@ def test_markdown_posts_available():
 def test_blog_index(client):
     response = client.get('/blog/')
     assert response.status_code == 200
-    assert b'Writing' in response.data
+    assert b'Sreyeesh Garimella' in response.data
 
 
 def test_blog_detail(client, tmp_path, monkeypatch):

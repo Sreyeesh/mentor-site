@@ -116,12 +116,26 @@ h1 {
 }
 
 .cs-tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
     font-family: var(--cs-font-body);
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--cs-muted);
+}
+
+.cs-tags li {
+    white-space: nowrap;
+}
+
+.cs-tags li:not(:last-child)::after {
+    content: "·";
+    margin: 0 0.6rem;
+    color: var(--cs-accent);
 }
 
 .cs-bio {
@@ -229,8 +243,17 @@ h1 {
         gap: 3rem;
     }
 
+    .cs-tags {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem 0;
+    }
+
+    .cs-tags li:not(:last-child)::after {
+        display: none;
+    }
+
     .cs-launch {
-        padding-top: 0;
         border-top: 1px solid var(--cs-border);
         padding-top: 2rem;
     }
@@ -240,8 +263,49 @@ h1 {
     }
 }
 
+/* ── Scroll reveal ───────────────────────────────── */
+
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+        opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Header fades in on load (always above fold) */
+@keyframes cs-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes cs-rule-grow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+.cs-header {
+    animation: cs-fade-in 0.5s ease both;
+    animation-delay: 0.05s;
+}
+
+.cs-header-rule {
+    transform-origin: left;
+    animation: cs-rule-grow 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.2s;
+}
+
 /* ── Reduced motion ──────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
 }

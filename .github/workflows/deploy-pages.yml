@@ -21,6 +21,8 @@ jobs:
       BASE_PATH: ${{ vars.BASE_PATH }}
       GITHUB_PAGES_BASE_PATH: ${{ vars.BASE_PATH }}
       SITE_COMING_SOON: ${{ vars.SITE_COMING_SOON }}
+      SITE_GITHUB_URL: ${{ vars.SITE_GITHUB_URL }}
+      SITE_LINKEDIN_URL: ${{ vars.SITE_LINKEDIN_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

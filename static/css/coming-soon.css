@@ -1,0 +1,57 @@
+@import url('base.css');
+
+main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 5rem 1.25rem 4rem;
+}
+
+.brand {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: clamp(1.85rem, 4.5vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+    max-width: 22ch;
+}
+
+.lede {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    max-width: 60ch;
+}
+
+.launch-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin-bottom: 3rem;
+}
+
+.launch-badge strong {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+footer {
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+}

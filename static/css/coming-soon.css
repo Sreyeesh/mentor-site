@@ -14,6 +14,16 @@
     --cs-font-body:   'Inter', system-ui, sans-serif;
 }
 
+[data-theme="light"] {
+    --cs-bg:         #f6f8fa;
+    --cs-surface:    #ffffff;
+    --cs-border:     rgba(0, 0, 0, 0.08);
+    --cs-text:       #1c2128;
+    --cs-muted:      #57606a;
+    --cs-accent:     #0d9488;
+    --cs-accent-dim: rgba(13, 148, 136, 0.1);
+}
+
 html {
     font-size: 16px;
     background: var(--cs-bg);
@@ -78,6 +88,12 @@ a:focus-visible {
     object-fit: contain;
 }
 
+.cs-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
 .cs-header-link {
     font-size: 0.8rem;
     color: var(--cs-muted);
@@ -85,6 +101,33 @@ a:focus-visible {
 }
 
 .cs-header-link:hover { color: var(--cs-accent); }
+
+.cs-theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: 1px solid var(--cs-border);
+    border-radius: 6px;
+    color: var(--cs-muted);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+}
+
+.cs-theme-toggle:hover {
+    color: var(--cs-accent);
+    border-color: var(--cs-accent);
+}
+
+.cs-theme-toggle svg { width: 16px; height: 16px; }
+
+/* Show moon in dark mode, sun in light mode */
+.cs-icon-sun { display: none; }
+[data-theme="light"] .cs-icon-sun { display: block; }
+[data-theme="light"] .cs-icon-moon { display: none; }
 
 /* ── Main content ────────────────────────────────── */
 

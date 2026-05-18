@@ -45,21 +45,65 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/coming-soon.css') }}">
 </head>
 <body>
-    <main>
-        <p class="brand">{{ config.brand_legal_name }}</p>
-        <h1>Production Technology Specialist · Pipeline TD · VFX</h1>
-        <p class="lede">CV and portfolio site launching soon. Production technology, pipeline support, and render operations across animation, VFX, and games.</p>
+    <div class="cs-wrap">
 
-        <div class="launch-badge">Launching <strong>{{ launch_display }}</strong></div>
+        <header class="cs-header">
+            <span class="cs-brand">
+                <img class="cs-logo" src="{{ url_for('static', filename='images/toucan-logo.png') }}" alt="Toucan Studios OÜ logo" width="32" height="25">
+                {{ config.brand_legal_name }}
+            </span>
+            <div class="cs-header-rule" aria-hidden="true"></div>
+        </header>
 
-        <footer>
+        <main class="cs-grid">
+            <section class="cs-identity">
+                <h1 data-reveal data-reveal-delay="100">Production Technology<br>Specialist</h1>
+                <ul class="cs-tags" aria-label="Specialisms" data-reveal data-reveal-delay="200">
+                    <li>Pipeline TD</li>
+                    <li>Render Operations</li>
+                    <li>VFX</li>
+                    <li>Games</li>
+                </ul>
+                <p class="cs-bio" data-reveal data-reveal-delay="300">I support creative production teams with pipeline tools, render workflows, automation, and technical problem-solving across animation, VFX, and game development.</p>
+
+                <div class="cs-contacts" data-reveal data-reveal-delay="400">
+                    <a href="mailto:{{ config.email }}" class="cs-contact-item">
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <rect x="2" y="4" width="16" height="12" rx="2"/>
+                            <path d="M2 7l8 5 8-5"/>
+                        </svg>
+                        {{ config.email }}
+                    </a>
+                    <span class="cs-contact-item">
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                            <path d="M10 2C7.2 2 5 4.2 5 7c0 4 5 11 5 11s5-7 5-11c0-2.8-2.2-5-5-5z"/>
+                            <circle cx="10" cy="7" r="1.8"/>
+                        </svg>
+                        Based in {{ config.location }}
+                    </span>
+                </div>
+            </section>
+
+            <aside class="cs-launch" data-reveal data-reveal-delay="250">
+                <div class="cs-launch-labels">
+                    <span class="cs-label">CV &amp; Portfolio</span>
+                    <span class="cs-label">Coming Soon</span>
+                </div>
+                <div class="cs-accent-rule" aria-hidden="true"></div>
+                <p class="cs-launching-eyebrow">Launching</p>
+                <p class="cs-date">{{ launch_display }}</p>
+            </aside>
+        </main>
+
+        <footer class="cs-footer" data-reveal data-reveal-delay="500">
             <span>&copy; {{ current_year }} {{ config.brand_legal_name }}</span>
-            <a href="mailto:{{ config.email }}">{{ config.email }}</a>
         </footer>
-    </main>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

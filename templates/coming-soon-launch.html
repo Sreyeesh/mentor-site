@@ -3,43 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config.brand_name }} | 1:1 Game Dev Mentoring (Launching {{ launch_display }})</title>
-    <meta name="description" content="1:1 game development mentoring at {{ config.brand_name }}, launching {{ launch_display }}. For complete beginners, hobbyists, and indie teams. 60-minute video sessions, €75.">
+    <title>{{ config.name }} — CV &amp; Portfolio (Launching {{ launch_display }})</title>
+    <meta name="description" content="{{ config.name }} — Production Technology Specialist, Pipeline TD, and VFX professional. CV and portfolio site launching {{ launch_display }}.">
 
     <link rel="canonical" href="{{ canonical_url }}">
 
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="{{ config.brand_name }}">
-    <meta property="og:title" content="{{ config.brand_name }} | 1:1 Game Dev Mentoring">
-    <meta property="og:description" content="Launching {{ launch_display }}. 1:1 game dev mentoring for beginners, hobbyists, and indie teams.">
+    <meta property="og:site_name" content="{{ config.name }}">
+    <meta property="og:title" content="{{ config.name }} — CV &amp; Portfolio">
+    <meta property="og:description" content="Production Technology Specialist · Pipeline TD · VFX. Launching {{ launch_display }}.">
     <meta property="og:url" content="{{ canonical_url }}">
     <meta property="og:image" content="{{ canonical_url }}static/images/SreyeeshProfilePic.jpg">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ config.brand_name }} | 1:1 Game Dev Mentoring">
-    <meta name="twitter:description" content="Launching {{ launch_display }}. 1:1 game dev mentoring for beginners, hobbyists, and indie teams.">
+    <meta name="twitter:title" content="{{ config.name }} — CV &amp; Portfolio">
+    <meta name="twitter:description" content="Production Technology Specialist · Pipeline TD · VFX. Launching {{ launch_display }}.">
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@graph": [
             {
-                "@type": "Organization",
-                "name": "{{ config.brand_legal_name }}",
-                "alternateName": "{{ config.brand_name }}",
-                "url": "{{ canonical_url }}",
-                "email": "{{ config.email }}",
-                "foundingDate": "{{ launch_iso }}",
-                "description": "1:1 game development mentoring for complete beginners, hobbyists, and indie teams."
-            },
-            {
                 "@type": "Person",
                 "name": "{{ config.name }}",
-                "jobTitle": "Game Development Mentor",
-                "worksFor": {
-                    "@type": "Organization",
-                    "name": "{{ config.brand_legal_name }}"
-                },
+                "jobTitle": "Production Technology Specialist",
+                "url": "{{ canonical_url }}",
+                "email": "{{ config.email }}",
+                "sameAs": [
+                    "{{ config.github_url }}",
+                    "{{ config.linkedin_url }}"
+                ],
                 "alumniOf": "Blizzard Entertainment",
                 "address": {
                     "@type": "PostalAddress",
@@ -184,14 +177,14 @@
 </head>
 <body>
     <main>
-        <p class="brand">{{ config.brand_legal_name }}</p>
-        <h1>1:1 Game Development Mentoring</h1>
-        <p class="lede">A new home for personal, 1:1 mentoring in game development. For beginners, hobbyists, and small indie teams.</p>
+        <p class="brand">{{ config.name }}</p>
+        <h1>Production Technology Specialist · Pipeline TD · VFX</h1>
+        <p class="lede">CV and portfolio site launching soon. Production technology, pipeline support, and render operations across animation, VFX, and games.</p>
 
         <div class="launch-badge">Launching <strong>{{ launch_display }}</strong></div>
 
         <footer>
-            <span>&copy; {{ current_year }} {{ config.brand_legal_name }}</span>
+            <span>&copy; {{ current_year }} {{ config.name }}</span>
             <a href="mailto:{{ config.email }}">{{ config.email }}</a>
         </footer>
     </main>

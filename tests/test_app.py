@@ -9,10 +9,10 @@ def test_home_page(client):
 
 
 def test_home_page_content(client):
-    """Home page shows the mentoring landing content."""
+    """Home page shows CV/portfolio coming-soon content."""
     response = client.get('/')
     assert b'Sreyeesh Garimella' in response.data
-    assert b'Book a session' in response.data
+    assert b'Production Technology Specialist' in response.data
 
 
 def test_home_page_has_og_image(client):
@@ -72,7 +72,7 @@ def test_markdown_posts_available():
 def test_blog_index(client):
     response = client.get('/blog/')
     assert response.status_code == 200
-    assert b'Writing' in response.data
+    assert b'Sreyeesh Garimella' in response.data
 
 
 def test_blog_detail(client, tmp_path, monkeypatch):

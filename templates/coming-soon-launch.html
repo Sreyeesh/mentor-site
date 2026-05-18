@@ -61,11 +61,16 @@
 
         <main class="cs-grid">
             <section class="cs-identity">
-                <h1>Production Technology<br>Specialist</h1>
-                <p class="cs-tags">Pipeline TD &nbsp;·&nbsp; Render Operations &nbsp;·&nbsp; VFX &nbsp;·&nbsp; Games</p>
-                <p class="cs-bio">I support creative production teams with pipeline tools, render workflows, automation, and technical problem-solving across animation, VFX, and game development.</p>
+                <h1 data-reveal data-reveal-delay="100">Production Technology<br>Specialist</h1>
+                <ul class="cs-tags" aria-label="Specialisms" data-reveal data-reveal-delay="200">
+                    <li>Pipeline TD</li>
+                    <li>Render Operations</li>
+                    <li>VFX</li>
+                    <li>Games</li>
+                </ul>
+                <p class="cs-bio" data-reveal data-reveal-delay="300">I support creative production teams with pipeline tools, render workflows, automation, and technical problem-solving across animation, VFX, and game development.</p>
 
-                <div class="cs-contacts">
+                <div class="cs-contacts" data-reveal data-reveal-delay="400">
                     <a href="mailto:{{ config.email }}" class="cs-contact-item">
                         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                             <rect x="2" y="4" width="16" height="12" rx="2"/>
@@ -83,7 +88,7 @@
                 </div>
             </section>
 
-            <aside class="cs-launch">
+            <aside class="cs-launch" data-reveal data-reveal-delay="250">
                 <div class="cs-launch-labels">
                     <span class="cs-label">CV &amp; Portfolio</span>
                     <span class="cs-label">Coming Soon</span>
@@ -94,10 +99,11 @@
             </aside>
         </main>
 
-        <footer class="cs-footer">
+        <footer class="cs-footer" data-reveal data-reveal-delay="500">
             <span>&copy; {{ current_year }} {{ config.brand_legal_name }}</span>
         </footer>
 
     </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

@@ -41,44 +41,10 @@
         </div>
     </header>
 
-    <!-- ── Body: two columns ── -->
+    <!-- ── Body ── -->
     <div class="cv-body">
 
-        <!-- Left column: Education · Skills · Studios -->
-        <aside class="cv-col cv-col--left">
-
-            <section id="education" class="cv-section" aria-labelledby="edu-label">
-                <h2 id="edu-label" class="cv-label">Education</h2>
-                {% for item in cv.education %}
-                <div class="edu-entry">
-                    <h3>{{ item.school }}</h3>
-                    <p>{{ item.credential }}</p>
-                    <span>{{ item.period }}</span>
-                </div>
-                {% endfor %}
-            </section>
-
-            <section id="skills" class="cv-section" aria-labelledby="skills-label">
-                <h2 id="skills-label" class="cv-label">Skills</h2>
-                {% for group in cv.skills %}
-                <div class="skill-entry">
-                    <h3>{{ group.group }}</h3>
-                    <p>{{ group['items'] | join(', ') }}</p>
-                </div>
-                {% endfor %}
-            </section>
-
-            <section id="studios" class="cv-section" aria-labelledby="studios-label">
-                <h2 id="studios-label" class="cv-label">Studios</h2>
-                {% for credit in cv.credits %}
-                <p class="studio-entry">{{ credit }}</p>
-                {% endfor %}
-            </section>
-
-        </aside>
-
-        <!-- Right column: Profile · Experience · Contact -->
-        <div class="cv-col cv-col--right">
+        <div class="cv-col">
 
             <section id="profile" class="cv-section" aria-labelledby="profile-label">
                 <h2 id="profile-label" class="cv-label">Profile</h2>

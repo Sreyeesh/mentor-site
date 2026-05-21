@@ -15,14 +15,16 @@ SITE_CONFIG = {
     'name': os.getenv('SITE_NAME', 'Sreyeesh Garimella'),
     'brand_name': os.getenv('SITE_BRAND_NAME', 'Toucan Studios'),
     'brand_legal_name': os.getenv('SITE_BRAND_LEGAL_NAME', 'Toucan Studios OÜ'),
-    'tagline': os.getenv('SITE_TAGLINE', 'Toucan Studios · 1:1 Game Dev Mentoring'),
+    'tagline': os.getenv(
+        'SITE_TAGLINE',
+        'Pipeline TD · Production Tech Portfolio',
+    ),
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),
     'meta_description': os.getenv(
         'SITE_META_DESCRIPTION',
-        '1:1 game development mentoring at Toucan Studios. '
-        'For complete beginners, hobbyists, and indie teams. '
-        '60-minute video sessions, €75 each.',
+        'Portfolio and CV for Sreyeesh Garimella, focused on pipeline '
+        'technical direction, render operations, and production tooling.',
     ),
     'asset_version': os.getenv('ASSET_VERSION', '1'),
     'plausible_script_url': os.getenv('PLAUSIBLE_SCRIPT_URL', ''),

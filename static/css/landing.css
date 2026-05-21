@@ -144,6 +144,35 @@ html {
 }
 
 
+/* ── Skills ──────────────────────────────── */
+
+.skill-entry {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 0.5rem 1.5rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+}
+
+.skill-entry:last-child {
+    border-bottom: none;
+}
+
+.skill-entry h3 {
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.skill-entry p {
+    color: var(--text);
+    font-size: 0.85rem;
+    line-height: 1.55;
+}
+
 /* ── Profile ─────────────────────────────── */
 
 .cv-profile-text {

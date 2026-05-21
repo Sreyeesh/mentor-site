@@ -2,21 +2,31 @@ from blog import load_posts
 
 
 def test_home_page(client):
-    """Home page loads the coming soon landing page."""
+    """Home page loads the CV site."""
     response = client.get('/')
     assert response.status_code == 200
     assert b'Sreyeesh Garimella' in response.data
 
 
-def test_home_page_content(client, monkeypatch):
-    """Coming-soon page shows CV/portfolio content when gate is enabled."""
-    monkeypatch.setenv('SITE_COMING_SOON', 'true')
+def test_home_page_content(client):
+    """CV page shows the real positioning and core CV content."""
     response = client.get('/')
     assert b'Sreyeesh Garimella' in response.data
     assert b'Pipeline TD' in response.data
-    assert b'Production Tech Portfolio' in response.data
-    assert b'Render Operations' in response.data
+    assert b'Python tooling' in response.data
+    assert b'DNEG' in response.data
+    assert b'Blizzard Entertainment' in response.data
+    assert b'Walt Disney Animation Studios' in response.data
     assert b'1:1 game development mentoring' not in response.data
+    assert b'Tally' not in response.data
+
+
+def test_home_page_ignores_legacy_coming_soon_flag(client, monkeypatch):
+    """The old coming-soon gate must not replace the CV homepage."""
+    monkeypatch.setenv('SITE_COMING_SOON', 'true')
+    response = client.get('/')
+    assert b'Pipeline TD and Software Developer' in response.data
+    assert b'Get launch updates' not in response.data
 
 
 def test_home_page_has_og_image(client):
@@ -39,6 +49,14 @@ def test_pages_load(client):
     """Blog index renders the post list."""
     response = client.get('/blog/')
     assert response.status_code == 200
+
+
+def test_about_page_uses_cv_bio(client):
+    response = client.get('/about/')
+    assert response.status_code == 200
+    assert b'Pipeline TD and software developer' in response.data
+    assert b'DNEG' in response.data
+    assert b'Book a session' not in response.data
 
 
 def test_sitemap_endpoint(client):

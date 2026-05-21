@@ -102,41 +102,6 @@ html {
     opacity: 0.65;
 }
 
-/* ── Section nav ─────────────────────────── */
-
-.cv-section-nav {
-    display: flex;
-    gap: 0;
-    border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-}
-
-.cv-section-nav::-webkit-scrollbar {
-    display: none;
-}
-
-.cv-section-nav a {
-    flex-shrink: 0;
-    padding: 0.65rem 1.1rem;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    transition: color 0.12s, border-color 0.12s;
-    white-space: nowrap;
-}
-
-.cv-section-nav a:hover {
-    color: var(--text);
-    border-bottom-color: var(--text);
-    opacity: 1;
-}
 
 /* ── Scroll offset for fixed nav ─────────── */
 

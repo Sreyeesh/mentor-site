@@ -67,6 +67,16 @@
                 {% endfor %}
             </section>
 
+            <section id="skills" class="cv-section" aria-labelledby="skills-label">
+                <h2 id="skills-label" class="cv-label">Skills</h2>
+                {% for group in cv.skills %}
+                <div class="skill-entry">
+                    <h3>{{ group.group }}</h3>
+                    <p>{{ group['items'] | join(', ') }}</p>
+                </div>
+                {% endfor %}
+            </section>
+
             <section id="contact" class="cv-section cv-contact-section" aria-labelledby="contact-label">
                 <h2 id="contact-label" class="cv-label">{{ cv.contact_heading }}</h2>
                 <p class="cv-contact-body">{{ cv.contact_body }}</p>

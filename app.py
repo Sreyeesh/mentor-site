@@ -291,7 +291,7 @@ CV_PAGE = {
 def home():
     return render_template(
         'landing.html',
-        **build_page_context(page_slug='home'),
+        **build_page_context(page_slug='home', main_class='cv-page-main'),
         cv=CV_PAGE,
     )
 

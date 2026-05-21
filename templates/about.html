@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
-{% block title %}About | Game Dev Mentor — {{ config.name }}{% endblock %}
-{% block meta_description %}1:1 game development mentoring for beginners, hobbyists, and indie teams. Blizzard Entertainment alumni, currently mentoring at GameCityKajaani.{% endblock %}
+{% block title %}About | {{ config.name }}{% endblock %}
+{% block meta_description %}Professional bio for {{ config.name }}, Pipeline TD and software developer focused on Python tooling, DCC pipelines, and workflow automation.{% endblock %}
 
 {% block content %}
 <article class="about-page">
@@ -9,7 +9,7 @@
     <header class="about-header">
         <img
             src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}"
-            alt="{{ config.name }}, game development mentor"
+            alt="{{ config.name }}"
             class="about-avatar"
         >
         <h1>About</h1>
@@ -17,48 +17,54 @@
 
     <div class="about-body">
         <p>
-            I'm {{ config.name }}, a 1:1 game development mentor based in {{ config.location }}.
-            I help complete beginners, hobbyists, and small indie teams get started in game dev,
-            pick the right engine, and finish the projects they start.
+            I'm {{ config.name }}, a Pipeline TD and software developer based in
+            {{ config.location }}. My work sits between creative production and
+            software: Python tools, DCC pipeline support, render workflows,
+            documentation, and the practical communication needed to help teams
+            ship.
         </p>
 
-        <h2>Background</h2>
+        <h2>Production background</h2>
         <p>
-            I've spent over a decade working in the games and animation industries,
-            most notably as a technical artist at Blizzard Entertainment. I currently
-            mentor aspiring game developers remotely with GameCityKajaani in Finland,
-            working with students at every stage, from people who have never opened a
-            game engine to teams shipping their first commercial project.
+            My studio experience includes DNEG, Walt Disney Animation Studios,
+            Blizzard Entertainment, Boulder Media, Encore VFX, FuseFX, and CoSA
+            VFX. Across those roles I have supported artists and production teams
+            through Python tooling, render support, show configuration work, DCC
+            troubleshooting, and pipeline workflow improvements.
         </p>
 
-        <h2>How I can help</h2>
+        <h2>Current focus</h2>
         <p>
-            Whether you are choosing between Godot, Unity, or Unreal, scoping your
-            first playable prototype, or pushing through the messy middle of a side
-            project, I offer focused 60-minute video sessions tailored to where you
-            actually are. Sessions are €75 each, with no long-term commitment.
-            <a href="{{ site_links.home }}">Book a session</a>, or email
-            <a href="mailto:{{ config.email }}">{{ config.email }}</a> if you have
-            questions first.
+            Through Toucan Studios OÜ, I also mentor junior developers and
+            creative technology learners on Python, Git, pipeline standards, and
+            technical problem-solving. I am interested in roles where production
+            experience, workflow automation, internal tools, and clear technical
+            support are useful beyond a single industry label.
         </p>
     </div>
 
-    {% if config.github_url or config.linkedin_url %}
+    {% if config.github_url or config.linkedin_url or config.imdb_url %}
     <hr class="about-divider">
 
     <section class="about-links">
         <h2>Elsewhere</h2>
         <ul class="elsewhere-list">
-            {% if config.github_url %}
-            <li>
-                <a href="{{ config.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
-                <span>code and open source</span>
-            </li>
-            {% endif %}
             {% if config.linkedin_url %}
             <li>
                 <a href="{{ config.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                <span>work history</span>
+                <span>work history and contact</span>
+            </li>
+            {% endif %}
+            {% if config.github_url %}
+            <li>
+                <a href="{{ config.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <span>code and project work</span>
+            </li>
+            {% endif %}
+            {% if config.imdb_url %}
+            <li>
+                <a href="{{ config.imdb_url }}" target="_blank" rel="noopener noreferrer">IMDb</a>
+                <span>production credits</span>
             </li>
             {% endif %}
         </ul>

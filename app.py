@@ -17,21 +17,26 @@ SITE_CONFIG = {
     'brand_legal_name': os.getenv('SITE_BRAND_LEGAL_NAME', 'Toucan Studios OÜ'),
     'tagline': os.getenv(
         'SITE_TAGLINE',
-        'Pipeline TD · Production Tech Portfolio',
+        'Pipeline TD and Software Developer',
     ),
-    'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
+    'email': os.getenv('SITE_EMAIL', 'sgarime1@gmail.com'),
+    'phone': os.getenv('SITE_PHONE', '+372 5827 7155'),
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),
     'meta_description': os.getenv(
         'SITE_META_DESCRIPTION',
-        'Portfolio and CV for Sreyeesh Garimella, focused on pipeline '
-        'technical direction, render operations, and production tooling.',
+        'CV and portfolio for Sreyeesh Garimella: Python tooling, workflow '
+        'automation, and production technology for animation, games, and beyond.',
     ),
     'asset_version': os.getenv('ASSET_VERSION', '1'),
     'plausible_script_url': os.getenv('PLAUSIBLE_SCRIPT_URL', ''),
     'plausible_domain': os.getenv('PLAUSIBLE_DOMAIN', ''),
     'social_image': os.getenv('SITE_SOCIAL_IMAGE', 'images/SreyeeshProfilePic.jpg'),
     'github_url': os.getenv('SITE_GITHUB_URL', ''),
-    'linkedin_url': os.getenv('SITE_LINKEDIN_URL', ''),
+    'linkedin_url': os.getenv(
+        'SITE_LINKEDIN_URL',
+        'https://www.linkedin.com/in/sreyeeshgarimella',
+    ),
+    'imdb_url': os.getenv('SITE_IMDB_URL', ''),
     'location': os.getenv('SITE_LOCATION', 'Estonia'),
     'launch_date': os.getenv('SITE_LAUNCH_DATE', '2026-05-31'),
 }
@@ -53,23 +58,6 @@ def get_posts():
     if 'posts' not in g:
         g.posts = load_posts()
     return g.posts
-
-
-def is_coming_soon() -> bool:
-    return os.getenv('SITE_COMING_SOON', 'false').lower() == 'true'
-
-
-def coming_soon_response():
-    from datetime import date
-    launch = datetime.strptime(SITE_CONFIG['launch_date'], '%Y-%m-%d')
-    return render_template(
-        'coming-soon-launch.html',
-        config=SITE_CONFIG,
-        canonical_url=build_absolute_url(request.path),
-        current_year=date.today().year,
-        launch_display=launch.strftime('%B %-d, %Y'),
-        launch_iso=SITE_CONFIG['launch_date'],
-    )
 
 
 def build_absolute_url(path: str) -> str:
@@ -101,104 +89,215 @@ def build_page_context(**extra) -> dict:
     return context
 
 
-MENTORING_BOOKING_URL = os.getenv(
-    'MENTORING_BOOKING_URL',
-    'https://cal.com/sreyeesh-dhb2sk/60min',
-)
-
-LANDING_PAGE = {
-    'page_title': 'Game Dev Mentoring',
-    'eyebrow': '1:1 Game Dev Mentoring',
-    'headline': 'Personal guidance for making your first (or next) game.',
-    'lede': (
-        'For complete beginners, hobbyists, and small indie teams. '
-        'No experience required. Bring a question, an idea, or a project '
-        'you are stuck on, and leave with a concrete next step.'
+CV_PAGE = {
+    'page_title': 'CV and Portfolio',
+    'eyebrow': 'CV / Portfolio',
+    'headline': 'Pipeline TD and software developer for production technology.',
+    'tagline': (
+        'Python tooling, workflow automation, and technical mentoring for '
+        'animation, games, and beyond.'
     ),
-    'cta_label': 'Book a session',
-    'cta_meta': '€75 · 60 min · 1:1 video call',
-    'cta_meta_short': '€75 · 60 min',
-    'trust': (
-        'Currently mentoring at GameCityKajaani · '
-        'Blizzard Entertainment alumni'
+    'summary': (
+        'Pipeline TD with VFX and feature animation studio experience in '
+        'Python tool development, Linux, and DCC pipelines including Maya, '
+        'Katana, Houdini, and Nuke. Experienced in sprint-based development, '
+        'code reviews, stakeholder documentation, and mentoring Assistant TDs.'
     ),
-    'audience_label': "Who it's for",
-    'audience_heading': 'This is for you if…',
-    'audience': [
-        "You've never made a game and want to start.",
-        "You're picking your first engine and feel overwhelmed "
-        "by the options.",
-        "You're working on a personal project and want someone "
-        "to think it through with.",
-        "You're on a small indie team and want a senior perspective.",
+    'fit': [
+        'Pipeline TD / production technology roles',
+        'Python tooling and workflow automation',
+        'Internal tools, workflow automation, and support engineering',
+        'Creative technology for animation, VFX, and games',
     ],
-    'topics_label': 'What I cover',
-    'topics': [
-        'Getting started: picking an engine and scoping a first project',
-        'Game design fundamentals and turning an idea into '
-        'something playable',
-        'Working through the hard parts: motivation, scope, and finishing',
-    ],
-    'steps_label': 'How it works',
-    'steps': [
-        'Book a 60-minute session and tell me what you are working on.',
-        'I meet with you 1:1 over video.',
-        'You leave with a concrete next step.',
-    ],
-    'about_label': 'About',
-    'about_body': (
-        "I'm a Blizzard Entertainment alumni and currently mentor aspiring "
-        "game developers at GameCityKajaani. I help people find their footing "
-        "in game dev, whatever stage they are starting from."
-    ),
-    'faq_label': 'FAQ',
-    'faq': [
+    'experience': [
         {
-            'q': "I'm a complete beginner. Is this for me?",
-            'a': 'Yes. Most of the people I work with are just starting out. '
-                 'I help with choosing an engine, scoping a first project, '
-                 'and getting unstuck.',
+            'role': 'Technical Mentor and Production Workflow Specialist',
+            'company': 'Toucan Studios OÜ',
+            'period': 'Jun 2023 - present',
+            'location': 'Estonia',
+            'summary': (
+                'Technical mentoring and production workflow support for '
+                'junior developers and creative technology learners.'
+            ),
+            'highlights': [
+                'Mentored junior developers on Python, Git, pipeline standards, '
+                'and technical problem-solving.',
+                'Delivered formal tutorials and documentation to support team '
+                'growth.',
+                'Led sprint-style development cycles and tracked tasks to '
+                'deliver tooling on schedule.',
+            ],
         },
         {
-            'q': 'Which engine do you teach?',
-            'a': "I'm engine-agnostic. Whether you're using Godot, Unity, "
-                 "Unreal, or something else, bring it along and we'll work "
-                 "with what you have.",
+            'role': 'Lighting TD / Pipeline Support',
+            'company': 'DNEG',
+            'period': '2022 - 2023',
+            'location': 'Remote',
+            'summary': (
+                'Python tooling and production support for Maya, Katana, USD '
+                'shot workflows, RenderMan, and ShotGrid pipeline work.'
+            ),
+            'highlights': [
+                'Built Python tooling in Maya and Katana supporting USD shot '
+                'workflows and RenderMan rendering.',
+                'Collaborated with R&D and creative supervisors on show-specific '
+                'tool development.',
+                'Gathered and actioned stakeholder feedback on pipeline tasks.',
+                'Provided face-to-face technical support to artists and bridged '
+                'technical and non-technical teams.',
+            ],
         },
         {
-            'q': 'How long is a session?',
-            'a': '60 minutes, 1:1, over video. €75 per session.',
+            'role': 'Production Show Technician - In-Game Cinematics',
+            'company': 'Blizzard Entertainment',
+            'period': 'May 2021 - Nov 2021',
+            'location': 'Remote',
+            'summary': (
+                'Lighting, rendering, and publishing workflow support for '
+                'in-game cinematics production.'
+            ),
+            'highlights': [
+                'Developed Python and Lua tools integrated with ShotGrid.',
+                'Supported lighting, rendering, and publishing workflows.',
+                'Mentored artists on workflow issues and supported technical '
+                'handoffs between TDs and production.',
+            ],
         },
         {
-            'q': 'Can I book more than one?',
-            'a': "Yes. Most people book a single session first, see if it's "
-                 'useful, and come back when they hit the next wall.',
+            'role': 'Render Wrangler',
+            'company': 'Boulder Media',
+            'period': 'Nov 2019 - Jan 2021',
+            'location': 'Dublin, Ireland',
+            'summary': 'Render farm operations and production continuity.',
+            'highlights': [
+                'Managed render farm operations under tight deadlines.',
+                'Coordinated with artists and production to resolve issues.',
+            ],
+        },
+        {
+            'role': 'Assistant Technical Director',
+            'company': 'Walt Disney Animation Studios',
+            'period': 'Jul 2019 - Aug 2019',
+            'location': 'Burbank, CA',
+            'summary': (
+                'Pipeline workflow, DCC troubleshooting, and technical '
+                'production systems support.'
+            ),
+            'highlights': [
+                'Supported technical production systems across shot and asset '
+                'work.',
+                'Helped troubleshoot DCC and pipeline workflow issues.',
+            ],
+        },
+        {
+            'role': 'Pipeline TD',
+            'company': 'Encore VFX',
+            'period': 'Dec 2018 - Feb 2019',
+            'location': 'Burbank, CA',
+            'summary': 'Pipeline and technical operations support for VFX work.',
+            'highlights': [
+                'Supported pipeline and technical operations on VFX productions.',
+                'Resolved DCC and workflow issues for artists.',
+            ],
+        },
+        {
+            'role': 'Render Wrangler',
+            'company': 'FuseFX',
+            'period': 'Aug 2018 - Dec 2018',
+            'location': 'Los Angeles, CA',
+            'summary': 'Render farm support across VFX productions.',
+            'highlights': [
+                'Diagnosed rendering failures.',
+                'Maintained production render pipelines.',
+            ],
+        },
+        {
+            'role': 'Render Wrangler',
+            'company': 'CoSA VFX',
+            'period': 'Dec 2016 - Aug 2018',
+            'location': 'Los Angeles, CA',
+            'summary': 'Render farm management for VFX productions.',
+            'highlights': [
+                'Delivered two years of render farm management.',
+                'Supported V-Ray and Redshift rendering workflows.',
+            ],
         },
     ],
-    'closing_heading': 'Ready when you are.',
-    'closing_body': (
-        'Book a 60-minute session and come with whatever you are '
-        'working on or thinking about.'
+    'credits': [
+        'Blizzard Entertainment',
+        'DNEG Animation',
+        'Walt Disney Animation Studios',
+        'Boulder Media',
+        'GameCityKajaani',
+    ],
+    'skills': [
+        {
+            'group': 'Languages and systems',
+            'items': ['Python', 'Linux', 'Lua', 'Git', 'Sprint development'],
+        },
+        {
+            'group': 'DCC and pipeline',
+            'items': [
+                'Maya',
+                'Houdini',
+                'Katana',
+                'Nuke',
+                'ShotGrid / Flow',
+            ],
+        },
+        {
+            'group': 'Rendering and data',
+            'items': ['USD / Alembic', 'RenderMan', 'Deadline', 'V-Ray', 'Redshift'],
+        },
+        {
+            'group': 'Production practice',
+            'items': [
+                'Tool development',
+                'Code review',
+                'Pipeline workflows',
+                'Mentoring',
+                'Documentation',
+            ],
+        },
+    ],
+    'education': [
+        {
+            'school': 'California State University, Northridge',
+            'credential': 'Art & Animation',
+            'period': '2010 - 2012',
+        },
+        {
+            'school': 'College of the Canyons',
+            'credential': 'Associate of Arts, Animation',
+            'period': '2007 - 2010',
+        },
+        {
+            'school': 'iAnimate.net',
+            'credential': 'Character Animation',
+            'period': '2013',
+        },
+    ],
+    'links_heading': 'Links',
+    'contact_heading': 'Available for production technology work',
+    'contact_body': (
+        'I am open to industry and adjacent technical roles involving Python, '
+        'workflow automation, production support, internal tools, or technical '
+        'mentoring.'
     ),
 }
 
 
 @app.route('/')
 def home():
-    if is_coming_soon():
-        return coming_soon_response()
     return render_template(
         'landing.html',
         **build_page_context(page_slug='home'),
-        booking_url=MENTORING_BOOKING_URL,
-        landing=LANDING_PAGE,
+        cv=CV_PAGE,
     )
 
 
 @app.route('/blog/')
 def blog_index():
-    if is_coming_soon():
-        return coming_soon_response()
     return render_template(
         'blog/list.html',
         **build_page_context(page_slug='blog', posts=get_posts()),
@@ -226,8 +325,6 @@ def blog_detail(slug: str):
 
 @app.route('/about/')
 def about():
-    if is_coming_soon():
-        return coming_soon_response()
     return render_template(
         'about.html',
         **build_page_context(page_slug='about'),

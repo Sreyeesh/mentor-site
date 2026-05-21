@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ config.name }} | {{ landing.page_title }}{% endblock %}
+{% block title %}{{ config.name }} | {{ cv.page_title }}{% endblock %}
 {% block meta_description %}{{ config.meta_description }}{% endblock %}
 
 {% block head_extra %}
@@ -8,80 +8,141 @@
 {% endblock %}
 
 {% block main_inner %}
-<div class="page landing-page">
+<div class="page cv-page">
 
-    <section class="hero">
-        <span class="eyebrow">{{ landing.eyebrow }}</span>
-        <h1>{{ landing.headline }}</h1>
-        <p class="lede">{{ landing.lede }}</p>
-        <div class="cta-row">
-            <a class="btn-primary" href="{{ booking_url }}" target="_blank" rel="noopener noreferrer">
-                {{ landing.cta_label }}<span class="sr-only"> (opens in new tab)</span>
-            </a>
-            <span class="cta-meta">{{ landing.cta_meta }}</span>
+    <section class="cv-hero" aria-labelledby="cv-title">
+        <div class="cv-hero__content">
+            <span class="eyebrow">{{ cv.eyebrow }}</span>
+            <h1 id="cv-title">{{ config.name }}</h1>
+            <p class="cv-title">{{ config.tagline }}</p>
+            <p class="lede">{{ cv.tagline }}</p>
+            <p class="cv-summary">{{ cv.summary }}</p>
+
+            <div class="cv-actions" aria-label="Contact and profile links">
+                <a class="btn-primary" href="mailto:{{ config.email }}">Email me</a>
+                {% if config.linkedin_url %}
+                <a href="{{ config.linkedin_url }}" target="_blank" rel="noopener noreferrer">
+                    LinkedIn<span class="sr-only"> (opens in new tab)</span>
+                </a>
+                {% endif %}
+                {% if config.phone %}
+                <a href="tel:{{ config.phone | replace(' ', '') }}">{{ config.phone }}</a>
+                {% endif %}
+                {% if config.github_url %}
+                <a href="{{ config.github_url }}" target="_blank" rel="noopener noreferrer">
+                    GitHub<span class="sr-only"> (opens in new tab)</span>
+                </a>
+                {% endif %}
+                {% if config.imdb_url %}
+                <a href="{{ config.imdb_url }}" target="_blank" rel="noopener noreferrer">
+                    IMDb<span class="sr-only"> (opens in new tab)</span>
+                </a>
+                {% endif %}
+            </div>
         </div>
-        <p class="trust">
-            {{ landing.trust }} · based in {{ config.location }}
-        </p>
+
+        <aside class="cv-snapshot" aria-label="Professional snapshot">
+            <dl>
+                <div>
+                    <dt>Based in</dt>
+                    <dd>{{ config.location }}</dd>
+                </div>
+                <div>
+                    <dt>Focus</dt>
+                    <dd>Python tooling, pipeline workflows, production support</dd>
+                </div>
+                <div>
+                    <dt>Open to</dt>
+                    <dd>Industry and adjacent technical roles</dd>
+                </div>
+            </dl>
+        </aside>
     </section>
 
-    <section class="block">
-        <span class="section-label">{{ landing.audience_label }}</span>
-        <h2 class="block-heading">{{ landing.audience_heading }}</h2>
-        <ul class="check-list">
-            {% for item in landing.audience %}
+    <section class="cv-section" aria-labelledby="fit-heading">
+        <div class="section-kicker">Role fit</div>
+        <h2 id="fit-heading">Where this profile fits</h2>
+        <ul class="fit-list">
+            {% for item in cv.fit %}
             <li>{{ item }}</li>
             {% endfor %}
         </ul>
     </section>
 
-    <section class="block">
-        <span class="section-label">{{ landing.topics_label }}</span>
-        <ul class="topic-list">
-            {% for topic in landing.topics %}
-            <li>
-                <span class="idx" aria-hidden="true">{{ '%02d' % loop.index }}</span>
-                {{ topic }}
-            </li>
+    <section class="cv-section" aria-labelledby="experience-heading">
+        <div class="section-kicker">Experience</div>
+        <h2 id="experience-heading">Recent work</h2>
+        <div class="experience-list">
+            {% for item in cv.experience %}
+            <article class="experience-item">
+                <header>
+                    <div>
+                        <h3>{{ item.role }}</h3>
+                        <p>{{ item.company }}</p>
+                    </div>
+                    <p class="experience-meta">{{ item.period }} · {{ item.location }}</p>
+                </header>
+                <p>{{ item.summary }}</p>
+                <ul>
+                    {% for highlight in item.highlights %}
+                    <li>{{ highlight }}</li>
+                    {% endfor %}
+                </ul>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="cv-section" aria-labelledby="credits-heading">
+        <div class="section-kicker">Production context</div>
+        <h2 id="credits-heading">Studios and collaborators</h2>
+        <ul class="credit-list">
+            {% for credit in cv.credits %}
+            <li>{{ credit }}</li>
             {% endfor %}
         </ul>
     </section>
 
-    <section class="block">
-        <span class="section-label">{{ landing.steps_label }}</span>
-        <ol class="steps-list">
-            {% for step in landing.steps %}
-            <li>
-                <span class="idx" aria-hidden="true">{{ loop.index }}</span>
-                {{ step }}
-            </li>
+    <section class="cv-section" aria-labelledby="skills-heading">
+        <div class="section-kicker">Skills</div>
+        <h2 id="skills-heading">Technical strengths</h2>
+        <div class="skills-grid">
+            {% for group in cv.skills %}
+            <article class="skill-group">
+                <h3>{{ group.group }}</h3>
+                <ul>
+                    {% for item in group['items'] %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </article>
             {% endfor %}
-        </ol>
+        </div>
     </section>
 
-    <section class="block about-block">
-        <span class="section-label">{{ landing.about_label }}</span>
-        <p>I'm {{ config.name }}, based in {{ config.location }}. {{ landing.about_body }}</p>
-    </section>
-
-    <section class="block">
-        <span class="section-label">{{ landing.faq_label }}</span>
-        <dl class="faq">
-            {% for item in landing.faq %}
-            <dt>{{ item.q }}</dt>
-            <dd>{{ item.a }}</dd>
+    <section class="cv-section" aria-labelledby="education-heading">
+        <div class="section-kicker">Education and training</div>
+        <h2 id="education-heading">Education</h2>
+        <div class="education-list">
+            {% for item in cv.education %}
+            <article>
+                <h3>{{ item.school }}</h3>
+                <p>{{ item.credential }}</p>
+                <span>{{ item.period }}</span>
+            </article>
             {% endfor %}
-        </dl>
+        </div>
     </section>
 
-    <section class="block cta-block">
-        <h2>{{ landing.closing_heading }}</h2>
-        <p>{{ landing.closing_body }}</p>
-        <div class="cta-row">
-            <a class="btn-primary" href="{{ booking_url }}" target="_blank" rel="noopener noreferrer">
-                {{ landing.cta_label }}<span class="sr-only"> (opens in new tab)</span>
-            </a>
-            <span class="cta-meta">{{ landing.cta_meta_short }}</span>
+    <section class="cv-section cv-contact" aria-labelledby="contact-heading">
+        <div class="section-kicker">Contact</div>
+        <h2 id="contact-heading">{{ cv.contact_heading }}</h2>
+        <p>{{ cv.contact_body }}</p>
+        <div class="cv-actions">
+            <a class="btn-primary" href="mailto:{{ config.email }}">{{ config.email }}</a>
+            {% if config.phone %}
+            <a href="tel:{{ config.phone | replace(' ', '') }}">{{ config.phone }}</a>
+            {% endif %}
         </div>
     </section>
 

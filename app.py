@@ -42,9 +42,9 @@ SITE_CONFIG = {
 }
 
 NAV_LINKS = [
-    {'label': 'Home', 'href': '/'},
-    {'label': 'Writing', 'href': '/blog/'},
-    {'label': 'About', 'href': '/about/'},
+    {'label': 'Home', 'href': '/', 'slug': 'home'},
+    {'label': 'Writing', 'href': '/blog/', 'slug': 'blog'},
+    {'label': 'About', 'href': '/about/', 'slug': 'about'},
 ]
 
 SITE_LINKS = {

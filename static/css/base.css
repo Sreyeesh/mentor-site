@@ -186,6 +186,24 @@ code, pre {
 .nav-links .nav-link--cta { all: unset; font-family: system-ui, -apple-system, sans-serif; font-size: 0.875rem; color: var(--text-muted); cursor: pointer; }
 .nav-links .nav-link--cta:hover { color: var(--text); }
 
+.nav-section-divider {
+    display: inline-block;
+    width: 1px;
+    height: 14px;
+    background: var(--border);
+    margin: 0 0.1rem;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.nav-section-link {
+    font-family: var(--font-mono) !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
 /* Dark mode toggle */
 .nav-controls { display: flex; align-items: center; }
 

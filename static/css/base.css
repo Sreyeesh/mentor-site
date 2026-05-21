@@ -183,6 +183,7 @@ code, pre {
 }
 
 .nav-links a:hover { color: var(--text); opacity: 1; }
+.nav-links .nav-link--active { color: var(--text); font-weight: 500; }
 .nav-links .nav-link--cta { all: unset; font-family: system-ui, -apple-system, sans-serif; font-size: 0.875rem; color: var(--text-muted); cursor: pointer; }
 .nav-links .nav-link--cta:hover { color: var(--text); }
 

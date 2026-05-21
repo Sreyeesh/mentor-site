@@ -41,13 +41,23 @@
         </div>
     </header>
 
+    <!-- ── Section nav ── -->
+    <nav class="cv-section-nav" aria-label="Jump to section">
+        <a href="#profile">Profile</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#studios">Studios</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
     <!-- ── Body: two columns ── -->
     <div class="cv-body">
 
         <!-- Left column: Education · Skills · Studios -->
         <aside class="cv-col cv-col--left">
 
-            <section class="cv-section" aria-labelledby="edu-label">
+            <section id="education" class="cv-section" aria-labelledby="edu-label">
                 <h2 id="edu-label" class="cv-label">Education</h2>
                 {% for item in cv.education %}
                 <div class="edu-entry">
@@ -58,7 +68,7 @@
                 {% endfor %}
             </section>
 
-            <section class="cv-section" aria-labelledby="skills-label">
+            <section id="skills" class="cv-section" aria-labelledby="skills-label">
                 <h2 id="skills-label" class="cv-label">Skills</h2>
                 {% for group in cv.skills %}
                 <div class="skill-entry">
@@ -68,7 +78,7 @@
                 {% endfor %}
             </section>
 
-            <section class="cv-section" aria-labelledby="studios-label">
+            <section id="studios" class="cv-section" aria-labelledby="studios-label">
                 <h2 id="studios-label" class="cv-label">Studios</h2>
                 {% for credit in cv.credits %}
                 <p class="studio-entry">{{ credit }}</p>
@@ -80,12 +90,12 @@
         <!-- Right column: Profile · Experience · Contact -->
         <div class="cv-col cv-col--right">
 
-            <section class="cv-section" aria-labelledby="profile-label">
+            <section id="profile" class="cv-section" aria-labelledby="profile-label">
                 <h2 id="profile-label" class="cv-label">Profile</h2>
                 <p class="cv-profile-text">{{ cv.summary }}</p>
             </section>
 
-            <section class="cv-section" aria-labelledby="exp-label">
+            <section id="experience" class="cv-section" aria-labelledby="exp-label">
                 <h2 id="exp-label" class="cv-label">Experience</h2>
                 {% for item in cv.experience %}
                 <article class="exp-item">
@@ -101,7 +111,7 @@
                 {% endfor %}
             </section>
 
-            <section class="cv-section cv-contact-section" aria-labelledby="contact-label">
+            <section id="contact" class="cv-section cv-contact-section" aria-labelledby="contact-label">
                 <h2 id="contact-label" class="cv-label">{{ cv.contact_heading }}</h2>
                 <p class="cv-contact-body">{{ cv.contact_body }}</p>
                 <div class="cv-cta">

@@ -174,21 +174,7 @@ CV_PAGE = {
                 'Coordinated with artists and production to resolve issues.',
             ],
         },
-        {
-            'role': 'Assistant Technical Director',
-            'company': 'Walt Disney Animation Studios',
-            'period': 'Jul 2019 - Aug 2019',
-            'location': 'Burbank, CA',
-            'summary': (
-                'Pipeline workflow, DCC troubleshooting, and technical '
-                'production systems support.'
-            ),
-            'highlights': [
-                'Supported technical production systems across shot and asset '
-                'work.',
-                'Helped troubleshoot DCC and pipeline workflow issues.',
-            ],
-        },
+
         {
             'role': 'Pipeline TD',
             'company': 'Encore VFX',
@@ -226,7 +212,7 @@ CV_PAGE = {
     'credits': [
         'Blizzard Entertainment',
         'DNEG Animation',
-        'Walt Disney Animation Studios',
+
         'Boulder Media',
         'GameCityKajaani',
     ],

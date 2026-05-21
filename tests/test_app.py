@@ -16,7 +16,7 @@ def test_home_page_content(client):
     assert b'Python tooling' in response.data
     assert b'DNEG' in response.data
     assert b'Blizzard Entertainment' in response.data
-    assert b'Walt Disney Animation Studios' in response.data
+    assert b'Boulder Media' in response.data
     assert b'1:1 game development mentoring' not in response.data
     assert b'Tally' not in response.data
 

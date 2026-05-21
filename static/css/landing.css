@@ -109,24 +109,14 @@ html {
     scroll-margin-top: calc(var(--nav-height) + 3.5rem);
 }
 
-/* ── Body: two-column grid ───────────────── */
+/* ── Body ────────────────────────────────── */
 
 .cv-body {
-    display: grid;
-    grid-template-columns: 230px minmax(0, 1fr);
-}
-
-/* ── Left column ─────────────────────────── */
-
-.cv-col--left {
-    padding: 2rem 1.75rem;
-    border-right: 1px solid var(--border);
-}
-
-/* ── Right column ────────────────────────── */
-
-.cv-col--right {
     padding: 2rem 2.5rem;
+}
+
+.cv-col {
+    max-width: 780px;
 }
 
 /* ── Section ─────────────────────────────── */
@@ -153,72 +143,6 @@ html {
     line-height: 1.4;
 }
 
-/* ── Education ───────────────────────────── */
-
-.edu-entry {
-    margin-bottom: 1.25rem;
-}
-
-.edu-entry:last-child {
-    margin-bottom: 0;
-}
-
-.edu-entry h3 {
-    color: var(--text);
-    font-size: 0.85rem;
-    font-weight: 600;
-    line-height: 1.35;
-}
-
-.edu-entry p {
-    margin-top: 0.15rem;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    line-height: 1.45;
-}
-
-.edu-entry span {
-    display: block;
-    margin-top: 0.2rem;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    font-size: 0.67rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-/* ── Skills ──────────────────────────────── */
-
-.skill-entry {
-    margin-bottom: 1rem;
-}
-
-.skill-entry:last-child {
-    margin-bottom: 0;
-}
-
-.skill-entry h3 {
-    color: var(--text);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    margin-bottom: 0.2rem;
-}
-
-.skill-entry p {
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    line-height: 1.55;
-}
-
-/* ── Studios ─────────────────────────────── */
-
-.studio-entry {
-    color: var(--text-muted);
-    font-size: 0.82rem;
-    line-height: 1.6;
-}
 
 /* ── Profile ─────────────────────────────── */
 
@@ -360,18 +284,6 @@ html {
     }
 
     .cv-body {
-        grid-template-columns: 1fr;
-    }
-
-    .cv-col--left {
-        order: 2;
-        padding: 1.5rem;
-        border-right: none;
-        border-top: 1px solid var(--border);
-    }
-
-    .cv-col--right {
-        order: 1;
         padding: 1.5rem;
     }
 }
@@ -393,8 +305,7 @@ html {
         padding: 1.25rem 1.1rem;
     }
 
-    .cv-col--left,
-    .cv-col--right {
+    .cv-body {
         padding: 1.25rem 1.1rem;
     }
 

@@ -13,7 +13,10 @@ def test_home_page_content(client, monkeypatch):
     monkeypatch.setenv('SITE_COMING_SOON', 'true')
     response = client.get('/')
     assert b'Sreyeesh Garimella' in response.data
-    assert b'Production Tech' in response.data
+    assert b'Pipeline TD' in response.data
+    assert b'Production Tech Portfolio' in response.data
+    assert b'Render Operations' in response.data
+    assert b'1:1 game development mentoring' not in response.data
 
 
 def test_home_page_has_og_image(client):

@@ -2,11 +2,21 @@ import os
 import shutil
 from pathlib import Path
 
-from app import app
+from app import SITE_CONFIG, app
 from blog import load_posts
 
 
 BUILD_DIR = Path('build')
+
+
+def require_site_url_for_static_build() -> None:
+    if SITE_CONFIG['site_url']:
+        return
+    raise SystemExit(
+        'ERROR: SITE_URL is not set. Canonical URLs in the static build '
+        'would point to localhost. Set SITE_URL to the deployed origin '
+        'before running freeze.py.'
+    )
 
 
 def write_file(destination: Path, content: str) -> None:
@@ -15,6 +25,8 @@ def write_file(destination: Path, content: str) -> None:
 
 
 def build_static_site() -> None:
+    require_site_url_for_static_build()
+
     base_path = os.getenv('GITHUB_PAGES_BASE_PATH', '')
     normalized_base_path = base_path.strip()
     if normalized_base_path and not normalized_base_path.startswith('/'):

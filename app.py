@@ -19,7 +19,7 @@ SITE_CONFIG = {
         'SITE_TAGLINE',
         'Pipeline TD and Software Developer',
     ),
-    'email': os.getenv('SITE_EMAIL', 'sgarime1@gmail.com'),
+    'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
     'phone': os.getenv('SITE_PHONE', '+372 5827 7155'),
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),
     'meta_description': os.getenv(

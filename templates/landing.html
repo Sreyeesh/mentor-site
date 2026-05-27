@@ -41,13 +41,9 @@
             </a>
             {% endif %}
             {% if config.imdb_url %}
-            <a href="{{ config.imdb_url }}" target="_blank" rel="noopener noreferrer" class="cv-social-link cv-imdb-link">
-                <svg width="30" height="14" viewBox="0 0 30 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <rect width="30" height="14" rx="2" fill="currentColor" fill-opacity="0.09"/>
-                    <rect x="0.5" y="0.5" width="29" height="13" rx="2" stroke="currentColor" stroke-opacity="0.32"/>
-                    <text x="4" y="10.5" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="7.5" fill="currentColor" letter-spacing="0.04em">IMDb</text>
-                </svg>
-                <span class="sr-only">IMDb profile (opens in new tab)</span>
+            <a href="{{ config.imdb_url }}" target="_blank" rel="noopener noreferrer" class="cv-social-link">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                IMDb<span class="sr-only"> (opens in new tab)</span>
             </a>
             {% endif %}
             <span class="cv-location">{{ config.location }}</span>

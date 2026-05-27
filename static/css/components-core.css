@@ -86,35 +86,16 @@
     outline-offset: 3px;
 }
 
-/* Enhanced CTA Buttons - Professional Gradient Design */
 .primary-cta {
-    background: linear-gradient(135deg, #0f62fe, #06c0f6);
+    background: var(--accent);
     color: #fff;
     border: none;
-    box-shadow: 0 25px 45px rgba(15, 98, 254, 0.35);
-    position: relative;
-    overflow: hidden;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-}
-
-.primary-cta::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.primary-cta:hover::before {
-    left: 100%;
+    box-shadow: 0 6px 20px oklch(54% 0.19 47 / 0.3);
 }
 
 .primary-cta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px oklch(54% 0.19 47 / 0.4);
 }
 
 /* Secondary CTA Button - Outline style */
@@ -183,9 +164,9 @@ section h2 {
 .current-status {
     margin-top: 20px;
     padding: 15px;
-    background: var(--bg-primary);
+    background: var(--bg);
     border-radius: 8px;
-    border-left: 4px solid #10b981;
+    border: 1px solid var(--border);
 }
 
 .current-status p {
@@ -647,7 +628,7 @@ section h2 {
     background: var(--bg-primary, #ffffff);
     color: var(--text-primary, #333333);
     transition: all 0.3s ease;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-sans);
 }
 
 .form-group input:focus,
@@ -715,38 +696,21 @@ section h2 {
 .submit-button {
     width: 100%;
     padding: 16px 24px;
-    background: linear-gradient(135deg, var(--accent-primary, #667eea) 0%, var(--accent-secondary, #764ba2) 100%);
+    background: var(--accent);
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Inter', sans-serif;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-family: var(--font-sans);
     letter-spacing: 0.5px;
-    position: relative;
-    overflow: hidden;
-}
-
-.submit-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.submit-button:hover::before {
-    left: 100%;
 }
 
 .submit-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 8px 24px oklch(54% 0.19 47 / 0.3);
 }
 
 .submit-button:active {
@@ -1328,10 +1292,10 @@ section h2 {
 
 .home-intro h1 {
     font-family: var(--font-serif);
-    font-size: clamp(2rem, 5vw, 2.75rem);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
+    font-size: clamp(2.75rem, 6vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
     margin-bottom: 1.25rem;
 }
 
@@ -1385,10 +1349,10 @@ section h2 {
 
 .about-header h1 {
     font-family: var(--font-serif);
-    font-size: clamp(2rem, 5vw, 2.75rem);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
+    font-size: clamp(3.5rem, 9vw, 5.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.0;
 }
 
 .about-body p {
@@ -1408,11 +1372,11 @@ section h2 {
 .about-body h2,
 .about-links h2 {
     font-family: var(--font-serif);
-    font-size: 1.15rem;
-    font-weight: 600;
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    font-weight: 700;
     letter-spacing: -0.01em;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0.9rem;
 }
 
 .about-body a {

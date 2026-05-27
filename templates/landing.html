@@ -41,7 +41,14 @@
             </a>
             {% endif %}
             {% if config.imdb_url %}
-            <a href="{{ config.imdb_url }}" target="_blank" rel="noopener noreferrer">IMDb<span class="sr-only"> (opens in new tab)</span></a>
+            <a href="{{ config.imdb_url }}" target="_blank" rel="noopener noreferrer" class="cv-social-link cv-imdb-link">
+                <svg width="30" height="14" viewBox="0 0 30 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect width="30" height="14" rx="2" fill="currentColor" fill-opacity="0.09"/>
+                    <rect x="0.5" y="0.5" width="29" height="13" rx="2" stroke="currentColor" stroke-opacity="0.32"/>
+                    <text x="4" y="10.5" font-family="var(--font-mono), monospace" font-weight="700" font-size="7.5" fill="currentColor" letter-spacing="0.04em">IMDb</text>
+                </svg>
+                <span class="sr-only">IMDb profile (opens in new tab)</span>
+            </a>
             {% endif %}
             <span class="cv-location">{{ config.location }}</span>
         </div>

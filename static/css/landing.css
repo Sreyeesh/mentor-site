@@ -475,6 +475,10 @@
         grid-template-columns: 1fr;
     }
 
+    .cv-main {
+        order: -1;
+    }
+
     .cv-sidebar {
         padding: 2rem 1.75rem;
         border-right: none;

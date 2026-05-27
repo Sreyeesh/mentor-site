@@ -149,6 +149,10 @@
     opacity: 0.6;
 }
 
+.cv-imdb-link svg {
+    flex-shrink: 0;
+}
+
 /* ── Scroll offset for fixed nav ─────────── */
 
 [id] {

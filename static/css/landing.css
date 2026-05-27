@@ -47,6 +47,17 @@
     border-bottom-color: oklch(30% 0.01 58);
 }
 
+.cv-header__identity {
+    min-width: 0;
+}
+
+.cv-header__meta-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
 .cv-name {
     font-family: var(--font-serif);
     font-size: clamp(3rem, 7vw, 5.5rem);

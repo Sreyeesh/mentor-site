@@ -1,6 +1,0 @@
-{% macro icon(name, size=16, label=None) %}
-  <svg width="{{ size }}" height="{{ size }}" aria-hidden="{{ 'false' if label else 'true' }}"{% if label %} role="img"{% endif %} focusable="false">
-    {% if label %}<title>{{ label }}</title>{% endif %}
-    <use href="{{ url_for('static', filename='icons.svg') }}#{{ name }}"></use>
-  </svg>
-{% endmacro %}

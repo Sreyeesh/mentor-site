@@ -17,10 +17,9 @@ def _icon(name, size=16, label=None):
     aria_hidden = 'false' if label else 'true'
     role = ' role="img"' if label else ''
     title = f'<title>{label}</title>' if label else ''
-    href = url_for('static', filename='icons.svg')
     return Markup(
         f'<svg width="{size}" height="{size}" aria-hidden="{aria_hidden}"{role} focusable="false">'
-        f'<use href="{href}#{name}"></use>{title}</svg>'
+        f'<use href="#{name}"></use>{title}</svg>'
     )
 
 

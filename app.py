@@ -18,7 +18,8 @@ def _icon(name, size=16, label=None):
     role = ' role="img"' if label else ''
     title = f'<title>{label}</title>' if label else ''
     return Markup(
-        f'<svg width="{size}" height="{size}" aria-hidden="{aria_hidden}"{role} focusable="false">'
+        f'<svg width="{size}" height="{size}"'
+        f' aria-hidden="{aria_hidden}"{role} focusable="false">'
         f'<use href="#{name}"></use>{title}</svg>'
     )
 

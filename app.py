@@ -3,6 +3,7 @@ from datetime import datetime
 
 from dotenv import load_dotenv
 from flask import Flask, abort, g, render_template, request, url_for
+from markupsafe import Markup
 
 load_dotenv()
 
@@ -10,6 +11,20 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 from blog import find_post, load_posts, normalize_media_path  # noqa: E402
+
+
+def _icon(name, size=16, label=None):
+    aria_hidden = 'false' if label else 'true'
+    role = ' role="img"' if label else ''
+    title = f'<title>{label}</title>' if label else ''
+    return Markup(
+        f'<svg width="{size}" height="{size}"'
+        f' aria-hidden="{aria_hidden}"{role} focusable="false">'
+        f'<use href="#{name}"></use>{title}</svg>'
+    )
+
+
+app.jinja_env.globals['icon'] = _icon
 
 SITE_CONFIG = {
     'name': os.getenv('SITE_NAME', 'Sreyeesh Garimella'),

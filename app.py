@@ -258,7 +258,11 @@ CV_PAGE = {
             'studio': 'Boulder Media',
             'image': 'images/credits/my-little-pony.jpg',
         },
-        {'title': 'Garfield', 'studio': 'DNEG'},
+        {
+            'title': 'Garfield',
+            'studio': 'DNEG',
+            'image': 'images/credits/garfield.png',
+        },
     ],
     'core_skills': [
         'Python',

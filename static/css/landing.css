@@ -651,11 +651,15 @@
 
 @media (max-width: 480px) {
     .cv-hero {
-        padding-bottom: 2rem;
+        padding-bottom: 1rem;
     }
 
     .cv-hero__links {
         gap: 0.85rem 1.4rem;
+    }
+
+    .cv-section {
+        margin-top: 2.25rem;
     }
 
     .btn-primary {

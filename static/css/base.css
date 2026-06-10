@@ -11,9 +11,9 @@
     --nav-bg: oklch(98.5% 0.006 80 / 0.95);
     --wrap-width: 700px;
     --nav-height: 56px;
-    --font-sans: 'Barlow', system-ui, -apple-system, sans-serif;
-    --font-serif: 'Barlow Condensed', system-ui, sans-serif;
-    --font-body: 'Barlow', system-ui, -apple-system, sans-serif;
+    --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+    --font-display: 'DM Sans', system-ui, sans-serif;
+    --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
 }
 
@@ -110,10 +110,10 @@ a:focus-visible {
 p { max-width: 68ch; line-height: 1.8; }
 
 h1, h2, h3, h4 {
-    font-family: var(--font-serif);
+    font-family: var(--font-display);
     font-weight: 700;
     line-height: 1.1;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     overflow-wrap: break-word;
 }
 

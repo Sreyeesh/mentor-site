@@ -246,7 +246,6 @@ CV_PAGE = {
         'Boulder Media',
         'GameCityKajaani',
     ],
-    'studio_strip': ['Disney', 'Blizzard', 'DNEG', 'Boulder Media'],
     'selected_credits': [
         {
             'title': 'Overwatch 2',

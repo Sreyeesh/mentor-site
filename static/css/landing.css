@@ -365,20 +365,48 @@
         padding: 1.5rem 1.25rem 4rem;
     }
 
+    /* Avatar byline: portrait and name share row 1; the rest spans full width */
     .cv-hero {
-        grid-template-columns: 1fr;
-        gap: 1.75rem;
+        grid-template-columns: auto 1fr;
+        column-gap: 1rem;
+        row-gap: 0;
+        align-items: center;
         padding: 1rem 0 3rem;
     }
 
+    .cv-hero__text {
+        display: contents;
+    }
+
     .cv-hero__media {
-        order: -1;
+        grid-row: 1;
+        grid-column: 1;
+        align-self: center;
         padding-top: 0;
     }
 
     .cv-portrait {
-        width: 104px;
-        height: 104px;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+    }
+
+    .cv-name {
+        grid-row: 1;
+        grid-column: 2;
+        align-self: center;
+        font-size: clamp(1.9rem, 8vw, 2.6rem);
+    }
+
+    .cv-subtitle,
+    .cv-hero__profile,
+    .cv-hero__status,
+    .cv-hero__links {
+        grid-column: 1 / -1;
+    }
+
+    .cv-subtitle {
+        margin-top: 1.5rem;
     }
 
     .cv-section {

@@ -247,6 +247,64 @@
     line-height: 1.7;
 }
 
+/* ── Earlier roles: condensed rows ───────── */
+
+.cv-subheading {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-muted);
+    margin: 2.5rem 0 0.5rem;
+}
+
+.exp-brief {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 0.35rem 2.5rem;
+    padding: 0.7rem 0;
+}
+
+.exp-brief + .exp-brief {
+    border-top: 1px solid var(--border);
+}
+
+.exp-brief__period {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-top: 0.2rem;
+}
+
+.exp-brief__line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 1rem;
+    max-width: none;
+}
+
+.exp-brief__company {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+}
+
+.exp-brief__role {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.exp-brief__location {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+}
+
 /* ── Selected credits ────────────────────── */
 
 .credit-list {
@@ -570,6 +628,11 @@
     .credit-list {
         grid-template-columns: 1fr;
         gap: 1.25rem;
+    }
+
+    .exp-brief {
+        grid-template-columns: 1fr;
+        gap: 0.2rem;
     }
 
     .edu-item {

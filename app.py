@@ -306,7 +306,7 @@ CV_PAGE = {
         },
     ],
     'links_heading': 'Links',
-    'contact_heading': 'Available for production technology work',
+    'contact_heading': 'Open to production technology work',
     'contact_body': (
         'I am open to industry and adjacent technical roles involving Python, '
         'workflow automation, production support, internal tools, or technical '

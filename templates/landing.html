@@ -8,112 +8,103 @@
 {% endblock %}
 
 {% block main_inner %}
-<div class="cv-wrap">
-<div class="cv-card">
+<div class="cv-page">
 
-    <!-- ── Header: display name + contact ── -->
-    <header class="cv-header">
-        <div class="cv-header__identity">
+    <!-- ── Hero: identity, summary, contact ── -->
+    <header class="cv-hero" id="top">
+        <div class="cv-hero__text">
             <h1 class="cv-name">{{ config.name }}</h1>
-            <div class="cv-header__meta-row">
-                <p class="cv-subtitle">{{ config.tagline }}</p>
+            <p class="cv-subtitle">{{ config.tagline }}</p>
+
+            <section id="profile" class="cv-hero__profile" aria-label="Profile">
+                <p class="cv-summary">{{ cv.summary }}</p>
+            </section>
+
+            <div class="cv-hero__status">
                 <span class="cv-availability">
                     <span class="cv-availability__dot" aria-hidden="true"></span>
                     Available for work
                 </span>
+                <span class="cv-location">{{ config.location }}</span>
+            </div>
+
+            <div class="cv-hero__links" aria-label="Contact details">
+                <a href="mailto:{{ config.email }}">{{ config.email }}</a>
+                {% if config.phone %}
+                <a href="tel:{{ config.phone | replace(' ', '') }}">{{ config.phone }}</a>
+                {% endif %}
+                {% if config.linkedin_url %}
+                <a href="{{ config.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="cv-social-link">
+                    {{ icon('linkedin', size=11) }}
+                    LinkedIn<span class="sr-only"> (opens in new tab)</span>
+                </a>
+                {% endif %}
+                {% if config.github_url %}
+                <a href="{{ config.github_url }}" target="_blank" rel="noopener noreferrer" class="cv-social-link">
+                    {{ icon('github', size=11) }}
+                    GitHub<span class="sr-only"> (opens in new tab)</span>
+                </a>
+                {% endif %}
+                {% if config.imdb_url %}
+                <a href="{{ config.imdb_url }}" target="_blank" rel="noopener noreferrer" class="cv-social-link">
+                    {{ icon('star', size=11) }}
+                    IMDb<span class="sr-only"> (opens in new tab)</span>
+                </a>
+                {% endif %}
             </div>
         </div>
-        <div class="cv-header__contact" aria-label="Contact details">
-            <a href="mailto:{{ config.email }}">{{ config.email }}</a>
-            {% if config.phone %}
-            <a href="tel:{{ config.phone | replace(' ', '') }}">{{ config.phone }}</a>
-            {% endif %}
-            {% if config.linkedin_url %}
-            <a href="{{ config.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="cv-social-link">
-                {{ icon('linkedin', size=11) }}
-                LinkedIn<span class="sr-only"> (opens in new tab)</span>
-            </a>
-            {% endif %}
-            {% if config.github_url %}
-            <a href="{{ config.github_url }}" target="_blank" rel="noopener noreferrer" class="cv-social-link">
-                {{ icon('github', size=11) }}
-                GitHub<span class="sr-only"> (opens in new tab)</span>
-            </a>
-            {% endif %}
-            {% if config.imdb_url %}
-            <a href="{{ config.imdb_url }}" target="_blank" rel="noopener noreferrer" class="cv-social-link">
-                {{ icon('star', size=11) }}
-                IMDb<span class="sr-only"> (opens in new tab)</span>
-            </a>
-            {% endif %}
-            <span class="cv-location">{{ config.location }}</span>
+        <div class="cv-hero__media">
+            <img src="{{ url_for('static', filename='images/SreyeeshProfilePic.jpg') }}"
+                 alt="Portrait of {{ config.name }}" class="cv-portrait" width="168" height="168">
         </div>
     </header>
 
-    <!-- ── Body: sidebar + main ── -->
-    <div class="cv-body">
+    <!-- ── Experience: full-width timeline ── -->
+    <section id="experience" class="cv-section" aria-labelledby="exp-label">
+        <h2 id="exp-label" class="cv-heading">Experience</h2>
+        {% for item in cv.experience %}
+        <article class="exp-item">
+            <div class="exp-item__when">
+                <span class="exp-item__period">{{ item.period }}</span>
+                <span class="exp-item__location">{{ item.location }}</span>
+            </div>
+            <div class="exp-item__body">
+                <h3 class="exp-item__company">{{ item.company }}</h3>
+                <p class="exp-item__role">{{ item.role }}</p>
+                <ul class="exp-item__list">
+                    {% for h in item.highlights %}<li>{{ h }}</li>{% endfor %}
+                </ul>
+            </div>
+        </article>
+        {% endfor %}
+    </section>
 
-        <!-- Left sidebar: profile, skills, contact -->
-        <aside class="cv-sidebar">
-
-            <section id="profile" class="cv-section" aria-labelledby="profile-label">
-                <h2 id="profile-label" class="cv-label">Profile</h2>
-                <p class="cv-profile-text">{{ cv.summary }}</p>
-            </section>
-
-            <section id="skills" class="cv-section" aria-labelledby="skills-label">
-                <h2 id="skills-label" class="cv-label">Skills</h2>
-                {% for group in cv.skills %}
-                <div class="skill-entry">
-                    <h3>{{ group.group }}</h3>
-                    <div class="skill-chips">
-                        {% for item in group['items'] %}<span class="skill-chip">{{ item }}</span>{% endfor %}
-                    </div>
+    <!-- ── Skills: wide band of grouped chips ── -->
+    <section id="skills" class="cv-section" aria-labelledby="skills-label">
+        <h2 id="skills-label" class="cv-heading">Skills</h2>
+        <div class="skills-grid">
+            {% for group in cv.skills %}
+            <div class="skill-entry">
+                <h3>{{ group.group }}</h3>
+                <div class="skill-chips">
+                    {% for item in group['items'] %}<span class="skill-chip">{{ item }}</span>{% endfor %}
                 </div>
-                {% endfor %}
-            </section>
-
-            <section id="contact" class="cv-section cv-contact-section" aria-labelledby="contact-label">
-                <h2 id="contact-label" class="cv-label">{{ cv.contact_heading }}</h2>
-                <p class="cv-contact-body">{{ cv.contact_body }}</p>
-                <div class="cv-cta">
-                    <a class="btn-primary" href="mailto:{{ config.email }}">{{ config.email }}</a>
-                    {% if config.phone %}
-                    <a class="btn-ghost" href="tel:{{ config.phone | replace(' ', '') }}">{{ config.phone }}</a>
-                    {% endif %}
-                </div>
-            </section>
-
-        </aside>
-
-        <!-- Right main: experience -->
-        <div class="cv-main">
-
-            <section id="experience" class="cv-section" aria-labelledby="exp-label">
-                <h2 id="exp-label" class="cv-label">Experience</h2>
-                {% for item in cv.experience %}
-                <article class="exp-item">
-                    <div class="exp-item__card-header">
-                        <div class="exp-item__identity">
-                            <h3 class="exp-item__company">{{ item.company }}</h3>
-                            <p class="exp-item__role">{{ item.role }}</p>
-                        </div>
-                        <div class="exp-item__meta">
-                            <span class="exp-item__period">{{ item.period }}</span>
-                            <span class="exp-item__location">{{ item.location }}</span>
-                        </div>
-                    </div>
-                    <ul class="exp-item__list">
-                        {% for h in item.highlights %}<li>{{ h }}</li>{% endfor %}
-                    </ul>
-                </article>
-                {% endfor %}
-            </section>
-
+            </div>
+            {% endfor %}
         </div>
+    </section>
 
-    </div><!-- /.cv-body -->
+    <!-- ── Contact: closing CTA ── -->
+    <section id="contact" class="cv-section cv-contact" aria-labelledby="contact-label">
+        <h2 id="contact-label" class="cv-heading cv-contact__heading">{{ cv.contact_heading }}</h2>
+        <p class="cv-contact-body">{{ cv.contact_body }}</p>
+        <div class="cv-cta">
+            <a class="btn-primary" href="mailto:{{ config.email }}">{{ config.email }}</a>
+            {% if config.phone %}
+            <a class="btn-ghost" href="tel:{{ config.phone | replace(' ', '') }}">{{ config.phone }}</a>
+            {% endif %}
+        </div>
+    </section>
 
-</div><!-- /.cv-card -->
-</div><!-- /.cv-wrap -->
+</div>
 {% endblock %}

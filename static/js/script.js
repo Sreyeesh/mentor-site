@@ -4,9 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     
     if (darkModeToggle) {
-        // Set initial theme
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Theme is set by the boot script in base.html (saved preference,
+        // else prefers-color-scheme); read it rather than re-deciding.
+        const savedTheme =
+            document.documentElement.getAttribute('data-theme') || 'light';
 
         const emitThemeChange = (theme) => {
             document.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
@@ -40,18 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hamburger && navLinks) {
         hamburger.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            
+
+            const isOpen = navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active', isOpen);
+            hamburger.setAttribute('aria-expanded', String(isOpen));
         });
-        
+
         // Close menu when clicking links
         const menuLinks = navLinks.querySelectorAll('a');
         menuLinks.forEach(link => {
             link.addEventListener('click', function() {
                 hamburger.classList.remove('active');
                 navLinks.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
             });
         });
         

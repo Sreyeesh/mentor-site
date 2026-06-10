@@ -61,22 +61,6 @@
     max-width: 58ch;
 }
 
-.cv-studios {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem 1.5rem;
-    margin-top: 1.5rem;
-}
-
-.cv-studios span {
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    white-space: nowrap;
-}
-
 .cv-hero__status {
     display: flex;
     align-items: center;

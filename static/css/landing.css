@@ -384,9 +384,19 @@
 
 .skills-core {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.55rem;
     margin-bottom: 2rem;
+}
+
+.skills-core__label {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.4;
 }
 
 .skill-chip--core {

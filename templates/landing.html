@@ -111,8 +111,11 @@
     <!-- ── Skills: wide band of grouped chips ── -->
     <section id="skills" class="cv-section" aria-labelledby="skills-label">
         <h2 id="skills-label" class="cv-heading">Skills</h2>
-        <div class="skills-core" aria-label="Core tools">
-            {% for item in cv.core_skills %}<span class="skill-chip skill-chip--core" style="--i: {{ loop.index0 }}">{{ item }}</span>{% endfor %}
+        <div class="skills-core">
+            <h3 class="skills-core__label">Core tools</h3>
+            <div class="skill-chips">
+                {% for item in cv.core_skills %}<span class="skill-chip skill-chip--core" style="--i: {{ loop.index0 }}">{{ item }}</span>{% endfor %}
+            </div>
         </div>
         <div class="skills-grid">
             {% for group in cv.skills %}
@@ -145,7 +148,7 @@
         <h2 id="contact-label" class="cv-heading cv-contact__heading">{{ cv.contact_heading }}</h2>
         <p class="cv-contact-body">{{ cv.contact_body }}</p>
         <div class="cv-cta">
-            <a class="btn-primary" href="mailto:{{ config.email }}">{{ config.email }}</a>
+            <a class="btn-primary" href="mailto:{{ config.email }}">Email me</a>
             {% if config.phone %}
             <a class="btn-ghost" href="tel:{{ config.phone | replace(' ', '') }}">{{ config.phone }}</a>
             {% endif %}

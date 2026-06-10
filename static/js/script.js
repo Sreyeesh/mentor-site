@@ -207,4 +207,22 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
+    // ===== SKILLS SECTION STAGGERED REVEAL =====
+    const skillsSection = document.getElementById('skills');
+
+    if (skillsSection && 'IntersectionObserver' in window) {
+        skillsSection.classList.add('js-reveal-ready');
+
+        const skillsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    skillsSection.classList.add('is-revealed');
+                    skillsObserver.disconnect();
+                }
+            });
+        }, { threshold: 0.2 });
+
+        skillsObserver.observe(skillsSection);
+    }
+
 });

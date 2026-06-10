@@ -82,12 +82,15 @@
     <!-- ── Skills: wide band of grouped chips ── -->
     <section id="skills" class="cv-section" aria-labelledby="skills-label">
         <h2 id="skills-label" class="cv-heading">Skills</h2>
+        <div class="skills-core" aria-label="Core tools">
+            {% for item in cv.core_skills %}<span class="skill-chip skill-chip--core" style="--i: {{ loop.index0 }}">{{ item }}</span>{% endfor %}
+        </div>
         <div class="skills-grid">
             {% for group in cv.skills %}
-            <div class="skill-entry">
+            <div class="skill-entry" style="--g: {{ loop.index0 }}">
                 <h3>{{ group.group }}</h3>
                 <div class="skill-chips">
-                    {% for item in group['items'] %}<span class="skill-chip">{{ item }}</span>{% endfor %}
+                    {% for item in group['items'] %}<span class="skill-chip" style="--i: {{ loop.index0 }}">{{ item }}</span>{% endfor %}
                 </div>
             </div>
             {% endfor %}

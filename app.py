@@ -248,7 +248,11 @@ CV_PAGE = {
     ],
     'studio_strip': ['Disney', 'Blizzard', 'DNEG', 'Boulder Media'],
     'selected_credits': [
-        {'title': 'Overwatch 2', 'studio': 'Blizzard Entertainment'},
+        {
+            'title': 'Overwatch 2',
+            'studio': 'Blizzard Entertainment',
+            'image': 'images/credits/overwatch.jpg',
+        },
         {'title': 'My Little Pony: A New Generation', 'studio': 'Boulder Media'},
         {'title': 'Garfield', 'studio': 'DNEG'},
     ],

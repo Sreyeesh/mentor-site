@@ -630,9 +630,34 @@
         padding-top: 0;
     }
 
+    /* Credits collapse to thumbnail rows: art left, text right */
     .credit-list {
         grid-template-columns: 1fr;
         gap: 1.25rem;
+    }
+
+    .credit-item {
+        display: grid;
+        grid-template-columns: 96px 1fr;
+        grid-template-rows: auto auto;
+        align-content: center;
+        column-gap: 1.1rem;
+        row-gap: 0.3rem;
+    }
+
+    .credit-item__art {
+        grid-row: 1 / 3;
+        align-self: center;
+        width: 96px;
+        margin-bottom: 0;
+    }
+
+    .credit-item__title {
+        align-self: end;
+    }
+
+    .credit-item__studio {
+        align-self: start;
     }
 
     .exp-brief {

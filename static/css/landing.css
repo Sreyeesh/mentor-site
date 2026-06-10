@@ -321,6 +321,18 @@
     gap: 0.35rem;
 }
 
+.credit-item__art {
+    display: block;
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 0.6rem;
+}
+
 .credit-item__title {
     font-family: var(--font-display);
     font-size: 1.05rem;

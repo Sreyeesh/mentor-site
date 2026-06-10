@@ -253,7 +253,11 @@ CV_PAGE = {
             'studio': 'Blizzard Entertainment',
             'image': 'images/credits/overwatch.jpg',
         },
-        {'title': 'My Little Pony: A New Generation', 'studio': 'Boulder Media'},
+        {
+            'title': 'My Little Pony: A New Generation',
+            'studio': 'Boulder Media',
+            'image': 'images/credits/my-little-pony.jpg',
+        },
         {'title': 'Garfield', 'studio': 'DNEG'},
     ],
     'core_skills': [

@@ -246,24 +246,30 @@ CV_PAGE = {
         'Boulder Media',
         'GameCityKajaani',
     ],
+    'core_skills': [
+        'Python',
+        'Linux',
+        'Maya',
+        'Katana',
+        'USD / Alembic',
+        'RenderMan',
+    ],
     'skills': [
         {
             'group': 'Languages and systems',
-            'items': ['Python', 'Linux', 'Lua', 'Git', 'Sprint development'],
+            'items': ['Lua', 'Git', 'Sprint development'],
         },
         {
             'group': 'DCC and pipeline',
             'items': [
-                'Maya',
                 'Houdini',
-                'Katana',
                 'Nuke',
                 'ShotGrid / Flow',
             ],
         },
         {
             'group': 'Rendering and data',
-            'items': ['USD / Alembic', 'RenderMan', 'Deadline', 'V-Ray', 'Redshift'],
+            'items': ['Deadline', 'V-Ray', 'Redshift'],
         },
         {
             'group': 'Production practice',

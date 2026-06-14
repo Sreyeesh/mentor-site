@@ -233,10 +233,57 @@
 
 /* ── Skills band ─────────────────────────── */
 
+.skills-core {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.skill-chip--core {
+    padding: 0.45rem 0.95rem;
+    border-radius: 5px;
+    border-color: color-mix(in oklch, var(--accent) 35%, transparent);
+    background: color-mix(in oklch, var(--accent) 7%, transparent);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 1.75rem 2.5rem;
+}
+
+/* ── Skills reveal: staggered entrance ───── */
+/* Chips hide only once JS confirms it can reveal them
+   (js-reveal-ready), so content is never lost without JS. */
+
+@media (prefers-reduced-motion: no-preference) {
+    #skills.js-reveal-ready:not(.is-revealed) .skill-chip {
+        opacity: 0;
+    }
+
+    #skills.is-revealed .skill-chip {
+        animation: chip-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+        animation-delay: calc(var(--i, 0) * 45ms);
+    }
+
+    #skills.is-revealed .skills-grid .skill-chip {
+        animation-delay: calc(240ms + var(--g, 0) * 120ms + var(--i, 0) * 35ms);
+    }
+}
+
+@keyframes chip-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .skill-entry {
@@ -272,7 +319,8 @@
     letter-spacing: 0.01em;
     line-height: 1.6;
     background: transparent;
-    transition: border-color 0.12s, color 0.12s, background 0.12s;
+    transition: border-color 0.12s, color 0.12s, background 0.12s,
+        transform 0.15s ease;
     white-space: nowrap;
 }
 
@@ -280,6 +328,7 @@
     border-color: var(--accent);
     color: var(--accent);
     background: color-mix(in oklch, var(--accent) 6%, transparent);
+    transform: translateY(-1px);
 }
 
 /* ── Contact ─────────────────────────────── */

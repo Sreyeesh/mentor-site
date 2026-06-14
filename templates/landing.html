@@ -82,6 +82,7 @@
         </article>
         {% endfor %}
 
+        {% if cv.experience|length > 4 %}
         <h3 class="cv-subheading">Earlier roles</h3>
         {% for item in cv.experience[4:] %}
         <div class="exp-brief">
@@ -93,6 +94,7 @@
             </p>
         </div>
         {% endfor %}
+        {% endif %}
     </section>
 
     <!-- ── Selected credits: shipped titles ── -->

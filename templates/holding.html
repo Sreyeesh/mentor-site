@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ config.brand_name }} — Game Dev Mentoring</title>
+  <meta name="description" content="One-on-one mentoring for game developers, producers, and technical artists. {{ config.brand_legal_name }} — launching soon." />
+
+  <link rel="canonical" href="{{ canonical_url }}" />
+  <meta name="robots" content="noindex, follow" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="{{ config.brand_name }}" />
+  <meta property="og:title" content="{{ config.brand_name }} — Game Dev Mentoring" />
+  <meta property="og:description" content="One-on-one mentoring for game developers, producers, and technical artists. Launching soon." />
+  <meta property="og:url" content="{{ canonical_url }}" />
+  <meta property="og:image" content="{{ social_image_url }}" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/holding.css', v=config.asset_version) }}" />
+</head>
+<body>
+
+  <!-- Animated background layers -->
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
+  <div class="scanline" aria-hidden="true"></div>
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <div class="watermark" aria-hidden="true">GG</div>
+
+  <div class="page">
+
+    <header class="topbar fu d1">
+      <div class="wordmark">TOUCAN<span>.</span>EE</div>
+      <div class="status"><span class="dot"></span> Launching soon</div>
+    </header>
+
+    <main class="main">
+
+      <div class="eyebrow fu d2">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">1-on-1 Mentoring</span>
+      </div>
+
+      <h1 class="headline">
+        <span class="line"><span class="line-inner">Level up your</span></span>
+        <span class="line"><span class="line-inner accent-word">game dev</span></span>
+        <span class="line"><span class="line-inner">career.</span></span>
+      </h1>
+
+      <div class="h-rule"></div>
+
+      <p class="sub fu d4">
+        Mentoring for game developers, producers, and technical artists who want to sharpen their craft, ship better work, and grow in the industry.
+      </p>
+
+      <div class="disciplines">
+        <span class="tag hot">Game Development</span>
+        <span class="tag hot">Technical Art</span>
+        <span class="tag hot">Production</span>
+        <span class="tag">Godot</span>
+        <span class="tag">Unity</span>
+        <span class="tag">Unreal Engine</span>
+        <span class="tag">Portfolio Review</span>
+        <span class="tag">Career Planning</span>
+      </div>
+
+    </main>
+
+    <footer class="footer fu d7">
+      <span class="footer-copy">© {{ current_year }} {{ config.brand_legal_name }} — Estonia</span>
+      <nav class="footer-links">
+        <a href="mailto:{{ config.email }}">Email</a>
+      </nav>
+    </footer>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='js/holding.js', v=config.asset_version) }}"></script>
+</body>
+</html>

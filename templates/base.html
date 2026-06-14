@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,12 +24,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script>
         (function () {
+            var theme = 'light';
             try {
-                var savedTheme = localStorage.getItem('theme');
-                if (savedTheme) {
-                    document.documentElement.setAttribute('data-theme', savedTheme);
-                }
+                theme = localStorage.getItem('theme') ||
+                    (window.matchMedia &&
+                        window.matchMedia('(prefers-color-scheme: dark)').matches
+                        ? 'dark' : 'light');
             } catch (err) {}
+            document.documentElement.setAttribute('data-theme', theme);
         })();
     </script>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..1000&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -94,11 +96,13 @@
                     <span class="sun-icon">{{ icon('sun', size=20) }}</span>
                     <span class="moon-icon">{{ icon('moon', size=20) }}</span>
                 </button>
-                <div class="hamburger" id="hamburger" aria-label="Toggle navigation" role="button">
+                <button type="button" class="hamburger" id="hamburger"
+                        aria-label="Toggle navigation" aria-expanded="false"
+                        aria-controls="nav-links">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
         </div>
     </nav>

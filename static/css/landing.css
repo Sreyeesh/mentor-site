@@ -4,11 +4,11 @@
 
 .cv-page-main {
     padding: 3rem 1.5rem 6rem;
-    background: oklch(88% 0.01 75);
+    background: oklch(93% 0 0);
 }
 
 [data-theme="dark"] .cv-page-main {
-    background: oklch(9% 0.01 55);
+    background: oklch(8% 0 0);
 }
 
 /* ── Card wrapper ────────────────────────── */
@@ -26,7 +26,7 @@
 }
 
 [data-theme="dark"] .cv-card {
-    background: oklch(16% 0.009 58);
+    background: oklch(16.5% 0 0);
     box-shadow: 0 4px 48px oklch(0% 0 0 / 0.6);
 }
 
@@ -43,8 +43,8 @@
 }
 
 [data-theme="dark"] .cv-header {
-    background: oklch(14% 0.01 58);
-    border-bottom-color: oklch(30% 0.01 58);
+    background: oklch(15% 0 0);
+    border-bottom-color: oklch(30% 0 0);
 }
 
 .cv-header__identity {
@@ -115,32 +115,22 @@
     margin-top: 1rem;
     padding: 0.32rem 0.85rem 0.32rem 0.65rem;
     border-radius: 999px;
-    border: 1px solid oklch(52% 0.18 145 / 0.3);
-    background: oklch(52% 0.18 145 / 0.06);
-    color: oklch(40% 0.18 145);
+    border: 1px solid color-mix(in oklch, var(--accent) 30%, transparent);
+    background: color-mix(in oklch, var(--accent) 6%, transparent);
+    color: var(--accent);
     font-family: var(--font-sans);
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.04em;
 }
 
-[data-theme="dark"] .cv-availability {
-    color: oklch(70% 0.18 145);
-    background: oklch(52% 0.18 145 / 0.1);
-    border-color: oklch(52% 0.18 145 / 0.28);
-}
-
 .cv-availability__dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: oklch(50% 0.18 145);
+    background: var(--accent);
     flex-shrink: 0;
     animation: pulse-dot 2.5s ease-in-out infinite;
-}
-
-[data-theme="dark"] .cv-availability__dot {
-    background: oklch(68% 0.18 145);
 }
 
 @keyframes pulse-dot {
@@ -181,8 +171,8 @@
 }
 
 [data-theme="dark"] .cv-sidebar {
-    background: oklch(14.5% 0.009 58);
-    border-right-color: oklch(28% 0.01 58);
+    background: oklch(15% 0 0);
+    border-right-color: oklch(28% 0 0);
 }
 
 .cv-main {
@@ -250,7 +240,7 @@
 }
 
 [data-theme="dark"] .exp-item {
-    background: oklch(18% 0.009 58);
+    background: oklch(18% 0 0);
 }
 
 .exp-item:last-child {
@@ -273,13 +263,13 @@
     align-items: flex-start;
     gap: 1rem;
     padding: 1rem 1.35rem 0.85rem;
-    background: oklch(97% 0.004 75);
+    background: oklch(97% 0 0);
     border-bottom: 1px solid var(--border);
 }
 
 [data-theme="dark"] .exp-item__card-header {
-    background: oklch(21% 0.01 58);
-    border-bottom-color: oklch(28% 0.01 58);
+    background: oklch(21% 0 0);
+    border-bottom-color: oklch(28% 0 0);
 }
 
 .exp-item__identity {
@@ -390,11 +380,11 @@
 .skill-chip:hover {
     border-color: var(--accent);
     color: var(--accent);
-    background: oklch(54% 0.19 47 / 0.05);
+    background: color-mix(in oklch, var(--accent) 6%, transparent);
 }
 
 [data-theme="dark"] .skill-chip:hover {
-    background: oklch(72% 0.17 52 / 0.08);
+    background: color-mix(in oklch, var(--accent) 10%, transparent);
 }
 
 /* ── Contact ─────────────────────────────── */
@@ -428,7 +418,7 @@
     padding: 0.6rem 1.4rem;
     border-radius: 4px;
     background: var(--accent);
-    color: oklch(98% 0.005 80) !important;
+    color: oklch(98.5% 0 0) !important;
     font-family: var(--font-sans) !important;
     font-size: 0.8rem;
     font-weight: 600;
@@ -496,7 +486,7 @@
     }
 
     [data-theme="dark"] .cv-sidebar {
-        border-bottom-color: oklch(28% 0.01 58);
+        border-bottom-color: oklch(28% 0 0);
     }
 
     .cv-main {
@@ -536,7 +526,7 @@
     }
 
     [data-theme="dark"] .cv-page-main {
-        background: oklch(9% 0.01 55);
+        background: oklch(8% 0 0);
     }
 
     .cv-card {

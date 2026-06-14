@@ -246,6 +246,12 @@ CV_PAGE = {
         'Boulder Media',
         'GameCityKajaani',
     ],
+    'studio_strip': ['Disney', 'Blizzard', 'DNEG', 'Boulder Media'],
+    'selected_credits': [
+        {'title': 'Overwatch 2', 'studio': 'Blizzard Entertainment'},
+        {'title': 'My Little Pony: A New Generation', 'studio': 'Boulder Media'},
+        {'title': 'Garfield', 'studio': 'DNEG'},
+    ],
     'core_skills': [
         'Python',
         'Linux',

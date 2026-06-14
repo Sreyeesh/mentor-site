@@ -20,6 +20,10 @@
                 <p class="cv-summary">{{ cv.summary }}</p>
             </section>
 
+            <p class="cv-studios" aria-label="Studios worked with">
+                {% for studio in cv.studio_strip %}<span>{{ studio }}</span>{% endfor %}
+            </p>
+
             <div class="cv-hero__status">
                 <span class="cv-availability">
                     <span class="cv-availability__dot" aria-hidden="true"></span>
@@ -79,6 +83,19 @@
         {% endfor %}
     </section>
 
+    <!-- ── Selected credits: shipped titles ── -->
+    <section id="credits" class="cv-section" aria-labelledby="credits-label">
+        <h2 id="credits-label" class="cv-heading">Selected credits</h2>
+        <ul class="credit-list">
+            {% for credit in cv.selected_credits %}
+            <li class="credit-item">
+                <span class="credit-item__title">{{ credit.title }}</span>
+                <span class="credit-item__studio">{{ credit.studio }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
     <!-- ── Skills: wide band of grouped chips ── -->
     <section id="skills" class="cv-section" aria-labelledby="skills-label">
         <h2 id="skills-label" class="cv-heading">Skills</h2>
@@ -95,6 +112,20 @@
             </div>
             {% endfor %}
         </div>
+    </section>
+
+    <!-- ── Education ── -->
+    <section id="education" class="cv-section" aria-labelledby="edu-label">
+        <h2 id="edu-label" class="cv-heading">Education</h2>
+        {% for entry in cv.education %}
+        <div class="edu-item">
+            <span class="edu-item__period">{{ entry.period }}</span>
+            <p class="edu-item__body">
+                <span class="edu-item__school">{{ entry.school }}</span>
+                <span class="edu-item__credential">{{ entry.credential }}</span>
+            </p>
+        </div>
+        {% endfor %}
     </section>
 
     <!-- ── Contact: closing CTA ── -->

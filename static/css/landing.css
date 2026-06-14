@@ -636,7 +636,9 @@
         gap: 1.25rem;
     }
 
-    .credit-item {
+    /* Only credits with cover art use the two-column thumbnail layout;
+       text-only credits keep the default stacked flex layout. */
+    .credit-item:has(.credit-item__art) {
         display: grid;
         grid-template-columns: 96px 1fr;
         grid-template-rows: auto auto;
@@ -652,11 +654,11 @@
         margin-bottom: 0;
     }
 
-    .credit-item__title {
+    .credit-item:has(.credit-item__art) .credit-item__title {
         align-self: end;
     }
 
-    .credit-item__studio {
+    .credit-item:has(.credit-item__art) .credit-item__studio {
         align-self: start;
     }
 

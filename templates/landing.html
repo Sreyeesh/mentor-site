@@ -103,6 +103,12 @@
         <ul class="credit-list">
             {% for credit in cv.selected_credits %}
             <li class="credit-item">
+                {% if credit.image %}
+                <img class="credit-item__art"
+                     src="{{ url_for('static', filename=credit.image) }}"
+                     alt="{{ credit.title }} cover art"
+                     loading="lazy" width="480" height="720">
+                {% endif %}
                 <span class="credit-item__title">{{ credit.title }}</span>
                 <span class="credit-item__studio">{{ credit.studio }}</span>
             </li>

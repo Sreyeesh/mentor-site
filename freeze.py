@@ -3,7 +3,6 @@ import shutil
 from pathlib import Path
 
 from app import SITE_CONFIG, app
-from blog import load_posts
 
 
 BUILD_DIR = Path('build')
@@ -40,16 +39,16 @@ def build_static_site() -> None:
     if Path('static').exists():
         shutil.copytree('static', BUILD_DIR / 'static')
 
-    posts = load_posts()
     original_base_path = app.config.get('SITE_BASE_PATH', '')
     app.config['SITE_BASE_PATH'] = normalized_base_path
 
     with app.app_context():
         with app.test_client() as client:
+            # Holding period: publish only the homepage holding page. The CV,
+            # about, and blog routes still exist in the app but are not frozen,
+            # so they are not live while the product landing is built.
             static_routes = [
                 ('/', BUILD_DIR / 'index.html'),
-                ('/blog/', BUILD_DIR / 'blog' / 'index.html'),
-                ('/about/', BUILD_DIR / 'about' / 'index.html'),
             ]
             for route, destination in static_routes:
                 response = client.get(route, follow_redirects=True)
@@ -57,15 +56,6 @@ def build_static_site() -> None:
                     raise RuntimeError(f'Failed to render {route}.')
                 write_file(destination, response.data.decode('utf-8'))
                 print(f"✅ Generated {destination.relative_to(BUILD_DIR)}")
-
-            for post in posts:
-                slug_route = f"/blog/{post['slug']}/"
-                response = client.get(slug_route)
-                if response.status_code != 200:
-                    raise RuntimeError(f'Failed to render {slug_route}.')
-                output_path = BUILD_DIR / 'blog' / post['slug'] / 'index.html'
-                write_file(output_path, response.data.decode('utf-8'))
-                print(f"✅ Generated blog/{post['slug']}/index.html")
 
     write_file(BUILD_DIR / '.nojekyll', '')
     app.config['SITE_BASE_PATH'] = original_base_path

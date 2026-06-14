@@ -220,7 +220,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     skillsObserver.disconnect();
                 }
             });
-        }, { threshold: 0.2 });
+        // threshold 0: reveal as soon as any part enters the viewport, so a
+        // section taller than the viewport can never stay stuck hidden.
+        }, { threshold: 0 });
 
         skillsObserver.observe(skillsSection);
     }

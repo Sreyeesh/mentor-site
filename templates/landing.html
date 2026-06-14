@@ -66,7 +66,7 @@
     <!-- ── Experience: full-width timeline ── -->
     <section id="experience" class="cv-section" aria-labelledby="exp-label">
         <h2 id="exp-label" class="cv-heading">Experience</h2>
-        {% for item in cv.experience %}
+        {% for item in cv.experience[:4] %}
         <article class="exp-item">
             <div class="exp-item__when">
                 <span class="exp-item__period">{{ item.period }}</span>
@@ -81,6 +81,20 @@
             </div>
         </article>
         {% endfor %}
+
+        {% if cv.experience|length > 4 %}
+        <h3 class="cv-subheading">Earlier roles</h3>
+        {% for item in cv.experience[4:] %}
+        <div class="exp-brief">
+            <span class="exp-brief__period">{{ item.period }}</span>
+            <p class="exp-brief__line">
+                <span class="exp-brief__company">{{ item.company }}</span>
+                <span class="exp-brief__role">{{ item.role }}</span>
+                <span class="exp-brief__location">{{ item.location }}</span>
+            </p>
+        </div>
+        {% endfor %}
+        {% endif %}
     </section>
 
     <!-- ── Selected credits: shipped titles ── -->

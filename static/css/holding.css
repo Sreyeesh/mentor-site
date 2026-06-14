@@ -95,24 +95,6 @@ html, body {
   50%      { transform: translate(30px, -50px) scale(1.2); opacity: 1; }
 }
 
-/* ---- Scanline sweep ---- */
-.scanline {
-  position: fixed;
-  left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, rgba(79,142,247,0.15) 40%, rgba(79,142,247,0.3) 50%, rgba(79,142,247,0.15) 60%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
-  animation: scanSweep 8s ease-in-out infinite;
-}
-
-@keyframes scanSweep {
-  0%   { top: -2px; opacity: 0; }
-  5%   { opacity: 1; }
-  95%  { opacity: 1; }
-  100% { top: 100vh; opacity: 0; }
-}
-
 /* ---- Particle canvas ---- */
 #particles {
   position: fixed;
@@ -449,7 +431,7 @@ html, body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fu, .dot, .orb, .grid-bg, .scanline, .watermark,
+  .fu, .dot, .orb, .grid-bg, .watermark,
   .eyebrow-line, .h-rule, .tag, .headline .line-inner {
     animation: none;
     opacity: 1;

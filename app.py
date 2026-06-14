@@ -305,10 +305,12 @@ CV_PAGE = {
 
 @app.route('/')
 def home():
+    # Holding page while the Toucan Studios product landing is built.
+    # The CV landing (landing.html / CV_PAGE) is retained for the upcoming
+    # redesign but is not served or frozen during the holding period.
     return render_template(
-        'landing.html',
-        **build_page_context(page_slug='home', main_class='cv-page-main'),
-        cv=CV_PAGE,
+        'holding.html',
+        **build_page_context(page_slug='home'),
     )
 
 

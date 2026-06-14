@@ -2,31 +2,22 @@ from blog import load_posts
 
 
 def test_home_page(client):
-    """Home page loads the CV site."""
+    """Home page serves the Toucan Studios holding page."""
     response = client.get('/')
     assert response.status_code == 200
-    assert b'Sreyeesh Garimella' in response.data
+    assert b'Toucan Studios' in response.data
 
 
-def test_home_page_content(client):
-    """CV page shows the real positioning and core CV content."""
+def test_home_page_is_holding_page(client):
+    """During the build period the homepage is the holding page, not the CV."""
     response = client.get('/')
-    assert b'Sreyeesh Garimella' in response.data
-    assert b'Pipeline TD' in response.data
-    assert b'Python tooling' in response.data
-    assert b'DNEG' in response.data
-    assert b'Blizzard Entertainment' in response.data
-    assert b'Walt Disney Animation Studios' in response.data
-    assert b'1:1 game development mentoring' not in response.data
-    assert b'Tally' not in response.data
-
-
-def test_home_page_ignores_legacy_coming_soon_flag(client, monkeypatch):
-    """The old coming-soon gate must not replace the CV homepage."""
-    monkeypatch.setenv('SITE_COMING_SOON', 'true')
-    response = client.get('/')
-    assert b'Pipeline TD and Software Developer' in response.data
-    assert b'Get launch updates' not in response.data
+    body = response.data
+    assert b'Launching soon' in body
+    assert b'game dev' in body
+    assert b'1-on-1 Mentoring' in body
+    # The CV must no longer be live on the homepage.
+    assert b'Sreyeesh Garimella' not in body
+    assert b'DNEG' not in body
 
 
 def test_home_page_has_og_image(client):

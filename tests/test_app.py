@@ -38,6 +38,34 @@ def test_subscribe_rejects_invalid_email(client, tmp_path, monkeypatch):
     assert not subs.exists()
 
 
+def test_subscribe_defangs_csv_formula_injection(client, tmp_path, monkeypatch):
+    """An email starting with a formula char is stored as text, not a formula."""
+    subs = tmp_path / 'subscribers.csv'
+    monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
+
+    # '=cmd@x.co' passes the shape check but is a spreadsheet-injection payload.
+    response = client.post('/subscribe', data={'email': '=cmd@x.co'})
+
+    assert response.status_code == 302
+    assert 'subscribed=ok' in response.headers['Location']
+    stored = subs.read_text()
+    assert "'=cmd@x.co" in stored  # quote-prefixed so it is treated as text
+    assert ',=cmd@x.co' not in stored  # never written as a bare formula
+
+
+def test_subscribe_rejects_overlong_email(client, tmp_path, monkeypatch):
+    """An address past the RFC length cap is rejected and nothing is written."""
+    subs = tmp_path / 'subscribers.csv'
+    monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
+
+    huge = ('a' * 250) + '@x.co'  # > 254 chars
+    response = client.post('/subscribe', data={'email': huge})
+
+    assert response.status_code == 302
+    assert 'subscribed=invalid' in response.headers['Location']
+    assert not subs.exists()
+
+
 def test_subscribe_confirmation_renders_on_home(client):
     """The home page shows the success message after a redirect."""
     response = client.get('/?subscribed=ok')

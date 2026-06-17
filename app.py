@@ -319,6 +319,10 @@ CV_PAGE = {
 # reject obvious junk before it lands in the file.
 EMAIL_RE = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
 
+# RFC 5321 caps an email address at 254 characters; anything longer is junk and
+# would only bloat the file.
+MAX_EMAIL_LEN = 254
+
 
 def _subscribers_path() -> str:
     """Where waitlist emails are stored. Override with SUBSCRIBERS_FILE."""
@@ -326,6 +330,18 @@ def _subscribers_path() -> str:
         'SUBSCRIBERS_FILE',
         os.path.join(app.instance_path, 'subscribers.csv'),
     )
+
+
+def _csv_safe(value: str) -> str:
+    """Defang spreadsheet formula injection.
+
+    A cell beginning with =, +, -, @, or a tab is interpreted as a formula by
+    Excel/Sheets/LibreOffice. A crafted email like ``=HYPERLINK(...)@x.co``
+    passes the shape check, so prefix a single quote to force it to be text.
+    """
+    if value and value[0] in ('=', '+', '-', '@', '\t', '\r'):
+        return "'" + value
+    return value
 
 
 @app.route('/')
@@ -351,7 +367,7 @@ def subscribe():
     build, where there is no server to receive the POST.
     """
     email = request.form.get('email', '').strip().lower()
-    if not EMAIL_RE.match(email):
+    if len(email) > MAX_EMAIL_LEN or not EMAIL_RE.match(email):
         return redirect(url_for('home', subscribed='invalid', _anchor='signup'))
 
     path = _subscribers_path()
@@ -366,7 +382,7 @@ def subscribe():
     fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
     with os.fdopen(fd, 'a', newline='', encoding='utf-8') as handle:
         csv.writer(handle).writerow(
-            [datetime.now(timezone.utc).isoformat(), email]
+            [datetime.now(timezone.utc).isoformat(), _csv_safe(email)]
         )
     os.chmod(path, 0o600)
 

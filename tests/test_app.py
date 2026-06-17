@@ -45,15 +45,16 @@ def test_subscribe_confirmation_renders_on_home(client):
 
 
 def test_home_page_is_holding_page(client):
-    """During the build period the homepage is the holding page, not the CV."""
+    """The homepage is the mentoring waitlist landing, not the CV/portfolio."""
     response = client.get('/')
     body = response.data
     assert b'Launching soon' in body
     assert b'game dev' in body
     assert b'1-on-1 Mentoring' in body
-    # The CV must no longer be live on the homepage.
-    assert b'Sreyeesh Garimella' not in body
-    assert b'DNEG' not in body
+    assert b'waitlist' in body
+    # It must not be the old CV/portfolio homepage.
+    assert b'Available for work' not in body
+    assert b'Selected credits' not in body
 
 
 def test_home_page_has_og_image(client):

@@ -6,37 +6,41 @@ brand
 
 ## Users
 
-Primary: VFX and animation studio hiring managers, pipeline supervisors, and technical directors evaluating a Pipeline TD or Production Technology Specialist candidate. They've been sent this URL and are scanning quickly for signal — real credits, technical depth, communication quality. They know what a pipeline person should know and will notice the difference between someone who sounds competent and someone who is.
+Primary: aspiring game and VFX developers, students, and early-career technical artists who want 1-on-1 mentoring. Many come from the weekly GameCity Kajaani sessions or similar game-dev communities. They are learning Python, version control, pipelines, and real production workflow, and they are evaluating whether this mentor is someone who has actually shipped games and films, speaks their language, and can get them unstuck. They scan fast and they can smell a sales funnel.
 
-Secondary: aspiring animation and game developers considering 1-on-1 mentoring. Less urgent now — the site is actively shifting toward job-hunting mode.
+Secondary: schools, programs, and community organizers who might refer or fund mentees. The founder's studio credits matter to them as a trust signal.
 
 ## Product Purpose
 
-Establish Sreyeesh Garimella as a credible, senior-level Pipeline TD candidate with serious production experience across Disney, Blizzard, DNEG, and others. Surface that experience clearly and let it do the persuading. The site should feel like it was built by someone who cares about craft and organization — which is exactly what hiring managers want in a pipeline person.
+This is the product landing for Toucan Studios, whose flagship offering is technical mentoring for game and VFX developers. The site exists to turn an interested visitor into a mentee: it leads with the mentoring offer, explains how it works, and uses real production credits (DNEG, Blizzard, Boulder Media, IMDb) plus weekly GameCity Kajaani mentoring as proof rather than as the headline.
 
-Success: a studio contact views the site and immediately understands what Sreyeesh does, what he has shipped, and why they should reach out.
+Success: a developer lands on the page, immediately understands what the mentoring is and who teaches it, trusts that the mentor has real shipped experience, and reaches out through the intake form or by email.
+
+Conversion is a request-a-session intake form (Formspree today, an owned Flask endpoint later) plus a direct email path. There is no scheduler and no fake scarcity.
 
 ## Brand Personality
 
-Quiet and precise. Confident without selling. Expertise proven through clarity, not claims. The kind of professional presence that doesn't need to convince you — the credits and consistency do the work.
+Energetic and game-native. This is a mentor who builds games and pipelines and clearly enjoys it, not a corporate training service. The voice is direct, technical, and encouraging, the way a good senior dev talks to a junior they actually want to see succeed. Confident because the work backs it up, never salesy.
 
-Three words: **precise, experienced, legible**
+Three words: **energetic, technical, approachable**
+
+The energy lives in typography, color, and purposeful motion, not in decorative effects. Bold and game-flavored, but disciplined.
 
 ## Anti-references
 
-- **Generic SaaS landing page:** hero metric cards, gradient text, identical icon grids, fake urgency banners ("Limited Availability"), conversion-optimized copy. The current index.html has this problem.
-- **Over-designed portfolio:** flashy scroll animations, WebGL backgrounds, cursor effects, parallax. Trying too hard, distracting from the work.
-- **Resume dumped on a page:** just a PDF translated to HTML with no organization or personality — sterile and forgettable.
-- **Creative agency aesthetic:** full-bleed imagery, big serif headlines, art-directed editorial layout. More for visual designers than Pipeline TDs.
+- **Generic SaaS landing page:** hero metric cards, gradient text, identical icon grids, fake urgency banners, conversion-optimized copy. Repels the exact audience it targets.
+- **Over-designed showpiece:** heavy WebGL, parallax, cursor effects, distracting scroll choreography, decorative particle fields and orbs for their own sake. Energy must come from craft, not gimmicks.
+- **Resume dumped on a page:** CV sections stacked with no narrative, hierarchy, or warmth. This is the current site's core problem and the thing the redesign must fix.
+- **Bootcamp or course-seller funnel:** aggressive "10x your skills" energy, countdown timers, testimonial-stuffed sales pages, pricing-tier pressure.
 
 ## Design Principles
 
-1. **Show, don't sell.** No urgency copy, no conversion tricks, no "Limited Availability" banners. Real credits at real studios persuade hiring managers; sales tactics repel them.
-2. **Expertise through clarity.** Organized, scannable information hierarchy signals technical competence. A Pipeline TD who can write clear docs and structure a system clearly is exactly what studios want.
-3. **Confidence without performance.** The person is the signal. No hero animations, no decorative chrome. Design should recede so the work comes forward.
-4. **Pipeline TD aesthetic.** The site should look like something a thoughtful technical person built — systematic, functional, uncluttered. Not a developer's default Bootstrap page, but not an art director's showpiece either.
-5. **Content before chrome.** Typography, spacing, and hierarchy matter more than color, illustration, or motion.
+1. **Offer first, proof second.** The mentoring value proposition leads. Studio credits and GameCity Kajaani mentoring are credibility that supports the offer, never the headline.
+2. **Speak the audience's language.** Game-dev and pipeline vocabulary, real tools, concrete outcomes. A developer should feel this was built by someone who does the work.
+3. **Energy through craft, not chrome.** Boldness comes from type scale, color commitment, and one or two purposeful motion moments, not from particle fields, parallax, or cursor tricks.
+4. **A landing, not a list.** Every section advances a narrative toward "request a session." No stacked-resume sections that just present data with no throughline.
+5. **Earn the click honestly.** No urgency, no scarcity, no funnel pressure. Clear value and a low-friction way to reach out.
 
 ## Accessibility & Inclusion
 
-WCAG AA minimum. Reduced motion already respected in base.css. Dark mode supported. Standard contrast ratios for body text and interactive elements.
+WCAG AA minimum. Respect `prefers-reduced-motion` (already honored in base.css) so all energetic motion has a calm fallback. Dark mode supported. Maintain contrast ratios for body text and interactive elements, especially for any bright accent color on dark surfaces.

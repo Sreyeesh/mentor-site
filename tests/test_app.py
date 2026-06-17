@@ -8,16 +8,142 @@ def test_home_page(client):
     assert b'Toucan Studios' in response.data
 
 
+def test_subscribe_stores_email(client, tmp_path, monkeypatch):
+    """A valid email is appended to the subscribers file with a timestamp."""
+    subs = tmp_path / 'subscribers.csv'
+    monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
+
+    response = client.post(
+        '/subscribe', data={'email': 'Dev@Studio.com', 'consent': 'yes'}
+    )
+
+    assert response.status_code == 302
+    assert 'subscribed=ok' in response.headers['Location']
+    assert subs.exists()
+    stored = subs.read_text()
+    assert 'dev@studio.com' in stored  # normalised to lowercase
+    assert 'consent' in stored  # consent recorded with the signup
+
+    # Personal data file must be owner read/write only (rw-------).
+    import stat
+    assert stat.S_IMODE(subs.stat().st_mode) == 0o600
+
+
+def test_subscribe_requires_consent(client, tmp_path, monkeypatch):
+    """A valid email without consent is rejected and nothing is written."""
+    subs = tmp_path / 'subscribers.csv'
+    monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
+
+    response = client.post('/subscribe', data={'email': 'dev@studio.com'})
+
+    assert response.status_code == 302
+    assert 'subscribed=invalid' in response.headers['Location']
+    assert not subs.exists()
+
+
+def test_subscribe_rejects_invalid_email(client, tmp_path, monkeypatch):
+    """An invalid email is rejected and nothing is written."""
+    subs = tmp_path / 'subscribers.csv'
+    monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
+
+    response = client.post(
+        '/subscribe', data={'email': 'not-an-email', 'consent': 'yes'}
+    )
+
+    assert response.status_code == 302
+    assert 'subscribed=invalid' in response.headers['Location']
+    assert not subs.exists()
+
+
+def test_subscribe_defangs_csv_formula_injection(client, tmp_path, monkeypatch):
+    """An email starting with a formula char is stored as text, not a formula."""
+    subs = tmp_path / 'subscribers.csv'
+    monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
+
+    # '=cmd@x.co' passes the shape check but is a spreadsheet-injection payload.
+    response = client.post(
+        '/subscribe', data={'email': '=cmd@x.co', 'consent': 'yes'}
+    )
+
+    assert response.status_code == 302
+    assert 'subscribed=ok' in response.headers['Location']
+    stored = subs.read_text()
+    assert "'=cmd@x.co" in stored  # quote-prefixed so it is treated as text
+    assert ',=cmd@x.co' not in stored  # never written as a bare formula
+
+
+def test_subscribe_rejects_overlong_email(client, tmp_path, monkeypatch):
+    """An address past the RFC length cap is rejected and nothing is written."""
+    subs = tmp_path / 'subscribers.csv'
+    monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
+
+    huge = ('a' * 250) + '@x.co'  # > 254 chars
+    response = client.post(
+        '/subscribe', data={'email': huge, 'consent': 'yes'}
+    )
+
+    assert response.status_code == 302
+    assert 'subscribed=invalid' in response.headers['Location']
+    assert not subs.exists()
+
+
+def test_privacy_page_renders(client):
+    """The privacy notice page is served and covers consent + rights."""
+    response = client.get('/privacy/')
+    assert response.status_code == 200
+    body = response.data
+    assert b'privacy notice' in body.lower()
+    assert b'consent' in body.lower()
+    assert b'Formspree' in body
+
+
+def test_waitlist_form_has_consent_and_privacy_link(client):
+    """The signup form requires consent and links the privacy notice."""
+    body = client.get('/').data
+    assert b'name="consent"' in body
+    assert b'/privacy/' in body
+
+
+def test_subscribe_confirmation_renders_on_home(client):
+    """The home page shows the success message after a redirect."""
+    response = client.get('/?subscribed=ok')
+    assert b"You're on the list" in response.data
+
+
+def test_waitlist_posts_to_formspree_by_default(client):
+    """The waitlist form posts to the configured Formspree endpoint."""
+    body = client.get('/').data
+    assert b'https://formspree.io/f/xdavvlor' in body
+    assert b'data-formspree' in body
+
+
+def test_waitlist_falls_back_to_flask_route_when_endpoint_empty(monkeypatch):
+    """An empty FORMSPREE_WAITLIST_ENDPOINT reverts to the Flask /subscribe route."""
+    import importlib
+
+    import app as app_module
+
+    monkeypatch.setenv('FORMSPREE_WAITLIST_ENDPOINT', '')
+    importlib.reload(app_module)
+    app_module.app.config.update(TESTING=True)
+    client = app_module.app.test_client()
+
+    body = client.get('/').data
+    assert b'action="/subscribe"' in body
+    assert b'data-formspree' not in body
+
+
 def test_home_page_is_holding_page(client):
-    """During the build period the homepage is the holding page, not the CV."""
+    """The homepage is the mentoring waitlist landing, not the CV/portfolio."""
     response = client.get('/')
     body = response.data
     assert b'Launching soon' in body
     assert b'game dev' in body
     assert b'1-on-1 Mentoring' in body
-    # The CV must no longer be live on the homepage.
-    assert b'Sreyeesh Garimella' not in body
-    assert b'DNEG' not in body
+    assert b'waitlist' in body
+    # It must not be the old CV/portfolio homepage.
+    assert b'Available for work' not in body
+    assert b'Selected credits' not in body
 
 
 def test_home_page_has_og_image(client):

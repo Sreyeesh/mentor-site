@@ -150,6 +150,10 @@
                    aria-label="Your email address" />
             <button class="btn-glow" type="submit">Notify me</button>
           </div>
+          <label class="signup-consent">
+            <input type="checkbox" name="consent" value="yes" required />
+            <span>I agree to be emailed once when mentoring launches, and to {{ config.brand_name }} storing my email for that purpose. See the <a href="{{ url_for('privacy') }}">privacy notice</a>.</span>
+          </label>
           <p class="signup-note">One email at launch. Unsubscribe anytime.</p>
           <!-- JS writes the AJAX result here; the block below is the no-JS / Flask fallback. -->
           <p class="signup-status" role="status" aria-live="polite" data-signup-status hidden></p>

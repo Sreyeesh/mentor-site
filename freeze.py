@@ -49,6 +49,7 @@ def build_static_site() -> None:
             # so they are not live while the product landing is built.
             static_routes = [
                 ('/', BUILD_DIR / 'index.html'),
+                ('/privacy/', BUILD_DIR / 'privacy' / 'index.html'),
             ]
             for route, destination in static_routes:
                 response = client.get(route, follow_redirects=True)

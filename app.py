@@ -432,7 +432,9 @@ def subscribe():
     build, where there is no server to receive the POST.
     """
     email = request.form.get('email', '').strip().lower()
-    if len(email) > MAX_EMAIL_LEN or not EMAIL_RE.match(email):
+    # GDPR: storing the email needs explicit consent and a valid address.
+    consent = request.form.get('consent')
+    if not consent or len(email) > MAX_EMAIL_LEN or not EMAIL_RE.match(email):
         return redirect(url_for('home', subscribed='invalid', _anchor='signup'))
 
     path = _subscribers_path()
@@ -444,14 +446,24 @@ def subscribe():
     # Open with 0o600 at creation so the file is never briefly world-readable.
     # os.open's mode is masked by umask (can only drop bits); the chmod after
     # guarantees 0o600 even if the file already existed with looser perms.
+    # Record the consent timestamp alongside the email as proof of consent.
     fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
     with os.fdopen(fd, 'a', newline='', encoding='utf-8') as handle:
         csv.writer(handle).writerow(
-            [datetime.now(timezone.utc).isoformat(), _csv_safe(email)]
+            [datetime.now(timezone.utc).isoformat(), _csv_safe(email), 'consent']
         )
     os.chmod(path, 0o600)
 
     return redirect(url_for('home', subscribed='ok', _anchor='signup'))
+
+
+@app.route('/privacy/')
+def privacy():
+    """Standalone privacy notice for the waitlist signup (frozen for Pages)."""
+    return render_template(
+        'privacy.html',
+        **build_page_context(page_slug='privacy'),
+    )
 
 
 @app.route('/blog/')

@@ -474,6 +474,29 @@ body {
   box-shadow: 0 0 0 3px rgba(16,185,129,0.2);
 }
 
+/* Consent checkbox — left-aligned even though the form is centred. */
+.signup-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  text-align: left;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.signup-consent input {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.signup-consent a { color: var(--accent-2); }
+
 .signup-note {
   margin-top: 0.85rem;
   font-size: 0.82rem;
@@ -499,6 +522,29 @@ body {
   opacity: 0;
   pointer-events: none;
 }
+
+/* ── Legal / prose (privacy notice) ── */
+.legal { max-width: 680px; }
+.legal .section-title { max-width: none; margin: 0.4rem 0 1.5rem; }
+
+.legal p {
+  margin-bottom: 1.1rem;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.legal h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--bright);
+  margin: 2rem 0 0.6rem;
+}
+
+.legal a { color: var(--accent-2); }
+
+.legal-meta { font-size: 0.85rem; color: var(--muted); }
 
 /* ── Footer ── */
 .footer {

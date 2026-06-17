@@ -13,17 +13,32 @@ def test_subscribe_stores_email(client, tmp_path, monkeypatch):
     subs = tmp_path / 'subscribers.csv'
     monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
 
-    response = client.post('/subscribe', data={'email': 'Dev@Studio.com'})
+    response = client.post(
+        '/subscribe', data={'email': 'Dev@Studio.com', 'consent': 'yes'}
+    )
 
     assert response.status_code == 302
     assert 'subscribed=ok' in response.headers['Location']
     assert subs.exists()
     stored = subs.read_text()
     assert 'dev@studio.com' in stored  # normalised to lowercase
+    assert 'consent' in stored  # consent recorded with the signup
 
     # Personal data file must be owner read/write only (rw-------).
     import stat
     assert stat.S_IMODE(subs.stat().st_mode) == 0o600
+
+
+def test_subscribe_requires_consent(client, tmp_path, monkeypatch):
+    """A valid email without consent is rejected and nothing is written."""
+    subs = tmp_path / 'subscribers.csv'
+    monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
+
+    response = client.post('/subscribe', data={'email': 'dev@studio.com'})
+
+    assert response.status_code == 302
+    assert 'subscribed=invalid' in response.headers['Location']
+    assert not subs.exists()
 
 
 def test_subscribe_rejects_invalid_email(client, tmp_path, monkeypatch):
@@ -31,7 +46,9 @@ def test_subscribe_rejects_invalid_email(client, tmp_path, monkeypatch):
     subs = tmp_path / 'subscribers.csv'
     monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
 
-    response = client.post('/subscribe', data={'email': 'not-an-email'})
+    response = client.post(
+        '/subscribe', data={'email': 'not-an-email', 'consent': 'yes'}
+    )
 
     assert response.status_code == 302
     assert 'subscribed=invalid' in response.headers['Location']
@@ -44,7 +61,9 @@ def test_subscribe_defangs_csv_formula_injection(client, tmp_path, monkeypatch):
     monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
 
     # '=cmd@x.co' passes the shape check but is a spreadsheet-injection payload.
-    response = client.post('/subscribe', data={'email': '=cmd@x.co'})
+    response = client.post(
+        '/subscribe', data={'email': '=cmd@x.co', 'consent': 'yes'}
+    )
 
     assert response.status_code == 302
     assert 'subscribed=ok' in response.headers['Location']
@@ -59,11 +78,30 @@ def test_subscribe_rejects_overlong_email(client, tmp_path, monkeypatch):
     monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
 
     huge = ('a' * 250) + '@x.co'  # > 254 chars
-    response = client.post('/subscribe', data={'email': huge})
+    response = client.post(
+        '/subscribe', data={'email': huge, 'consent': 'yes'}
+    )
 
     assert response.status_code == 302
     assert 'subscribed=invalid' in response.headers['Location']
     assert not subs.exists()
+
+
+def test_privacy_page_renders(client):
+    """The privacy notice page is served and covers consent + rights."""
+    response = client.get('/privacy/')
+    assert response.status_code == 200
+    body = response.data
+    assert b'privacy notice' in body.lower()
+    assert b'consent' in body.lower()
+    assert b'Formspree' in body
+
+
+def test_waitlist_form_has_consent_and_privacy_link(client):
+    """The signup form requires consent and links the privacy notice."""
+    body = client.get('/').data
+    assert b'name="consent"' in body
+    assert b'/privacy/' in body
 
 
 def test_subscribe_confirmation_renders_on_home(client):

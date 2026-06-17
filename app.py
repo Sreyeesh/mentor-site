@@ -58,6 +58,14 @@ SITE_CONFIG = {
     'imdb_url': os.getenv('SITE_IMDB_URL', ''),
     'location': os.getenv('SITE_LOCATION', 'Estonia'),
     'launch_date': os.getenv('SITE_LAUNCH_DATE', '2026-05-31'),
+    # Formspree endpoint for the waitlist form (the live static build has no
+    # server, so the form posts here instead of the Flask /subscribe route).
+    # A Formspree form ID is public — it ships in the page HTML — so it is safe
+    # to keep as the default. Override with FORMSPREE_WAITLIST_ENDPOINT if the
+    # form ever changes.
+    'formspree_endpoint': os.getenv(
+        'FORMSPREE_WAITLIST_ENDPOINT', 'https://formspree.io/f/xdavvlor'
+    ),
 }
 
 NAV_LINKS = [

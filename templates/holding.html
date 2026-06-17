@@ -176,9 +176,19 @@
         <h2 class="section-title">Be first in line when mentoring opens.</h2>
         <p class="waitlist-sub">Join the waitlist and I'll email you once, the day it goes live. No spam.</p>
 
-        <!-- Posts to the Flask /subscribe route, which stores the email server-side.
-             Works in dev + the planned homelab; 404s on the static build (no server). -->
-        <form class="signup" id="signup" method="POST" action="{{ url_for('subscribe') }}">
+        {#
+          On the live static build there is no server, so the form posts to
+          Formspree when FORMSPREE_WAITLIST_ENDPOINT is set. In dev (or the
+          future homelab) without that env var it falls back to the Flask
+          /subscribe route. holding.js AJAX-submits when data-formspree is
+          present, so the visitor stays on the page.
+        #}
+        {% set signup_action = config.formspree_endpoint or url_for('subscribe') %}
+        <form class="signup" id="signup" method="POST" action="{{ signup_action }}"
+              {% if config.formspree_endpoint %}data-formspree{% endif %}>
+          <input type="hidden" name="_subject" value="New {{ config.brand_name }} waitlist signup" />
+          <!-- Formspree honeypot: bots fill this hidden field, humans never see it. -->
+          <input class="signup-hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <div class="signup-row">
             <input class="signup-input" type="email" name="email" inputmode="email"
                    autocomplete="email" required placeholder="you@studio.com"
@@ -186,6 +196,8 @@
             <button class="btn-glow" type="submit">Notify me</button>
           </div>
           <p class="signup-note">One email at launch. Unsubscribe anytime.</p>
+          <!-- JS writes the AJAX result here; the block below is the no-JS / Flask fallback. -->
+          <p class="signup-status" role="status" aria-live="polite" data-signup-status hidden></p>
           {% if subscribed == 'ok' %}
           <p class="signup-status is-ok" role="status">You're on the list. I'll email you at launch.</p>
           {% elif subscribed == 'invalid' %}

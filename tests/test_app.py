@@ -44,6 +44,29 @@ def test_subscribe_confirmation_renders_on_home(client):
     assert b"You're on the list" in response.data
 
 
+def test_waitlist_posts_to_formspree_by_default(client):
+    """The waitlist form posts to the configured Formspree endpoint."""
+    body = client.get('/').data
+    assert b'https://formspree.io/f/xdavvlor' in body
+    assert b'data-formspree' in body
+
+
+def test_waitlist_falls_back_to_flask_route_when_endpoint_empty(monkeypatch):
+    """An empty FORMSPREE_WAITLIST_ENDPOINT reverts to the Flask /subscribe route."""
+    import importlib
+
+    import app as app_module
+
+    monkeypatch.setenv('FORMSPREE_WAITLIST_ENDPOINT', '')
+    importlib.reload(app_module)
+    app_module.app.config.update(TESTING=True)
+    client = app_module.app.test_client()
+
+    body = client.get('/').data
+    assert b'action="/subscribe"' in body
+    assert b'data-formspree' not in body
+
+
 def test_home_page_is_holding_page(client):
     """The homepage is the mentoring waitlist landing, not the CV/portfolio."""
     response = client.get('/')

@@ -1,59 +1,74 @@
-// Toucan Studios — holding page: floating particle field.
+// Toucan Studios — holding page: reveal sections as they scroll into view.
 (function () {
-  const canvas = document.getElementById('particles');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+  const items = document.querySelectorAll('.reveal');
+  if (!items.length) return;
 
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const PARTICLE_COUNT = 55;
-  const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
-    r: Math.random() * 1.4 + 0.3,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3 - 0.1,
-    alpha: Math.random() * 0.5 + 0.1,
-    pulse: Math.random() * Math.PI * 2,
-  }));
-
-  function paint(animate) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((p) => {
-      p.pulse += 0.012;
-      const a = p.alpha * (0.6 + 0.4 * Math.sin(p.pulse));
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(79,142,247,${a})`;
-      ctx.fill();
-
-      if (!animate) return;
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < -10) p.x = canvas.width + 10;
-      if (p.x > canvas.width + 10) p.x = -10;
-      if (p.y < -10) p.y = canvas.height + 10;
-      if (p.y > canvas.height + 10) p.y = -10;
-    });
-  }
-
-  const reduceMotion = window.matchMedia
-    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (reduceMotion) {
-    // Respect the user's preference: render a single static frame.
-    paint(false);
+  // No IntersectionObserver (or reduced motion handled in CSS): just show them.
+  if (!('IntersectionObserver' in window)) {
+    items.forEach((el) => el.classList.add('is-visible'));
     return;
   }
 
-  function loop() {
-    paint(true);
-    requestAnimationFrame(loop);
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    { rootMargin: '0px 0px -10% 0px', threshold: 0.15 }
+  );
+
+  items.forEach((el) => observer.observe(el));
+})();
+
+// Toucan Studios — holding page: AJAX-submit the waitlist form to Formspree
+// so the visitor stays on the page. Without JS (or fetch) the form just does a
+// normal POST and Formspree shows its own confirmation page.
+(function () {
+  const form = document.querySelector('form[data-formspree]');
+  if (!form || !window.fetch) return;
+
+  const status = form.querySelector('[data-signup-status]');
+  const button = form.querySelector('button[type="submit"]');
+
+  function show(message, ok) {
+    if (!status) return;
+    status.textContent = message;
+    status.classList.toggle('is-ok', ok);
+    status.classList.toggle('is-err', !ok);
+    status.hidden = false;
   }
-  requestAnimationFrame(loop);
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (button) button.disabled = true;
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+
+      if (response.ok) {
+        // Leave the button disabled so a happy visitor can't double-submit.
+        form.reset();
+        if (button) button.textContent = 'Done';
+        show("You're on the list. I'll email you at launch.", true);
+        return;
+      }
+
+      // Formspree returns 422 with a JSON `errors` array for bad input.
+      const data = await response.json().catch(() => null);
+      const detail = data && data.errors && data.errors[0] && data.errors[0].message;
+      show(detail || 'That email didn’t look right. Mind trying again?', false);
+      if (button) button.disabled = false;
+    } catch (err) {
+      show('Something went wrong. Please email me instead.', false);
+      if (button) button.disabled = false;
+    }
+  });
 })();

@@ -50,3 +50,5 @@ leads.json
 static/uploads/
 instance/newsletter.db
 instance/tutoring.sqlite
+instance/subscribers.csv
+subscribers.csv

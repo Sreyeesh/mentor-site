@@ -8,6 +8,42 @@ def test_home_page(client):
     assert b'Toucan Studios' in response.data
 
 
+def test_subscribe_stores_email(client, tmp_path, monkeypatch):
+    """A valid email is appended to the subscribers file with a timestamp."""
+    subs = tmp_path / 'subscribers.csv'
+    monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
+
+    response = client.post('/subscribe', data={'email': 'Dev@Studio.com'})
+
+    assert response.status_code == 302
+    assert 'subscribed=ok' in response.headers['Location']
+    assert subs.exists()
+    stored = subs.read_text()
+    assert 'dev@studio.com' in stored  # normalised to lowercase
+
+    # Personal data file must be owner read/write only (rw-------).
+    import stat
+    assert stat.S_IMODE(subs.stat().st_mode) == 0o600
+
+
+def test_subscribe_rejects_invalid_email(client, tmp_path, monkeypatch):
+    """An invalid email is rejected and nothing is written."""
+    subs = tmp_path / 'subscribers.csv'
+    monkeypatch.setenv('SUBSCRIBERS_FILE', str(subs))
+
+    response = client.post('/subscribe', data={'email': 'not-an-email'})
+
+    assert response.status_code == 302
+    assert 'subscribed=invalid' in response.headers['Location']
+    assert not subs.exists()
+
+
+def test_subscribe_confirmation_renders_on_home(client):
+    """The home page shows the success message after a redirect."""
+    response = client.get('/?subscribed=ok')
+    assert b"You're on the list" in response.data
+
+
 def test_home_page_is_holding_page(client):
     """During the build period the homepage is the holding page, not the CV."""
     response = client.get('/')

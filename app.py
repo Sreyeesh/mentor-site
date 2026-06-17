@@ -1,8 +1,12 @@
+import csv
 import os
-from datetime import datetime
+import re
+from datetime import datetime, timezone
 
 from dotenv import load_dotenv
-from flask import Flask, abort, g, render_template, request, url_for
+from flask import (
+    Flask, abort, g, redirect, render_template, request, url_for,
+)
 from markupsafe import Markup
 
 load_dotenv()
@@ -303,6 +307,19 @@ CV_PAGE = {
 }
 
 
+# Basic email shape check. Not a deliverability guarantee, just enough to
+# reject obvious junk before it lands in the file.
+EMAIL_RE = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+
+
+def _subscribers_path() -> str:
+    """Where waitlist emails are stored. Override with SUBSCRIBERS_FILE."""
+    return os.getenv(
+        'SUBSCRIBERS_FILE',
+        os.path.join(app.instance_path, 'subscribers.csv'),
+    )
+
+
 @app.route('/')
 def home():
     # Holding page while the Toucan Studios product landing is built.
@@ -310,8 +327,42 @@ def home():
     # redesign but is not served or frozen during the holding period.
     return render_template(
         'holding.html',
-        **build_page_context(page_slug='home'),
+        **build_page_context(
+            page_slug='home',
+            subscribed=request.args.get('subscribed'),
+        ),
     )
+
+
+@app.route('/subscribe', methods=['POST'])
+def subscribe():
+    """Store a waitlist email, then redirect home with a status flag.
+
+    Note: this needs a running Flask server. It works in local dev and on
+    the planned self-hosted homelab, but NOT on the static GitHub Pages
+    build, where there is no server to receive the POST.
+    """
+    email = request.form.get('email', '').strip().lower()
+    if not EMAIL_RE.match(email):
+        return redirect(url_for('home', subscribed='invalid', _anchor='signup'))
+
+    path = _subscribers_path()
+    directory = os.path.dirname(path)
+    # Data dir: owner-only (rwx------), so other users on the box can't list it.
+    os.makedirs(directory, exist_ok=True)
+    os.chmod(directory, 0o700)
+
+    # Open with 0o600 at creation so the file is never briefly world-readable.
+    # os.open's mode is masked by umask (can only drop bits); the chmod after
+    # guarantees 0o600 even if the file already existed with looser perms.
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
+    with os.fdopen(fd, 'a', newline='', encoding='utf-8') as handle:
+        csv.writer(handle).writerow(
+            [datetime.now(timezone.utc).isoformat(), email]
+        )
+    os.chmod(path, 0o600)
+
+    return redirect(url_for('home', subscribed='ok', _anchor='signup'))
 
 
 @app.route('/blog/')

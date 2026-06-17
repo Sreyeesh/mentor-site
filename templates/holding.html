@@ -38,25 +38,12 @@
   <!-- ── Marquee ticker ── -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>Game Development</span><span class="sep">/</span>
-      <span>Technical Art</span><span class="sep">/</span>
-      <span>Python Tooling</span><span class="sep">/</span>
-      <span>Git &amp; Pipelines</span><span class="sep">/</span>
-      <span>Unreal</span><span class="sep">/</span>
-      <span>Unity</span><span class="sep">/</span>
-      <span>Godot</span><span class="sep">/</span>
-      <span>Portfolio Review</span><span class="sep">/</span>
-      <span>Career Planning</span><span class="sep">/</span>
-      <!-- duplicated for a seamless loop -->
-      <span>Game Development</span><span class="sep">/</span>
-      <span>Technical Art</span><span class="sep">/</span>
-      <span>Python Tooling</span><span class="sep">/</span>
-      <span>Git &amp; Pipelines</span><span class="sep">/</span>
-      <span>Unreal</span><span class="sep">/</span>
-      <span>Unity</span><span class="sep">/</span>
-      <span>Godot</span><span class="sep">/</span>
-      <span>Portfolio Review</span><span class="sep">/</span>
-      <span>Career Planning</span><span class="sep">/</span>
+      {# Looped twice so the track scrolls seamlessly. #}
+      {% for _ in range(2) %}
+        {% for term in holding.marquee %}
+        <span>{{ term }}</span><span class="sep">/</span>
+        {% endfor %}
+      {% endfor %}
     </div>
   </div>
 
@@ -87,12 +74,9 @@
         </div>
 
         <ul class="tags fu d6">
-          <li class="tag tag--hot">Game Development</li>
-          <li class="tag tag--hot">Technical Art</li>
-          <li class="tag tag--hot">Production</li>
-          <li class="tag">Godot</li>
-          <li class="tag">Unity</li>
-          <li class="tag">Unreal Engine</li>
+          {% for tag in holding.hero_tags %}
+          <li class="tag{% if tag.hot %} tag--hot{% endif %}">{{ tag.label }}</li>
+          {% endfor %}
         </ul>
       </div>
     </section>
@@ -103,36 +87,13 @@
         <p class="kicker">What you'll learn</p>
         <h2 class="section-title">Mentoring built around real production work.</h2>
         <div class="grid">
+          {% for item in holding.curriculum %}
           <article class="card reveal">
-            <span class="card-num">01</span>
-            <h3>Python for tools &amp; automation</h3>
-            <p>Write maintainable scripts and small tools that remove the boring parts of your workflow.</p>
+            <span class="card-num">{{ '%02d' | format(loop.index) }}</span>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.body }}</p>
           </article>
-          <article class="card reveal">
-            <span class="card-num">02</span>
-            <h3>Git &amp; version control</h3>
-            <p>Branch, review, and collaborate the way real studios do, without fear of breaking things.</p>
-          </article>
-          <article class="card reveal">
-            <span class="card-num">03</span>
-            <h3>Production pipelines</h3>
-            <p>Understand how assets, code, and tools move through a real game or VFX pipeline.</p>
-          </article>
-          <article class="card reveal">
-            <span class="card-num">04</span>
-            <h3>Game engines</h3>
-            <p>Hands-on guidance in Unreal, Unity, or Godot, focused on shipping, not tutorials.</p>
-          </article>
-          <article class="card reveal">
-            <span class="card-num">05</span>
-            <h3>Technical art &amp; DCC tools</h3>
-            <p>Bridge art and engineering with the DCC and shader workflows studios actually use.</p>
-          </article>
-          <article class="card reveal">
-            <span class="card-num">06</span>
-            <h3>Portfolio &amp; career</h3>
-            <p>Honest portfolio reviews and a plan to get you closer to the role you want.</p>
-          </article>
+          {% endfor %}
         </div>
       </div>
     </section>
@@ -153,18 +114,12 @@
             and VFX developers every week, and I want to do more of it.
           </p>
           <ul class="proof">
+            {% for item in holding.proof %}
             <li>
-              <strong>DNEG &middot; Blizzard &middot; Boulder Media</strong>
-              <span>Feature animation &amp; VFX production credits</span>
+              <strong>{{ item.label }}</strong>
+              <span>{{ item.detail }}</span>
             </li>
-            <li>
-              <strong>Weekly mentor</strong>
-              <span>GameCity Kajaani game-dev sessions</span>
-            </li>
-            <li>
-              <strong>IMDb-credited</strong>
-              <span>Shipped film &amp; game work</span>
-            </li>
+            {% endfor %}
           </ul>
         </div>
       </div>

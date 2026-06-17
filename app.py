@@ -315,6 +315,70 @@ CV_PAGE = {
 }
 
 
+# Holding-page content. Kept here (not in the template) so copy lives with the
+# other page constants and the template stays structural — see CLAUDE.md.
+HOLDING_PAGE = {
+    'marquee': [
+        'Game Development', 'Technical Art', 'Python Tooling', 'Git & Pipelines',
+        'Unreal', 'Unity', 'Godot', 'Portfolio Review', 'Career Planning',
+    ],
+    'hero_tags': [
+        {'label': 'Game Development', 'hot': True},
+        {'label': 'Technical Art', 'hot': True},
+        {'label': 'Production', 'hot': True},
+        {'label': 'Godot', 'hot': False},
+        {'label': 'Unity', 'hot': False},
+        {'label': 'Unreal Engine', 'hot': False},
+    ],
+    'curriculum': [
+        {
+            'title': 'Python for tools & automation',
+            'body': 'Write maintainable scripts and small tools that remove '
+                    'the boring parts of your workflow.',
+        },
+        {
+            'title': 'Git & version control',
+            'body': 'Branch, review, and collaborate the way real studios do, '
+                    'without fear of breaking things.',
+        },
+        {
+            'title': 'Production pipelines',
+            'body': 'Understand how assets, code, and tools move through a real '
+                    'game or VFX pipeline.',
+        },
+        {
+            'title': 'Game engines',
+            'body': 'Hands-on guidance in Unreal, Unity, or Godot, focused on '
+                    'shipping, not tutorials.',
+        },
+        {
+            'title': 'Technical art & DCC tools',
+            'body': 'Bridge art and engineering with the DCC and shader '
+                    'workflows studios actually use.',
+        },
+        {
+            'title': 'Portfolio & career',
+            'body': 'Honest portfolio reviews and a plan to get you closer to '
+                    'the role you want.',
+        },
+    ],
+    'proof': [
+        {
+            'label': 'DNEG · Blizzard · Boulder Media',
+            'detail': 'Feature animation & VFX production credits',
+        },
+        {
+            'label': 'Weekly mentor',
+            'detail': 'GameCity Kajaani game-dev sessions',
+        },
+        {
+            'label': 'IMDb-credited',
+            'detail': 'Shipped film & game work',
+        },
+    ],
+}
+
+
 # Basic email shape check. Not a deliverability guarantee, just enough to
 # reject obvious junk before it lands in the file.
 EMAIL_RE = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
@@ -354,6 +418,7 @@ def home():
         **build_page_context(
             page_slug='home',
             subscribed=request.args.get('subscribed'),
+            holding=HOLDING_PAGE,
         ),
     )
 

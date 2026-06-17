@@ -54,7 +54,9 @@
       });
 
       if (response.ok) {
+        // Leave the button disabled so a happy visitor can't double-submit.
         form.reset();
+        if (button) button.textContent = 'Done';
         show("You're on the list. I'll email you at launch.", true);
         return;
       }
@@ -63,9 +65,9 @@
       const data = await response.json().catch(() => null);
       const detail = data && data.errors && data.errors[0] && data.errors[0].message;
       show(detail || 'That email didn’t look right. Mind trying again?', false);
+      if (button) button.disabled = false;
     } catch (err) {
       show('Something went wrong. Please email me instead.', false);
-    } finally {
       if (button) button.disabled = false;
     }
   });

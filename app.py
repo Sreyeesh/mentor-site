@@ -1,8 +1,12 @@
+import csv
 import os
-from datetime import datetime
+import re
+from datetime import datetime, timezone
 
 from dotenv import load_dotenv
-from flask import Flask, abort, g, render_template, request, url_for
+from flask import (
+    Flask, abort, g, redirect, render_template, request, url_for,
+)
 from markupsafe import Markup
 
 load_dotenv()
@@ -54,6 +58,14 @@ SITE_CONFIG = {
     'imdb_url': os.getenv('SITE_IMDB_URL', ''),
     'location': os.getenv('SITE_LOCATION', 'Estonia'),
     'launch_date': os.getenv('SITE_LAUNCH_DATE', '2026-05-31'),
+    # Formspree endpoint for the waitlist form (the live static build has no
+    # server, so the form posts here instead of the Flask /subscribe route).
+    # A Formspree form ID is public — it ships in the page HTML — so it is safe
+    # to keep as the default. Override with FORMSPREE_WAITLIST_ENDPOINT if the
+    # form ever changes.
+    'formspree_endpoint': os.getenv(
+        'FORMSPREE_WAITLIST_ENDPOINT', 'https://formspree.io/f/xdavvlor'
+    ),
 }
 
 NAV_LINKS = [
@@ -326,12 +338,147 @@ CV_PAGE = {
 }
 
 
+# Holding-page content. Kept here (not in the template) so copy lives with the
+# other page constants and the template stays structural — see CLAUDE.md.
+HOLDING_PAGE = {
+    'marquee': [
+        'Game Development', 'Technical Art', 'Python Tooling', 'Git & Pipelines',
+        'Unreal', 'Unity', 'Godot', 'Portfolio Review', 'Career Planning',
+    ],
+    'hero_tags': [
+        {'label': 'Game Development', 'hot': True},
+        {'label': 'Technical Art', 'hot': True},
+        {'label': 'Production', 'hot': True},
+        {'label': 'Godot', 'hot': False},
+        {'label': 'Unity', 'hot': False},
+        {'label': 'Unreal Engine', 'hot': False},
+    ],
+    'curriculum': [
+        {
+            'title': 'Python for tools & automation',
+            'body': 'Write maintainable scripts and small tools that remove '
+                    'the boring parts of your workflow.',
+        },
+        {
+            'title': 'Git & version control',
+            'body': 'Branch, review, and collaborate the way real studios do, '
+                    'without fear of breaking things.',
+        },
+        {
+            'title': 'Production pipelines',
+            'body': 'Understand how assets, code, and tools move through a real '
+                    'game or VFX pipeline.',
+        },
+        {
+            'title': 'Game engines',
+            'body': 'Hands-on guidance in Unreal, Unity, or Godot, focused on '
+                    'shipping, not tutorials.',
+        },
+        {
+            'title': 'Technical art & DCC tools',
+            'body': 'Bridge art and engineering with the DCC and shader '
+                    'workflows studios actually use.',
+        },
+        {
+            'title': 'Portfolio & career',
+            'body': 'Honest portfolio reviews and a plan to get you closer to '
+                    'the role you want.',
+        },
+    ],
+    'proof': [
+        {
+            'label': 'DNEG · Blizzard · Boulder Media',
+            'detail': 'Feature animation & VFX production credits',
+        },
+        {
+            'label': 'Weekly mentor',
+            'detail': 'GameCity Kajaani game-dev sessions',
+        },
+        {
+            'label': 'IMDb-credited',
+            'detail': 'Shipped film & game work',
+        },
+    ],
+}
+
+
+# Basic email shape check. Not a deliverability guarantee, just enough to
+# reject obvious junk before it lands in the file.
+EMAIL_RE = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+
+# RFC 5321 caps an email address at 254 characters; anything longer is junk and
+# would only bloat the file.
+MAX_EMAIL_LEN = 254
+
+
+def _subscribers_path() -> str:
+    """Where waitlist emails are stored. Override with SUBSCRIBERS_FILE."""
+    return os.getenv(
+        'SUBSCRIBERS_FILE',
+        os.path.join(app.instance_path, 'subscribers.csv'),
+    )
+
+
+def _csv_safe(value: str) -> str:
+    """Defang spreadsheet formula injection.
+
+    A cell beginning with =, +, -, @, or a tab is interpreted as a formula by
+    Excel/Sheets/LibreOffice. A crafted email like ``=HYPERLINK(...)@x.co``
+    passes the shape check, so prefix a single quote to force it to be text.
+    """
+    if value and value[0] in ('=', '+', '-', '@', '\t', '\r'):
+        return "'" + value
+    return value
+
+
 @app.route('/')
 def home():
     return render_template(
-        'landing.html',
-        **build_page_context(page_slug='home', main_class='cv-page-main'),
-        cv=CV_PAGE,
+        'construction.html',
+        **build_page_context(page_slug='home'),
+    )
+
+
+@app.route('/subscribe', methods=['POST'])
+def subscribe():
+    """Store a waitlist email, then redirect home with a status flag.
+
+    Note: this needs a running Flask server. It works in local dev and on
+    the planned self-hosted homelab, but NOT on the static GitHub Pages
+    build, where there is no server to receive the POST.
+    """
+    email = request.form.get('email', '').strip().lower()
+    # GDPR: storing the email needs explicit consent and a valid address.
+    consent = request.form.get('consent')
+    if not consent or len(email) > MAX_EMAIL_LEN or not EMAIL_RE.match(email):
+        return redirect(url_for('home', subscribed='invalid', _anchor='signup'))
+
+    path = _subscribers_path()
+    directory = os.path.dirname(path)
+    # Data dir: owner-only (rwx------), so other users on the box can't list it.
+    os.makedirs(directory, exist_ok=True)
+    os.chmod(directory, 0o700)
+
+    # Open with 0o600 at creation so the file is never briefly world-readable.
+    # os.open's mode is masked by umask (can only drop bits); the chmod after
+    # guarantees 0o600 even if the file already existed with looser perms.
+    # Record the consent timestamp alongside the email as proof of consent.
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
+    with os.fdopen(fd, 'a', newline='', encoding='utf-8') as handle:
+        csv.writer(handle).writerow(
+            [datetime.now(timezone.utc).isoformat(), _csv_safe(email), 'consent']
+        )
+    os.chmod(path, 0o600)
+
+    return redirect(url_for('home', subscribed='ok', _anchor='signup'))
+
+
+@app.route('/privacy/')
+def privacy():
+    """Standalone privacy notice for the waitlist signup (frozen for Pages)."""
+    return render_template(
+        'privacy.html',
+        **build_page_context(page_slug='privacy'),
     )
 
 

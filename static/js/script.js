@@ -4,9 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     
     if (darkModeToggle) {
-        // Set initial theme
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
+        // Theme is set by the boot script in base.html (saved preference,
+        // else prefers-color-scheme); read it rather than re-deciding.
+        const savedTheme =
+            document.documentElement.getAttribute('data-theme') || 'light';
 
         const emitThemeChange = (theme) => {
             document.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
@@ -40,18 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hamburger && navLinks) {
         hamburger.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            
+
+            const isOpen = navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active', isOpen);
+            hamburger.setAttribute('aria-expanded', String(isOpen));
         });
-        
+
         // Close menu when clicking links
         const menuLinks = navLinks.querySelectorAll('a');
         menuLinks.forEach(link => {
             link.addEventListener('click', function() {
                 hamburger.classList.remove('active');
                 navLinks.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
             });
         });
         
@@ -205,6 +207,26 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch((error) => {
                 console.error('❌ Calendly widget failed to load', error);
             });
+    }
+
+    // ===== SKILLS SECTION STAGGERED REVEAL =====
+    const skillsSection = document.getElementById('skills');
+
+    if (skillsSection && 'IntersectionObserver' in window) {
+        skillsSection.classList.add('js-reveal-ready');
+
+        const skillsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    skillsSection.classList.add('is-revealed');
+                    skillsObserver.disconnect();
+                }
+            });
+        // threshold 0: reveal as soon as any part enters the viewport, so a
+        // section taller than the viewport can never stay stuck hidden.
+        }, { threshold: 0 });
+
+        skillsObserver.observe(skillsSection);
     }
 
 });

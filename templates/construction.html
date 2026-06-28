@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ config.brand_name }} | Site in transition</title>
+  <meta name="description" content="{{ config.brand_name }} is changing direction. A new, more focused site is on the way." />
+
+  <link rel="canonical" href="{{ canonical_url }}" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="{{ config.brand_name }}" />
+  <meta property="og:title" content="{{ config.brand_name }} | Site in transition" />
+  <meta property="og:description" content="Toucan is changing direction. A new, more focused site is on the way." />
+  <meta property="og:url" content="{{ canonical_url }}" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/construction.css', v=config.asset_version) }}" />
+</head>
+<body>
+  <div class="construction-shell">
+    <header class="site-header">
+      <a class="wordmark" href="{{ canonical_url }}" aria-label="{{ config.brand_name }} home">
+        toucan<span>.ee</span>
+      </a>
+      <p class="site-state">Site in transition</p>
+    </header>
+
+    <main class="construction-main">
+      <section class="construction-copy" aria-labelledby="construction-title">
+        <p class="eyebrow">A new direction</p>
+        <h1 id="construction-title">
+          <span class="headline-line headline-line-first">
+            <span class="headline-light">Changing</span>
+            <em>direction.</em>
+          </span>
+          <span class="headline-line headline-line-second">
+            <span>Building with</span>
+            <strong>intent.</strong>
+          </span>
+        </h1>
+        <p class="lede">
+          I&rsquo;m rebuilding Toucan around a new idea. More soon.
+        </p>
+        <a class="contact-link" href="mailto:{{ config.email }}">
+          Start a conversation
+          <span aria-hidden="true">&#8599;</span>
+        </a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>&copy; {{ current_year }} {{ config.brand_legal_name }}</span>
+    </footer>
+  </div>
+</body>
+</html>

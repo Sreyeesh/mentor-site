@@ -2,10 +2,12 @@ from blog import load_posts
 
 
 def test_home_page(client):
-    """Home page serves the Toucan Studios holding page."""
+    """Home page serves the site transition placeholder."""
     response = client.get('/')
     assert response.status_code == 200
-    assert b'Toucan Studios' in response.data
+    assert b'Site in transition' in response.data
+    assert b'Changing' in response.data
+    assert b'direction.' in response.data
 
 
 def test_subscribe_stores_email(client, tmp_path, monkeypatch):
@@ -97,69 +99,16 @@ def test_privacy_page_renders(client):
     assert b'Formspree' in body
 
 
-def test_waitlist_form_has_consent_and_privacy_link(client):
-    """The signup form requires consent and links the privacy notice."""
+def test_home_page_is_construction_placeholder(client):
+    """The homepage is the pivot placeholder, not mentoring or the CV."""
     body = client.get('/').data
-    assert b'name="consent"' in body
-    assert b'/privacy/' in body
-
-
-def test_subscribe_confirmation_renders_on_home(client):
-    """The home page shows the success message after a redirect."""
-    response = client.get('/?subscribed=ok')
-    assert b"You're on the list" in response.data
-
-
-def test_waitlist_posts_to_formspree_by_default(client):
-    """The waitlist form posts to the configured Formspree endpoint."""
-    body = client.get('/').data
-    assert b'https://formspree.io/f/xdavvlor' in body
-    assert b'data-formspree' in body
-
-
-def test_waitlist_falls_back_to_flask_route_when_endpoint_empty(monkeypatch):
-    """An empty FORMSPREE_WAITLIST_ENDPOINT reverts to the Flask /subscribe route."""
-    import importlib
-
-    import app as app_module
-
-    monkeypatch.setenv('FORMSPREE_WAITLIST_ENDPOINT', '')
-    importlib.reload(app_module)
-    app_module.app.config.update(TESTING=True)
-    client = app_module.app.test_client()
-
-    body = client.get('/').data
-    assert b'action="/subscribe"' in body
-    assert b'data-formspree' not in body
-
-
-def test_home_page_is_holding_page(client):
-    """The homepage is the mentoring waitlist landing, not the CV/portfolio."""
-    response = client.get('/')
-    body = response.data
-    assert b'Launching soon' in body
-    assert b'game dev' in body
-    assert b'1-on-1 Mentoring' in body
-    assert b'waitlist' in body
-    # It must not be the old CV/portfolio homepage.
-    assert b'Available for work' not in body
+    assert b'Site in transition' in body
+    assert b'<img' not in body
+    assert body.count(b'mailto:') == 1
+    # It must not be the old mentoring waitlist or CV/portfolio homepage.
+    assert b'1-on-1 Mentoring' not in body
+    assert b'waitlist' not in body
     assert b'Selected credits' not in body
-
-
-def test_home_page_has_og_image(client):
-    """og:image meta tag must resolve to a non-empty absolute URL."""
-    response = client.get('/')
-    html = response.data.decode()
-    import re
-    match = re.search(
-        r'<meta property="og:image" content="([^"]*)"', html
-    )
-    assert match is not None, 'og:image meta tag missing'
-    url = match.group(1)
-    assert url, 'og:image content is empty'
-    assert url.startswith(('http://', 'https://')), (
-        f'og:image must be absolute, got: {url}'
-    )
 
 
 def test_pages_load(client):

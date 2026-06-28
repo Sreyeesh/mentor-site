@@ -258,24 +258,47 @@ CV_PAGE = {
         'Boulder Media',
         'GameCityKajaani',
     ],
+    'selected_credits': [
+        {
+            'title': 'Overwatch 2',
+            'studio': 'Blizzard Entertainment',
+            'image': 'images/credits/overwatch.jpg',
+        },
+        {
+            'title': 'My Little Pony: A New Generation',
+            'studio': 'Boulder Media',
+            'image': 'images/credits/my-little-pony.jpg',
+        },
+        {
+            'title': 'Garfield',
+            'studio': 'DNEG',
+            'image': 'images/credits/garfield.png',
+        },
+    ],
+    'core_skills': [
+        'Python',
+        'Linux',
+        'Maya',
+        'Katana',
+        'USD / Alembic',
+        'RenderMan',
+    ],
     'skills': [
         {
             'group': 'Languages and systems',
-            'items': ['Python', 'Linux', 'Lua', 'Git', 'Sprint development'],
+            'items': ['Lua', 'Git', 'Sprint development'],
         },
         {
             'group': 'DCC and pipeline',
             'items': [
-                'Maya',
                 'Houdini',
-                'Katana',
                 'Nuke',
                 'ShotGrid / Flow',
             ],
         },
         {
             'group': 'Rendering and data',
-            'items': ['USD / Alembic', 'RenderMan', 'Deadline', 'V-Ray', 'Redshift'],
+            'items': ['Deadline', 'V-Ray', 'Redshift'],
         },
         {
             'group': 'Production practice',
@@ -306,7 +329,7 @@ CV_PAGE = {
         },
     ],
     'links_heading': 'Links',
-    'contact_heading': 'Available for production technology work',
+    'contact_heading': 'Open to production technology work',
     'contact_body': (
         'I am open to industry and adjacent technical roles involving Python, '
         'workflow automation, production support, internal tools, or technical '
@@ -410,16 +433,9 @@ def _csv_safe(value: str) -> str:
 
 @app.route('/')
 def home():
-    # Holding page while the Toucan Studios product landing is built.
-    # The CV landing (landing.html / CV_PAGE) is retained for the upcoming
-    # redesign but is not served or frozen during the holding period.
     return render_template(
-        'holding.html',
-        **build_page_context(
-            page_slug='home',
-            subscribed=request.args.get('subscribed'),
-            holding=HOLDING_PAGE,
-        ),
+        'construction.html',
+        **build_page_context(page_slug='home'),
     )
 
 

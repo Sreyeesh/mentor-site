@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ config.brand_name }} — Under construction</title>
+  <meta name="description" content="{{ config.brand_name }} — something new is being built. Check back soon." />
+
+  <link rel="canonical" href="{{ canonical_url }}" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="{{ config.brand_name }}" />
+  <meta property="og:title" content="{{ config.brand_name }} — Under construction" />
+  <meta property="og:description" content="Something new is being built. Check back soon." />
+  <meta property="og:url" content="{{ canonical_url }}" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/construction.css', v=config.asset_version) }}" />
+</head>
+<body>
+  <main class="construction">
+    <div class="construction-inner">
+      <p class="wordmark">toucan<span>.ee</span></p>
+
+      <p class="status"><span class="dot" aria-hidden="true"></span> Under construction</p>
+
+      <h1>Something new is being built.</h1>
+      <p class="lede">The site is being rebuilt from the ground up. Check back soon.</p>
+
+      <p class="contact">
+        In the meantime &mdash; <a href="mailto:{{ config.email }}">{{ config.email }}</a>
+      </p>
+    </div>
+
+    <footer class="construction-footer">
+      <span>© {{ current_year }} {{ config.brand_legal_name }} — Estonia</span>
+    </footer>
+  </main>
+</body>
+</html>

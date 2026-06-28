@@ -410,16 +410,9 @@ def _csv_safe(value: str) -> str:
 
 @app.route('/')
 def home():
-    # Holding page while the Toucan Studios product landing is built.
-    # The CV landing (landing.html / CV_PAGE) is retained for the upcoming
-    # redesign but is not served or frozen during the holding period.
     return render_template(
-        'holding.html',
-        **build_page_context(
-            page_slug='home',
-            subscribed=request.args.get('subscribed'),
-            holding=HOLDING_PAGE,
-        ),
+        'construction.html',
+        **build_page_context(page_slug='home'),
     )
 
 

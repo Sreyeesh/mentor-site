@@ -44,12 +44,8 @@ def build_static_site() -> None:
 
     with app.app_context():
         with app.test_client() as client:
-            # Holding period: publish only the homepage holding page. The CV,
-            # about, and blog routes still exist in the app but are not frozen,
-            # so they are not live while the product landing is built.
             static_routes = [
                 ('/', BUILD_DIR / 'index.html'),
-                ('/privacy/', BUILD_DIR / 'privacy' / 'index.html'),
             ]
             for route, destination in static_routes:
                 response = client.get(route, follow_redirects=True)

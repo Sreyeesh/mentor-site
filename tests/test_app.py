@@ -2,10 +2,12 @@ from blog import load_posts
 
 
 def test_home_page(client):
-    """Home page serves the 'under construction' placeholder."""
+    """Home page serves the site transition placeholder."""
     response = client.get('/')
     assert response.status_code == 200
-    assert b'Under construction' in response.data
+    assert b'Site in transition' in response.data
+    assert b'Changing' in response.data
+    assert b'direction.' in response.data
 
 
 def test_subscribe_stores_email(client, tmp_path, monkeypatch):
@@ -98,9 +100,11 @@ def test_privacy_page_renders(client):
 
 
 def test_home_page_is_construction_placeholder(client):
-    """The homepage is the neutral placeholder, not mentoring or the CV."""
+    """The homepage is the pivot placeholder, not mentoring or the CV."""
     body = client.get('/').data
-    assert b'Under construction' in body
+    assert b'Site in transition' in body
+    assert b'<img' not in body
+    assert body.count(b'mailto:') == 1
     # It must not be the old mentoring waitlist or CV/portfolio homepage.
     assert b'1-on-1 Mentoring' not in body
     assert b'waitlist' not in body

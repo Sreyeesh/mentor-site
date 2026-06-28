@@ -1,141 +1,299 @@
-/* Standalone "under construction" page — no dependency on base.css.
-   Deliberately minimal: this is a placeholder while the site is rebuilt. */
+/* Standalone transition page. Kept independent from the legacy site styles. */
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 :root {
-  --bg: #0b0d10;
-  --fg: #e8eaed;
-  --muted: #8b9199;
-  --accent: #10b981;
-  --line: rgba(255, 255, 255, 0.08);
+  color-scheme: light dark;
+  --surface: #eef0ec;
+  --text: #18201b;
+  --muted: #59635c;
+  --line: rgba(24, 32, 27, 0.17);
+  --accent: #276148;
+  --accent-ink: #f3f7f3;
+  --focus: #276148;
+  --font-sans: "Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #121714;
+    --text: #e8ece8;
+    --muted: #a5afa7;
+    --line: rgba(232, 236, 232, 0.17);
+    --accent: #99c7aa;
+    --accent-ink: #132019;
+    --focus: #b5dcc1;
+  }
 }
 
 html {
+  min-width: 320px;
+  background: var(--surface);
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  min-width: 320px;
+  min-height: 100dvh;
+  margin: 0;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-.construction {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem 1.5rem;
-  /* Faint dev-grid backdrop, kept subtle so text stays the focus. */
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 48px 48px;
-  background-position: center;
+a {
+  color: inherit;
 }
 
-.construction-inner {
-  max-width: 36rem;
-  text-align: center;
+.construction-shell {
+  width: min(100%, 96rem);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 4.5rem);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.site-header,
+.site-footer {
+  min-height: 4.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-color: var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--line);
 }
 
 .wordmark {
-  font-size: 0.95rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--fg);
+  padding: 0.5rem 0;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  text-decoration: none;
 }
 
 .wordmark span {
   color: var(--accent);
 }
 
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 2.5rem;
-  padding: 0.35rem 0.85rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.site-state {
+  margin: 0;
   color: var(--muted);
+  text-transform: uppercase;
 }
 
-.status .dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
-  animation: pulse 2.4s ease-out infinite;
+.construction-main {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: center;
+  padding: clamp(2.5rem, 7vh, 6.5rem) 0;
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
-  70% { box-shadow: 0 0 0 9px rgba(16, 185, 129, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+.construction-copy {
+  grid-column: 1 / -1;
+  max-width: none;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  margin: 0 0 1.5rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 h1 {
-  margin-top: 1.75rem;
-  font-size: clamp(1.6rem, 4.5vw, 2.5rem);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  max-width: none;
+  margin: 0;
+  font-size: clamp(3.25rem, 7.2vw, 6.8rem);
+  font-weight: 560;
+  font-kerning: normal;
+  letter-spacing: -0.065em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.headline-line {
+  width: fit-content;
+  display: flex;
+  align-items: baseline;
+  gap: 0.16em;
+  white-space: nowrap;
+}
+
+.headline-line-second {
+  margin-left: clamp(2.5rem, 8vw, 8rem);
+}
+
+.headline-line em {
+  padding-bottom: 0.08em;
+  display: inline-block;
+  font-style: italic;
+  font-weight: 650;
+  line-height: 1.08;
+}
+
+.headline-line strong {
+  color: var(--accent);
+  font-weight: 780;
+}
+
+.headline-light {
+  color: var(--text);
+  font-weight: 380;
 }
 
 .lede {
-  margin-top: 1rem;
-  font-size: 1rem;
+  max-width: 35rem;
+  margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
   line-height: 1.6;
-  color: var(--muted);
 }
 
-.contact {
-  margin-top: 2.5rem;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-.contact a {
-  color: var(--accent);
+.contact-link {
+  width: fit-content;
+  min-height: 3.25rem;
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  padding: 0 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1;
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease;
+  white-space: nowrap;
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), opacity 180ms ease;
 }
 
-.contact a:hover,
-.contact a:focus-visible {
-  border-bottom-color: var(--accent);
+.contact-link span {
+  font-size: 1rem;
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.construction-footer {
-  position: fixed;
-  bottom: 1.25rem;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
+.contact-link:hover {
+  opacity: 0.88;
+}
+
+.contact-link:hover span {
+  transform: translate(0.16rem, -0.16rem);
+}
+
+.contact-link:active {
+  transform: translateY(1px);
+}
+
+.wordmark:focus-visible,
+.contact-link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.site-footer {
+  min-height: 4rem;
+  border-top: 1px solid var(--line);
   color: var(--muted);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .status .dot {
-    animation: none;
+@media (prefers-reduced-motion: no-preference) {
+  .construction-copy > * {
+    opacity: 0;
+    animation: enter-copy 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .construction-copy > :nth-child(2) { animation-delay: 70ms; }
+  .construction-copy > :nth-child(3) { animation-delay: 140ms; }
+  .construction-copy > :nth-child(4) { animation-delay: 210ms; }
+
+  @keyframes enter-copy {
+    from { opacity: 0; transform: translateY(1.25rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@media (max-width: 767px) {
+  .construction-shell {
+    padding: 0 1.25rem;
+  }
+
+  .site-header {
+    min-height: 4rem;
+  }
+
+  .construction-main {
+    grid-template-columns: 1fr;
+    align-items: start;
+    padding: 3.25rem 0 2rem;
+  }
+
+  .construction-copy {
+    grid-column: 1;
+    width: 100%;
+    max-width: none;
+  }
+
+  h1 {
+    max-width: none;
+    font-size: clamp(2.75rem, 13.5vw, 4.25rem);
+  }
+
+  .headline-line {
+    width: auto;
+    display: block;
+    white-space: normal;
+  }
+
+  .headline-line-second {
+    margin-left: 0;
+  }
+
+  .lede {
+    max-width: 31rem;
+  }
+
+  .site-footer {
+    padding: 1rem 0;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.35rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-state {
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+  }
+
+  .construction-main {
+    padding-top: 2.5rem;
+  }
+
+  .eyebrow {
+    margin-bottom: 1.1rem;
   }
 }

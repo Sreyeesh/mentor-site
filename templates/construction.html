@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ config.brand_name }} | Site in transition</title>
-  <meta name="description" content="{{ config.brand_name }} is changing direction. A new, more focused site is on the way." />
+  <meta name="description" content="toucan.ee is being rebuilt around DevOps and platform engineering. A new, more focused site is on the way." />
 
   <link rel="canonical" href="{{ canonical_url }}" />
   <meta name="robots" content="noindex, nofollow" />
@@ -15,6 +15,9 @@
   <meta property="og:description" content="Toucan is changing direction. A new, more focused site is on the way." />
   <meta property="og:url" content="{{ canonical_url }}" />
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..1000&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/construction.css', v=config.asset_version) }}" />
 </head>
 <body>
@@ -28,7 +31,7 @@
 
     <main class="construction-main">
       <section class="construction-copy" aria-labelledby="construction-title">
-        <p class="eyebrow">A new direction</p>
+        <p class="eyebrow">Rebuild in progress</p>
         <h1 id="construction-title">
           <span class="headline-line headline-line-first">
             <span class="headline-light">Changing</span>
@@ -40,12 +43,51 @@
           </span>
         </h1>
         <p class="lede">
-          I&rsquo;m rebuilding Toucan around a new idea. More soon.
+          I&rsquo;m {{ config.name }} &mdash; DevOps and platform engineering.
+          I&rsquo;m rebuilding toucan.ee as a live piece of infrastructure;
+          the full site lands soon.
         </p>
-        <a class="contact-link" href="mailto:{{ config.email }}">
-          Start a conversation
-          <span aria-hidden="true">&#8599;</span>
-        </a>
+
+        <div class="deploy-log" aria-labelledby="deploy-log-title">
+          <p class="deploy-log-title" id="deploy-log-title">deploy log</p>
+          <ul class="deploy-log-list">
+            <li class="log-item is-done">
+              <span class="log-mark" aria-hidden="true">&#10003;</span>
+              <span class="log-label">design system</span>
+              <span class="log-state">shipped</span>
+            </li>
+            <li class="log-item is-done">
+              <span class="log-mark" aria-hidden="true">&#10003;</span>
+              <span class="log-label">static build pipeline</span>
+              <span class="log-state">shipped</span>
+            </li>
+            <li class="log-item is-active">
+              <span class="log-mark" aria-hidden="true">&#9656;</span>
+              <span class="log-label">terraform + aws</span>
+              <span class="log-state">in progress</span>
+            </li>
+            <li class="log-item is-queued">
+              <span class="log-mark" aria-hidden="true">&#9675;</span>
+              <span class="log-label">cv, devops edition</span>
+              <span class="log-state">queued</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contact-row">
+          <a class="contact-link" href="mailto:{{ config.email }}">
+            Email me
+            <span aria-hidden="true">&#8599;</span>
+          </a>
+          <a class="social-link" href="{{ config.linkedin_url }}" target="_blank" rel="noopener">
+            LinkedIn <span aria-hidden="true">&#8599;</span>
+          </a>
+          {% if config.github_url %}
+          <a class="social-link" href="{{ config.github_url }}" target="_blank" rel="noopener">
+            GitHub <span aria-hidden="true">&#8599;</span>
+          </a>
+          {% endif %}
+        </div>
       </section>
     </main>
 

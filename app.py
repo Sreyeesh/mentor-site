@@ -48,7 +48,7 @@ SITE_CONFIG = {
     ),
     'asset_version': os.getenv('ASSET_VERSION', '1'),
     'social_image': os.getenv('SITE_SOCIAL_IMAGE', 'images/SreyeeshProfilePic.jpg'),
-    'github_url': os.getenv('SITE_GITHUB_URL', ''),
+    'github_url': os.getenv('SITE_GITHUB_URL', 'https://github.com/Sreyeesh'),
     'linkedin_url': os.getenv(
         'SITE_LINKEDIN_URL',
         'https://www.linkedin.com/in/sreyeeshgarimella',

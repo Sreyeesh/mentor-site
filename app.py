@@ -15,11 +15,12 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 from blog import find_post, load_posts, normalize_media_path  # noqa: E402
-from metrics import collect_metrics  # noqa: E402
+from metrics import bar_heights, collect_metrics  # noqa: E402
 
 # Captured once at startup / freeze time — the static build bakes these
 # values into the HTML, so they are "as of last deploy" by design.
 BUILD_METRICS = collect_metrics()
+BUILD_METRICS['weekly_bars'] = bar_heights(BUILD_METRICS['weekly_commits'])
 
 
 def _icon(name, size=16, label=None):
@@ -434,11 +435,35 @@ def _csv_safe(value: str) -> str:
     return value
 
 
+# Rebuild-board content for the construction dashboard. The workstream
+# stat panel derives shipped/total from this list — update it here only.
+CONSTRUCTION_PAGE = {
+    'workstreams': [
+        {'label': 'design system', 'state': 'shipped'},
+        {'label': 'static build pipeline', 'state': 'shipped'},
+        {'label': 'terraform + aws', 'state': 'in progress'},
+        {'label': 'cv, devops edition', 'state': 'queued'},
+    ],
+    'deploy_target': [
+        {'label': 'compute', 'value': 'AWS EC2, free tier'},
+        {'label': 'provisioning', 'value': 'Terraform'},
+        {'label': 'serving', 'value': 'gunicorn + nginx, Docker'},
+        {'label': 'current host', 'value': 'GitHub Pages, static'},
+    ],
+}
+
+
 @app.route('/')
 def home():
+    workstreams = CONSTRUCTION_PAGE['workstreams']
     return render_template(
         'construction.html',
         metrics=BUILD_METRICS,
+        workstreams=workstreams,
+        shipped_count=sum(
+            1 for item in workstreams if item['state'] == 'shipped'
+        ),
+        deploy_target=CONSTRUCTION_PAGE['deploy_target'],
         **build_page_context(page_slug='home'),
     )
 

@@ -54,6 +54,21 @@ def _weekly_commit_counts(now, repo_dir=None, weeks=SPARKLINE_WEEKS):
     return counts
 
 
+def bar_heights(counts, floor=6):
+    """Scale commit counts to 0-100 bar heights for the CSS chart.
+
+    `floor` keeps zero-commit weeks faintly visible so the chart reads
+    as "quiet week", not "missing data".
+    """
+    if not counts:
+        return None
+    peak = max(counts) or 1
+    return [
+        max(round(count / peak * 100), floor) if count else floor
+        for count in counts
+    ]
+
+
 def collect_metrics(repo_dir=None, now=None):
     """Assemble the dashboard metrics dict.
 

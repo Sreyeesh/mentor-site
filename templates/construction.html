@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ config.brand_name }} | Site in transition</title>
-  <meta name="description" content="toucan.ee is being rebuilt around DevOps and platform engineering. A new, more focused site is on the way." />
+  <meta name="description" content="toucan.ee is being rebuilt around DevOps and platform engineering. Live rebuild board — a new, more focused site is on the way." />
 
   <link rel="canonical" href="{{ canonical_url }}" />
   <meta name="robots" content="noindex, nofollow" />
@@ -12,7 +12,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="{{ config.brand_name }}" />
   <meta property="og:title" content="{{ config.brand_name }} | Site in transition" />
-  <meta property="og:description" content="Toucan is changing direction. A new, more focused site is on the way." />
+  <meta property="og:description" content="toucan.ee is being rebuilt around DevOps and platform engineering." />
   <meta property="og:url" content="{{ canonical_url }}" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,59 +21,110 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/construction.css', v=config.asset_version) }}" />
 </head>
 <body>
-  <div class="construction-shell">
-    <header class="site-header">
+  <div class="dash">
+    <header class="dash-topbar">
       <a class="wordmark" href="{{ canonical_url }}" aria-label="{{ config.brand_name }} home">
         toucan<span>.ee</span>
       </a>
-      <p class="site-state">Site in transition</p>
+      <p class="dash-state">
+        <span class="live-dot" aria-hidden="true"></span>
+        Site in transition &mdash; rebuild board
+      </p>
+      <p class="dash-updated">
+        {% if metrics.available %}
+        snapshot {{ metrics.generated_at.strftime('%Y-%m-%d %H:%M UTC') }}
+        {% else %}
+        static snapshot
+        {% endif %}
+      </p>
     </header>
 
-    <main class="construction-main">
-      <section class="construction-copy" aria-labelledby="construction-title">
-        <p class="eyebrow">Rebuild in progress</p>
+    <main class="dash-grid">
+      <section class="panel panel-intro" aria-labelledby="construction-title">
         <h1 id="construction-title">
-          <span class="headline-line headline-line-first">
-            <span class="headline-light">Changing</span>
-            <em>direction.</em>
-          </span>
-          <span class="headline-line headline-line-second">
-            <span>Building with</span>
-            <strong>intent.</strong>
-          </span>
+          <span class="headline-light">Changing direction.</span>
+          <strong>Building with intent.</strong>
         </h1>
         <p class="lede">
           I&rsquo;m {{ config.name }} &mdash; DevOps and platform engineering.
-          I&rsquo;m rebuilding toucan.ee as a live piece of infrastructure;
-          the full site lands soon.
+          This board is real: the numbers below are read from this site&rsquo;s
+          own repository every time it is built.
         </p>
+      </section>
 
-        <div class="deploy-log" aria-labelledby="deploy-log-title">
-          <p class="deploy-log-title" id="deploy-log-title">deploy log</p>
-          <ul class="deploy-log-list">
-            <li class="log-item is-done">
-              <span class="log-mark" aria-hidden="true">&#10003;</span>
-              <span class="log-label">design system</span>
-              <span class="log-state">shipped</span>
-            </li>
-            <li class="log-item is-done">
-              <span class="log-mark" aria-hidden="true">&#10003;</span>
-              <span class="log-label">static build pipeline</span>
-              <span class="log-state">shipped</span>
-            </li>
-            <li class="log-item is-active">
-              <span class="log-mark" aria-hidden="true">&#9656;</span>
-              <span class="log-label">terraform + aws</span>
-              <span class="log-state">in progress</span>
-            </li>
-            <li class="log-item is-queued">
-              <span class="log-mark" aria-hidden="true">&#9675;</span>
-              <span class="log-label">cv, devops edition</span>
-              <span class="log-state">queued</span>
-            </li>
-          </ul>
+      <section class="panel panel-stat" aria-label="Total commits">
+        <p class="panel-title">total commits</p>
+        <p class="stat-value">{{ metrics.total_commits if metrics.available else 'n/a' }}</p>
+        <p class="stat-sub">since first commit</p>
+      </section>
+
+      <section class="panel panel-stat" aria-label="Last activity">
+        <p class="panel-title">last activity</p>
+        <p class="stat-value stat-value--date">
+          {{ metrics.last_commit.strftime('%b %d') if metrics.last_commit else 'n/a' }}
+        </p>
+        <p class="stat-sub">
+          {{ metrics.last_commit.strftime('%Y, %H:%M %z') if metrics.last_commit else 'repo data unavailable' }}
+        </p>
+      </section>
+
+      <section class="panel panel-stat" aria-label="Rebuild progress">
+        <p class="panel-title">rebuild workstreams</p>
+        <p class="stat-value">{{ shipped_count }}<span class="stat-of">/{{ workstreams | length }}</span></p>
+        <p class="stat-sub">shipped &middot; see status panel</p>
+      </section>
+
+      <section class="panel panel-activity" aria-label="Commit activity, last 12 weeks">
+        <p class="panel-title">commit activity &mdash; 12 weeks</p>
+        {% if metrics.weekly_bars %}
+        <div class="bar-chart" role="img" aria-label="Weekly commit counts for the last 12 weeks">
+          {% for height in metrics.weekly_bars %}
+          <span class="bar{% if loop.last %} bar--current{% endif %}" style="--h: {{ height }}%"></span>
+          {% endfor %}
         </div>
+        <p class="chart-legend">
+          <span>{{ metrics.weekly_commits | sum }} commits</span>
+          <span>peak {{ metrics.weekly_commits | max }}/wk</span>
+        </p>
+        {% else %}
+        <p class="panel-na">n/a &mdash; built without repository access</p>
+        {% endif %}
+      </section>
 
+      <section class="panel panel-status" aria-label="Rebuild status">
+        <p class="panel-title">status</p>
+        <ul class="status-list">
+          {% for item in workstreams %}
+          {% set state_class = {
+            'shipped': 'is-done', 'in progress': 'is-active'
+          }.get(item.state, 'is-queued') %}
+          {% set mark = {
+            'shipped': '&#10003;', 'in progress': '&#9656;'
+          }.get(item.state, '&#9675;') %}
+          <li class="status-item {{ state_class }}">
+            <span class="status-mark" aria-hidden="true">{{ mark | safe }}</span>
+            <span class="status-label">{{ item.label }}</span>
+            <span class="status-state">{{ item.state }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="panel panel-target" aria-label="Next deployment target">
+        <p class="panel-title">next deploy target</p>
+        <dl class="target-list">
+          {% for row in deploy_target %}
+          <div class="target-row">
+            <dt>{{ row.label }}</dt>
+            <dd>{{ row.value }}</dd>
+          </div>
+          {% endfor %}
+        </dl>
+      </section>
+
+      <section class="panel panel-contact" aria-label="Contact">
+        <p class="panel-title">contact</p>
+        <p class="contact-copy">Open to DevOps and platform work.</p>
         <div class="contact-row">
           <a class="contact-link" href="mailto:{{ config.email }}">
             Email me
@@ -91,8 +142,9 @@
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="dash-footer">
       <span>&copy; {{ current_year }} {{ config.brand_legal_name }}</span>
+      <span>values captured at build time &mdash; static by design</span>
     </footer>
   </div>
 </body>

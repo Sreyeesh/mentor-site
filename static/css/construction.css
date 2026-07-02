@@ -514,7 +514,6 @@ a {
     grid-column: span 12;
   }
 
-  .panel-status,
   .panel-stat {
     grid-column: span 6;
   }

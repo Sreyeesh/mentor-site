@@ -70,7 +70,7 @@
 
       <section class="panel panel-stat" aria-label="Rebuild progress">
         <p class="panel-title">rebuild workstreams</p>
-        <p class="stat-value">2<span class="stat-of">/4</span></p>
+        <p class="stat-value">{{ shipped_count }}<span class="stat-of">/{{ workstreams | length }}</span></p>
         <p class="stat-sub">shipped &middot; see status panel</p>
       </section>
 
@@ -94,48 +94,31 @@
       <section class="panel panel-status" aria-label="Rebuild status">
         <p class="panel-title">status</p>
         <ul class="status-list">
-          <li class="status-item is-done">
-            <span class="status-mark" aria-hidden="true">&#10003;</span>
-            <span class="status-label">design system</span>
-            <span class="status-state">shipped</span>
+          {% for item in workstreams %}
+          {% set state_class = {
+            'shipped': 'is-done', 'in progress': 'is-active'
+          }.get(item.state, 'is-queued') %}
+          {% set mark = {
+            'shipped': '&#10003;', 'in progress': '&#9656;'
+          }.get(item.state, '&#9675;') %}
+          <li class="status-item {{ state_class }}">
+            <span class="status-mark" aria-hidden="true">{{ mark | safe }}</span>
+            <span class="status-label">{{ item.label }}</span>
+            <span class="status-state">{{ item.state }}</span>
           </li>
-          <li class="status-item is-done">
-            <span class="status-mark" aria-hidden="true">&#10003;</span>
-            <span class="status-label">static build pipeline</span>
-            <span class="status-state">shipped</span>
-          </li>
-          <li class="status-item is-active">
-            <span class="status-mark" aria-hidden="true">&#9656;</span>
-            <span class="status-label">terraform + aws</span>
-            <span class="status-state">in progress</span>
-          </li>
-          <li class="status-item is-queued">
-            <span class="status-mark" aria-hidden="true">&#9675;</span>
-            <span class="status-label">cv, devops edition</span>
-            <span class="status-state">queued</span>
-          </li>
+          {% endfor %}
         </ul>
       </section>
 
       <section class="panel panel-target" aria-label="Next deployment target">
         <p class="panel-title">next deploy target</p>
         <dl class="target-list">
+          {% for row in deploy_target %}
           <div class="target-row">
-            <dt>compute</dt>
-            <dd>AWS EC2, free tier</dd>
+            <dt>{{ row.label }}</dt>
+            <dd>{{ row.value }}</dd>
           </div>
-          <div class="target-row">
-            <dt>provisioning</dt>
-            <dd>Terraform</dd>
-          </div>
-          <div class="target-row">
-            <dt>serving</dt>
-            <dd>gunicorn + nginx, Docker</dd>
-          </div>
-          <div class="target-row">
-            <dt>current host</dt>
-            <dd>GitHub Pages, static</dd>
-          </div>
+          {% endfor %}
         </dl>
       </section>
 

@@ -435,11 +435,35 @@ def _csv_safe(value: str) -> str:
     return value
 
 
+# Rebuild-board content for the construction dashboard. The workstream
+# stat panel derives shipped/total from this list — update it here only.
+CONSTRUCTION_PAGE = {
+    'workstreams': [
+        {'label': 'design system', 'state': 'shipped'},
+        {'label': 'static build pipeline', 'state': 'shipped'},
+        {'label': 'terraform + aws', 'state': 'in progress'},
+        {'label': 'cv, devops edition', 'state': 'queued'},
+    ],
+    'deploy_target': [
+        {'label': 'compute', 'value': 'AWS EC2, free tier'},
+        {'label': 'provisioning', 'value': 'Terraform'},
+        {'label': 'serving', 'value': 'gunicorn + nginx, Docker'},
+        {'label': 'current host', 'value': 'GitHub Pages, static'},
+    ],
+}
+
+
 @app.route('/')
 def home():
+    workstreams = CONSTRUCTION_PAGE['workstreams']
     return render_template(
         'construction.html',
         metrics=BUILD_METRICS,
+        workstreams=workstreams,
+        shipped_count=sum(
+            1 for item in workstreams if item['state'] == 'shipped'
+        ),
+        deploy_target=CONSTRUCTION_PAGE['deploy_target'],
         **build_page_context(page_slug='home'),
     )
 

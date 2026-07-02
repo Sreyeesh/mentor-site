@@ -58,7 +58,7 @@ Three distinct Flask applications share templates and content:
 ### Environment
 
 - Copy `.env.example` to `.env.dev` for local dev
-- Key vars: `SITE_NAME`, `SITE_EMAIL`, `SITE_LOCATION`, `SITE_GITHUB_URL`, `SITE_LINKEDIN_URL`, `BASE_PATH`, `GITHUB_PAGES_BASE_PATH`, `PLAUSIBLE_SCRIPT_URL`
+- Key vars: `SITE_NAME`, `SITE_EMAIL`, `SITE_LOCATION`, `SITE_GITHUB_URL`, `SITE_LINKEDIN_URL`, `BASE_PATH`, `GITHUB_PAGES_BASE_PATH`
 
 ## Git Commits
 

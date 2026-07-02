@@ -47,8 +47,6 @@ SITE_CONFIG = {
         'automation, and production technology for animation, games, and beyond.',
     ),
     'asset_version': os.getenv('ASSET_VERSION', '1'),
-    'plausible_script_url': os.getenv('PLAUSIBLE_SCRIPT_URL', ''),
-    'plausible_domain': os.getenv('PLAUSIBLE_DOMAIN', ''),
     'social_image': os.getenv('SITE_SOCIAL_IMAGE', 'images/SreyeeshProfilePic.jpg'),
     'github_url': os.getenv('SITE_GITHUB_URL', ''),
     'linkedin_url': os.getenv(

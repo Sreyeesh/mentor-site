@@ -15,11 +15,12 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 from blog import find_post, load_posts, normalize_media_path  # noqa: E402
-from metrics import collect_metrics  # noqa: E402
+from metrics import bar_heights, collect_metrics  # noqa: E402
 
 # Captured once at startup / freeze time — the static build bakes these
 # values into the HTML, so they are "as of last deploy" by design.
 BUILD_METRICS = collect_metrics()
+BUILD_METRICS['weekly_bars'] = bar_heights(BUILD_METRICS['weekly_commits'])
 
 
 def _icon(name, size=16, label=None):

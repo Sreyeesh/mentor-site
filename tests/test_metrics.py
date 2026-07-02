@@ -78,6 +78,20 @@ def test_weekly_counts_ignore_commits_outside_window(monkeypatch):
     assert sum(counts) == 0
 
 
+def test_bar_heights_scales_to_peak():
+    assert metrics.bar_heights([0, 5, 10]) == [6, 50, 100]
+
+
+def test_bar_heights_keeps_zero_weeks_visible():
+    heights = metrics.bar_heights([0, 0, 1])
+    assert heights == [6, 6, 100]
+
+
+def test_bar_heights_handles_missing_data():
+    assert metrics.bar_heights(None) is None
+    assert metrics.bar_heights([]) is None
+
+
 def test_git_helper_swallows_missing_binary(monkeypatch):
     def raise_missing(*args, **kwargs):
         raise FileNotFoundError('git not installed')

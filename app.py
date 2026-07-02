@@ -15,6 +15,11 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 from blog import find_post, load_posts, normalize_media_path  # noqa: E402
+from metrics import collect_metrics  # noqa: E402
+
+# Captured once at startup / freeze time — the static build bakes these
+# values into the HTML, so they are "as of last deploy" by design.
+BUILD_METRICS = collect_metrics()
 
 
 def _icon(name, size=16, label=None):
@@ -433,6 +438,7 @@ def _csv_safe(value: str) -> str:
 def home():
     return render_template(
         'construction.html',
+        metrics=BUILD_METRICS,
         **build_page_context(page_slug='home'),
     )
 

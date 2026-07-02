@@ -9,7 +9,12 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     curl \
+    git \
     && rm -rf /var/lib/apt/lists/*
+
+# The repo is volume-mounted and owned by the host user; the container
+# runs as root, so git's dubious-ownership guard would refuse it.
+RUN git config --global --add safe.directory /app
 
 # Copy requirements and install Python dependencies
 COPY requirements.txt .

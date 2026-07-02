@@ -36,13 +36,6 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..1000&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=config.asset_version) }}">
-    {% if config.plausible_script_url %}
-        <script
-            defer
-            src="{{ config.plausible_script_url }}"
-            {% if config.plausible_domain %}data-domain="{{ config.plausible_domain }}"{% endif %}
-        ></script>
-    {% endif %}
     {% block head_extra %}{% endblock %}
 </head>
 <body class="{{ body_class | default('') }}">

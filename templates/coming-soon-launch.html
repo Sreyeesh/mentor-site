@@ -19,10 +19,6 @@
     <meta name="twitter:title" content="{{ config.name }} — Coming Soon">
     <meta name="twitter:description" content="{{ config.meta_description }}">
 
-    {% if config.plausible_script_url and config.plausible_domain %}
-    <script defer data-domain="{{ config.plausible_domain }}" src="{{ config.plausible_script_url }}"></script>
-    {% endif %}
-
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/toucan-logo.png') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">

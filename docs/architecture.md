@@ -14,7 +14,6 @@
 | Linting | flake8 | 6.1.0 | Code style enforcement (max 88 chars) |
 | Environment | python-dotenv | 1.0.0 | Loads `.env` / `.env.dev` |
 | Containers | Docker + Docker Compose | — | Dev, production, authoring, and test services |
-| Analytics | Plausible (optional) | — | Privacy-friendly analytics via `PLAUSIBLE_SCRIPT_URL` |
 | CI/CD | GitHub Actions | — | Lint → test → freeze on PRs; manual deploy to Pages |
 
 ---

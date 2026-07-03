@@ -38,6 +38,7 @@ dist/
 .claude/
 .junie/
 .impeccable.md
+.impeccable/
 skills-lock.json
 
 # OS

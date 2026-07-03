@@ -17,7 +17,6 @@
   --muted: #8fa096;
   --accent: #5fd39a;
   --accent-dim: color-mix(in srgb, var(--accent) 16%, transparent);
-  --accent-ink: #0d1f16;
   --focus: #8ae4b8;
   --font-sans: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
@@ -377,70 +376,30 @@ a {
   row-gap: 0.9rem;
 }
 
-.contact-link {
-  min-height: 2.75rem;
-  padding: 0 1.1rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  border-radius: 2px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-size: 0.85rem;
-  font-weight: 700;
-  line-height: 1;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: opacity 180ms ease, transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.contact-link span {
-  font-size: 0.95rem;
-  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.contact-link:hover {
-  opacity: 0.88;
-}
-
-.contact-link:hover span {
-  transform: translate(0.16rem, -0.16rem);
-}
-
-.contact-link:active {
-  transform: translateY(1px);
-}
-
 .social-link {
+  width: 2.75rem;
+  height: 2.75rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding-bottom: 0.15rem;
-  border-bottom: 1px solid var(--line);
-  color: var(--text);
-  font-size: 0.85rem;
-  font-weight: 600;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--muted);
   text-decoration: none;
-  transition: border-color 180ms ease, color 180ms ease;
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
 }
 
-.social-link span {
-  color: var(--muted);
-  font-size: 0.78rem;
-  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+.social-icon {
+  display: block;
 }
 
 .social-link:hover {
   color: var(--accent);
   border-color: var(--accent);
-}
-
-.social-link:hover span {
-  transform: translate(0.12rem, -0.12rem);
+  background: var(--accent-dim);
 }
 
 .wordmark:focus-visible,
-.contact-link:focus-visible,
 .social-link:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;

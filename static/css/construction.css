@@ -9,15 +9,20 @@
 
 :root {
   color-scheme: dark;
-  --bg: #0e1310;
-  --panel: #141a16;
-  --panel-raised: #17201b;
-  --line: #26302a;
-  --text: #e6ebe7;
-  --muted: #8fa096;
-  --accent: #5fd39a;
-  --accent-dim: color-mix(in srgb, var(--accent) 16%, transparent);
-  --focus: #8ae4b8;
+  /* Grafana dark theme: cool near-black canvas, faint borders, light-gray text */
+  --bg: #111217;
+  --panel: #181b1f;
+  --panel-raised: #1f2329;
+  --line: #2c3235;
+  --text: #ccccdc;
+  --muted: #8e909a;
+  --accent: #3d71d9;
+  --accent-dim: color-mix(in srgb, var(--accent) 18%, transparent);
+  --focus: #6e9fff;
+  /* Threshold palette (Grafana classic): status states */
+  --good: #73bf69;
+  --warn: #ff9830;
+  --warn-dim: color-mix(in srgb, var(--warn) 18%, transparent);
   --font-sans: "DM Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 }
@@ -71,7 +76,8 @@ a {
 }
 
 .wordmark span {
-  color: var(--accent);
+  /* Lighter blue than --accent so the small bold wordmark clears WCAG AA */
+  color: var(--focus);
 }
 
 .dash-state,
@@ -296,11 +302,11 @@ a {
 }
 
 .status-item.is-done .status-mark {
-  color: var(--accent);
+  color: var(--good);
 }
 
 .status-item.is-active .status-mark {
-  color: var(--accent);
+  color: var(--warn);
 }
 
 .status-item.is-active .status-label {
@@ -310,8 +316,8 @@ a {
 .status-item.is-active .status-state {
   padding: 0.12rem 0.5rem;
   border-radius: 2px;
-  background: var(--accent-dim);
-  color: var(--accent);
+  background: var(--warn-dim);
+  color: var(--warn);
   font-weight: 600;
 }
 

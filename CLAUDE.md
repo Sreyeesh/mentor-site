@@ -23,16 +23,30 @@ To lint: `docker compose --profile ci run --rm tests flake8 .`
 
 Three distinct Flask applications share templates and content:
 
-1. **`app.py`** — Main public site. Routes: `/`, `/coming-soon/`, `/about/`, `/blog/<slug>/`, `/sitemap.xml`, `/robots.txt`. Site-wide config lives in `SITE_CONFIG` near the top, populated from env vars. `build_page_context()` assembles the template context for every `render_template` call. Page-level content data (`ABOUT_EXPERIENCE`, `COMING_SOON_TOPICS`) is defined as module-level constants and passed explicitly to templates — keep content out of templates.
+1. **`app.py`** — Main public site. Routes: `/` (construction dashboard), `/about/`, `/blog/`, `/blog/<slug>/`, `/privacy/`, `/sitemap.xml`, `/robots.txt`, and `POST /subscribe` (legacy, see below). Site-wide config lives in `SITE_CONFIG` near the top, populated from env vars. `build_page_context()` assembles the template context for every `render_template` call. Page-level content data is defined as module-level constants and passed explicitly to templates — keep content out of templates.
 
-2. **`freeze.py`** — Static site generator. Uses Flask's test client to render every route to HTML files in `build/`. Respects `GITHUB_PAGES_BASE_PATH` env var for subdirectory deployments. Production serves frozen output via Nginx or GitHub Pages.
+2. **`metrics.py`** — Build-time repo metrics for the construction dashboard (total commits, last commit, weekly commit sparkline). Runs `git` via subprocess; every value degrades to `None` (rendered as "n/a") when git or `.git` is missing. `BUILD_METRICS` is captured once at `app.py` import — on a static site, "telemetry" is whatever was true at build time. **Deploy gotcha:** the Pages workflow must check out with `fetch-depth: 0`, or a shallow clone bakes "total commits: 1".
 
-3. **`author_app.py`** + **`authoring_app/`** — CMS app (port 5001). Application factory in `authoring_app/__init__.py`. Routes in `authoring_app/views.py` under a Blueprint at `/authoring`. Handles Markdown post creation and media uploads. Not included in the public build.
+3. **`freeze.py`** — Static site generator. Uses Flask's test client to render every route to HTML files in `build/`. Requires `SITE_URL` to be set; respects `GITHUB_PAGES_BASE_PATH` for subdirectory deployments. Production serves frozen output via Nginx or GitHub Pages.
+
+4. **`author_app.py`** + **`authoring_app/`** — CMS app (port 5001). Application factory in `authoring_app/__init__.py`. Routes in `authoring_app/views.py` under a Blueprint at `/authoring`. Handles Markdown post creation and media uploads. Not included in the public build.
+
+### Current state: construction page
+
+The homepage (`/`) is a Grafana-style "site in transition" dashboard (`construction.html` + `CONSTRUCTION_PAGE` constant + `metrics.py` data) while the site pivots to a DevOps portfolio. The former CV homepage and mentoring holding page are retired.
+
+### Known dead code (pending cleanup)
+
+- `CV_PAGE` and `HOLDING_PAGE` constants in `app.py` (~290 lines) — referenced by nothing; `about.html` content is hardcoded
+- `POST /subscribe` + CSV subscriber helpers — only used by the retired holding page (and a frozen static site can't receive POSTs)
+- Templates with no rendering route: `holding.html`, `landing.html`, `index.html`, `coming-soon-launch.html`; plus `holding.css`, `landing.css`, `coming-soon.css`, `holding.js`
+
+Don't extend any of these; prefer deleting them (verify with grep + `make test` first).
 
 ### Templates
 
-- Most pages extend `base.html` using `{% block content %}`.
-- `coming-soon-full.html` is a **standalone** page — it does not extend `base.html` and has its own CSS (`static/css/coming-soon.css`).
+- Site pages (`about.html`, `privacy.html`, blog templates) extend `base.html` using `{% block content %}`.
+- `construction.html` is a **standalone** page — it does not extend `base.html`, has its own `<head>` (noindex, DM Sans + JetBrains Mono fonts), and uses `static/css/construction.css`.
 - No inline JavaScript in templates — all JS lives in `static/js/script.js`.
 
 ### CSS Architecture
@@ -42,32 +56,35 @@ Three distinct Flask applications share templates and content:
 - `components-core.css` — buttons, cards, home page, about page, company logos, contact form
 - `components-blog.css` — blog-specific styles
 
-`coming-soon.css` imports `base.css` directly and adds only page-specific styles. Do not duplicate CSS variables — add shared tokens to `base.css`.
+`construction.css` is standalone for the dashboard page. Do not duplicate CSS variables — add shared tokens to `base.css`. (`holding.css`, `landing.css`, `coming-soon.css` are dead — see above.)
 
 ### Blog Engine (`blog/`)
 
 - Posts are Markdown files in `content/posts/` with YAML front matter (`title`, `slug`, `date`, optional `hero_image`)
 - `blog/utils.py` handles parsing, rendering (with syntax highlighting), and metadata extraction
 - Content directory resolves via: `BLOG_CONTENT_DIR` → `AUTHORING_CONTENT_DIR` → `CONTENT_DIR` env vars → default `content/posts/`
+- `content/posts/` is currently empty — the engine works but has no published content yet
 
 ### Tests (`tests/`)
 
 - `conftest.py` reloads `app` fresh for each test run to avoid import-order side effects
-- Test files map 1:1 to source files: `test_app.py`, `test_authoring_app.py`, `test_blog_utils.py`, `test_freeze_utils.py`
+- Test files map 1:1 to source files: `test_app.py`, `test_authoring_app.py`, `test_blog_utils.py`, `test_freeze_utils.py`, `test_metrics.py`
 
 ### Environment
 
 - Copy `.env.example` to `.env.dev` for local dev
-- Key vars: `SITE_NAME`, `SITE_EMAIL`, `SITE_LOCATION`, `SITE_GITHUB_URL`, `SITE_LINKEDIN_URL`, `BASE_PATH`, `GITHUB_PAGES_BASE_PATH`
+- Key vars: `SITE_NAME`, `SITE_EMAIL`, `SITE_URL` (required by `freeze.py`), `SITE_GITHUB_URL`, `SITE_LINKEDIN_URL`, `BASE_PATH`, `GITHUB_PAGES_BASE_PATH`
 
 ## Git Commits
 
 Use [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): description`  
 Common types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 
+Never add `Co-Authored-By` trailers or attribution footers to commits or PR bodies.
+
 ## Branching Strategy
 
-- `master` is production — only updated via PR from `dev`
+- `master` is production — only updated via PR from `dev`; release PRs dev→master use **merge commits, never squash** (keeps histories aligned)
 - `dev` is the integration branch — all feature branches merge here
 - Branch naming: `type/issue-number-short-description` e.g. `feat/137-email-signup`
 - **Never** use auto-generated branch names like `claude/identify-project-bRvHV`
@@ -75,5 +92,5 @@ Common types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 ## CI/CD
 
 GitHub Actions runs lint → tests → static build on PRs to `master`.  
-Deployment to GitHub Pages is manual (`workflow_dispatch`).  
+Deployment to GitHub Pages is manual (`workflow_dispatch`); the deploy checkout uses `fetch-depth: 0` so baked metrics see full history.  
 Workflows: `.github/workflows/ci.yml` and `deploy-pages.yml`.

@@ -1,6 +1,6 @@
 # Toucan.ee — Sreyeesh Garimella
 
-Personal developer portfolio and blog. Built with Flask in development, deployed as a frozen static site.
+DevOps/cloud portfolio and blog for Sreyeesh Garimella. Built with Flask in development, deployed as a frozen static site. The homepage is currently a Grafana-style "under construction" dashboard while the site is rebuilt around infrastructure and ops work.
 
 → **Architecture & tech stack:** [`docs/architecture.md`](docs/architecture.md)
 → **Makefile reference:** [`docs/MAKEFILE.md`](docs/MAKEFILE.md)
@@ -9,16 +9,10 @@ Personal developer portfolio and blog. Built with Flask in development, deployed
 
 ## Quick Start
 
-**Docker (recommended):**
+All commands run inside Docker via the Makefile — never use local Python or a venv directly.
+
 ```bash
 make run
-# → http://localhost:5000
-```
-
-**Local Python:**
-```bash
-pip install -r requirements.txt
-python app.py
 # → http://localhost:5000
 ```
 
@@ -65,9 +59,8 @@ make deploy        # deploy to GitHub Pages
 ## Tests & Lint
 
 ```bash
-make test          # pytest in Docker
-pytest             # local
-flake8 .           # lint (max 88 chars)
+make test                                          # pytest in Docker
+docker compose --profile ci run --rm tests flake8 .   # lint (max 88 chars)
 ```
 
 ---
@@ -87,4 +80,10 @@ Copy `.env.example` to `.env` (or `.env.dev` for local dev). Key variables:
 
 ## Branching
 
-Trunk-based development — `master` is always releasable. Use short-lived feature branches and merge via PR. Conventional commits required.
+Trunk-based development with short-lived branches:
+
+- **`master`** — production; only updated via release PR from `dev` (merge commit, never squash).
+- **`dev`** — integration branch; all feature branches merge here.
+- **Feature branches** — branch off `dev`, named `type/issue-number-short-description` (e.g. `docs/317-update-readme`).
+
+[Conventional commits](https://www.conventionalcommits.org/) required (`type(scope): description`).

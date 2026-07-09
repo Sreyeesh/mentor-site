@@ -114,12 +114,12 @@ CONSTRUCTION_PAGE = {
     'workstreams': [
         {'label': 'design system', 'state': 'shipped'},
         {'label': 'static build pipeline', 'state': 'shipped'},
-        {'label': 'terraform + aws', 'state': 'in progress'},
+        {'label': 'self-hosted deployment (wsl2)', 'state': 'in progress'},
         {'label': 'cv, devops edition', 'state': 'queued'},
     ],
     'deploy_target': [
-        {'label': 'compute', 'value': 'AWS EC2, free tier'},
-        {'label': 'provisioning', 'value': 'Terraform'},
+        {'label': 'compute', 'value': 'WSL2, Windows laptop'},
+        {'label': 'provisioning', 'value': 'Ansible'},
         {'label': 'serving', 'value': 'gunicorn + nginx, Docker'},
         {'label': 'current host', 'value': 'GitHub Pages, static'},
     ],

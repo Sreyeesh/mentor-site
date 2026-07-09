@@ -15,6 +15,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 from blog import find_post, load_posts, normalize_media_path  # noqa: E402
 from config import SITE_CONFIG  # noqa: E402,F401 (re-exported for freeze.py)
 from config import build_absolute_url, build_page_context  # noqa: E402
+from content.construction import CONSTRUCTION_PAGE  # noqa: E402
 from metrics import bar_heights, collect_metrics  # noqa: E402
 
 # Captured once at startup / freeze time — the static build bakes these
@@ -35,23 +36,6 @@ def _icon(name, size=16, label=None):
 
 
 app.jinja_env.globals['icon'] = _icon
-
-# Rebuild-board content for the construction dashboard. The workstream
-# stat panel derives shipped/total from this list — update it here only.
-CONSTRUCTION_PAGE = {
-    'workstreams': [
-        {'label': 'design system', 'state': 'shipped'},
-        {'label': 'static build pipeline', 'state': 'shipped'},
-        {'label': 'self-hosted deployment (wsl2)', 'state': 'in progress'},
-        {'label': 'cv, devops edition', 'state': 'queued'},
-    ],
-    'deploy_target': [
-        {'label': 'compute', 'value': 'WSL2, Windows laptop'},
-        {'label': 'provisioning', 'value': 'Ansible'},
-        {'label': 'serving', 'value': 'gunicorn + nginx, Docker'},
-        {'label': 'current host', 'value': 'GitHub Pages, static'},
-    ],
-}
 
 
 def get_posts():

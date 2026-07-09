@@ -3,7 +3,7 @@ from datetime import datetime
 
 from dotenv import load_dotenv
 from flask import (
-    Flask, abort, g, redirect, render_template, request, url_for,
+    Flask, abort, g, render_template, request, url_for,
 )
 from markupsafe import Markup
 
@@ -43,7 +43,6 @@ SITE_CONFIG = {
         'Pipeline TD and Software Developer',
     ),
     'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
-    'phone': os.getenv('SITE_PHONE', '+372 5827 7155'),
     'site_url': os.getenv('SITE_URL', '').rstrip('/'),
     'meta_description': os.getenv(
         'SITE_META_DESCRIPTION',
@@ -59,7 +58,6 @@ SITE_CONFIG = {
     ),
     'imdb_url': os.getenv('SITE_IMDB_URL', ''),
     'location': os.getenv('SITE_LOCATION', 'Estonia'),
-    'launch_date': os.getenv('SITE_LAUNCH_DATE', '2026-05-31'),
 }
 
 NAV_LINKS = [

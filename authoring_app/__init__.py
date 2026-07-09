@@ -50,7 +50,6 @@ def create_app() -> Flask:
         SITE_NAME=os.getenv('SITE_NAME', 'Toucan.ee Preview'),
     )
 
-    # Ensure content directory exists so authors can start immediately
     content_dir: Path = app.config['CONTENT_DIR']
     content_dir.mkdir(parents=True, exist_ok=True)
 

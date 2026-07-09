@@ -23,7 +23,10 @@ To lint: `docker compose --profile ci run --rm tests flake8 .`
 
 Three distinct Flask applications share templates and content:
 
-1. **`app.py`** — Main public site. Routes: `/` (construction dashboard), `/about/`, `/blog/`, `/blog/<slug>/`, `/sitemap.xml`, `/robots.txt`. Site-wide config lives in `SITE_CONFIG` near the top, populated from env vars. `build_page_context()` assembles the template context for every `render_template` call. Page-level content data is defined as module-level constants and passed explicitly to templates — keep content out of templates.
+1. **`app.py`** — Main public site. Routes: `/` (construction dashboard), `/about/`, `/blog/`, `/blog/<slug>/`, `/sitemap.xml`, `/robots.txt`. Flask init, the `icon()` Jinja global, `BUILD_METRICS`, `get_posts()`, and the route views only — config and content live in separate modules (below) and are imported in.
+
+   - **`config.py`** — `SITE_CONFIG` (populated from env vars), `NAV_LINKS`, `SITE_LINKS`, and the `build_absolute_url()` / `build_social_image_url()` / `build_page_context()` helpers. `build_page_context()` assembles the template context for every `render_template` call. `app.py` re-exports `SITE_CONFIG` for `freeze.py`.
+   - **`content/`** — page-level content as module-level constants (e.g. `content/construction.py`'s `CONSTRUCTION_PAGE`), passed explicitly to templates — keep content out of templates.
 
 2. **`metrics.py`** — Build-time repo metrics for the construction dashboard (total commits, last commit, weekly commit sparkline). Runs `git` via subprocess; every value degrades to `None` (rendered as "n/a") when git or `.git` is missing. `BUILD_METRICS` is captured once at `app.py` import — on a static site, "telemetry" is whatever was true at build time. **Deploy gotcha:** the Pages workflow must check out with `fetch-depth: 0`, or a shallow clone bakes "total commits: 1".
 

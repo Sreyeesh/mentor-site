@@ -137,7 +137,6 @@ def load_posts(
         except Exception as exc:  # noqa: BLE001 - surface file errors
             print(f"❌ Failed to parse {path}: {exc}")
 
-    # Sort by date (newest first), regardless of featured status
     posts.sort(
         key=lambda item: item.get('date') or datetime.min,
         reverse=True,

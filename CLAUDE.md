@@ -23,7 +23,7 @@ To lint: `docker compose --profile ci run --rm tests flake8 .`
 
 Three distinct Flask applications share templates and content:
 
-1. **`app.py`** — Main public site. Routes: `/` (construction dashboard), `/about/`, `/blog/`, `/blog/<slug>/`, `/privacy/`, `/sitemap.xml`, `/robots.txt`, and `POST /subscribe` (legacy, see below). Site-wide config lives in `SITE_CONFIG` near the top, populated from env vars. `build_page_context()` assembles the template context for every `render_template` call. Page-level content data is defined as module-level constants and passed explicitly to templates — keep content out of templates.
+1. **`app.py`** — Main public site. Routes: `/` (construction dashboard), `/about/`, `/blog/`, `/blog/<slug>/`, `/sitemap.xml`, `/robots.txt`. Site-wide config lives in `SITE_CONFIG` near the top, populated from env vars. `build_page_context()` assembles the template context for every `render_template` call. Page-level content data is defined as module-level constants and passed explicitly to templates — keep content out of templates.
 
 2. **`metrics.py`** — Build-time repo metrics for the construction dashboard (total commits, last commit, weekly commit sparkline). Runs `git` via subprocess; every value degrades to `None` (rendered as "n/a") when git or `.git` is missing. `BUILD_METRICS` is captured once at `app.py` import — on a static site, "telemetry" is whatever was true at build time. **Deploy gotcha:** the Pages workflow must check out with `fetch-depth: 0`, or a shallow clone bakes "total commits: 1".
 
@@ -35,17 +35,9 @@ Three distinct Flask applications share templates and content:
 
 The homepage (`/`) is a Grafana-style "site in transition" dashboard (`construction.html` + `CONSTRUCTION_PAGE` constant + `metrics.py` data) while the site pivots to a DevOps portfolio. The former CV homepage and mentoring holding page are retired.
 
-### Known dead code (pending cleanup)
-
-- `CV_PAGE` and `HOLDING_PAGE` constants in `app.py` (~290 lines) — referenced by nothing; `about.html` content is hardcoded
-- `POST /subscribe` + CSV subscriber helpers — only used by the retired holding page (and a frozen static site can't receive POSTs)
-- Templates with no rendering route: `holding.html`, `landing.html`, `index.html`, `coming-soon-launch.html`; plus `holding.css`, `landing.css`, `coming-soon.css`, `holding.js`
-
-Don't extend any of these; prefer deleting them (verify with grep + `make test` first).
-
 ### Templates
 
-- Site pages (`about.html`, `privacy.html`, blog templates) extend `base.html` using `{% block content %}`.
+- Site pages (`about.html`, blog templates) extend `base.html` using `{% block content %}`.
 - `construction.html` is a **standalone** page — it does not extend `base.html`, has its own `<head>` (noindex, DM Sans + JetBrains Mono fonts), and uses `static/css/construction.css`.
 - No inline JavaScript in templates — all JS lives in `static/js/script.js`.
 
@@ -56,7 +48,7 @@ Don't extend any of these; prefer deleting them (verify with grep + `make test` 
 - `components-core.css` — buttons, cards, home page, about page, company logos, contact form
 - `components-blog.css` — blog-specific styles
 
-`construction.css` is standalone for the dashboard page. Do not duplicate CSS variables — add shared tokens to `base.css`. (`holding.css`, `landing.css`, `coming-soon.css` are dead — see above.)
+`construction.css` is standalone for the dashboard page. Do not duplicate CSS variables — add shared tokens to `base.css`.
 
 ### Blog Engine (`blog/`)
 

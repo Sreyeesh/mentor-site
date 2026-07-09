@@ -87,6 +87,8 @@ services:
     working_dir: /app
     environment:
       - PYTHONDONTWRITEBYTECODE=1
+    env_file:
+      - .env.dev
     restart: "no"
 
 networks:

@@ -18,13 +18,10 @@ SITE_CONFIG = {
         'CV and portfolio for Sreyeesh Garimella: Python tooling, workflow '
         'automation, and production technology for animation, games, and beyond.',
     ),
-    'asset_version': os.getenv('ASSET_VERSION', '1'),
-    'social_image': os.getenv('SITE_SOCIAL_IMAGE', 'images/SreyeeshProfilePic.jpg'),
-    'github_url': os.getenv('SITE_GITHUB_URL', 'https://github.com/Sreyeesh'),
-    'linkedin_url': os.getenv(
-        'SITE_LINKEDIN_URL',
-        'https://www.linkedin.com/in/sreyeeshgarimella',
-    ),
+    'asset_version': os.getenv('ASSET_VERSION', ''),
+    'social_image': os.getenv('SITE_SOCIAL_IMAGE', ''),
+    'github_url': os.getenv('SITE_GITHUB_URL', ''),
+    'linkedin_url': os.getenv('SITE_LINKEDIN_URL', ''),
     'imdb_url': os.getenv('SITE_IMDB_URL', ''),
     'location': os.getenv('SITE_LOCATION', 'Estonia'),
 }

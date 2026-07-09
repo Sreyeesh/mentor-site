@@ -143,15 +143,6 @@ def home():
     )
 
 
-@app.route('/privacy/')
-def privacy():
-    """Standalone privacy notice for the waitlist signup (frozen for Pages)."""
-    return render_template(
-        'privacy.html',
-        **build_page_context(page_slug='privacy'),
-    )
-
-
 @app.route('/blog/')
 def blog_index():
     return render_template(

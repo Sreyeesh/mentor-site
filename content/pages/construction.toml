@@ -24,7 +24,7 @@ unavailable = "repo data unavailable"
 
 [stats.rebuild_progress]
 label = "rebuild workstreams"
-subtext = "shipped · see status panel"
+subtext = "current snapshot · see status panel"
 
 [activity]
 title = "commit activity — 12 weeks"
@@ -37,7 +37,7 @@ peak_label = "peak"
 title = "status"
 
 [target]
-title = "next deploy target"
+title = "current deployment"
 
 [contact]
 title = "contact"
@@ -55,25 +55,25 @@ label = "static build pipeline"
 state = "shipped"
 
 [[workstreams]]
-label = "self-hosted deployment (wsl2)"
-state = "in progress"
+label = "content/config cleanup"
+state = "shipped"
 
 [[workstreams]]
-label = "cv, devops edition"
-state = "queued"
+label = "production deploy path"
+state = "shipped"
 
 [[deploy_target]]
-label = "compute"
-value = "WSL2, Windows laptop"
+label = "production host"
+value = "GitHub Pages"
 
 [[deploy_target]]
-label = "provisioning"
-value = "Ansible"
+label = "site format"
+value = "frozen static HTML"
 
 [[deploy_target]]
-label = "serving"
-value = "gunicorn + nginx, Docker"
+label = "deploy trigger"
+value = "manual GitHub Actions workflow"
 
 [[deploy_target]]
-label = "current host"
-value = "GitHub Pages, static"
+label = "local preview"
+value = "Docker + nginx"

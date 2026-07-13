@@ -27,7 +27,7 @@ Toucan.ee workflow targets:
 | `make run` / `make docker-dev` | `docker compose --profile dev up toucan-ee-dev` | Launch the Flask dev server with live reload on port 5000. Uses `.env.dev` by default. |
 | `make freeze`   | `ENV_FILE=.env docker compose --profile dev run --rm toucan-ee-dev python freeze.py` | Generate the static site with production env vars inside the dev container. Automatically runs before `make docker-build`. |
 | `make test`     | `docker compose run --rm tests` | Execute the Pytest suite inside the dedicated test container. |
-| `make docker-build` | `docker build … -t toucan-ee .` (after `make freeze`) | Create the production image. Pulls `BASE_PATH` from `.env`. |
+| `make docker-build` | `docker build … -t toucan-ee .` (after `make freeze`) | Create the production image. Pulls `BASE_PATH` and `SITE_URL` from `.env`. |
 | `make docker-up` | `docker compose up --build toucan-ee` | Run the production-style nginx container locally on port 3000. Good for staging/testing the static build. |
 | `make authoring` | `docker compose --profile authoring up authoring-tool` | Start the CMS/authoring tool on port 5001 to edit blog posts via the UI. |
 | `make down`     | `docker compose down` | Stop every running service defined in `docker-compose.yml`. |

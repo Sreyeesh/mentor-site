@@ -1,5 +1,4 @@
 from pathlib import Path
-from functools import lru_cache
 import tomllib
 from typing import Any
 
@@ -7,7 +6,6 @@ from typing import Any
 CONTENT_ROOT = Path(__file__).resolve().parent
 
 
-@lru_cache(maxsize=None)
 def load_toml(relative_path: str) -> dict[str, Any]:
     path = CONTENT_ROOT / relative_path
     return tomllib.loads(path.read_text(encoding='utf-8'))

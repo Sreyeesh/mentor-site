@@ -15,6 +15,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 from blog import find_post, load_posts, normalize_media_path  # noqa: E402
 from config import SITE_CONFIG  # noqa: E402,F401 (re-exported for freeze.py)
 from config import build_absolute_url, build_page_context  # noqa: E402
+from content.loader import load_page  # noqa: E402
 from metrics import bar_heights, collect_metrics  # noqa: E402
 
 # Captured once at startup / freeze time — the static build bakes these
@@ -45,8 +46,10 @@ def get_posts():
 
 @app.route('/')
 def home():
+    construction = load_page('construction')
     return render_template(
         'construction.html',
+        construction=construction,
         metrics=BUILD_METRICS,
         **build_page_context(page_slug='home'),
     )

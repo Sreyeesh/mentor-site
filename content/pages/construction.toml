@@ -1,0 +1,79 @@
+[meta]
+title_suffix = "Site in transition"
+description = "toucan.ee is being rebuilt around DevOps and platform engineering. Live rebuild board — a new, more focused site is on the way."
+og_description = "toucan.ee is being rebuilt around DevOps and platform engineering."
+
+[topbar]
+state_label = "Site in transition — rebuild board"
+snapshot_prefix = "snapshot"
+static_snapshot = "static snapshot"
+
+[intro]
+headline_light = "Changing direction."
+headline_strong = "Building with intent."
+role = "DevOps and platform engineering"
+body = "This board is real: the numbers below are read from this site’s own repository every time it is built."
+
+[stats.total_commits]
+label = "total commits"
+subtext = "since first commit"
+
+[stats.last_activity]
+label = "last activity"
+unavailable = "repo data unavailable"
+
+[stats.rebuild_progress]
+label = "rebuild workstreams"
+subtext = "shipped · see status panel"
+
+[activity]
+title = "commit activity — 12 weeks"
+aria_label = "Weekly commit counts for the last 12 weeks"
+unavailable = "n/a — built without repository access"
+commits_label = "commits"
+peak_label = "peak"
+
+[status]
+title = "status"
+
+[target]
+title = "next deploy target"
+
+[contact]
+title = "contact"
+copy = "Open to DevOps and platform work."
+
+[footer]
+snapshot_note = "values captured at build time — static by design"
+
+[[workstreams]]
+label = "design system"
+state = "shipped"
+
+[[workstreams]]
+label = "static build pipeline"
+state = "shipped"
+
+[[workstreams]]
+label = "self-hosted deployment (wsl2)"
+state = "in progress"
+
+[[workstreams]]
+label = "cv, devops edition"
+state = "queued"
+
+[[deploy_target]]
+label = "compute"
+value = "WSL2, Windows laptop"
+
+[[deploy_target]]
+label = "provisioning"
+value = "Ansible"
+
+[[deploy_target]]
+label = "serving"
+value = "gunicorn + nginx, Docker"
+
+[[deploy_target]]
+label = "current host"
+value = "GitHub Pages, static"

@@ -41,7 +41,7 @@ title = "next deploy target"
 
 [contact]
 title = "contact"
-copy = "Open to DevOps and platform work."
+body = "Open to DevOps and platform work."
 
 [footer]
 snapshot_note = "values captured at build time — static by design"

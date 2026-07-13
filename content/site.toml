@@ -1,0 +1,35 @@
+[site]
+name = "Sreyeesh Garimella"
+brand_name = "Toucan Studios"
+brand_legal_name = "Toucan Studios OÜ"
+tagline = "Pipeline TD and Software Developer"
+email = "toucan.sg@gmail.com"
+site_url = ""
+meta_description = "CV and portfolio for Sreyeesh Garimella: Python tooling, workflow automation, and production technology for animation, games, and beyond."
+asset_version = ""
+social_image = ""
+github_url = ""
+linkedin_url = ""
+imdb_url = ""
+location = "Estonia"
+preview_name = "Toucan.ee Preview"
+
+[[nav_links]]
+label = "Home"
+href = "/"
+slug = "home"
+
+[[nav_links]]
+label = "Writing"
+href = "/blog/"
+slug = "blog"
+
+[[nav_links]]
+label = "About"
+href = "/about/"
+slug = "about"
+
+[site_links]
+home = "/"
+blog = "/blog/"
+about = "/about/"

@@ -10,6 +10,7 @@ from typing import Any, Dict, Iterable, List, Optional
 import frontmatter
 import markdown
 
+from content.loader import message
 
 _DEFAULT_CONTENT_DIR = Path('content/posts')
 
@@ -103,7 +104,7 @@ def parse_post(path: Path) -> Dict[str, Any]:
         excerpt += '…'
 
     return {
-        'title': metadata.get('title', 'Untitled Post'),
+        'title': metadata.get('title', message('blog', 'untitled_post')),
         'slug': slug,
         'date': published_at,
         'date_display': (
@@ -135,7 +136,7 @@ def load_posts(
         try:
             posts.append(parse_post(path))
         except Exception as exc:  # noqa: BLE001 - surface file errors
-            print(f"❌ Failed to parse {path}: {exc}")
+            print(message('blog', 'parse_failed', path=path, error=exc))
 
     posts.sort(
         key=lambda item: item.get('date') or datetime.min,

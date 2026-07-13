@@ -1,18 +1,23 @@
+{% set shipped_count = construction.workstreams
+  | selectattr('state', 'equalto', 'shipped')
+  | list
+  | length
+%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ config.brand_name }} | Site in transition</title>
-  <meta name="description" content="toucan.ee is being rebuilt around DevOps and platform engineering. Live rebuild board — a new, more focused site is on the way." />
+  <title>{{ config.brand_name }} | {{ construction.meta.title_suffix }}</title>
+  <meta name="description" content="{{ construction.meta.description }}" />
 
   <link rel="canonical" href="{{ canonical_url }}" />
   <meta name="robots" content="noindex, nofollow" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="{{ config.brand_name }}" />
-  <meta property="og:title" content="{{ config.brand_name }} | Site in transition" />
-  <meta property="og:description" content="toucan.ee is being rebuilt around DevOps and platform engineering." />
+  <meta property="og:title" content="{{ config.brand_name }} | {{ construction.meta.title_suffix }}" />
+  <meta property="og:description" content="{{ construction.meta.og_description }}" />
   <meta property="og:url" content="{{ canonical_url }}" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,13 +33,13 @@
       </a>
       <p class="dash-state">
         <span class="live-dot" aria-hidden="true"></span>
-        Site in transition &mdash; rebuild board
+        {{ construction.topbar.state_label }}
       </p>
       <p class="dash-updated">
         {% if metrics.available %}
-        snapshot {{ metrics.generated_at.strftime('%Y-%m-%d %H:%M UTC') }}
+        {{ construction.topbar.snapshot_prefix }} {{ metrics.generated_at.strftime('%Y-%m-%d %H:%M UTC') }}
         {% else %}
-        static snapshot
+        {{ construction.topbar.static_snapshot }}
         {% endif %}
       </p>
     </header>
@@ -42,59 +47,58 @@
     <main class="dash-grid">
       <section class="panel panel-intro" aria-labelledby="construction-title">
         <h1 id="construction-title">
-          <span class="headline-light">Changing direction.</span>
-          <strong>Building with intent.</strong>
+          <span class="headline-light">{{ construction.intro.headline_light }}</span>
+          <strong>{{ construction.intro.headline_strong }}</strong>
         </h1>
         <p class="lede">
-          I&rsquo;m {{ config.name }} &mdash; DevOps and platform engineering.
-          This board is real: the numbers below are read from this site&rsquo;s
-          own repository every time it is built.
+          I&rsquo;m {{ config.name }} &mdash; {{ construction.intro.role }}.
+          {{ construction.intro.body }}
         </p>
       </section>
 
       <section class="panel panel-stat" aria-label="Total commits">
-        <p class="panel-title">total commits</p>
+        <p class="panel-title">{{ construction.stats.total_commits.label }}</p>
         <p class="stat-value">{{ metrics.total_commits if metrics.available else 'n/a' }}</p>
-        <p class="stat-sub">since first commit</p>
+        <p class="stat-sub">{{ construction.stats.total_commits.subtext }}</p>
       </section>
 
       <section class="panel panel-stat" aria-label="Last activity">
-        <p class="panel-title">last activity</p>
+        <p class="panel-title">{{ construction.stats.last_activity.label }}</p>
         <p class="stat-value stat-value--date">
           {{ metrics.last_commit.strftime('%b %d') if metrics.last_commit else 'n/a' }}
         </p>
         <p class="stat-sub">
-          {{ metrics.last_commit.strftime('%Y, %H:%M %z') if metrics.last_commit else 'repo data unavailable' }}
+          {{ metrics.last_commit.strftime('%Y, %H:%M %z') if metrics.last_commit else construction.stats.last_activity.unavailable }}
         </p>
       </section>
 
       <section class="panel panel-stat" aria-label="Rebuild progress">
-        <p class="panel-title">rebuild workstreams</p>
-        <p class="stat-value">{{ shipped_count }}<span class="stat-of">/{{ workstreams | length }}</span></p>
-        <p class="stat-sub">shipped &middot; see status panel</p>
+        <p class="panel-title">{{ construction.stats.rebuild_progress.label }}</p>
+        <p class="stat-value">{{ shipped_count }}<span class="stat-of">/{{ construction.workstreams | length }}</span></p>
+        <p class="stat-sub">{{ construction.stats.rebuild_progress.subtext }}</p>
       </section>
 
       <section class="panel panel-activity" aria-label="Commit activity, last 12 weeks">
-        <p class="panel-title">commit activity &mdash; 12 weeks</p>
+        <p class="panel-title">{{ construction.activity.title }}</p>
         {% if metrics.weekly_bars %}
-        <div class="bar-chart" role="img" aria-label="Weekly commit counts for the last 12 weeks">
+        <div class="bar-chart" role="img" aria-label="{{ construction.activity.aria_label }}">
           {% for height in metrics.weekly_bars %}
           <span class="bar{% if loop.last %} bar--current{% endif %}" style="--h: {{ height }}%"></span>
           {% endfor %}
         </div>
         <p class="chart-legend">
-          <span>{{ metrics.weekly_commits | sum }} commits</span>
-          <span>peak {{ metrics.weekly_commits | max }}/wk</span>
+          <span>{{ metrics.weekly_commits | sum }} {{ construction.activity.commits_label }}</span>
+          <span>{{ construction.activity.peak_label }} {{ metrics.weekly_commits | max }}/wk</span>
         </p>
         {% else %}
-        <p class="panel-na">n/a &mdash; built without repository access</p>
+        <p class="panel-na">{{ construction.activity.unavailable }}</p>
         {% endif %}
       </section>
 
       <section class="panel panel-status" aria-label="Rebuild status">
-        <p class="panel-title">status</p>
+        <p class="panel-title">{{ construction.status.title }}</p>
         <ul class="status-list">
-          {% for item in workstreams %}
+          {% for item in construction.workstreams %}
           {% set state_class = {
             'shipped': 'is-done', 'in progress': 'is-active'
           }.get(item.state, 'is-queued') %}
@@ -111,9 +115,9 @@
       </section>
 
       <section class="panel panel-target" aria-label="Next deployment target">
-        <p class="panel-title">next deploy target</p>
+        <p class="panel-title">{{ construction.target.title }}</p>
         <dl class="target-list">
-          {% for row in deploy_target %}
+          {% for row in construction.deploy_target %}
           <div class="target-row">
             <dt>{{ row.label }}</dt>
             <dd>{{ row.value }}</dd>
@@ -123,8 +127,8 @@
       </section>
 
       <section class="panel panel-contact" aria-label="Contact">
-        <p class="panel-title">contact</p>
-        <p class="contact-copy">Open to DevOps and platform work.</p>
+        <p class="panel-title">{{ construction.contact.title }}</p>
+        <p class="contact-copy">{{ construction.contact.body }}</p>
         <div class="contact-row">
           <a class="social-link" href="mailto:{{ config.email }}" aria-label="Email">
             <svg class="social-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false">
@@ -149,7 +153,7 @@
 
     <footer class="dash-footer">
       <span>&copy; {{ current_year }} {{ config.brand_legal_name }}</span>
-      <span>values captured at build time &mdash; static by design</span>
+      <span>{{ construction.footer.snapshot_note }}</span>
     </footer>
   </div>
 </body>

@@ -33,6 +33,7 @@ test:
 docker-build: freeze
 	$(DOCKER) build \
 		--build-arg BASE_PATH=$$(grep -m1 BASE_PATH .env | cut -d'=' -f2-) \
+		--build-arg SITE_URL=$$(grep -m1 SITE_URL .env | cut -d'=' -f2-) \
 		-t toucan-ee .
 
 docker-up:

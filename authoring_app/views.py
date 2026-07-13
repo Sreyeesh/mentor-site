@@ -306,7 +306,7 @@ def preview_post(slug: str) -> str:
         'authoring/preview.html',
         post=post_data,
         hero_image_url=hero_image_url,
-        site_name=current_app.config.get('SITE_NAME', 'Toucan.ee'),
+        site_name=current_app.config['SITE_NAME'],
     )
 
 

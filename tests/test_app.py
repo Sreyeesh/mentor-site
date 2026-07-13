@@ -16,6 +16,8 @@ def test_home_page_is_construction_placeholder(client):
     assert b'Site in transition' in body
     assert b'<img' not in body
     assert body.count(b'mailto:') == 1
+    assert b'Open to DevOps and platform work.' in body
+    assert b'<built-in method copy' not in body
     # It must not be the old mentoring waitlist or CV/portfolio homepage.
     assert b'1-on-1 Mentoring' not in body
     assert b'waitlist' not in body

@@ -3,6 +3,7 @@ FROM python:3.11-slim
 
 # Allow overriding the URL base path (useful for GitHub Pages)
 ARG BASE_PATH=/mentor-site
+ARG SITE_URL=
 
 # Set working directory
 WORKDIR /app
@@ -15,6 +16,7 @@ ENV FLASK_ENV=production
 ENV PYTHONPATH=/app
 ENV BASE_PATH=${BASE_PATH}
 ENV GITHUB_PAGES_BASE_PATH=${BASE_PATH}
+ENV SITE_URL=${SITE_URL}
 
 # Install system dependencies
 RUN apt-get update \

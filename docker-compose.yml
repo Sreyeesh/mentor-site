@@ -4,6 +4,7 @@ services:
       context: .
       args:
         BASE_PATH: ${BASE_PATH:-/}
+        SITE_URL: ${SITE_URL:-}
     container_name: toucan-ee-prod
     ports:
       # Map configurable host port to container port 80 (nginx)

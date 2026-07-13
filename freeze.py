@@ -3,6 +3,7 @@ import shutil
 from pathlib import Path
 
 from app import SITE_CONFIG, app
+from content.loader import message
 
 
 BUILD_DIR = Path('build')
@@ -11,11 +12,7 @@ BUILD_DIR = Path('build')
 def require_site_url_for_static_build() -> None:
     if SITE_CONFIG['site_url']:
         return
-    raise SystemExit(
-        'ERROR: SITE_URL is not set. Canonical URLs in the static build '
-        'would point to localhost. Set SITE_URL to the deployed origin '
-        'before running freeze.py.'
-    )
+    raise SystemExit(message('freeze', 'missing_site_url'))
 
 
 def write_file(destination: Path, content: str) -> None:
@@ -50,14 +47,22 @@ def build_static_site() -> None:
             for route, destination in static_routes:
                 response = client.get(route, follow_redirects=True)
                 if response.status_code != 200:
-                    raise RuntimeError(f'Failed to render {route}.')
+                    raise RuntimeError(
+                        message('freeze', 'render_failed', route=route)
+                    )
                 write_file(destination, response.data.decode('utf-8'))
-                print(f"✅ Generated {destination.relative_to(BUILD_DIR)}")
+                print(
+                    message(
+                        'freeze',
+                        'generated',
+                        path=destination.relative_to(BUILD_DIR),
+                    )
+                )
 
     write_file(BUILD_DIR / '.nojekyll', '')
     app.config['SITE_BASE_PATH'] = original_base_path
 
-    print("\nStatic site generated in 'build' directory.")
+    print(f"\n{message('freeze', 'complete')}")
 
 
 if __name__ == '__main__':

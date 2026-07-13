@@ -19,6 +19,7 @@ from urllib.parse import urljoin, urlparse
 from werkzeug.utils import secure_filename
 
 from blog.utils import normalize_media_path, parse_post
+from content.loader import message
 
 bp = Blueprint(
     'authoring',
@@ -75,7 +76,15 @@ def load_all_posts() -> List[Dict[str, object]]:
             )
             posts.append(metadata)
         except Exception as exc:  # noqa: BLE001
-            flash(f'Failed to read {path.name}: {exc}', 'error')
+            flash(
+                message(
+                    'authoring',
+                    'read_failed',
+                    filename=path.name,
+                    error=exc,
+                ),
+                'error',
+            )
     posts.sort(
         key=lambda item: item.get('date') or datetime.min.isoformat(),
         reverse=True,
@@ -151,11 +160,11 @@ def edit_post(slug: Optional[str] = None) -> str:
 
         errors: List[str] = []
         if not title:
-            errors.append('Title is required.')
+            errors.append(message('authoring', 'title_required'))
         if not slug_value:
-            errors.append('Slug is required.')
+            errors.append(message('authoring', 'slug_required'))
         if not content:
-            errors.append('Content is required.')
+            errors.append(message('authoring', 'content_required'))
 
         original_slug = form.get('original_slug') or slug
         content_dir = get_content_dir()
@@ -164,7 +173,9 @@ def edit_post(slug: Optional[str] = None) -> str:
             not post
             or (original_slug and slug_value != original_slug)
         ) and target_path.exists():
-            errors.append(f'A post with slug "{slug_value}" already exists.')
+            errors.append(
+                message('authoring', 'duplicate_slug', slug=slug_value)
+            )
 
         if errors:
             for error in errors:
@@ -194,7 +205,7 @@ def edit_post(slug: Optional[str] = None) -> str:
             content=content,
             original_slug=original_slug,
         )
-        flash(f'Post "{title}" saved successfully.', 'success')
+        flash(message('authoring', 'saved', title=title), 'success')
         return redirect(url_for('authoring.dashboard'))
 
     if post:
@@ -242,21 +253,23 @@ def upload_media() -> str:
 
     upload = request.files.get('media_file')
     if upload is None or not upload.filename:
-        flash('Please choose a file to upload.', 'error')
+        flash(message('authoring', 'choose_file'), 'error')
         return redirect(next_url)
 
     filename = secure_filename(upload.filename)
     if not filename:
-        flash('The selected filename is not valid.', 'error')
+        flash(message('authoring', 'invalid_filename'), 'error')
         return redirect(next_url)
 
     extension = Path(filename).suffix.lower().lstrip('.')
     if extension not in allowed_media_extensions():
         allowed_list = ', '.join(sorted(allowed_media_extensions()))
         flash(
-            (
-                f'Unsupported file type "{extension}". Allowed extensions: '
-                f'{allowed_list}.'
+            message(
+                'authoring',
+                'unsupported_file_type',
+                extension=extension,
+                allowed_list=allowed_list,
             ),
             'error',
         )
@@ -278,10 +291,7 @@ def upload_media() -> str:
 
     media_url = build_media_url(candidate)
     flash(
-        (
-            'Uploaded successfully! Use '
-            f'"{media_url}" in your post for images, video, or audio embeds.'
-        ),
+        message('authoring', 'uploaded', media_url=media_url),
         'success',
     )
     return redirect(next_url)
@@ -291,13 +301,13 @@ def upload_media() -> str:
 def preview_post(slug: str) -> str:
     path = get_content_dir() / f'{slug}.md'
     if not path.exists():
-        flash(f'Unable to find post "{slug}".', 'error')
+        flash(message('authoring', 'preview_missing', slug=slug), 'error')
         return redirect(url_for('authoring.dashboard'))
 
     try:
         post_data = parse_post(path)
     except Exception as exc:  # noqa: BLE001
-        flash(f'Unable to render preview: {exc}', 'error')
+        flash(message('authoring', 'preview_failed', error=exc), 'error')
         return redirect(url_for('authoring.dashboard'))
 
     hero_image_url = _resolve_hero_image_url(post_data.get('hero_image'))
@@ -332,9 +342,9 @@ def delete_post(slug: str) -> str:
     path = get_content_dir() / f'{slug}.md'
     if path.exists():
         path.unlink()
-        flash(f'Post "{slug}" deleted.', 'success')
+        flash(message('authoring', 'deleted', slug=slug), 'success')
     else:
-        flash(f'Post "{slug}" not found.', 'error')
+        flash(message('authoring', 'delete_missing', slug=slug), 'error')
     return redirect(url_for('authoring.dashboard'))
 
 

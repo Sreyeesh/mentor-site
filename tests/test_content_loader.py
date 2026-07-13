@@ -1,4 +1,4 @@
-from content.loader import load_page, load_toml
+from content.loader import load_page, load_toml, message
 
 
 def test_load_toml_reads_content_file():
@@ -24,3 +24,13 @@ def test_site_content_contains_defaults_and_nav():
         'href': '/',
         'slug': 'home',
     }
+
+
+def test_message_formats_values():
+    result = message(
+        'authoring',
+        'duplicate_slug',
+        slug='example-post',
+    )
+
+    assert result == 'A post with slug "example-post" already exists.'

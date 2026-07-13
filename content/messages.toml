@@ -1,0 +1,25 @@
+[authoring]
+read_failed = "Failed to read {filename}: {error}"
+title_required = "Title is required."
+slug_required = "Slug is required."
+content_required = "Content is required."
+duplicate_slug = "A post with slug \"{slug}\" already exists."
+saved = "Post \"{title}\" saved successfully."
+choose_file = "Please choose a file to upload."
+invalid_filename = "The selected filename is not valid."
+unsupported_file_type = "Unsupported file type \"{extension}\". Allowed extensions: {allowed_list}."
+uploaded = "Uploaded successfully! Use \"{media_url}\" in your post for images, video, or audio embeds."
+preview_missing = "Unable to find post \"{slug}\"."
+preview_failed = "Unable to render preview: {error}"
+deleted = "Post \"{slug}\" deleted."
+delete_missing = "Post \"{slug}\" not found."
+
+[blog]
+untitled_post = "Untitled Post"
+parse_failed = "❌ Failed to parse {path}: {error}"
+
+[freeze]
+missing_site_url = "ERROR: SITE_URL is not set. Canonical URLs in the static build would point to localhost. Set SITE_URL to the deployed origin before running freeze.py."
+render_failed = "Failed to render {route}."
+generated = "✅ Generated {path}"
+complete = "Static site generated in 'build' directory."

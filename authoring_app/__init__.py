@@ -4,8 +4,11 @@ from pathlib import Path
 from flask import Flask, redirect, url_for
 
 from blog.utils import get_content_dir
+from content.loader import load_toml
 
 from .views import bp as authoring_bp
+
+SITE_DEFAULTS = load_toml('site.toml')['site']
 
 
 def create_app() -> Flask:
@@ -47,7 +50,7 @@ def create_app() -> Flask:
             'mp3',
             'wav',
         },
-        SITE_NAME=os.getenv('SITE_NAME', 'Toucan.ee Preview'),
+        SITE_NAME=os.getenv('SITE_NAME', SITE_DEFAULTS['preview_name']),
     )
 
     content_dir: Path = app.config['CONTENT_DIR']

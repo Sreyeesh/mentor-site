@@ -3,40 +3,41 @@ from datetime import datetime
 
 from flask import request, url_for
 
+from content.loader import load_toml
+
+
+SITE_CONTENT = load_toml('site.toml')
+SITE_DEFAULTS = SITE_CONTENT['site']
+
+
+def site_value(key: str, env_var: str) -> str:
+    return os.getenv(env_var, SITE_DEFAULTS.get(key, ''))
+
+
 SITE_CONFIG = {
-    'name': os.getenv('SITE_NAME', 'Sreyeesh Garimella'),
-    'brand_name': os.getenv('SITE_BRAND_NAME', 'Toucan Studios'),
-    'brand_legal_name': os.getenv('SITE_BRAND_LEGAL_NAME', 'Toucan Studios OÜ'),
-    'tagline': os.getenv(
-        'SITE_TAGLINE',
-        'Pipeline TD and Software Developer',
+    'name': site_value('name', 'SITE_NAME'),
+    'brand_name': site_value('brand_name', 'SITE_BRAND_NAME'),
+    'brand_legal_name': site_value(
+        'brand_legal_name',
+        'SITE_BRAND_LEGAL_NAME',
     ),
-    'email': os.getenv('SITE_EMAIL', 'toucan.sg@gmail.com'),
-    'site_url': os.getenv('SITE_URL', '').rstrip('/'),
-    'meta_description': os.getenv(
+    'tagline': site_value('tagline', 'SITE_TAGLINE'),
+    'email': site_value('email', 'SITE_EMAIL'),
+    'site_url': site_value('site_url', 'SITE_URL').rstrip('/'),
+    'meta_description': site_value(
+        'meta_description',
         'SITE_META_DESCRIPTION',
-        'CV and portfolio for Sreyeesh Garimella: Python tooling, workflow '
-        'automation, and production technology for animation, games, and beyond.',
     ),
-    'asset_version': os.getenv('ASSET_VERSION', ''),
-    'social_image': os.getenv('SITE_SOCIAL_IMAGE', ''),
-    'github_url': os.getenv('SITE_GITHUB_URL', ''),
-    'linkedin_url': os.getenv('SITE_LINKEDIN_URL', ''),
-    'imdb_url': os.getenv('SITE_IMDB_URL', ''),
-    'location': os.getenv('SITE_LOCATION', 'Estonia'),
+    'asset_version': site_value('asset_version', 'ASSET_VERSION'),
+    'social_image': site_value('social_image', 'SITE_SOCIAL_IMAGE'),
+    'github_url': site_value('github_url', 'SITE_GITHUB_URL'),
+    'linkedin_url': site_value('linkedin_url', 'SITE_LINKEDIN_URL'),
+    'imdb_url': site_value('imdb_url', 'SITE_IMDB_URL'),
+    'location': site_value('location', 'SITE_LOCATION'),
 }
 
-NAV_LINKS = [
-    {'label': 'Home', 'href': '/', 'slug': 'home'},
-    {'label': 'Writing', 'href': '/blog/', 'slug': 'blog'},
-    {'label': 'About', 'href': '/about/', 'slug': 'about'},
-]
-
-SITE_LINKS = {
-    'home': '/',
-    'blog': '/blog/',
-    'about': '/about/',
-}
+NAV_LINKS = SITE_CONTENT['nav_links']
+SITE_LINKS = SITE_CONTENT['site_links']
 
 
 def build_absolute_url(path: str) -> str:

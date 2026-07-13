@@ -13,3 +13,14 @@ def test_load_page_reads_page_content():
 
     assert data['topbar']['state_label'] == 'Site in transition — rebuild board'
     assert data['deploy_target'][0]['label'] == 'compute'
+
+
+def test_site_content_contains_defaults_and_nav():
+    data = load_toml('site.toml')
+
+    assert data['site']['brand_name'] == 'Toucan Studios'
+    assert data['nav_links'][0] == {
+        'label': 'Home',
+        'href': '/',
+        'slug': 'home',
+    }
